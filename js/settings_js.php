@@ -91,6 +91,9 @@ $(document).ready(function(){
 						setTimeout(function(){
 							dTable[frmId].ajax.reload();
 						}, 2000);
+						if(id_input == ""){
+							frm[0].reset();
+						}
 					}else{
 						
 						showStatusMessage(response, "fail");
@@ -223,8 +226,8 @@ $(document).ready(function(){
 				  "orderable": false
 			  } */],
 			  "autoWidth": false,
-			  columns:[ { data: 'title' },
-					{ data: 'category'},
+			  columns:[ { data: 'title' },/* 
+					{ data: 'category'}, */
 					{ data: 'description'},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<span><a data-toggle="modal" href="#categoryModalUnit"  id="'+data+'-land_acquistion_category_unit-landAcquisitionUnit" data-toggle="modal" href="#categoryModalUnit" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a></span><span id="'+data+'-land_acquistion_category_unit-landAcquisitionUnit" class= "delete_me"><i class="fa fa-trash-o"></i></span>';}}
 					
@@ -397,7 +400,7 @@ $(document).ready(function(){
 					{ data: 'description'},//, render: function ( data, type, full, meta ) {return full.firstname + ' ' + full.othername + ' ' + full.lastname;}
 					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
 					
-					{ data: 'id', render: function ( data, type, full, meta ) {console.log(data); return '<a data-toggle="modal" href="#expense_type"  id="'+data+'-expense_types-tblExpenseType" data-toggle="modal" href="#expense_type" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-expense_types-tblExpenseType" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#expense_type"  id="'+data+'-expense_types-tblExpenseType" data-toggle="modal" href="#expense_type" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-expense_types-tblExpenseType" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [
@@ -426,6 +429,242 @@ $(document).ready(function(){
 			});
 		}
 	  /*-- End Expense Type--*/
+	  /*-- Tree or crop Type--*/
+		if ($("#treeCropsTypes").length) {
+			  dTable['tblTreeCrops'] = $('#treeCropsTypes').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			  "ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'treecroptypes';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },"columnDefs": [ {
+				  "targets": [2],
+				  "orderable": false,
+				  "searchable": false
+			  }/* , {
+				  "targets": [0],
+				  "orderable": false
+			  } */],
+			  "autoWidth": false,
+			  columns:[ { data: 'title', render: function ( data, type, full, meta ) { return '<a  id="'+full.id +'-treeCropsTypes-tblTreeCrops"  href="crop_types_description.php?id='+full.id +'" class="ls-modal"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
+					{ data: 'description'},//
+					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
+					
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#treecrops"  id="'+data+'-treeCropsTypes-tblTreeCrops"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-treeCropsTypes-tblTreeCrops" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- End Crop Type--*/
+	  /*-- Tree or Property Type--*/
+		if ($("#tblPropertyType").length) {
+			  dTable['tblPropertyTypes'] = $('#tblPropertyType').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			  "ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'propertytypes';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },"columnDefs": [ {
+				  "targets": [2],
+				  "orderable": false,
+				  "searchable": false
+			  }/* , {
+				  "targets": [0],
+				  "orderable": false
+			  } */],
+			  "autoWidth": false,
+			  columns:[ { data: 'title', render: function ( data, type, full, meta ) { return '<a  id="'+full.id +'-treeCropsTypes-tblTreeCrops"  href="propertytypedescription.php?id='+full.id +'" class="property_type"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
+					{ data: 'description'},//
+					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
+					
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#propertytype"  id="'+data+'-tblPropertyType-tblPropertyTypes"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblPropertyType-tblPropertyTypes" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- End Crop Type--*/
+	  /*-- Crop description--*/
+		if ($("#cropDescription").length) {
+			  dTable['tblCropDescription'] = $('#cropDescription').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			  "ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'cropdescription';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },"columnDefs": [ {
+				  "targets": [2],
+				  "orderable": false,
+				  "searchable": false
+			  }/* , {
+				  "targets": [0],
+				  "orderable": false
+			  } */],
+			  "autoWidth": false,
+			  columns:[ { data: 'title' },
+					{ data: 'description'},//, render: function ( data, type, full, meta ) {return full.firstname + ' ' + full.othername + ' ' + full.lastname;}
+					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
+					
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#cropdescription"  id="'+data+'-cropdescription-tblCropDescription" data-toggle="modal" href="#cropdescription" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription-tblCropDescription" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- End crop description--*/
+	  /*-- property description--*/
+		if ($("#propertyDescription").length) {
+			  dTable['tblPropertyDescription'] = $('#propertyDescription').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			  "ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'propertydescription';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },"columnDefs": [ {
+				  "targets": [2],
+				  "orderable": false,
+				  "searchable": false
+			  }/* , {
+				  "targets": [0],
+				  "orderable": false
+			  } */],
+			  "autoWidth": false,
+			  columns:[ { data: 'title' },
+					{ data: 'description'},//, render: function ( data, type, full, meta ) {return full.firstname + ' ' + full.othername + ' ' + full.lastname;}
+					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
+					
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal"  id="'+data+'-propertydescription-tblPropertyDescription" href="#propertydescription" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-propertydescription-tblPropertyDescription" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- End crop description--*/
 		/*Loan Product Types */
 	  	if ($("#loan_product_types").length) {
 			  dTable['tblLoanProductType'] = $('#loan_product_types').DataTable({
@@ -827,22 +1066,30 @@ $(document).ready(function(){
 	}();
 	
 	TableManageButtons.init();
-	
-	/* Editing Several tables */
-		$('.table tbody').on('click', 'tr .edit_me', function () {
-			//id="'+data+'-person_type-personTypeTable" 
-			
-			var tbl, id , frm, dt;
-			var d_id = $(this).attr("id");
-			var arr = d_id.split("-");
-			id = arr[0]; //The  row id 
-			tbl = arr[1]; // The table , 
-			frm = arr[2]; //The form id
-			dt = dTable[frm];
-			var row = $(this).parent().parent(); 
-			edit_data(dt.row(row).data(), frm);
-			
-		});
+	//This helps load a page into a bootstrap modal
+	$('.table tbody').on('click', 'tr .ls-modal', function (e) {
+		e.preventDefault();
+		$('#croptypes_desc').modal('show').find('.modal-body').load($(this).attr('href'));
+	});
+	$('.table tbody').on('click', 'tr .property_type', function (e) {
+		e.preventDefault();
+		$('#property_d').modal('show').find('.modal-body').load($(this).attr('href'));
+	});
+/* Editing Several tables */
+	$('.table tbody').on('click', 'tr .edit_me', function () {
+		//id="'+data+'-person_type-personTypeTable" 
+		
+		var tbl, id , frm, dt;
+		var d_id = $(this).attr("id");
+		var arr = d_id.split("-");
+		id = arr[0]; //The  row id 
+		tbl = arr[1]; // The table , 
+		frm = arr[2]; //The form id
+		dt = dTable[frm];
+		var row = $(this).parent().parent(); 
+		edit_data(dt.row(row).data(), frm);
+		
+	});
 	/*  */
 	
 });

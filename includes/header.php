@@ -133,7 +133,7 @@ include("lib/Libraries.php");
     <script src="javascripts/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="javascripts/dropzone.js" type="text/javascript"></script>
     <script src="javascripts/jquery.nestable.js" type="text/javascript"></script>
-    <script src="javascripts/main.js" type="text/javascript"></script>
+    <!--<script src="javascripts/main.js" type="text/javascript"></script> -->
     <script src="javascripts/respond.js" type="text/javascript"></script>
 	<?php include_once("./js/utils.inc");//utility functions?>
 	<!-- PNotify -->

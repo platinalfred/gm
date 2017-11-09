@@ -12,16 +12,15 @@ include("includes/header.php");
 			<div class="widget-container fluid-height clearfix">
 				<div class="tabs-container">
 					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#tab-1" >Land Acquisition Categories</a></li>
-						<li><a data-toggle="tab" href="#tab-2" >Land Acquisition Types</a></li>
+						
+						<li  class="active"><a data-toggle="tab" href="#tab-2" >Land Acquisition Types</a></li>
+						<li><a data-toggle="tab" href="#tab-5" >Crop Description</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-3" >Tree or Crop Types</a></li>
+						<li class=""><a data-toggle="tab"  href="#tab-7" href="#">Property Description</a></li>
+						<li class=""><a data-toggle="tab"  href="#tab-8" href="#">Property</a></li>
 						<li class=""><a data-toggle="tab"  href="#tab-9" >Access Levels</a></li>
 						<li><a data-toggle="tab" href="#tab-23" >Positions</a></li>
 						<li><a data-toggle="tab" href="#tab-17" >Expense Types</a></li>
-						<!--<li class=""><a data-toggle="tab" href="#tab-2" href="#">Account Types</a></li>-->
-						<li class=""><a data-toggle="tab" href="#tab-3" >Tree or Crop Types</a></li>
-						<li class=""><a data-toggle="tab" href="#tab-5" >Crop Description</a></li>
-						<li class=""><a data-toggle="tab"  href="#tab-7" href="#">Income Sources</a></li>
-						<li class=""><a data-toggle="tab"  href="#tab-8" href="#">Individual Types</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">More <b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -39,8 +38,329 @@ include("includes/header.php");
 						</li>
 					</ul>
 					<div class="tab-content">
+						<!---  Land Access Category Unit   --->
+						<div id="tab-2" class="tab-pane active">
+							<div class="col-lg-12">
+								<div class="action-buttons">
+									<a  data-toggle="modal" href="#categoryUnitModal"><i class="fa fa-plus"></i> Add New</a>
+								</div>
+								<div class="modal fade" id="categoryUnitModal">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+												<h4 class="modal-title">Land Acquisition Category Unit</h4>
+											</div>
+											<div class="modal-body">
+												<?php include("add_acquisition_category_unit.php"); ?>
+											</div>
+										</div>
+									</div>
+								</div>
+							
+							</div>
+							<div class="heading">
+								<i class="fa fa-bars"></i>Land Acquisition Category Unit
+							</div>
+							<div class="widget-content padded">
+								<table class="table table-bordered table-striped" id="land_acquistion_category_unit">
+									<thead>
+										<th>Title</th>
+										<th>Description</th>
+										<th></th>
+									</thead>
+									<tbody>
+										
+									</tbody>
+								</table>
+							</div>
+						
+						</div>
+						<!-- Tree or Crop Types -->
+						<div id="tab-3" class="tab-pane">
+							<div class="panel-body">
+								<div class="col-lg-2 col-offset-sm-8">
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#treecrops"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+									<div id="treecrops" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Add /Update Tree or Crop Type</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" id="tblTreeCrops">
+																	<input type="hidden" name="id" >
+																	<input type="hidden" name="tbl"  value="treecroptypes">
+																	<div class="form-group"><label class="col-lg-2 control-label">Title</label>
+																		<div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
+																		</div>
+																	</div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="croptypes_desc" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12" style="margin-top:10px;">
+									<div class="ibox-content">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover" id="treeCropsTypes">
+												<thead>
+												<tr>
+													<th>Title</th>
+													<th>Description</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody></tbody>
+												<tfoot>
+													<tr>
+														<th>Title</th>
+														<th>Description</th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Tree or Crop Types -->
+						
+						<!-- Crop Descriptions -->
+						<div id="tab-5" class="tab-pane">
+							<div class="panel-body">
+								<div class="col-lg-2 col-offset-sm-8">
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#cropdescription"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+									<div id="cropdescription" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Add /Update Crop Description</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" id="tblCropDescription">
+																	<input type="hidden" name="id" >
+																	<input type="hidden" name="tbl"  value="CropDescription">
+																	<div class="form-group"><label class="col-lg-2 control-label">Title</label>
+																		<div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
+																		</div>
+																	</div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12" style="margin-top:10px;">
+									<div class="ibox-content">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover" id="cropDescription">
+												<thead>
+												<tr>
+													<th>Title</th>
+													<th>Description</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody></tbody>
+												<tfoot>
+													<tr>
+														<th>Title</th>
+														<th>Description</th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Tree Crop Descriptions -->
+						<!-- Property Descriptions -->
+						<div id="tab-7" class="tab-pane">
+							<div class="panel-body">
+								<div class="col-lg-2 col-offset-sm-8">
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#propertydescription"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+									<div id="propertydescription" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Add /Update Property Description</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" id="tblPropertyDescription">
+																	<input type="hidden" name="id" >
+																	<input type="hidden" name="tbl"  value="propertyDescription">
+																	<div class="form-group"><label class="col-lg-2 control-label">Title</label>
+																		<div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
+																		</div>
+																	</div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12" style="margin-top:10px;">
+									<div class="ibox-content">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover" id="propertyDescription">
+												<thead>
+												<tr>
+													<th>Title</th>
+													<th>Description</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody></tbody>
+												<tfoot>
+													<tr>
+														<th>Title</th>
+														<th>Description</th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Property Descriptions -->
+						<!-- Propery -->
+						<div id="tab-8" class="tab-pane">
+							<div class="panel-body">
+								<div class="col-lg-2 col-offset-sm-8">
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#propertytype"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+									<div id="propertytype" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Add /Update Tree Property</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" id="tblPropertyTypes">
+																	<input type="hidden" name="id" >
+																	<input type="hidden" name="tbl"  value="propertytypes">
+																	<div class="form-group"><label class="col-lg-2 control-label">Title</label>
+																		<div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
+																		</div>
+																	</div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="property_d" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12" style="margin-top:10px;">
+									<div class="ibox-content">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover" id="tblPropertyType">
+												<thead>
+												<tr>
+													<th>Title</th>
+													<th>Description</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody></tbody>
+												<tfoot>
+													<tr>
+														<th>Title</th>
+														<th>Description</th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Property -->
+						
+						
 						<!-- Land access category -->
-						<div id="tab-1" class="tab-pane active">
+						<div id="tab-21" class="tab-pane">
 							<div class="col-lg-12">
 								<div class="action-buttons">
 									<a  data-toggle="modal" href="#categoryModal"><i class="fa fa-plus"></i> Add New</a>
@@ -77,60 +397,6 @@ include("includes/header.php");
 							</div>
 						</div>
 						<!-- End Land Access Category -->
-						<!---  Land Access Category Unit   --->
-						<div id="tab-2" class="tab-pane">
-							<div class="col-lg-12">
-								<div class="action-buttons">
-									<a  data-toggle="modal" href="#categoryUnitModal"><i class="fa fa-plus"></i> Add New</a>
-								</div>
-								<div class="modal fade" id="categoryUnitModal">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
-												<h4 class="modal-title">Land Acquisition Category Unit</h4>
-											</div>
-											<div class="modal-body">
-												<?php include("add_acquisition_category_unit.php"); ?>
-											</div>
-										</div>
-									</div>
-								</div>
-							
-							</div>
-							<div class="heading">
-								<i class="fa fa-bars"></i>Land Acquisition Category Unit
-							</div>
-							<div class="widget-content padded">
-								<table class="table table-bordered table-striped" id="land_acquistion_category_unit">
-									<thead>
-										<th>Title</th>
-										<th>Category</th>
-										<th>Description</th>
-										<th></th>
-									</thead>
-									<tbody>
-										
-									</tbody>
-								</table>
-							</div>
-						
-						</div>
-						
-						<div id="tab-3" class="tab-pane">
-						</div>
-						<!-- Access Level -->
-						<div id="tab-5" class="tab-pane ">
-						</div>
-						<!-- Id Card Type-->
-						<div id="tab-6" class="tab-pane ">
-						</div>
-						<!-- Income Source -->
-						<div id="tab-7" class="tab-pane ">
-						</div>
-						<!-- Individual Type -->
-						<div id="tab-8" class="tab-pane ">
-						</div>
 						<!-- Access Level -->
 						<div id="tab-9" class="tab-pane">
 							<div class="panel-body">

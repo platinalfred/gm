@@ -11,7 +11,7 @@ class landAcquisitionCategoryUnit extends Db {
 	}
 	
 	public function findAll(){
-		$result_array = $this->getfarray(self::$table_name, "active=1", "", "");
+		$result_array = $this->getarray(self::$table_name, "active=1", "", "");
 		return !empty($result_array) ? $result_array : false;
 	}
 	public function findUnits(){
