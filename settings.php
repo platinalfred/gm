@@ -13,14 +13,13 @@ include("includes/header.php");
 				<div class="tabs-container">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#tab-1" >Land Acquisition Categories</a></li>
-						<li><a data-toggle="tab" href="#tab-2" >Land Acquisition Category Unit</a></li>
+						<li><a data-toggle="tab" href="#tab-2" >Land Acquisition Types</a></li>
 						<li class=""><a data-toggle="tab"  href="#tab-9" >Access Levels</a></li>
 						<li><a data-toggle="tab" href="#tab-23" >Positions</a></li>
-						<li><a data-toggle="tab" href="#tab-1" >Expense Types</a></li>
+						<li><a data-toggle="tab" href="#tab-17" >Expense Types</a></li>
 						<!--<li class=""><a data-toggle="tab" href="#tab-2" href="#">Account Types</a></li>-->
 						<li class=""><a data-toggle="tab" href="#tab-3" >Tree or Crop Types</a></li>
 						<li class=""><a data-toggle="tab" href="#tab-5" >Crop Description</a></li>
-						<li class=""><a data-toggle="tab" href="#tab-17" href="#">Positions</a></li>
 						<li class=""><a data-toggle="tab"  href="#tab-7" href="#">Income Sources</a></li>
 						<li class=""><a data-toggle="tab"  href="#tab-8" href="#">Individual Types</a></li>
 						<li class="dropdown">
@@ -117,9 +116,7 @@ include("includes/header.php");
 							</div>
 						
 						</div>
-						<!---  Share Rate Start   --->
-						<div id="tab-23" class="tab-pane">
-						</div>
+						
 						<div id="tab-3" class="tab-pane">
 						</div>
 						<!-- Access Level -->
@@ -134,14 +131,235 @@ include("includes/header.php");
 						<!-- Individual Type -->
 						<div id="tab-8" class="tab-pane ">
 						</div>
-						<!-- Loan Product Type -->
+						<!-- Access Level -->
 						<div id="tab-9" class="tab-pane">
+							<div class="panel-body">
+								<div class="col-lg-2 col-offset-sm-8">
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#access_level"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+									<div id="access_level" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Add Access Level.</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" method="post" id="tblAccessLevel">
+																	<input type="hidden" name="tbl" value="access_level">
+																	<input type="hidden" name="id" value="access_level">
+																	<div class="form-group"><label class="col-lg-2 control-label">Name</label>
+
+																		<div class="col-lg-10"><input name="name" type="text" placeholder="Name" class="form-control"> <span class="help-block m-b-none">Access Level name (e.g Administrator).</span>
+																		</div>
+																	</div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
+																		<div class="col-lg-10"><textarea name="description" placeholder="Description" class="form-control"></textarea></div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12" style="margin-top:10px;">
+									<div class="ibox-content">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover" id="access_levels" >
+												<thead>
+												<tr>
+													<th>Name</th>
+													<th>Description</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+												<tfoot>
+													<tr>
+														<th>Name</th>
+														<th>Description</th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+								
+							</div>
 						</div>
+						<!---  Position   --->
+						<div id="tab-23" class="tab-pane">
+							<div class="panel-body">
+								<div class="col-lg-2 col-offset-sm-8">
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#position"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+									<div id="position" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Add /Update Position</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" id="tblPosition">
+																	<input type="hidden" name="id" >
+																	<input type="hidden" name="tbl"  value="position">
+																	<div class="form-group"><label class="col-lg-2 control-label">Name</label>
+																		<div class="col-lg-10"><input type="text" name="name" placeholder="Name" class="form-control"> 
+																		</div>
+																	</div>
+																	<div class="item form-group">
+																		<label class="control-label col-md-3 col-sm-3 col-xs-12 no_padding" for="id_type">Access Level <span class="required">*</span>
+																		</label>
+																		<div class="col-md-9 col-sm-9 col-xs-12">
+																			<select class="form-control m-b" name="access_level" required >
+																				<option>Please select</option>
+																				<?php 
+																				$access_level = new AccessLevel();
+																				$access_level = $access_level->findAll();
+																				if($access_level){
+																					foreach($access_level as $single){ ?>
+																						<option value="<?php echo $single['id']; ?>" ><?php echo $single['name']; ?></option>
+																						<?php
+																					}
+																				}
+																				?>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12" style="margin-top:10px;">
+									<div class="ibox-content">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover" id="positions">
+												<thead>
+												<tr>
+													<th>Name</th>
+													<th>Access Level</th>
+													<th>Description</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody></tbody>
+												<tfoot>
+													<tr>
+														<th>Name</th>
+														<th>Access Level</th>
+														<th>Description</th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Position -->
+						<!-- Expense Type -->
+						<div id="tab-17" class="tab-pane">
+							<div class="panel-body">
+								<div class="col-lg-2 col-offset-sm-8">
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#expense_type"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+									<div id="expense_type" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Expense Type</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" id="tblExpenseType">
+																	<input type="hidden" name="tbl"  value="expense_type">
+																	<input type="hidden" name="id" id="id_field">
+																	<div class="form-group"><label class="col-lg-2 control-label">Name</label>
+																		<div class="col-lg-10"><input type="text" name="name" placeholder="Expense Type" class="form-control"> 
+																		</div>
+																	</div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+								<div class="col-lg-12" style="margin-top:10px;">
+									<div class="ibox-content">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover" id="expense_types">
+												<thead>
+												<tr>
+													<th>Name</th>
+													<th>Description</th>
+													<th>Edit / Delete</th>
+												</tr>
+												</thead>
+												<tbody></tbody>
+												<tfoot>
+													<tr>
+														<th>Name</th>
+														<th>Description</th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						<!-- End Expense Type-->
 						<!-- Penalty Calculation Method Start -->		
 						<div id="tab-12" class="tab-pane ">
 						</div>
 						<!--End Loan Product penality-->
-						<!-- Relationhip Type-->
+						
 						<div id="tab-14" class="tab-pane">
 						</div>
 						<!-- End Security Type-->
@@ -149,10 +367,6 @@ include("includes/header.php");
 						<div id="tab-16" class="tab-pane">
 						</div>
 						<!-- End Security Type-->
-						<!-- Position -->
-						<div id="tab-17" class="tab-pane">
-						</div>
-						<!-- End Position -->
 						
 						<!-- Adress Type -->
 						<div id="tab-18" class="tab-pane">

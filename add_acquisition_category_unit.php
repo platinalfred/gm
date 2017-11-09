@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="widget-container fluid-height clearfix">
             <div class="heading">
-                <i class="fa fa-bars"></i> Acquisition Category Unit
+                <i class="fa fa-bars"></i>Types of Land Acquisition
             </div>
             <div class="widget-content padded">
                 <form  id="landAcquisitionUnit"action="#" method="post" class="form-horizontal">

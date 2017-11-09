@@ -42,52 +42,59 @@ if(isset($_POST['tbl'])){
 			}
 			
 		break;
-		case "add_share":
-			$shares = new Shares();
-			if($shares->addShares($data)){
-				$output = "success";
-			}else{ 
-				$output = "Member Share could not be added. Please try again or contact admin for assistance!";
-			}
-		break;
-		case "share_rate":
-			$shares = new Shares();
-			if($shares->addShareRate($data)){
-				$output = "success";
-			}else{ 
-				$output = "Share rate could not be added. Please try again or contact admin for assistance!";
-			}
-		break;
-		case "add_group":
-			$sacco_group = new SaccoGroup();
-			$group_id = $sacco_group->addSaccoGroup($data);
-			if($group_id){
-				$data['groupId'] = $group_id;
-				if(!empty($data['members'])){
-					foreach($data['members'] as $single){
-						$data['memberId'] = $single['memberId'];
-						$sacco_group->addSaccoGroupMembers($data);
-					}
+		case "access_level":
+			$access_level = new AccessLevel();
+			if($_POST['id'] != ""){
+				if($access_level->updateAccessLevel($data)){
+					$output = "success";
+				}else{ 
+					$output = "Access level unsuccessfully updated!";
 				}
-				$output = "success";
-			}else{ 
-				$output = "Group details could not be added. Please try again or contact admin for assistance!";
-			} 
-		break;
-		case "update_group":
-			$sacco_group = new SaccoGroup();
-			if($sacco_group->updateSaccoGroup($data)){
-				if(!empty($data['members'])){
-					foreach($data['members'] as $single){
-						$data['memberId'] = $single['memberId'];
-						$sacco_group->addSaccoGroupMembers($data);
-					}
+			}else{
+				$data['date_added'] = date("Y-m-d h:i:s");
+				if($access_level->addAccessLevel($data)){
+					$output = "success";
+				}else{ 
+					$output = "Could not add access level!";
 				}
-				$output = "success";
-			}else{ 
-				$output = "Group details could not be added. Please try again or contact admin for assistance!";
 			}
+			
 		break;
+		case "position":
+			$position = new Position();
+			if($_POST['id'] != ""){
+				if($position->updatePosition($data)){
+					$output = "success";
+				}else{ 
+					$output = "Position update failed,,please contact administrator for assistance.";
+				}
+			}else{
+				if($position->addPosition($data)){
+					$output = "success";
+				}else{ 
+					$output = "Could not add position,please contact administrator for assistance.";
+				}
+			}
+			
+		break;
+		case "expense_type":
+			$expense_type = new ExpenseTypes();
+			if($_POST['id'] != ""){
+				if($expense_type->updateExpenseType($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! expense type not added, please contact administrator for assistance.";
+				}
+			}else{
+				if($expense_type->addExpenseType($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! expense type not added, please contact administrator for assistance.";
+				}
+			}
+			
+		break;
+		
 		//UPDATE STAFF
 		case "update_staff":
 			$staff = new Staff();

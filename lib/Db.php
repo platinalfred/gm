@@ -500,7 +500,7 @@ class Db{
 		}
 		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES (".$va.")";
 		
-			echo $ins;
+		//	echo $ins;
 		 $inse = $this->conn->query($ins);
 		if($inse){
 			
