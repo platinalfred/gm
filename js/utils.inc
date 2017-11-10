@@ -297,11 +297,8 @@ function showStatusMessage(message='', display_type='success'){
 	}
 	$(".modal").on("hide.bs.modal", function () {
 		// put your default event here
-		//$('form', this)[0].reset();
+		$('form', this)[0].reset();
 		$('input[name="id"]', this).val('');
-		if(typeof viewModal!=='undefined'){
-			viewModel.edit_client(0);
-		}
 	});
 /*$(function () {
   $('[data-toggle="tooltip"]').tooltip()

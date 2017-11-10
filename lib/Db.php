@@ -19,13 +19,6 @@ class Db{
 	   $this->user = "root";
 	   $this->password = "";
 	   $this->database = "gmt";
-	   //Connects to the database;
-	   /* 
-	    $this->server = "localhost";
-	   $this->user = "buladde_user";
-	   $this->password = "Buladdeor@Ug";
-	   $this->database = "buladde_fms";
-		*/
 	   $this->connectDB();
 	   
 	}

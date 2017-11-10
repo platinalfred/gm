@@ -6,45 +6,31 @@
                 <i class="fa fa-bars"></i>Basic Components
             </div>
             <div class="widget-content padded">
-                <form id="tblLandAccess" action="#" method="post" class="form-horizontal">
+                <form id="tblLandProjectForm" action="#" method="post" class="form-horizontal">
+					<input type="hidden" name="tbl" value="tblLandProject">
+					<input type="hidden" name="id" >
                     <div class="form-group">
-                        <label class="control-label col-md-2">Title</label>
+                        <label class="control-label col-md-4">Project Title</label>
                         <div class="col-md-7">
-							<textarea name="title" class="form-control" rows="2"></textarea>
+							<textarea name="project_title" class="form-control" rows="2"></textarea>
                         </div>
                     </div>
 					<div class="form-group">
-                        <label class="control-label col-md-2">Project Reference</label>
+                        <label class="control-label col-md-4">Project Reference</label>
                         <div class="col-md-7">
                             <div class="input-group">
-                                <input class="form-control" placeholder="project_reference" type="text">
+                                <input class="form-control" placeholder="Project reference" name="project_reference" type="text">
                             </div>
                         </div>
                     </div>
-                    
-					<div class="form-group">
-                        <label class="control-label col-md-2">Project Category</label>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Project Category Unit</label>
 						<?php 
 						$land_acquisition_category = new LandAcquisitionCategory(); 
-						$land_acquisition_category_unit = new landAcquisitionCategoryUnit(); 
-						$all_categories = $land_acquisition_category->findAll();
+						$land_acquisition_category_unit = new landAcquisitionCategoryUnit();
 						?>
                         <div class="col-md-7">
-							<?php 
-							if($all_categories){
-								foreach($all_categories as $single){ ?>
-									<label class="radio-inline">
-									<input name="project_category" type="radio" value="<?php echo $single['id']; ?>"><span><?php echo $single['title']; ?></span></label>
-									<?php
-								}
-							}
-							?>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2">Project Category Unit</label>
-                        <div class="col-md-7">
-                            <select class="form-control" multiple="" name="project_category_unit">
+                            <select class="form-control" name="project_category_unit">
 								<?php 
 								$all_categories_units = $land_acquisition_category_unit->findAll();
 								print_r($all_categories_units);
@@ -60,16 +46,16 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="control-label col-md-2">Client Name</label>
+                        <label class="control-label col-md-4">Client Name</label>
                         <div class="col-md-7">
-							<textarea name="client_name" class="form-control" rows="2"></textarea>
-                           
+							<select name="client_id" class="form-control" data-placeholder="Select client..." class="form-control chosen-select" data-bind='options: clients, optionsText: "client_names", optionsCaption: "Select customer...", optionsAfterRender: $root.setOptionValue("id")' data-msg-required="Client name is required" required></select>
                         </div>
+						<!--, value: $root.client-->
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-2">&nbsp;</label>
+                        <label class="control-label col-md-4">&nbsp;</label>
                         <div class="col-md-7">
-                            <button class="btn btn-primary save" type="button">Submit</button>
+                            <button class="btn btn-primary" type="submit">Submit</button>
                             <button class="btn btn-default-outline" data-dismiss="modal" >Cancel </button>
                         </div>
                     </div>

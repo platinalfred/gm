@@ -6,6 +6,23 @@ $output = "";
 if(isset($_POST['tbl'])){
 	$data = $_POST;
 	switch($data['tbl']){
+		case "tblClient":
+			$client_obj = new Client();
+			if($data['id'] != ""){
+				if($client_obj->updateClient($data)){
+					$output = "success";
+				}else{ 
+					$output = "Client data could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				if($client_obj->addClient($data)){
+					$output = "success";
+				}else{ 
+					$output = "Client data could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			
+		break;
 		case "land_acquisition":
 			$lan_acquisition_category = new landAcquisitionCategory();
 			if($data['id'] != ""){
@@ -20,6 +37,25 @@ if(isset($_POST['tbl'])){
 					$output = "success";
 				}else{ 
 					$output = "Land Acquisition category could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			
+		break;
+		case "tblLandProject":
+			$land_project = new LandAcquisition();
+			if($data['id'] != ""){
+				unset($data['tbl']);
+				if($land_project->updateProject($data)){
+					$output = "success";
+				}else{ 
+					$output = "Project details could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				/* $output = $land_project->addProject($data); */
+				if($land_project->addProject($data)){
+					$output = "success";
+				}else{ 
+					$output = "Project details could not be added. Please try again or contact admin for assistance!";
 				}
 			}
 			

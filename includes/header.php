@@ -135,7 +135,7 @@ include("lib/Libraries.php");
     <script src="javascripts/jquery.nestable.js" type="text/javascript"></script>
     <script src="javascripts/main.js" type="text/javascript"></script>
     <script src="javascripts/respond.js" type="text/javascript"></script>
-	<?php include_once("./js/utils.inc");//utility functions?>
+    <script src="javascripts/knockout-3.4.2.js" type="text/javascript"></script>
 	<!-- PNotify -->
 	<script src="js/plugins/pnotify/dist/pnotify.js"></script>
 	<script src="js/plugins/pnotify/dist/pnotify.buttons.js"></script>
