@@ -1,0 +1,4 @@
+.table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td{
+	line-height: 1.128571429 !important;
+	padding: 0px 8px !important;
+}

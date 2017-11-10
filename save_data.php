@@ -41,6 +41,7 @@ if(isset($_POST['tbl'])){
 			}
 			
 		break;
+<<<<<<< HEAD
 		case "tblLandProject":
 			$land_project = new LandAcquisition();
 			if($data['id'] != ""){
@@ -56,6 +57,40 @@ if(isset($_POST['tbl'])){
 					$output = "success";
 				}else{ 
 					$output = "Project details could not be added. Please try again or contact admin for assistance!";
+=======
+		case "district_rate":
+			$districtcroprate = new DistrictCropRate();
+			if($data['id'] != ""){
+				if($districtcroprate->updateDistrictCropRate($data)){
+					$output = "success";
+				}else{ 
+					$output = "District crop rate could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				$data['date_added'] = date("Y-m-d h:i:s");
+				if($districtcroprate->addDistrictCropRate($data)){
+					$output = "success";
+				}else{ 
+					$output = "District crop rate could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			
+		break;
+		case "property_rate":
+			$property_rate = new DistrictPropertyRate();
+			if($data['id'] != ""){
+				if($property_rate->updateDistrictPropertyRate($data)){
+					$output = "success";
+				}else{ 
+					$output = "Property rate could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				$data['date_added'] = date("Y-m-d h:i:s");
+				if($property_rate->addDistrictPropertyRate($data)){
+					$output = "success";
+				}else{ 
+					$output = "Property rate could not be added. Please try again or contact admin for assistance!";
+>>>>>>> 2995377d9f4f1a2381bef7f3aa1004a292fa2888
 				}
 			}
 			
@@ -119,7 +154,7 @@ if(isset($_POST['tbl'])){
 				if($expense_type->updateExpenseType($data)){
 					$output = "success";
 				}else{ 
-					$output = "Ooups! expense type not added, please contact administrator for assistance.";
+					$output = "Ooups! expense type not updated, please contact administrator for assistance.";
 				}
 			}else{
 				if($expense_type->addExpenseType($data)){
@@ -130,7 +165,101 @@ if(isset($_POST['tbl'])){
 			}
 			
 		break;
-		
+		case "treecroptypes":
+			$treecroptypes = new TreeCropTypes();
+			if($_POST['id'] != ""){
+				if($treecroptypes->updateTreeCropType($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! Tree or crop type not updated, please contact administrator for assistance.";
+				}
+			}else{
+				if($treecroptypes->addTreeCropType($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! Tree or crop type not added, please contact administrator for assistance.";
+				}
+			}
+			
+		break;
+		case "treecroptypedescription":
+			$treecroptypedescription = new TreeCropTypesDescription();
+			if(!empty($_POST['crop_description_id'])){
+				$data['tree_crop_id'] = $_POST['tree_crop_id'];
+				
+				foreach($_POST['crop_description_id'] as $single){
+					$data['crop_description_id'] = $single;
+					$treecroptypedescription->addTreeCropTypesDescription($data);
+				}
+				$output =  "success";
+			}else{
+				$output = "There were no descriptions selected.";
+			}
+		break;
+		case "propertytypesdescription":
+			$propertytypedescription = new PropertyTypeDescription();
+			if(!empty($_POST['property_type_id'])){
+				$data['property_type_id'] = $_POST['property_type_id'];
+				foreach($_POST['property_description_id'] as $single){
+					$data['property_description_id'] = $single;
+					$propertytypedescription->addPropertyTypeDescription($data);
+				}
+				$output =  "success";
+			}else{
+				$output = "There were no descriptions selected.";
+			}
+		break;
+		case "CropDescription":
+			$crop_description = new CropDescription();
+			if($_POST['id'] != ""){
+				if($crop_description->updateCropDescription($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! crop description not updated, please contact administrator for assistance.";
+				}
+			}else{
+				if($crop_description->addCropDescription($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! crop description not added, please contact administrator for assistance.";
+				}
+			}
+			
+		break;
+		case "propertyDescription":
+			$property_description = new PropertyDescription();
+			if($_POST['id'] != ""){
+				if($property_description->updatePropertyDescription($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! property description not updated, please contact administrator for assistance.";
+				}
+			}else{
+				if($property_description->addPropertyDescription($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! property description not added, please contact administrator for assistance.";
+				}
+			}
+			
+		break;
+		case "propertytypes":
+			$propertytypes = new PropertyTypes();
+			if($_POST['id'] != ""){
+				if($propertytypes->updatePropertyTypes($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! property type not updated, please contact administrator for assistance.";
+				}
+			}else{
+				if($propertytypes->addPropertyTypes($data)){
+					$output = "success";
+				}else{ 
+					$output = "Ooups! property type not added, please contact administrator for assistance.";
+				}
+			}
+			
+		break;
 		//UPDATE STAFF
 		case "update_staff":
 			$staff = new Staff();

@@ -4,7 +4,7 @@ if(!isset($_SESSION['staff_id']))
 	if(!is_numeric($_SESSION['staff_id']))
 		die("Invalid access");
 
-require_once("lib/Db.php");
+require_once("lib/Libraries.php");
 $db = new Db();
 
 if(isset($_GET['tbl'])){
@@ -30,9 +30,23 @@ if(isset($_GET['tbl'])){
 				$msg =  "Success";
 			}
 		break;
-		case "account_type":
-			if($db->turnOff("accounttype", "id=".$_GET['id'])){
-				$msg =  "Successfully deleted the account type";
+		case "treeCropsTypes":
+			if($db->del("tbl_tree_or_cropt_types", "id=".$_GET['id'])){
+				$msg =  "Successfully deleted the crop type";
+			}
+		break;
+		case "cropdescription":
+			if($db->update_single("tbl_crop_description", "active", 0, "id=".$_GET['id'])){
+				$msg =  "Successfully deleted  crop description.";
+			}else{
+				$msg =  "Ooups! Could not delete crop description.";
+			}
+		break;
+		case "propertydescription":
+			if($db->update_single("tbl_property_description", "active", 0, "id=".$_GET['id'])){
+				$msg =  "Successfully deleted  property description.";
+			}else{
+				$msg =  "Ooups! Could not delete property description.";
 			}
 		break;
 		case "tbl_client":

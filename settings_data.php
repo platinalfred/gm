@@ -9,16 +9,38 @@ if(isset($_POST['tbl'])){
 		break;
 		case "land_acquistion_category_unit":
 			$land_acquistion_category_unit = new landAcquisitionCategoryUnit();
-			$output['data'] = $land_acquistion_category_unit->findUnits();
+			$output['data'] = $land_acquistion_category_unit->findAll();
+		break;
+		case "treecroptypes":
+			$treecroptypes = new TreeCropTypes();
+			$output['data'] = $treecroptypes->findAll();
+		break;
+		break;
+		case "propertytypes":
+			$propertytypes = new PropertyTypes();
+			$output['data'] = $propertytypes->findAll();
+		break;
+		case "cropdescription":
+			$cropdescription = new CropDescription();
+			$output['data'] = $cropdescription->findAll();
+		break;
+		case "propertydescription":
+			$propertydescription = new PropertyDescription();
+			$output['data'] = $propertydescription->findAll();
+		break;
+		case "districtcroprate":
+			$districtcroprate = new DistrictCropRate();
+			$output['data'] = $districtcroprate->findDistrictCropRates();
+		break;
+		case "districtpropertyrate":
+			$districtpropertyrate = new DistrictPropertyRate();
+			$output['data'] = $districtpropertyrate->findDistrictPropertyRates();
 		break;
 		case "expense_type":
 			$expense_type = new ExpenseTypes();
 			$output['data'] = $expense_type->findAll();
 		break;
-		case "marital_status":
-			$marital_status = new MaritalStatus();
-			$output['data'] = $marital_status->findAll();
-		break;
+		
 		case "person_type":
 			$person_type = new PersonType();
 			$output['data'] = $person_type->findAll();

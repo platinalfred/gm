@@ -493,7 +493,7 @@ class Db{
 		}
 		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES (".$va.")";
 		
-		//	echo $ins;
+		//echo $ins;
 		 $inse = $this->conn->query($ins);
 		if($inse){
 			
@@ -536,7 +536,7 @@ class Db{
 	function update_single($table, $field, $value, $where) {
 		$value = $this->escape_value($value);
 		$upd = "UPDATE ".$table. " SET ".$field." = '".$value."' WHERE ".$where;
-		echo $upd;
+		//echo $upd;
 		return $this->conn->query($upd);
 	}
 	function update($table, $fields, $values, $where){
@@ -667,6 +667,7 @@ class Db{
 		/* if($limit == 3){
 			echo $sel;
 		} */
+		//echo $sel;
 		$q = $this->conn->query($sel);
 		if($q){
 			$res = $this->buildOut($q);
