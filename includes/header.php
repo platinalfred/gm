@@ -7,8 +7,9 @@ include("lib/Libraries.php");
     <title>
        GMIS
     </title>
+  
     <link href="stylesheets/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="stylesheets/font-awesome.min.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/hightop-font.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/isotope.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/jquery.fancybox.css" media="all" rel="stylesheet" type="text/css" />
@@ -16,18 +17,7 @@ include("lib/Libraries.php");
     <link href="stylesheets/wizard.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/select2.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/morris.css" media="all" rel="stylesheet" type="text/css" />
-	<?php
-	 if(in_array("dataTables", $needed_files)){
-		?>
-		<link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-		<!--<link href="css/plugins/dataTables/jquery.dataTables.css" rel="stylesheet">-->
-		<link href="css/plugins/dataTables/buttons.dataTables.min.css" rel="stylesheet">
-	<?php 
-	} /* 
-	<link href="stylesheets/datatables.css" media="all" rel="stylesheet" type="text/css" />*/
-	?>
-   
-	
+    <link href="stylesheets/datatables.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/datepicker.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/timepicker.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/colorpicker.css" media="all" rel="stylesheet" type="text/css" />
@@ -48,13 +38,20 @@ include("lib/Libraries.php");
     <link href="stylesheets/color/magenta.css" media="all" rel="alternate stylesheet" title="magenta-theme" type="text/css" />
     <link href="stylesheets/color/gray.css" media="all" rel="alternate stylesheet" title="gray-theme" type="text/css" />
 	
-	<!-- Sweet Alert -->
-    <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
-
 	<link href="js/plugins/pnotify/dist/pnotify.css" rel="stylesheet">
 	<link href="js/plugins/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
 	<link href="js/plugins/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 	
+	<?php
+	 if(in_array("dataTables", $needed_files)){
+		?>
+		<link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+		<!--<link href="css/plugins/dataTables/jquery.dataTables.css" rel="stylesheet">-->
+		<link href="css/plugins/dataTables/buttons.dataTables.min.css" rel="stylesheet">
+	<?php 
+	 }
+	 ?>
+    
 	<script src="js/jquery-2.1.1.js" type="text/javascript"></script>
     <script src="js/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -67,37 +64,6 @@ include("lib/Libraries.php");
     <script src="javascripts/jquery.bootstrap.wizard.js" type="text/javascript"></script>
     <script src="javascripts/fullcalendar.min.js" type="text/javascript"></script>
     <script src="javascripts/gcal.js" type="text/javascript"></script>
-	<?php
-	if(in_array("dataTables", $needed_files)){
-		?>
-		<script src="js/plugins/dataTables/datatables.min.js"></script>
-		<script src="js/plugins/dataTables/dataTables.responsive.min.js"></script>
-		<script src="js/plugins/dataTables/dataTables.buttons.min.js"></script>
-		<script src="js/plugins/dataTables/buttons.print.min.js"></script>
-		<script src="js/plugins/dataTables/buttons.colVis.min.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function () {
-				jQuery.fn.dataTable.Api.register( 'sum()', function ( ) {
-					return this.flatten().reduce( function ( a, b ) {
-						if ( typeof a === 'string' ) {
-							a = a.replace(/[^\d.-]/g, '') * 1;
-						}
-						if ( typeof b === 'string' ) {
-							b = b.replace(/[^\d.-]/g, '') * 1;
-						}
-				 
-						return a + b;
-					}, 0 );
-				} );
-			} );
-		</script>
-	<?php 
-	}
-	?>
-	<!--
-    <script src="javascripts/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="javascripts/datatable-editable.js" type="text/javascript"></script> -->
-	
     <script src="javascripts/jquery.easy-pie-chart.js" type="text/javascript"></script>
     <script src="javascripts/excanvas.min.js" type="text/javascript"></script>
     <script src="javascripts/jquery.isotope.min.js" type="text/javascript"></script>
@@ -133,15 +99,43 @@ include("lib/Libraries.php");
     <script src="javascripts/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="javascripts/dropzone.js" type="text/javascript"></script>
     <script src="javascripts/jquery.nestable.js" type="text/javascript"></script>
-    <!--<script src="javascripts/main.js" type="text/javascript"></script> -->
+    <script src="javascripts/main.js" type="text/javascript"></script>
     <script src="javascripts/respond.js" type="text/javascript"></script>
 	<?php include_once("./js/utils.inc");//utility functions?>
 	<!-- PNotify -->
 	<script src="js/plugins/pnotify/dist/pnotify.js"></script>
 	<script src="js/plugins/pnotify/dist/pnotify.buttons.js"></script>
 	<script src="js/plugins/pnotify/dist/pnotify.nonblock.js"></script>
-	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-	<link href="images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+	<?php
+	if(in_array("dataTables", $needed_files)){
+		?>
+		<script src="js/plugins/dataTables/datatables.min.js"></script>
+		<script src="js/plugins/dataTables/dataTables.responsive.min.js"></script>
+		<script src="js/plugins/dataTables/dataTables.buttons.min.js"></script>
+		<script src="js/plugins/dataTables/buttons.print.min.js"></script>
+		<script src="js/plugins/dataTables/buttons.colVis.min.js"></script>
+		<!--
+     -->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				jQuery.fn.dataTable.Api.register( 'sum()', function ( ) {
+					return this.flatten().reduce( function ( a, b ) {
+						if ( typeof a === 'string' ) {
+							a = a.replace(/[^\d.-]/g, '') * 1;
+						}
+						if ( typeof b === 'string' ) {
+							b = b.replace(/[^\d.-]/g, '') * 1;
+						}
+				 
+						return a + b;
+					}, 0 );
+				} );
+			} );
+		</script>
+	<?php 
+	}
+	?>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 </head>
 <body class="page-header-fixed bg-1">
     <div class="modal-shiftfix">
@@ -230,7 +224,7 @@ include("lib/Libraries.php");
                         </li>
                         <li>
 							<a  href="settings.php">
-                                <span aria-hidden="true" class="hightop-gear"></span>Settings<b class="caret"></b>
+                                <span aria-hidden="true" class="hightop-gear"></span>Settings</b>
 							</a>
                         </li>
                     </ul>
@@ -238,5 +232,5 @@ include("lib/Libraries.php");
                 </div>
             </div>
         </div>
-        <!-- End Navigation -->
+        <!-- <b class="caret"> End Navigation -->
     

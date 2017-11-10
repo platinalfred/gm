@@ -24,6 +24,42 @@ if(isset($_POST['tbl'])){
 			}
 			
 		break;
+		case "district_rate":
+			$districtcroprate = new DistrictCropRate();
+			if($data['id'] != ""){
+				if($districtcroprate->updateDistrictCropRate($data)){
+					$output = "success";
+				}else{ 
+					$output = "District crop rate could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				$data['date_added'] = date("Y-m-d h:i:s");
+				if($districtcroprate->addDistrictCropRate($data)){
+					$output = "success";
+				}else{ 
+					$output = "District crop rate could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			
+		break;
+		case "property_rate":
+			$property_rate = new DistrictPropertyRate();
+			if($data['id'] != ""){
+				if($property_rate->updateDistrictPropertyRate($data)){
+					$output = "success";
+				}else{ 
+					$output = "Property rate could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				$data['date_added'] = date("Y-m-d h:i:s");
+				if($property_rate->addDistrictPropertyRate($data)){
+					$output = "success";
+				}else{ 
+					$output = "Property rate could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			
+		break;
 		case "land_acquisition_unit":
 			$lan_acquisition_category_unit = new landAcquisitionCategoryUnit();
 			if($_POST['id'] != ""){
@@ -127,11 +163,10 @@ if(isset($_POST['tbl'])){
 		break;
 		case "propertytypesdescription":
 			$propertytypedescription = new PropertyTypeDescription();
-			if(!empty($_POST['crop_description_id'])){
-				$data['tree_crop_id'] = $_POST['tree_crop_id'];
-				
-				foreach($_POST['crop_description_id'] as $single){
-					$data['crop_description_id'] = $single;
+			if(!empty($_POST['property_type_id'])){
+				$data['property_type_id'] = $_POST['property_type_id'];
+				foreach($_POST['property_description_id'] as $single){
+					$data['property_description_id'] = $single;
 					$propertytypedescription->addPropertyTypeDescription($data);
 				}
 				$output =  "success";

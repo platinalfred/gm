@@ -8,22 +8,22 @@ $propertytypes = new PropertyTypes();
 ?>
 <div class="row">
 	<div class="col-sm-12">
-		<h3><?php echo $propertytypes->findTreeName($_GET['id']); ?> </h3>
+		<h3><?php echo $propertytypes->findPropertyName($_GET['id']); ?> </h3>
 		<?php
-		$all_attached = $propertytypesdescription->findByTreeCropId($_GET['id']);
+		$all_attached = $propertytypesdescription->findByPropertyTypeId($_GET['id']);
 		$existing = array();
 		if($all_attached){
 			foreach($all_attached as $single){
-				echo "<p>". $propertytypes->findTreeName($_GET['id'])." - <b>".$property_description->findDescriptionName($single['property_description_id']) ."</b></p>";
+				echo "<p>". $propertytypes->findPropertyName($_GET['id'])." - <b>".$property_description->findDescriptionName($single['property_description_id']) ."</b></p>";
 				$existing[] = $single['property_description_id'];
 			}
 		}
 		?>
 		<div class="ibox-content">
-			<p><b>Attach possible description to <?php echo $propertytypes->findTreeName($_GET['id']); ?> </b></p>
+			<p><b>Attach possible description to <?php echo $propertytypes->findPropertyName($_GET['id']); ?> </b></p>
 			<form class="form-horizontal" >
 				<input type="hidden" value="propertytypesdescription" name="tbl">
-				<input type="hidden" value="<?php echo $_GET['id']; ?>" name="tree_crop_id">
+				<input type="hidden" value="<?php echo $_GET['id']; ?>" name="property_type_id">
 				<div class="form-group">
 					<div class=" col-md-12">Choose description</div>
 					
@@ -36,7 +36,7 @@ $propertytypes = new PropertyTypes();
 								}
 								?>
 								<div class="col-md-4">
-								 <label class="checkbox"><input value="<?php echo $single['id']; ?>" type="checkbox" name="crop_description_id[]"><span><?php echo $single['title']; ?></span></label>
+								 <label class="checkbox"><input value="<?php echo $single['id']; ?>" type="checkbox" name="property_description_id[]"><span><?php echo $single['title']; ?></span></label>
 								 </div>
 							<?php
 							}
@@ -63,12 +63,12 @@ $(document).ready(function(){
 			type: 'POST',
 			data: frmdata,
 			success: function (response) {
+				//alert(response);
 				if(response.trim() == "success"){
-					showStatusMessage("Descriptions successfully saved, Please re-open the crop/tree type to see your selections" ,"success");
-					setTimeout(function(){ window.location = "settings.php#tab-3"; }, 3000);
-					 $('#croptypes_desc').modal('toggle');
+					showStatusMessage("Property type descriptions successfully saved, Please re-open the crop/tree type to see your selections" ,"success");
+					setTimeout(function(){ window.location = "settings.php#tab-8"; }, 3000);
 				}else{
-					showStatusMessage("Your description could not be saved, Please refresh the page anad try again or contact administrator for assistance." ,"fail");
+					showStatusMessage("Your property type description could not be saved, Please refresh the page anad try again or contact administrator for assistance." ,"fail");
 				}
 				
 			}

@@ -28,6 +28,14 @@ if(isset($_POST['tbl'])){
 			$propertydescription = new PropertyDescription();
 			$output['data'] = $propertydescription->findAll();
 		break;
+		case "districtcroprate":
+			$districtcroprate = new DistrictCropRate();
+			$output['data'] = $districtcroprate->findDistrictCropRates();
+		break;
+		case "districtpropertyrate":
+			$districtpropertyrate = new DistrictPropertyRate();
+			$output['data'] = $districtpropertyrate->findDistrictPropertyRates();
+		break;
 		case "expense_type":
 			$expense_type = new ExpenseTypes();
 			$output['data'] = $expense_type->findAll();

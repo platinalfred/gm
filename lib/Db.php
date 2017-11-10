@@ -674,6 +674,7 @@ class Db{
 		/* if($limit == 3){
 			echo $sel;
 		} */
+		//echo $sel;
 		$q = $this->conn->query($sel);
 		if($q){
 			$res = $this->buildOut($q);

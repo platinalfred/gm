@@ -2,7 +2,7 @@
 $curdir = dirname(__FILE__);
 require_once($curdir.'/Db.php');
 class TreeCropTypes extends Db {
-	protected static $table_name  = "tbl_tree_or_cropt_types";
+	protected static $table_name  = "tbl_tree_or_crop_types";
 	protected static $db_fields = array("id", "title",  "description");
 	
 	public function findById($id){

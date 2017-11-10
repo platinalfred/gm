@@ -11,6 +11,10 @@ require_once("CropDescription.php");
 require_once("TreeCropTypesDescription.php");
 require_once("PropertyDescription.php");
 require_once("PropertyTypes.php");
+require_once("Districts.php");
+require_once("PropertyTypeDescription.php");
+require_once("DistrictCropRate.php");
+require_once("DistrictPropertyRate.php");
 /*
 require_once("AccountType.php");
 require_once("Deposits.php");
