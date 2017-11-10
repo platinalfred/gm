@@ -254,7 +254,7 @@ $(document).ready(function(){
 				  className: "btn-sm btn-white"
 				},
 			  ],
-			  responsive: true,
+			  responsive: false,
 			});
 			//$("#datatable-buttons").DataTable();
 		  }
@@ -631,7 +631,6 @@ $(document).ready(function(){
 								.draw();
 						} );
 					column.data().unique().sort().each( function ( d, j ) {
-						console.log(d);
 						select.append( '<option value="'+d+'">'+d+'</option>' )
 					} );
 				} );
@@ -714,7 +713,7 @@ $(document).ready(function(){
 								.draw();
 						} );
 					column.data().unique().sort().each( function ( d, j ) {
-						console.log(d);
+						
 						select.append( '<option value="'+d+'">'+d+'</option>' )
 					} );
 				} );

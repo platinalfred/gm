@@ -37,6 +37,7 @@ include("lib/Libraries.php");
     <link href="stylesheets/color/orange.css" media="all" rel="alternate stylesheet" title="orange-theme" type="text/css" />
     <link href="stylesheets/color/magenta.css" media="all" rel="alternate stylesheet" title="magenta-theme" type="text/css" />
     <link href="stylesheets/color/gray.css" media="all" rel="alternate stylesheet" title="gray-theme" type="text/css" />
+    <link href="css/general.css" media="all" rel="alternate stylesheet" title="gray-theme" type="text/css" />
 	
 	<link href="js/plugins/pnotify/dist/pnotify.css" rel="stylesheet">
 	<link href="js/plugins/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
