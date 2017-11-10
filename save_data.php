@@ -41,7 +41,6 @@ if(isset($_POST['tbl'])){
 			}
 			
 		break;
-<<<<<<< HEAD
 		case "tblLandProject":
 			$land_project = new LandAcquisition();
 			if($data['id'] != ""){
@@ -57,7 +56,6 @@ if(isset($_POST['tbl'])){
 					$output = "success";
 				}else{ 
 					$output = "Project details could not be added. Please try again or contact admin for assistance!";
-=======
 		case "district_rate":
 			$districtcroprate = new DistrictCropRate();
 			if($data['id'] != ""){
@@ -90,7 +88,6 @@ if(isset($_POST['tbl'])){
 					$output = "success";
 				}else{ 
 					$output = "Property rate could not be added. Please try again or contact admin for assistance!";
->>>>>>> 2995377d9f4f1a2381bef7f3aa1004a292fa2888
 				}
 			}
 			
