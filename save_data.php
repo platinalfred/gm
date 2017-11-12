@@ -56,6 +56,8 @@ if(isset($_POST['tbl'])){
 					$output = "success";
 				}else{ 
 					$output = "Project details could not be added. Please try again or contact admin for assistance!";
+				}
+			}
 		case "district_rate":
 			$districtcroprate = new DistrictCropRate();
 			if($data['id'] != ""){
