@@ -10,8 +10,8 @@ class ProjectAffectedPerson extends Db {
 		return !empty($result) ? $result:false;
 	}
 	public function findAll($where = 1){
-		$improvements = "(SELECT `pap_id`, COUNT(`id`) `improvement_cnt`,SUM(`amount`) `improvement_sum` FROM `tbl_pap_improvement` GROUP BY `pap_id`) `improvements`";
-		$crop_trees = "(SELECT `pap_id`, COUNT(`id`) `crop_tree_cnt`,SUM(`amount`) `crop_tree_sum` FROM `tbl_pap_crop_tree` GROUP BY `pap_id`) `crop_trees`";
+		$improvements = "(SELECT `pap_id`, COUNT(`id`) `improvement_cnt`,SUM(`rate`*`quantity`) `improvement_sum` FROM `tbl_pap_improvement` GROUP BY `pap_id`) `improvements`";
+		$crop_trees = "(SELECT `pap_id`, COUNT(`id`) `crop_tree_cnt`,SUM(`rate`*`quantity`) `crop_tree_sum` FROM `tbl_pap_crop_tree` GROUP BY `pap_id`) `crop_trees`";
 		$tables = "tbl_paps LEFT JOIN $improvements ON `id` = `improvements`.`pap_id` LEFT JOIN $crop_trees ON `id` = `crop_trees`.`pap_id`";
 		
 		$fields = "id, project_id, pap_ref, firstname, othername, lastname, phone_contact, district_id, subcounty_id, parish_id, village, way_leave, rightofway, total_take, chainage, crop_tree_cnt, crop_tree_sum, improvement_cnt, improvement_sum";
