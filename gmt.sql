@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2017 at 02:13 PM
+-- Generation Time: Nov 12, 2017 at 11:32 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.5.35
 
@@ -171,15 +171,26 @@ CREATE TABLE `land_access_paps` (
 
 CREATE TABLE `land_access_project` (
   `id` int(11) NOT NULL,
-  `title` varchar(300) NOT NULL,
-  `project_category` int(11) NOT NULL,
+  `project_title` varchar(300) NOT NULL,
+  `project_category` int(11) DEFAULT NULL,
   `project_category_unit` int(11) NOT NULL,
   `project_reference` varchar(100) NOT NULL,
-  `client_name` varchar(300) NOT NULL,
-  `date_added` date NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `created_by` int(11) NOT NULL,
   `date_modified` datetime NOT NULL,
-  `modified_by` int(11) NOT NULL
+  `modified_by` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `land_access_project`
+--
+
+INSERT INTO `land_access_project` (`id`, `project_title`, `project_category`, `project_category_unit`, `project_reference`, `client_id`, `date_added`, `created_by`, `date_modified`, `modified_by`, `active`) VALUES
+(1, 'Rehabilitation of Rwizi settlers', NULL, 4, 'REF837N', 4, '2017-11-10 12:18:59', 0, '0000-00-00 00:00:00', 1, 1),
+(2, 'Land title', NULL, 4, 'GREA2016', 4, '2017-11-10 12:20:59', 0, '0000-00-00 00:00:00', 1, 1),
+(3, 'Standard Gauge Railway for Ntungamo', NULL, 1, 'NME2311', 3, '2017-11-10 12:34:52', 0, '0000-00-00 00:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -302,7 +313,6 @@ INSERT INTO `position` (`id`, `name`, `access_level`, `description`, `active`) V
 
 CREATE TABLE `staff` (
   `id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL,
   `branch_id` int(11) NOT NULL,
   `position_id` int(11) NOT NULL,
   `username` varchar(120) NOT NULL,
@@ -314,6 +324,37 @@ CREATE TABLE `staff` (
   `date_added` date NOT NULL,
   `added_by` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_client`
+--
+
+CREATE TABLE `tbl_client` (
+  `id` int(11) NOT NULL,
+  `client_names` varchar(150) NOT NULL,
+  `physical_address` varchar(150) NOT NULL,
+  `postal_address` varchar(100) NOT NULL,
+  `phone_contact1` varchar(15) NOT NULL,
+  `phone_contact2` varchar(15) NOT NULL,
+  `email_contact1` varchar(60) NOT NULL,
+  `email_contact2` varchar(60) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `date_created` int(11) NOT NULL,
+  `modified_by` int(11) NOT NULL,
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Records of all the clients worked with';
+
+--
+-- Dumping data for table `tbl_client`
+--
+
+INSERT INTO `tbl_client` (`id`, `client_names`, `physical_address`, `postal_address`, `phone_contact1`, `phone_contact2`, `email_contact1`, `email_contact2`, `created_by`, `date_created`, `modified_by`, `date_modified`) VALUES
+(1, 'Uganda Electricity Transmission Company', 'Nakasero Road Road, Kampala', '10347, Kampala', '0414989029', '0414083093', 'procurement@uetcl.go.ug', 'contact@uetcl.go.ug', 0, 1510235600, 1, '2017-11-10 10:51:14'),
+(2, 'Uganda National Roads Authority', 'Mackinnon Road, Kampala', '45989, Kampala', '0312837837', '', 'info@unra.go.ug', '', 0, 1510236100, 1, '2017-11-10 10:48:47'),
+(3, 'Uganda Railways Corporation', 'Nasser Road, Kampala', '938939, Kampala', '0438939030', '', 'info@urc.go.ug', '', 0, 1510236271, 1, '2017-11-09 11:04:31'),
+(4, 'Electricity Regulatory Authority', 'Electricity Towers, Nakasero, Kampala', '98083, Kampala', '0414319082', '', 'info@era.go.ug', 'contact@era.go.ug', 0, 1510236852, 1, '2017-11-09 11:14:12');
 
 -- --------------------------------------------------------
 
@@ -346,6 +387,176 @@ INSERT INTO `tbl_crop_description` (`id`, `tree_type_id`, `title`, `description`
 (10, 0, 'Young', '', 1),
 (11, 0, 'Timber', '', 1),
 (12, 0, 'Telephone', '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_district`
+--
+
+CREATE TABLE `tbl_district` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `district_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Districts in Uganda';
+
+--
+-- Dumping data for table `tbl_district`
+--
+
+INSERT INTO `tbl_district` (`id`, `district_name`) VALUES
+(1, 'ABIM'),
+(2, 'ADJUMANI'),
+(3, 'AGAGO'),
+(4, 'ALEBTONG'),
+(5, 'AMOLATAR'),
+(6, 'AMUDAT'),
+(7, 'AMURIA'),
+(8, 'AMURU'),
+(9, 'APAC'),
+(10, 'ARUA'),
+(11, 'BUDAKA'),
+(12, 'BUDUDA'),
+(13, 'BUGIRI'),
+(14, 'BUHWEJU'),
+(15, 'BUIKWE'),
+(16, 'BUKEDEA'),
+(17, 'BUKOMANSIMBI'),
+(18, 'BUKWO'),
+(19, 'BULAMBULI'),
+(20, 'BULIISA'),
+(21, 'BUNDIBUGYO'),
+(22, 'BUSHENYI'),
+(23, 'BUSIA'),
+(24, 'BUTALEJA'),
+(25, 'BUTAMBALA'),
+(26, 'BUVUMA'),
+(27, 'BUYENDE'),
+(28, 'DOKOLO'),
+(29, 'GOMBA'),
+(30, 'GULU'),
+(31, 'HOIMA'),
+(32, 'IBANDA'),
+(33, 'IGANGA'),
+(34, 'ISINGIRO'),
+(35, 'JINJA'),
+(36, 'KAABONG'),
+(37, 'KABALE'),
+(38, 'KABAROLE'),
+(39, 'KABERAMAIDO'),
+(40, 'KALANGALA'),
+(41, 'KALIRO'),
+(42, 'KALUNGU'),
+(43, 'KAMPALA'),
+(44, 'KAMULI'),
+(45, 'KAMWENGE'),
+(46, 'KANUNGU'),
+(47, 'KAPCHORWA'),
+(48, 'KASESE'),
+(49, 'KATAKWI'),
+(50, 'KAYUNGA'),
+(51, 'KIBAALE'),
+(52, 'KIBOGA'),
+(53, 'KIBUKU'),
+(54, 'KIRUHURA'),
+(55, 'KIRYANDONGO'),
+(56, 'KISORO'),
+(57, 'KITGUM'),
+(58, 'KOBOKO'),
+(59, 'KOLE'),
+(60, 'KOTIDO'),
+(61, 'KUMI'),
+(62, 'KWEEN'),
+(63, 'KYANKWANZI'),
+(64, 'KYEGEGWA'),
+(65, 'KYENJOJO'),
+(66, 'LAMWO'),
+(67, 'LIRA'),
+(68, 'LUUKA'),
+(69, 'LUWEERO'),
+(70, 'LWENGO'),
+(71, 'LYANTONDE'),
+(72, 'MANAFWA'),
+(73, 'MARACHA'),
+(74, 'MASAKA'),
+(75, 'MASINDI'),
+(76, 'MAYUGE'),
+(77, 'MBALE'),
+(78, 'MBARARA'),
+(79, 'MITOOMA'),
+(80, 'MITYANA'),
+(81, 'MOROTO'),
+(82, 'MOYO'),
+(83, 'MPIGI'),
+(84, 'MUBENDE'),
+(85, 'MUKONO'),
+(86, 'NAKAPIRIPIRIT'),
+(87, 'NAKASEKE'),
+(88, 'NAKASONGOLA'),
+(89, 'NAMAYINGO'),
+(90, 'NAMUTUMBA'),
+(91, 'NAPAK'),
+(92, 'NEBBI'),
+(93, 'NGORA'),
+(94, 'NTOROKO'),
+(95, 'NTUNGAMO'),
+(96, 'NWOYA'),
+(97, 'OTUKE'),
+(98, 'OYAM'),
+(99, 'PADER'),
+(100, 'PALLISA'),
+(101, 'RAKAI'),
+(102, 'RUBIRIZI'),
+(103, 'RUKUNGIRI'),
+(104, 'SERERE'),
+(105, 'SHEEMA'),
+(106, 'SIRONKO'),
+(107, 'SOROTI'),
+(108, 'SSEMBABULE'),
+(109, 'TORORO'),
+(110, 'WAKISO'),
+(111, 'YUMBE'),
+(112, 'ZOMBO');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_district_croptree_rate`
+--
+
+CREATE TABLE `tbl_district_croptree_rate` (
+  `id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `croptree_id` int(11) NOT NULL,
+  `rate` double(12,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_district_croptree_rate`
+--
+
+INSERT INTO `tbl_district_croptree_rate` (`id`, `district_id`, `croptree_id`, `rate`) VALUES
+(1, 1, 1, 20000.00),
+(2, 1, 2, 4000.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_district_property_rate`
+--
+
+CREATE TABLE `tbl_district_property_rate` (
+  `id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `propertytypedescription_id` int(11) NOT NULL,
+  `rate` double(12,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_district_property_rate`
+--
+
+INSERT INTO `tbl_district_property_rate` (`id`, `district_id`, `propertytypedescription_id`, `rate`) VALUES
+(2, 1, 2, 20000.00);
 
 -- --------------------------------------------------------
 
@@ -406,32 +617,40 @@ INSERT INTO `tbl_property_type` (`id`, `title`, `description`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_property__types_description`
+-- Table structure for table `tbl_property_types_description`
 --
 
-CREATE TABLE `tbl_property__types_description` (
+CREATE TABLE `tbl_property_types_description` (
   `id` int(11) NOT NULL,
   `property_type_id` int(11) NOT NULL,
   `property_description_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tbl_property_types_description`
+--
+
+INSERT INTO `tbl_property_types_description` (`id`, `property_type_id`, `property_description_id`) VALUES
+(1, 1, 2),
+(2, 1, 3);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_tree_or_cropt_types`
+-- Table structure for table `tbl_tree_or_crop_types`
 --
 
-CREATE TABLE `tbl_tree_or_cropt_types` (
+CREATE TABLE `tbl_tree_or_crop_types` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tbl_tree_or_cropt_types`
+-- Dumping data for table `tbl_tree_or_crop_types`
 --
 
-INSERT INTO `tbl_tree_or_cropt_types` (`id`, `title`, `description`) VALUES
+INSERT INTO `tbl_tree_or_crop_types` (`id`, `title`, `description`) VALUES
 (2, 'Eucalyptus', 'Eucalyptus tree'),
 (3, 'Mutuba', 'Mutuba'),
 (4, 'Bush Tree', 'Bush Tree'),
@@ -481,6 +700,17 @@ CREATE TABLE `tree_crop_types_description` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `tree_crop_types_description`
+--
+
+INSERT INTO `tree_crop_types_description` (`id`, `tree_crop_id`, `crop_description_id`) VALUES
+(1, 8, 1),
+(2, 4, 1),
+(3, 4, 7),
+(4, 4, 9),
+(5, 4, 10);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -526,7 +756,10 @@ ALTER TABLE `land_access_paps`
 -- Indexes for table `land_access_project`
 --
 ALTER TABLE `land_access_project`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `client_id` (`client_id`),
+  ADD KEY `project_category_unit` (`project_category_unit`),
+  ADD KEY `created_by` (`created_by`);
 
 --
 -- Indexes for table `land_access_project_category`
@@ -551,15 +784,38 @@ ALTER TABLE `position`
 --
 ALTER TABLE `staff`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `person_id` (`person_id`),
-  ADD KEY `branch_id` (`branch_id`),
-  ADD KEY `person_id_2` (`person_id`),
-  ADD KEY `person_id_3` (`person_id`);
+  ADD KEY `branch_id` (`branch_id`);
+
+--
+-- Indexes for table `tbl_client`
+--
+ALTER TABLE `tbl_client`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_created_by` (`created_by`),
+  ADD KEY `fk_modified_by` (`modified_by`);
 
 --
 -- Indexes for table `tbl_crop_description`
 --
 ALTER TABLE `tbl_crop_description`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_district`
+--
+ALTER TABLE `tbl_district`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_district_croptree_rate`
+--
+ALTER TABLE `tbl_district_croptree_rate`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_district_property_rate`
+--
+ALTER TABLE `tbl_district_property_rate`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -575,15 +831,15 @@ ALTER TABLE `tbl_property_type`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_property__types_description`
+-- Indexes for table `tbl_property_types_description`
 --
-ALTER TABLE `tbl_property__types_description`
+ALTER TABLE `tbl_property_types_description`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_tree_or_cropt_types`
+-- Indexes for table `tbl_tree_or_crop_types`
 --
-ALTER TABLE `tbl_tree_or_cropt_types`
+ALTER TABLE `tbl_tree_or_crop_types`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -633,10 +889,15 @@ ALTER TABLE `land_access_improvement`
 ALTER TABLE `land_access_paps`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `land_access_project`
+--
+ALTER TABLE `land_access_project`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `land_access_project_category`
 --
 ALTER TABLE `land_access_project_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `land_access_project_category_unit`
 --
@@ -648,10 +909,30 @@ ALTER TABLE `land_access_project_category_unit`
 ALTER TABLE `position`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `tbl_client`
+--
+ALTER TABLE `tbl_client`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `tbl_crop_description`
 --
 ALTER TABLE `tbl_crop_description`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `tbl_district`
+--
+ALTER TABLE `tbl_district`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+--
+-- AUTO_INCREMENT for table `tbl_district_croptree_rate`
+--
+ALTER TABLE `tbl_district_croptree_rate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tbl_district_property_rate`
+--
+ALTER TABLE `tbl_district_property_rate`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tbl_property_description`
 --
@@ -663,15 +944,15 @@ ALTER TABLE `tbl_property_description`
 ALTER TABLE `tbl_property_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT for table `tbl_property__types_description`
+-- AUTO_INCREMENT for table `tbl_property_types_description`
 --
-ALTER TABLE `tbl_property__types_description`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tbl_property_types_description`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `tbl_tree_or_cropt_types`
+-- AUTO_INCREMENT for table `tbl_tree_or_crop_types`
 --
-ALTER TABLE `tbl_tree_or_cropt_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+ALTER TABLE `tbl_tree_or_crop_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tenure`
 --
@@ -681,7 +962,7 @@ ALTER TABLE `tenure`
 -- AUTO_INCREMENT for table `tree_crop_types_description`
 --
 ALTER TABLE `tree_crop_types_description`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
