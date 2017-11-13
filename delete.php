@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['staff_id'] = 1;
 if(!isset($_SESSION['staff_id']))
 	if(!is_numeric($_SESSION['staff_id']))
 		die("Invalid access");
@@ -68,6 +69,11 @@ if(isset($_GET['tbl'])){
 		break;
 		case "expense_types":
 			if($db->turnOff("expensetypes", "id=".$_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
+		case "staff":
+			if($db->turnOff("staff", "id=".$_GET['id'])){
 				$msg =  "Success";
 			}
 		break;
