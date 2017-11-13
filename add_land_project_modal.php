@@ -48,7 +48,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">Client Name</label>
                         <div class="col-md-7">
-							<select name="client_id" class="form-control" data-placeholder="Select client..." class="form-control chosen-select" data-bind='options: clients, optionsText: "client_names", optionsCaption: "Select customer...", optionsAfterRender: $root.setOptionValue("id")' data-msg-required="Client name is required" required></select>
+							<select name="client_id" class="form-control" data-placeholder="Select client..." class="form-control chosen-select" data-bind='options: clients, optionsText: "client_names", optionsCaption: "Select client...", optionsAfterRender: $root.setOptionValue("id")' required></select>
                         </div>
 						<!--, value: $root.client-->
                     </div>

@@ -1,0 +1,43 @@
+<?php
+$curdir = dirname(__FILE__);
+require_once($curdir.'/Db.php');
+class PAP_CropTree extends Db {
+	protected static $table_name  = "tbl_pap_crop_tree";
+	protected static $db_fields = array("id","pap_id", "crop_description_rate_id", "rate", "quantity","date_created", "created_by","modified_by");
+	
+	public function findById($id){
+		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
+		return !empty($result) ? $result:false;
+	}
+	public function findAll($where = 1){
+		$result_array = $this->getarray(self::$table_name, $where, "", "");
+		return !empty($result_array) ? $result_array : false;
+	}
+	public function findPapCropTrees($where = 1){
+		$fields = "`tbl_pap_improvement`.`id`, `pap_id`, `quantity`, `rate`, `old_rate`, `district_property_rate_id`, propertytype, propertydescription";
+		$table_name = self::$table_name . " JOIN (SELECT `dr`.`id`, dr.rate, `old_rate`, d.district_name, tct.`title` as croptype, cd.`title` as cropdescription FROM tbl_district_croptree_rate dr JOIN tree_crop_types_description ctd ON dr.croptree_id = ctd.id JOIN tbl_crop_description cd ON ctd.crop_description_id = cd.id JOIN tbl_tree_or_crop_types tct ON ctd.tree_crop_id = tct.id JOIN tbl_district d ON  dr.district_id = d.id) `tbl_dr` ON `crop_description_rate_id` = `tbl_dr`.`id`";
+		$result_array = $this->getfarray($table_name, $fields, $where, "", "");
+		return !empty($result_array) ? $result_array : false;
+	}
+	public function addPapCropTrees($data){
+		$fields =array_slice(self::$db_fields, 1);
+		if($this->addMultiple(self::$table_name, $fields, $data)){
+			return true;
+		}
+		return false;
+	}
+	public function updatePapCropTrees($data){
+		$fields = array_slice(self::$db_fields, 1);
+		if($this->updateMultiple(self::$table_name, $data, "id")){
+			return true;
+		}
+		return false;
+	}
+	public function deletePap($id){
+		if($this->del(self::$table_name, "id=".$id)){
+			return true;
+		}
+		return false;
+	}
+}
+?>

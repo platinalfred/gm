@@ -73,7 +73,7 @@ include("includes/header.php");
 												<h4 class="modal-title">Clients</h4>
 											</div>
 											<div class="modal-body">
-												<?php include("add_client.php"); ?>
+												<?php include("add_client_modal.php"); ?>
 											</div>
 										</div>
 									</div>

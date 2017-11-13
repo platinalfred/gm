@@ -6,7 +6,7 @@ class LandAcquisition extends Db {
 	protected static $db_fields = array("id","client_id", "project_title", "project_category_unit", "project_reference", "date_added", "modified_by", "active");
 	
 	public function findById($id){
-		$result = $this->getrec(self::$table_name, "id=".$id, "");
+		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
 		return !empty($result) ? $result:false;
 	}
 	public function findAllAccess(){
@@ -35,10 +35,7 @@ class LandAcquisition extends Db {
 		$data['active'] = 1;
 		$data['date_added'] = date("Y-m-d h:i:s");
 		$data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
-		if($this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data))){
-			return true;
-		}
-		return false;
+		return $this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data));
 	}
 	public function updateProject($data){
 		$fields = array_slice(self::$db_fields, 1);

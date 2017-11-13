@@ -1,8 +1,27 @@
 <script>
 //the view model for the page
+var DummyObject = function(){
+	var self = this;
+}
 var ViewModel = function() {
 		var self = this;
-		self.clients = ko.observableArray();
+		self.project_districts = ko.observableArray(); //list of districts covered by this project
+		self.available_districts = ko.observableArray(); //list of districts available to be added to this project
+		self.district_property_rates = ko.observableArray(); //list of district property rates
+		self.district_crop_rates = ko.observableArray(); //list of district crop rates
+		
+		self.selectedDistricts = ko.observableArray([new DummyObject()]);
+		self.selectedImprovements = ko.observableArray([new DummyObject()]);
+		self.serverDataImprovements = ko.observableArray(); //data returned from the serve upon clicking the edit button
+		self.selectedPlants = ko.observableArray([new DummyObject()]);
+		self.serverDataPlants = ko.observableArray(); //data returned from the serve upon clicking the edit button
+		//operations
+		self.addDistrict = function(){self.selectedDistricts.push(new DummyObject());};
+		self.removeSelectedDistrict = function(selectedDistrict){self.selectedDistricts.remove(selectedDistrict);};
+		self.addImprovement = function(){self.selectedImprovements.push(new DummyObject());};
+		self.removeSelectedImprovement = function(selectedImprovement){self.selectedImprovements.remove(selectedImprovement);};
+		self.addPlant = function(){self.selectedPlants.push(new DummyObject());};
+		self.removeSelectedPlant = function(selectedPlant){self.selectedPlants.remove(selectedPlant);};
 		//set options value after populating the select list
 		self.setOptionValue = function(propId) {
 			return function (option, item) {
@@ -18,10 +37,30 @@ var ViewModel = function() {
 			$.ajax({
 				type: "post",
 				dataType: "json",
-				data:{tbl:"project_setup"},
+				data:{tbl:"project_details", project_id:<?php echo $_GET['id']; ?>},
 				url: "getData.php",
 				success: function(response){
-					self.clients(response.clients);
+					self.available_districts(response.available_districts);
+					self.district_property_rates(response.district_property_rates);
+					self.district_crop_rates(response.district_crop_rates);
+					viewModel.available_districts.valueHasMutated();
+				}
+			})
+		};
+		//Retrieve pap details from the server
+		self.getPapDetails = function(pap_id) {
+			$.ajax({
+				type: "post",
+				dataType: "json",
+				data:{tbl:"pap_details", pap_id:pap_id},
+				url: "getData.php",
+				success: function(response){
+					if(reponse.success){
+						self.serverDataImprovements(response.pap_improvements);
+						self.serverDataCropTrees(response.pap_crop_trees);
+						viewModel.serverDataImprovements.valueHasMutated();
+						viewModel.serverCropTrees.valueHasMutated();
+					}
 				}
 			})
 		};	
@@ -68,8 +107,8 @@ $(document).ready(function(){
 
 	var handleDataTableButtons = function() {
 		/* -- Land Acquisition category Data Table --- */
-		if ($("#tblLandProject").length) {
-			  dTable['tblLandProject'] = $('#tblLandProject').DataTable({
+		if ($("#tblPap").length) {
+			  dTable['tblPap'] = $('#tblPap').DataTable({
 			  dom: "lfrtipB",
 			  "processing": true,
 			  "ajax": {
@@ -77,8 +116,8 @@ $(document).ready(function(){
 				  "dataType": "JSON",
 				  "type": "POST",
 				  "data":  function(d){
-					 
-						d.tbl = 'land_access_project';
+						d.tbl = 'paps';
+						d.project_id = <?php echo $_GET['id']; ?>;
 					}
 			  },"columnDefs": [ {
 				  "targets": [2],
@@ -86,11 +125,19 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
-			  columns:[ { data: 'project_title', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" href="project_details.php?id='+full.id+'">' + data + '</a>';} },
-				  { data: 'client_names' },
-					{ data: 'project_reference'},
-					{ data: 'project_category'},
-					{ data: 'date_added'},
+			  columns:[ { data: 'pap_ref' },
+				  { data: 'firstname' },
+					{ data: 'district_name'},
+					{ data: 'county_name'},
+					{ data: 'subcounty_name'},
+					{ data: 'parish_name'},
+					{ data: 'village'},
+					{ data: 'phone_contact'},
+					{ data: 'way_leave'},
+					{ data: 'rightofway'},
+					{ data: 'totaltake'},
+					{ data: 'chainage'},
+					{ data: 'chainage'},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#projectModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-land_acquistion_category-landAcquisition" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
 					
 					] ,
@@ -122,8 +169,8 @@ $(document).ready(function(){
 		}
 	  /*-- End Land Acquisition category--*/
 	  /* -- Clients Data Table --- */
-	  if ($("#tblClient").length) {
-			  dTable['tblClient'] = $('#tblClient').DataTable({
+	  if ($("#tblProjectCoverage").length) {
+			  dTable['tblProjectCoverage'] = $('#tblProjectCoverage').DataTable({
 			  dom: "lfrtipB",
 			  "processing": true,
 			  "ajax": {
@@ -132,12 +179,13 @@ $(document).ready(function(){
 				  "type": "POST",
 				  "data":  function(d){
 					 
-						d.tbl = 'gmt_clients';
+						d.project_id = <?php echo $_GET['id']; ?>;
+						d.tbl = 'project_coverage';
 					}
 			  },
 			  "initComplete": function(settings,json){
-					viewModel.clients(json.data);
-					viewModel.clients.valueHasMutated();
+					viewModel.project_districts(json.data);
+					viewModel.project_districts.valueHasMutated();
 			  },
 			  "columnDefs": [ {
 				  "targets": [2],
@@ -145,13 +193,8 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
-			  columns:[ { data: 'client_names'},
-					{ data: 'postal_address'},
-					{ data: 'phone_contact1'},
-					{ data: 'phone_contact2'},
-					{ data: 'email_contact1'},
-					{ data: 'email_contact2'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#clientModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span class= "btn-danger btn-sm delete_me" id="'+data+'&amp;tbl=tbl_client"><i class="fa fa-trash-o"></i></span>';}}
+			  columns:[ { data: 'district_name' },
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal"  data-toggle="modal" href="#projectCoverageModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span class= "btn-danger btn-sm delete_me" id="'+data+'&amp;tbl=tbl_client"><i class="fa fa-trash-o"></i></span>';}}
 					
 					] ,
 			  buttons: [
@@ -193,8 +236,8 @@ $(document).ready(function(){
 	
 	TableManageButtons.init();
 });
-//viewModel.getServerData();// get data to be populated on the page
-ko.applyBindings(viewModel, $("#loan_account_details")[0]);
+viewModel.getServerData();// get data to be populated on the page
+ko.applyBindings(viewModel);// , $("#loan_account_details")[0]
 
 //Functions being used in more than one instances / places
 //With this one function all settings will be sent to save_data.php for saving
@@ -220,13 +263,13 @@ function saveData(form,event){
 						if(id_input == ""){
 							frm.reset();
 						}
-						if(frmId == 'tblClient'){
-							location.reload(true);
-							//viewModel.getServerData();
+						if(frmId == 'tblProjectCoverage'){
+							//location.reload(true);
+							viewModel.getServerData();
 						}
-						if(frmId == 'tblLandProject'){
-							location.replace('project_details.php?id='+response.project_id);
-							//dTable[frmId].ajax.reload();
+						else{
+						//if(frmId == 'tblPap'){
+							dTable[frmId].ajax.reload();
 						}
 					}, 2000);
 				}else{
@@ -241,7 +284,7 @@ function saveData(form,event){
 	//});
 }
 //clicking the update icon
-$('table tbody').on( 'click', '.edit_me', function () {
+$('table#tblPap tbody').on( 'click', '.edit_me', function () {
 	var row = $(this).closest("tr");
 	var tbl = $(row).parent().parent();
 	var dt = dTable[$(tbl).attr("id")];
@@ -250,7 +293,8 @@ $('table tbody').on( 'click', '.edit_me', function () {
 		data = dt.row($(row).prev()).data();
 	}
     // Display the update form
-	edit_data(data, $(tbl).attr("id") + 'Form'); /* */
+	viewModel.getPapDetails(data.id);
+	edit_data(data, 'tblPapForm'); /* */
 } );
 
 /* Delete whenever a Delete Button has been clicked */
@@ -275,6 +319,6 @@ $('table tbody').on('click', '.delete_me', function () {
 	}
 });
 
-$("#tblClientForm").validate({submitHandler: saveData});
-$("#tblLandProjectForm").validate({submitHandler: saveData});
+$("#projectCoverageForm").validate({submitHandler: saveData});
+$("#tblPapForm").validate({submitHandler: saveData});
 </script>

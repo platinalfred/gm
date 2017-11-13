@@ -8,20 +8,22 @@ if(isset($_POST['tbl'])){
 	switch($data['tbl']){
 		case "tblClient":
 			$client_obj = new Client();
+			$response = array();
 			if($data['id'] != ""){
 				if($client_obj->updateClient($data)){
-					$output = "success";
+					$response['success'] = true;
 				}else{ 
-					$output = "Client data could not be updated. Please try again or contact admin for assistance!";
+					$response['false'] = true;
+					$response['message'] =  "Client data could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
 				if($client_obj->addClient($data)){
-					$output = "success";
+					$response['false'] = true;
 				}else{ 
-					$output = "Client data could not be added. Please try again or contact admin for assistance!";
+					$response['message'] = "Client data could not be added. Please try again or contact admin for assistance!";
 				}
 			}
-			
+			$output = json_encode($response);
 		break;
 		case "land_acquisition":
 			$lan_acquisition_category = new landAcquisitionCategory();
@@ -43,19 +45,134 @@ if(isset($_POST['tbl'])){
 		break;
 		case "tblLandProject":
 			$land_project = new LandAcquisition();
+			$response = "";
 			if($data['id'] != ""){
 				unset($data['tbl']);
 				if($land_project->updateProject($data)){
-					$output = "success";
+					$response['success'] = true;
 				}else{ 
-					$output = "Project details could not be updated. Please try again or contact admin for assistance!";
+					$response['success'] = false;
+					$response['message'] = "Project details could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				/* $output = $land_project->addProject($data); */
-				if($land_project->addProject($data)){
-					$output = "success";
+				$response['project_id'] = $land_project->addProject($data);
+				if(is_numeric($response['project_id'])){
+					$response['success'] = true;
 				}else{ 
-					$output = "Project details could not be added. Please try again or contact admin for assistance!";
+					$response['success'] = false;
+					$response['message'] = "Project details could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			$output = json_encode($response);
+		break;
+		case "tblProjectCoverage":
+			$land_project = new LandAcquisition();
+			$response = array();
+			foreach($data['district_id'] as $district_id){
+				if(is_numeric($district_id)){
+					$project_coverage_data['district_id'] = $district_id;
+					$project_coverage_data['project_id'] = $data['project_id'];
+					$response['project_coverage_ids'][] = $coverage_id = $land_project->addProjectCoverage($project_coverage_data);
+					if($coverage_id){
+						$response['success'] = true;
+					}else{ 
+						$response['success'] = false;
+						$response['message'] = "Project details could not be added. Please try again or contact admin for assistance!";
+					}
+				}
+			}
+			$output = json_encode($response);
+		break;
+		case "tblPap": //Project affected persons details capture
+			$pap_obj = new ProjectAffectedPerson();
+			$pap_crop_tree_obj = new PAP_CropTree();
+			$pap_improvement_obj = new PAP_Improvement();
+			
+			//lerts extract out the plants and the improvements from the array
+			$improvements = $data['improvement'];
+			$plants = $data['plant'];
+			unset($data['tbl'], $data['plant'], $data['improvement']);
+			
+			$response = array();
+			$response['success'] = false;
+			$response['message'] = "PAP details could not be saved. Please try again or contact admin for assistance!";
+			if($data['id'] != ""){
+				if($pap_obj->updatePap($data)){
+					$add_multiple_data = $update_multiple_data = array();
+					foreach($plants as $key=>$plant){ //we first deal with the plants
+						if(isset($plant['id'])&&is_numeric($plant['id'])){
+							$update_multiple_data[$key]['id'] = $plant['id'];
+							$update_multiple_data[$key]['pap_id'] = $plant['pap_id'];
+							$update_multiple_data[$key]['crop_description_rate_id'] = $plant['crop_description_rate_id'];
+							$update_multiple_data[$key]['rate'] = $plant['rate'];
+							$update_multiple_data[$key]['quantity'] = $plant['quantity'];
+							$update_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+						}
+						else{
+							$add_multiple_data[$key]['pap_id'] = $plant['pap_id'];
+							$add_multiple_data[$key]['crop_description_rate_id'] = $plant['crop_description_rate_id'];
+							$add_multiple_data[$key]['rate'] = $plant['rate'];
+							$add_multiple_data[$key]['quantity'] = $plant['quantity'];
+							$add_multiple_data[$key]['date_created'] = time();
+							$add_multiple_data[$key]['created_by'] = $add_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+						}
+					}
+					if($pap_crop_tree_obj->addPapCropTrees($add_multiple_data) && $pap_crop_tree_obj->updatePapCropTree($add_multiple_data)){
+						$response['success'] = true;
+						$response['message'] = "PAP details successfully updated!";
+					}
+					//then the properties/improvements
+					unset($add_multiple_data, $update_multiple_data);
+					$add_multiple_data = $update_multiple_data = array();
+					
+					foreach($improvements as $key=>$improvement){
+						if(isset($improvement['id'])&&is_numeric($improvement['id'])){
+							$update_multiple_data[$key]['id'] = $improvement['id'];
+							$update_multiple_data[$key]['pap_id'] = $improvement['pap_id'];
+							$update_multiple_data[$key]['district_property_rate_id'] = $improvement['district_property_rate_id'];
+							$update_multiple_data[$key]['rate'] = $improvement['rate'];
+							$update_multiple_data[$key]['quantity'] = $improvement['quantity'];
+							$update_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+						}
+						else{
+							$add_multiple_data[$key]['pap_id'] = $improvement['pap_id'];
+							$add_multiple_data[$key]['district_property_rate_id'] = $improvement['district_property_rate_id'];
+							$add_multiple_data[$key]['rate'] = $improvement['rate'];
+							$add_multiple_data[$key]['quantity'] = $improvement['quantity'];
+							$add_multiple_data[$key]['date_created'] = time();
+							$add_multiple_data[$key]['created_by'] = $add_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+						}
+					}
+					if($pap_improvement_obj->addPapImprovement($add_multiple_data) && $pap_crop_tree_obj->updatePapImprovement($add_multiple_data)){
+						$response['success'] = true;
+						$response['message'] = "PAP details successfully updated!";
+					}
+				}
+			}else{				
+				if($pap_obj->addPap($data)){
+					//we first deal with the plants/crops
+					foreach($plants as $key=>$plant){
+						$plants[$key]['date_created'] = time();
+						$plants[$key]['created_by'] = $plants[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+					}
+					if($pap_crop_tree_obj->addPapCropTrees($plants)){
+						$response['success'] = true;
+						$response['message'] = "PAP details successfully updated!";
+					}
+					
+					//then the properties/improvements
+					foreach($improvements as $key=>$improvement){
+						$improvements[$key]['date_created'] = time();
+						$improvements[$key]['created_by'] = $improvements[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+					}
+					if($pap_crop_tree_obj->addPapImprovement($improvements)){
+						$response['success'] = true;
+						$response['message'] = "PAP details successfully updated!";
+					}
+				}
+			}
+			$output = json_encode($response);
+		break;
 		case "district_rate":
 			$districtcroprate = new DistrictCropRate();
 			if($data['id'] != ""){

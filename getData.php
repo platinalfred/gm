@@ -23,6 +23,28 @@ if(isset($_POST['tbl'])){
 			$client_obj = new Client();
 			$output['clients'] = $client_obj->getSelectList();
 		break;
+		case "project_details":
+			$project_coverage_obj = new ProjectCoverage();
+			$district_property_rate_obj = new DistrictPropertyRate();
+			$district_crop_rate_obj = new DistrictCropRate();
+			$output['available_districts'] = $project_coverage_obj->findAvailableDistricts($_POST['project_id']);
+			$output['district_property_rates'] = $district_property_rate_obj->findDistrictPropertyRates();
+			$output['district_crop_rates'] = $district_crop_rate_obj->findDistrictCropRates();
+		break;
+		case "project_coverage":
+			$project_coverage_obj = new ProjectCoverage();
+			$output['data'] = $project_coverage_obj->findAll("`project_id`=".$_POST['project_id']);
+		break;
+		case "paps":
+			$pap_obj = new ProjectAffectedPerson();
+			$output['data'] = $pap_obj->findAll("`project_id`=".$_POST['project_id']);
+		break;
+		case "pap_details":
+			$pap_crop_tree_obj = new PAP_CropTree();
+			$pap_improvement_obj = new PAP_Improvement();
+			$output['pap_improvements'] = $pap_crop_tree_obj->findPapImprovements("pap_id".$_POST['pap_id']);
+			$output['pap_crop_trees'] = $pap_improvement_obj->findPapCropTrees("pap_id".$_POST['pap_id']);
+		break;
 		default:
 			echo "No data found!"; 
 		break;

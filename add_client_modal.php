@@ -16,30 +16,37 @@
                     </div>
 					
                     <div class="form-group">
-                        <label class="control-label col-md-4">Phone contact</label>
+                        <label class="control-label col-md-4">Primary phone contact</label>
                         <div class="col-md-7">
 							<input name="phone_contact1" type="text" class="form-control" pattern="(0|\+256)[2347]([0-9]{8})" required />
                         </div>
                     </div>
 					
                     <div class="form-group">
-                        <label class="control-label col-md-4">Phone contact2</label>
+                        <label class="control-label col-md-4">Secondary phone contact</label>
                         <div class="col-md-7">
 							<input name="phone_contact2" type="text" class="form-control" pattern="(0|\+256)[2347]([0-9]{8})" />
                         </div>
                     </div>
 					
                     <div class="form-group">
-                        <label class="control-label col-md-4">Email contact</label>
+                        <label class="control-label col-md-4">Primary email contact</label>
                         <div class="col-md-7">
 							<input name="email_contact1" type="email" class="form-control" required />
                         </div>
                     </div>
 					
                     <div class="form-group">
-                        <label class="control-label col-md-4">Email contact2</label>
+                        <label class="control-label col-md-4">Secondary email contact</label>
                         <div class="col-md-7">
 							<input name="email_contact2" type="email" class="form-control" />
+                        </div>
+                    </div>
+					
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Website</label>
+                        <div class="col-md-7">
+							<input name="website" type="url" class="form-control" />
                         </div>
                     </div>
 					<div class="form-group">

@@ -496,7 +496,6 @@ class Db{
 		//echo $ins;
 		 $inse = $this->conn->query($ins);
 		if($inse){
-			
 			return mysqli_insert_id($this->conn);
 		} 
 		return false; 
@@ -521,7 +520,7 @@ class Db{
 	function addMultiple($table, $fields, $values){
 		$fi = implode(",", $fields);
 		
-		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES ".implode(',', $values);
+		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES ".implode(',', array_map("implode_array", $values));
 		//echo $ins;
 		$inse = $this->conn->query($ins);
 		if($inse){
@@ -529,9 +528,23 @@ class Db{
 		}
 		return false;
 	}
+	function implode_array($array){
+		return "(".implode(',', $array).")";
+	}
 	function numberFormat($no){  
 		$format_number = number_format($no, 2, '.', ',');
 		return $format_number;
+	}
+	function updateMultiple($table, $data, $pk){
+		$fi = implode(",", $fields);
+		
+		$ins = "UPDATE ".$table. " (".$fi.") VALUES ".implode(',', array_map("implode_array", $values));
+		//echo $ins;
+		$inse = $this->conn->query($ins);
+		if($inse){
+			return true;
+		}
+		return false;
 	}
 	function update_single($table, $field, $value, $where) {
 		$value = $this->escape_value($value);
