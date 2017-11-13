@@ -2,6 +2,7 @@
 //the view model for the page
 var DummyObject = function(){
 	var self = this;
+	self.rate_description = ko.observable(0);
 }
 var ViewModel = function() {
 		var self = this;
@@ -138,7 +139,7 @@ $(document).ready(function(){
 					{ data: 'totaltake'},
 					{ data: 'chainage'},
 					{ data: 'chainage'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#projectModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-land_acquistion_category-landAcquisition" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#projectModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
 					
 					] ,
 			  buttons: [
@@ -188,13 +189,13 @@ $(document).ready(function(){
 					viewModel.project_districts.valueHasMutated();
 			  },
 			  "columnDefs": [ {
-				  "targets": [2],
+				  "targets": [0],
 				  "orderable": false,
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
 			  columns:[ { data: 'district_name' },
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal"  data-toggle="modal" href="#projectCoverageModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span class= "btn-danger btn-sm delete_me" id="'+data+'&amp;tbl=tbl_client"><i class="fa fa-trash-o"></i></span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a href="#" class= "btn-danger btn-sm delete_me" ><i class="fa fa-trash-o"></i></a>';}}
 					
 					] ,
 			  buttons: [
@@ -237,7 +238,7 @@ $(document).ready(function(){
 	TableManageButtons.init();
 });
 viewModel.getServerData();// get data to be populated on the page
-ko.applyBindings(viewModel);// , $("#loan_account_details")[0]
+ko.applyBindings(viewModel, $("#project_page")[0]); //
 
 //Functions being used in more than one instances / places
 //With this one function all settings will be sent to save_data.php for saving
@@ -269,8 +270,8 @@ function saveData(form,event){
 						}
 						else{
 						//if(frmId == 'tblPap'){
-							dTable[frmId].ajax.reload();
 						}
+							dTable[frmId].ajax.reload();
 					}, 2000);
 				}else{
 					
@@ -304,14 +305,17 @@ $('table tbody').on('click', '.delete_me', function () {
 	if(confirmation){
 		var row = $(this).closest("tr");
 		var tbl = $(row).parent().parent();
-		
-		var del_attr = $(this).attr("id");
+		var dt = dTable[$(tbl).attr("id")];
+		var data = dt.row(row).data();
+		if(typeof(data)=='undefined'){
+			data = dt.row($(row).prev()).data();
+		}
+	
 		 $.ajax({ // create an AJAX call...
-			url: "delete.php?id="+del_attr, // the file to call
+			url: "delete.php?id="+data.id+"&tbl="+$(tbl).attr("id"), // the file to call
 			success: function(response) { // on success..
 				showStatusMessage(response, "success");
 				setTimeout(function(){
-					var dt = dTable[$(tbl).attr("id")];
 					dt.ajax.reload();
 				}, 300);
 			}			

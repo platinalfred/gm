@@ -22,7 +22,7 @@ $client_details = $client_obj->findById($projectDetails['client_id']);
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="widget-container fluid-height clearfix">
-				<div class="tabs-container">
+				<div class="tabs-container" id="project_page">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#tab-1" ><i class="fa fa-briefcase"></i> Client</a></li>
 						<li><a data-toggle="tab" href="#tab-2"><i class="fa fa-group"></i> PAPs</a></li>
@@ -141,6 +141,7 @@ $client_details = $client_obj->findById($projectDetails['client_id']);
 									<table class="table table-bordered table-striped" id="tblProjectCoverage">
 										<thead>
 											<th>District</th>
+											<th>Action</th>
 										</thead>
 										<tbody>
 											

@@ -3,7 +3,7 @@ $curdir = dirname(__FILE__);
 require_once($curdir.'/Db.php');
 class ProjectAffectedPerson extends Db {
 	protected static $table_name  = "tbl_paps";
-	protected static $db_fields = array("id","project_id", "pap_ref", "firstname", "othername", "lastname", "phone_contact", "district_id", "subcounty_id", "parish", "village", "way_leave", "rightofway", "total_take", "chainage", "created_by","date_created","modified_by");
+	protected static $db_fields = array("id","project_id", "pap_ref", "firstname", "othername", "lastname", "phone_contact", "district_id", "county_id", "subcounty_id", "parish_id", "village", "way_leave", "rightofway", "total_take", "chainage", "created_by","date_created","modified_by");
 	
 	public function findById($id){
 		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
@@ -26,12 +26,14 @@ class ProjectAffectedPerson extends Db {
 	}
 	public function addPap($data){
 		$fields =array_slice(self::$db_fields, 1);
+		$data['pap_ref'] = "PAP_".time();
+		$data['project_id'] = 1;
+		$data['county_id'] = 17;
+		$data['subcounty_id'] = 451;
+		$data['parish_id'] = 321;
 		$data['date_created'] = time();
 		$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
-		if($this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data))){
-			return true;
-		}
-		return false;
+		return $this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data));
 	}
 	public function updatePap($data){
 		$fields = array_slice(self::$db_fields, 1);

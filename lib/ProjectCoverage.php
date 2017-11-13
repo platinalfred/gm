@@ -10,11 +10,13 @@ class ProjectCoverage extends Db {
 		return !empty($result) ? $result:false;
 	}
 	public function findAll($where = ""){
-		$result_array = $this->getarray(self::$table_name, "", "", "");
+		$fields = "`tbl_district`.`id`, `district_name`";
+		$table_name = self::$table_name . " JOIN `tbl_district` ON `district_id`=`tbl_district`.`id`";
+		$result_array = $this->getfarray($table_name, $fields, $where, "", "");
 		return !empty($result_array) ? $result_array : false;
 	}
 	public function findAvailableDistricts($project_id){
-		$where = "`id` NOT IN (SELECT `district_id` FROM tbl_project_coverage` WHERE `project_id`=$project_id)";
+		$where = "`id` NOT IN (SELECT `district_id` FROM `tbl_project_coverage` WHERE `project_id`=$project_id)";
 		$result_array = $this->getarray("tbl_district", $where, "", "");
 		return !empty($result_array) ? $result_array : false;
 	}

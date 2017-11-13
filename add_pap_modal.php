@@ -7,9 +7,16 @@
                 <form  id="tblPapForm" action="#" method="post" class="form-horizontal">
 						<fieldset>
 							<legend>Personal Details</legend>
-						<div class="col-lg-6">
+						<div class="col-lg-3">
 							<input type="hidden" name="tbl" value="tblPap">
 							<input type="hidden" name="id" >
+							<input type="hidden" name="project_id" value="<?php echo $_GET['id']; ?>" />
+							<div class="form-group" >
+								<label class="control-label">User Photo</label>
+								<input name="photo_url" type="file" accept=".png,.jpeg,.gif,.jpg, image/gif,image/jpg,image/jpeg,image/pjpeg,image/png)" class="form-control"/>
+							</div>
+						</div>
+						<div class="col-lg-5">
 							<div class="form-group" >
 								<label class="control-label col-md-5">First name</label>
 								<div class="col-md-7">
@@ -42,33 +49,33 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">District</label>
 								<div class="col-md-7">
-									<select name="district_id" class="form-control" class="form-control chosen-select" data-bind="options: available_districts, optionsText: 'district_name', optionsCaption: 'Select district...', optionsAfterRender: $root.setOptionValue('id')" required ></select>
+									<select name="district_id" class="form-control" class="form-control chosen-select" data-bind="options: project_districts, optionsText: 'district_name', optionsCaption: 'Select district...', optionsAfterRender: $root.setOptionValue('id')" required ></select>
 								</div>
 							</div>
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">County</label>
 								<div class="col-md-7">
-									<select name="district_id" class="form-control" class="form-control" data-bind='options: available_districts, optionsText: "district_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id")'></select>
+									<select name="county_id" class="form-control" class="form-control" data-bind='options: project_districts, optionsText: "district_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id")'></select>
 								</div>
 							</div>
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">Subcounty</label>
 								<div class="col-md-7">
-									<select name="district_id" class="form-control" class="form-control" data-bind='options: available_districts, optionsText: "district_name", optionsCaption: "Select subcounty...", optionsAfterRender: $root.setOptionValue("id")'></select>
+									<select name="subcounty_id" class="form-control" class="form-control" data-bind='options: project_districts, optionsText: "district_name", optionsCaption: "Select subcounty...", optionsAfterRender: $root.setOptionValue("id")'></select>
 								</div>
 							</div>
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">Parish</label>
 								<div class="col-md-7">
-									<select name="district_id" class="form-control" class="form-control" data-bind='options: available_districts, optionsText: "district_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id")'></select>
+									<select name="parish_id" class="form-control" class="form-control" data-bind='options: project_districts, optionsText: "district_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id")'></select>
 								</div>
 							</div>
 							<div class="form-group" >
@@ -138,7 +145,7 @@
 								<div class="col-md-5">
 									<input type="hidden" data-bind="attr:{name:'improvement['+$index()+'][id]'}, value:id" />
 									<input type="hidden" data-bind="attr:{name:'improvement['+$index()+'][district_property_rate_id]'}, value:district_property_rate_id" />
-									<label class="form-control" data-bind="text: propertytype + ' ' + propertydescription"></label>
+									<label class="form-control" data-bind="text: propertytype + ' - ' + propertydescription"></label>
 								</div>
 								<div class="col-md-4">
 									<input class="form-control" placeholder="Unit of measure" data-bind="attr:{name:'improvement['+$index()+'][unit]'}, value:unit" required />
@@ -155,12 +162,14 @@
 							<!-- ko foreach: selectedImprovements -->
 							<div class="form-group">
 								<div class="col-md-5">
-									<select class="form-control" data-bind="options: $root.district_property_rates, optionsText: function(item){ return item.propertytype + ' ' + item.propertydescription;}, optionsCaption: 'Select improvement...', optionsAfterRender: $root.setOptionValue('id'), attr:{name:'improvement['+($index()+$root.serverDataImprovements().length)+'][district_property_rate_id]'}"></select>
+									<select class="form-control" data-bind="options: $root.district_property_rates, optionsText: function(item){ return item.propertytype + ' - ' + item.propertydescription;}, optionsCaption: 'Select improvement...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'improvement['+($index()+$root.serverDataImprovements().length)+'][district_property_rate_id]'}"></select>
 								</div>
 								<div class="col-md-4"><input class="form-control" placeholder="Unit of measure" data-bind="attr:{name:'improvement['+($index()+$root.serverDataImprovements().length)+'][unit]'}" required /></div>
 								<div class="col-md-2">
 									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'improvement['+($index()+$root.serverDataImprovements().length)+'][quantity]'}" required />
-									<input type="hidden" data-bind="attr:{name:'improvement['+($index()+$root.serverDataImprovements().length)+'][rate]'}, value:rate" />
+									<!--ko with:rate_description-->
+									<input type="hidden" data-bind="attr:{name:'improvement['+($parentContext.$index()+$root.serverDataImprovements().length)+'][rate]'}, value:rate" />
+									<!--/ko-->
 								</div>
 								<div class="col-md-1">
 									<a href="#" data-bind="click: $root.removeSelectedImprovement" class="text-danger"><i class="fa fa-minus"></i></a>
@@ -185,7 +194,7 @@
 									<input type="hidden" data-bind="value:id, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][id]'}" />
 									<input type="hidden" data-bind="value:pap_id, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][pap_id]'}" />
 									<input type="hidden" data-bind="value:crop_description_rate_id, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][crop_description_rate_id]'}" />
-									<label class="form-control" data-bind="text: croptype + ' ' + cropdescription"></label>
+									<label class="form-control" data-bind="text: croptype + ' - ' + cropdescription"></label>
 								</div>
 								<div class="col-md-4">
 									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][quantity]'}" required />
@@ -200,11 +209,13 @@
 							<div class="form-group">
 								<!--label class="control-label col-md-4">Plant <span data-bind="text: ($index()+1)"></span></label-->
 								<div class="col-md-7">
-									<select class="form-control" data-bind="options: $root.district_crop_rates, optionsText: function(item){ return item.croptype + ' ' + item.cropdescription;}, optionsCaption: 'Select crop/tree...', optionsAfterRender: $root.setOptionValue('id'), attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][crop_description_rate_id]'}"></select>
+									<select class="form-control" data-bind="options: $root.district_crop_rates, optionsText: function(item){ return item.croptype + ' - ' + item.cropdescription;}, optionsCaption: 'Select crop/tree...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][crop_description_rate_id]'}"></select>
 								</div>
 								<div class="col-md-4">
 									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][quantity]'}" required />
-									<input type="hidden" data-bind="attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][rate]'}, value:rate" />
+									<!--ko with:rate_description-->
+									<input type="hidden" data-bind="attr:{name:'plant['+($parentContext.$index()+$root.serverDataPlants().length)+'][rate]', value:rate}" />
+									<!--/ko-->
 								</div>
 								<div class="col-md-1">
 									<a href="#" data-bind="click: $root.removeSelectedPlant" class="text-danger"><i class="fa fa-minus"></i></a>
