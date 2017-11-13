@@ -19,6 +19,10 @@ if(isset($_POST['tbl'])){
 			$client_obj = new Client();
 			$output['data'] = $client_obj->findAll();
 		break;
+		case "staff":
+			$staff_obj = new Staff();
+			$output['data'] = $staff_obj->findStaffDetails();
+		break;
 		case "project_setup":
 			$client_obj = new Client();
 			$output['clients'] = $client_obj->getSelectList();

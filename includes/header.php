@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include("lib/Libraries.php");
 ?>
 <!DOCTYPE html>
@@ -7,7 +8,7 @@ include("lib/Libraries.php");
     <title>
        GMIS
     </title>
-  
+	<meta charset="UTF-8" />
     <link href="stylesheets/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/font-awesome.min.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/hightop-font.css" media="all" rel="stylesheet" type="text/css" />
@@ -136,6 +137,7 @@ include("lib/Libraries.php");
 	<?php 
 	}
 	?>
+	<script src="js/plugins/moment/min/moment.min.js"></script>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 </head>
 <body class="page-header-fixed bg-1">
@@ -177,7 +179,7 @@ include("lib/Libraries.php");
                                 <span aria-hidden="true" class="hightop-charts"></span>Reports</a>
                         </li>
                         <li>
-                            <a href=""><span aria-hidden="true" class="hightop-feed"></span>Administration</a>
+                            <a href="administration.php"><span aria-hidden="true" class="hightop-feed"></span>Administration</a>
                         </li>
                         <li>
                             <a data-toggle="dropdown" href="#"><span aria-hidden="true" class="hightop-assign"></span>Assignments</a>

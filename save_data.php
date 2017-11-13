@@ -3,6 +3,7 @@ require_once('lib/Libraries.php');
 //require_once("lib/SimpleImage.php");
 //$images = new SimpleImage();
 $output = "";
+
 if(isset($_POST['tbl'])){
 	$data = $_POST;
 	switch($data['tbl']){
@@ -21,6 +22,27 @@ if(isset($_POST['tbl'])){
 					$response['false'] = true;
 				}else{ 
 					$response['message'] = "Client data could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			$output = json_encode($response);
+		break;
+		case "tblStaff":
+			$staff_obj = new Staff();
+			$response = array();
+			
+			if($data['id'] != ""){
+				if($staff_obj->updateStaff($data)){
+					$response['success'] = true;
+				}else{ 
+					$response['success'] = false;
+					$response['message'] =  "Staff data could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				if($staff_obj->addStaff($data)){
+					$response['success'] = true;
+				}else{ 
+					$response['success'] = false;
+					$response['message'] = "Staff data could not be added. Please try again or contact admin for assistance!";
 				}
 			}
 			$output = json_encode($response);
