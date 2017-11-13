@@ -17,14 +17,15 @@ $propertytypedescription = new PropertyTypeDescription();
 					<ul class="nav nav-tabs">
 						
 						<li  class="active"><a data-toggle="tab" href="#tab-2" >Land Acquisition Types</a></li>
-						<li><a data-toggle="tab" href="#tab-5" >Crop Description</a></li>
 						<li class=""><a data-toggle="tab" href="#tab-3" >Tree or Crop Types</a></li>
+						<li><a data-toggle="tab" href="#tab-5" >Crop Description</a></li>
+						
+						<li class=""><a data-toggle="tab" role="tab" href="#tab-11" href="#">District Crop/Tree Rates</a></li>
 						<li class=""><a data-toggle="tab"  href="#tab-7" href="#">Property Description</a></li>
 						<li class=""><a data-toggle="tab"  href="#tab-8" href="#">Property</a></li>
 						<li class=""><a data-toggle="tab"  href="#tab-9" >Access Levels</a></li>
 						<li><a data-toggle="tab" href="#tab-23" >Positions</a></li>
 						<li><a data-toggle="tab" href="#tab-17" >Expense Types</a></li>
-						<li class=""><a data-toggle="tab" role="tab" href="#tab-11" href="#">District Crop/Tree Rates</a></li>
 						<li class=""><a data-toggle="tab" role="tab" href="#tab-12" href="#">District Property Rates</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">More <b class="caret"></b></a>
