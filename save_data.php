@@ -7,6 +7,9 @@ $output = "";
 if(isset($_POST['tbl'])){
 	$data = $_POST;
 	switch($data['tbl']){
+		case "gmt103932092030932":
+			print_r($_POST);
+		break;
 		case "tblClient":
 			$client_obj = new Client();
 			$response = array();

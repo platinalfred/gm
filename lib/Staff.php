@@ -58,6 +58,7 @@ class Staff extends Db {
 	}
 	public function addStaff($data){
 		$fields = array_slice(self::$db_fields, 1);
+		$data['password'] = md5($data['password']);
 		$data['date_added'] = time();
 		if($this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data))){
 			return true;
@@ -68,6 +69,7 @@ class Staff extends Db {
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];
 		unset($data['id']);
+		$data['password'] = md5($data['password']);
 		if($this->update(self::$table_name, $fields, $this->generateAddFields($fields, $data), "id=".$id)){
 			return true;
 		}

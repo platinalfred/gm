@@ -1,41 +1,42 @@
 <script>
 var dTable = {};
 $(document).ready(function(){
+	function showStatusMessage(message='', display_type='success'){
+		new PNotify({
+			  title: "Action response",
+			  text: message,
+			  type: display_type,
+			  styling: 'bootstrap3',
+			  sound: true,
+			  hide:true,
+			  buttons: {
+				closer_hover: false,
+			},
+			confirm: {
+				confirm: true,
+				buttons: [{
+					text: 'Ok',
+					addClass: 'btn-primary',
+					click: function(notice) {
+						notice.remove();
+					}
+				},
+				null]
+			},
+			animate: {
+				animate: true,
+				in_class: 'zoomInLeft',
+				out_class: 'zoomOutRight'
+			},
+			  nonblock: {
+				  nonblock: true
+			  }
+			  
+		  });
+		
+	}
 	var handleDataTableButtons = function() {
-		function showStatusMessage(message='', display_type='success'){
-			new PNotify({
-				  title: "Action response",
-				  text: message,
-				  type: display_type,
-				  styling: 'bootstrap3',
-				  sound: true,
-				  hide:true,
-				  buttons: {
-					closer_hover: false,
-				},
-				confirm: {
-					confirm: true,
-					buttons: [{
-						text: 'Ok',
-						addClass: 'btn-primary',
-						click: function(notice) {
-							notice.remove();
-						}
-					},
-					null]
-				},
-				animate: {
-					animate: true,
-					in_class: 'zoomInLeft',
-					out_class: 'zoomOutRight'
-				},
-				  nonblock: {
-					  nonblock: true
-				  }
-				  
-			  });
-			
-		}
+		
 		
 		/* -- Land Acquisition category Data Table --- */
 		if ($("#tblStaff").length) {
@@ -130,7 +131,10 @@ $(document).ready(function(){
 					type: "post",
 					data: {
 					  email: function() {
-						return $( "#email" ).val();
+							var form_id = $("#form_id").val();
+							if(form_id == ""){
+								return $( "#email" ).val();
+							}
 					  }
 					}
 				}
@@ -166,59 +170,58 @@ $(document).ready(function(){
 		submitHandler: saveData
 	});
 });
-function deleteDataTableRowData(){
-		$('.table tbody').on('click', 'tr .delete_me', function () {
-			var confirmation = confirm("Are sure you would like to delete this item?");
-			if(confirmation){
-				var tbl;
-				var id;
-				var d_id = $(this).attr("id")
-				var arr = d_id.split("-");
-				id = arr[0];//This is the row id
-				tbl = arr[1]; //This is the table to delete from 
-				var dttbl = arr[2];//Table to reload
-				//alert(dttbl);
-				 $.ajax({ // create an AJAX call...
-					url: "delete.php?id="+id+"&tbl="+tbl, // the file to call
-					success: function(response) { // on success..
-						showStatusMessage(response, "success");
-						window.location.reload(true);
-					}			
-				}); 
-			}
-		});
-	}
-	function saveData(form,event){
-		event.preventDefault();
-		var frm = $(form).closest("form");
-		var frmdata = frm.serialize();
-		var id_input = frm.find("input[name = 'id']").val();;
-		var frmId = frm.attr('id');
-		$.ajax({
-			url: "save_data.php",
-			type: 'POST',
-			dataType:'json',
-			data: frmdata,
-			success: function (response) {
-				alert(response.success);
-				if(response.success){
-					showStatusMessage("Data successfully saved" ,"success");
-					setTimeout(function(){
-						if(id_input == ""){
-							document.getElementById(frmId).reset();
-							//$(frmId).reset();
-						}
-						dTable[frmId].ajax.reload();
-						
-					}, 2000);
-				}else{
-					showStatusMessage(response.message, "fail");
-				} 
-				
-			}
-		});
+function saveData(form,event){
+	event.preventDefault();
+	var frm =  $(form).closest("form").submit();
+	var frmdata = frm.serialize();
+	var id_input = frm.find("input[name = 'id']").val();;
+	var frmId = frm.attr('id');
+	$.ajax({
+		url: "save_data.php",
+		type: 'POST',
+		dataType:'json',
+		data: frmdata,
+		success: function (response) {
+			if(response.success){
+				showStatusMessage("Data successfully saved" ,"success");
+				setTimeout(function(){
+					if(id_input == ""){
+						document.getElementById(frmId).reset();
+					}
+					dTable[frmId].ajax.reload();
+					
+				}, 2000);
+			}else{
+				showStatusMessage(response.message, "fail");
+			} 
+			
+		}
+	});
 
-		return false;
-		//});
-	}
+	return false; 
+	//});
+}
+function deleteDataTableRowData(){
+	$('.table tbody').on('click', 'tr .delete_me', function () {
+		var confirmation = confirm("Are sure you would like to delete this item?");
+		if(confirmation){
+			var tbl;
+			var id;
+			var d_id = $(this).attr("id")
+			var arr = d_id.split("-");
+			id = arr[0];//This is the row id
+			tbl = arr[1]; //This is the table to delete from 
+			var dttbl = arr[2];//Table to reload
+			//alert(dttbl);
+			 $.ajax({ // create an AJAX call...
+				url: "delete.php?id="+id+"&tbl="+tbl, // the file to call
+				success: function(response) { // on success..
+					showStatusMessage(response, "success");
+					window.location.reload(true);
+				}			
+			}); 
+		}
+	});
+}
+	
 </script>

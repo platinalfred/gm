@@ -5,7 +5,7 @@
 				<fieldset>
 					<div class="col-lg-9">
 						<input type="hidden" name="tbl" value="tblStaff">
-						<input type="hidden" name="id" >
+						<input type="hidden" id="form_id" name="id" >
 						<input type="hidden" name="<?php echo $_SESSION['gmt']; ?>" >
 						<div class="form-group">
 							<label class="control-label col-md-5">Staff Type</label>

@@ -1,4 +1,5 @@
 <?php 
+$needed_files = array("dataTables", "iCheck", "jasny", "knockout", "moment");
 include("includes/header.php");
 ?>
     <div class="container-fluid main-content">
@@ -12,25 +13,25 @@ include("includes/header.php");
                                 86<small>%</small>
                             </div>
                             <div class="text">
-                                Overall growth
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="number">
-                                <div class="icon visitors"></div>
-                                613
-                            </div>
-                            <div class="text">
-                                Unique visitors
+                                Projects
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="number">
                                 <div class="icon money"></div>
-                                <small>$</small>924
+                                <small>$</small>61,000,000
                             </div>
                             <div class="text">
-                                Sales
+                                Total Income
+                            </div>
+                        </div>
+						<div class="col-md-3">
+                            <div class="number">
+                                <div class="icon money"></div>
+                                <small>$</small>11,000,000
+                            </div>
+                            <div class="text">
+                                Total Expenses
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -47,129 +48,7 @@ include("includes/header.php");
             </div>
             <!-- End Statistics -->
             <div class="row">
-                <!-- Weather -->
-                <div class="col-md-8">
-                    <div class="widget-container weather">
-                        <div class="widget-content padded">
-                            <div class="row text-center">
-                                <div class="col-sm-6 col-md-6 col-lg-4 today">
-                                    <p>
-                                        TODAY
-                                    </p>
-                                    <canvas class="skycons-element" data-skycons="RAIN" height="100" id="rain" width="100"></canvas>
-                                    <div class="number">
-                                        72<small>&deg;</small>
-                                    </div>
-                                    <p class="location">
-                                        Washington, D.C.
-                                    </p>
-                                </div>
-                                <div class="col-sm-2 hidden-xs">
-                                    <p>
-                                        MON
-                                    </p>
-                                    <canvas class="skycons-element" data-skycons="CLEAR_DAY" height="60" id="clear-day" width="60"></canvas>
-                                    <div class="number">
-                                        86<small>&deg;</small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 hidden-xs">
-                                    <p>
-                                        TUE
-                                    </p>
-                                    <canvas class="skycons-element" data-skycons="RAIN" height="60" id="cloudy" width="60"></canvas>
-                                    <div class="number">
-                                        75<small>&deg;</small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 hidden-xs">
-                                    <p>
-                                        WED
-                                    </p>
-                                    <canvas class="skycons-element" data-skycons="PARTLY_CLOUDY_DAY" height="60" id="partly-cloudy-day" width="60"></canvas>
-                                    <div class="number">
-                                        82<small>&deg;</small>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2 hidden-md hidden-sm hidden-xs">
-                                    <p>
-                                        THU
-                                    </p>
-                                    <canvas class="skycons-element" data-skycons="SLEET" height="60" id="sleet" width="60"></canvas>
-                                    <div class="number">
-                                        64<small>&deg;</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end Weather -->
-                <!-- Bar Graph -->
-                <div class="col-md-4">
-                    <div class="widget-container small">
-                        <div class="heading">
-                            <i class="fa fa-signal"></i>New sign ups<i class="fa fa-list pull-right"></i><i class="fa fa-refresh pull-right"></i>
-                        </div>
-                        <div class="widget-content padded">
-                            <div class="bar-chart-widget">
-                                <div class="chart-graph">
-                                    <div id="barcharts">
-                                        Loading...
-                                    </div>
-                                    <ul class="chart-text-axis">
-                                        <li>
-                                            1
-                                        </li>
-                                        <li>
-                                            2
-                                        </li>
-                                        <li>
-                                            3
-                                        </li>
-                                        <li>
-                                            4
-                                        </li>
-                                        <li>
-                                            5
-                                        </li>
-                                        <li>
-                                            6
-                                        </li>
-                                        <li>
-                                            7
-                                        </li>
-                                        <li>
-                                            8
-                                        </li>
-                                        <li>
-                                            9
-                                        </li>
-                                        <li>
-                                            10
-                                        </li>
-                                        <li>
-                                            11
-                                        </li>
-                                        <li>
-                                            12
-                                        </li>
-                                        <li>
-                                            13
-                                        </li>
-                                        <li>
-                                            14
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Bar Graph -->
-            </div>
-            <div class="row">
-                <!-- Area Charts:Morris -->
+				<!-- Area Charts:Morris -->
                 <div class="col-md-6">
                     <div class="widget-container fluid-height">
                         <div class="heading">
@@ -184,94 +63,7 @@ include("includes/header.php");
                     </div>
                 </div>
                 <!-- Area Charts:Morris -->
-                <!-- Chat -->
-                <div class="col-md-6">
-                    <div class="widget-container scrollable chat" style="height: 427px;">
-                        <div class="heading">
-                            <i class="fa fa-comments"></i>Chat Widget<i class="fa fa-smile-o pull-right"></i>
-                        </div>
-                        <div class="widget-content padded">
-                            <ul>
-                                <li>
-                                    <img width="30" height="30" src="images/avatar-male.jpg" />
-                                    <div class="bubble">
-                                        <a class="user-name" href="#">John Smith</a>
-                                        <p class="message">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.
-                                        </p>
-                                        <p class="time">
-                                            <strong>Today</strong>3:53 pm
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="current-user">
-                                    <img width="30" height="30" src="images/avatar-female.jpg" />
-                                    <div class="bubble">
-                                        <a class="user-name" href="#">Jane Smith</a>
-                                        <p class="message">
-                                            Donec odio. Quisque volutpat mattis eros.
-                                        </p>
-                                        <p class="time">
-                                            <strong>Today</strong>3:53 pm
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <img width="30" height="30" src="images/avatar-male.jpg" />
-                                    <div class="bubble">
-                                        <a class="user-name" href="#">John Smith</a>
-                                        <p class="message">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                                        </p>
-                                        <p class="time">
-                                            <strong>Today</strong>3:53 pm
-                                        </p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <img width="30" height="30" src="images/avatar-male.jpg" />
-                                    <div class="bubble">
-                                        <a class="user-name" href="#">John Smith</a>
-                                        <p class="message">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros.
-                                        </p>
-                                        <p class="time">
-                                            <strong>Today</strong>3:53 pm
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="post-message">
-                            <input class="form-control" placeholder="Write your message here..." type="text">
-                            <input type="submit" value="Send">
-                        </div>
-                    </div>
-                </div>
-                <!-- End Chat -->
-            </div>
-            <div class="row">
-                <!-- Pie Graph 1 -->
-                <div class="col-lg-5">
-                    <div class="widget-container fluid-height">
-                        <div class="heading">
-                            <i class="fa fa-bar-chart-o"></i>Donut Charts
-                        </div>
-                        <div class="widget-content clearfix">
-                            <div class="col-sm-6">
-                                <div class="pie-chart1 pie-chart pie-number" data-percent="87">
-                                    87%
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pie-chart2 pie-chart pie-number" data-percent="26">
-                                    26%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-7">
+                 <div class="col-lg-6">
                     <div class="widget-container fluid-height">
                         <!-- Table -->
                         <table class="table table-filters">
@@ -387,6 +179,52 @@ include("includes/header.php");
                                     </td>
                                 </tr>
                                 <tr>
+								<tr>
+                                    <td class="filter-category blue">
+                                        <div class="arrow-left"></div>
+                                        <i class="fa fa-stethoscope"></i>
+                                    </td>
+                                    <td>
+                                        National Distribution Co.
+                                    </td>
+                                    <td>
+                                        $9204
+                                    </td>
+                                    <td class="hidden-xs">
+                                        <div class="sparkslim">
+                                            50,55,60,40,30,35,30,20,25,30,40,20,15
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="danger">
+                                            -4%
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+								<tr>
+                                    <td class="filter-category blue">
+                                        <div class="arrow-left"></div>
+                                        <i class="fa fa-stethoscope"></i>
+                                    </td>
+                                    <td>
+                                        National Distribution Co.
+                                    </td>
+                                    <td>
+                                        $9204
+                                    </td>
+                                    <td class="hidden-xs">
+                                        <div class="sparkslim">
+                                            50,55,60,40,30,35,30,20,25,30,40,20,15
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="danger">
+                                            -4%
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td class="filter-category magenta">
                                         <div class="arrow-left"></div>
                                         <i class="fa fa-trophy"></i>
@@ -413,68 +251,9 @@ include("includes/header.php");
                     </div>
                 </div>
                 <!-- End Pie Graph 1 -->
+				
             </div>
-        </div>
-    </div>
-    <div class="style-selector">
-        <div class="style-selector-container">
-            <h2>
-          Layout Style
-        </h2>
-            <select name="layout">
-                <option value="fluid">Fluid</option>
-                <option value="boxed">Boxed</option>
-            </select>
-            <h2>
-          Navigation Style
-        </h2>
-            <select name="nav">
-                <option value="top">Top</option>
-                <option value="left">Left</option>
-            </select>
-            <h2>
-          Color Options
-        </h2>
-            <ul class="color-options clearfix">
-                <li>
-                    <a class="blue" href="javascript:chooseStyle('none', 30)"></a>
-                </li>
-                <li>
-                    <a class="green" href="javascript:chooseStyle('green-theme', 30)"></a>
-                </li>
-                <li>
-                    <a class="orange" href="javascript:chooseStyle('orange-theme', 30)"></a>
-                </li>
-                <li>
-                    <a class="magenta" href="javascript:chooseStyle('magenta-theme', 30)"></a>
-                </li>
-                <li>
-                    <a class="gray" href="javascript:chooseStyle('gray-theme', 30)"></a>
-                </li>
-            </ul>
-            <h2>
-          Background Patterns
-        </h2>
-            <ul class="pattern-options clearfix">
-                <li>
-                    <a class="active" href="#" id="bg-1"></a>
-                </li>
-                <li>
-                    <a href="#" id="bg-2"></a>
-                </li>
-                <li>
-                    <a href="#" id="bg-3"></a>
-                </li>
-                <li>
-                    <a href="#" id="bg-4"></a>
-                </li>
-                <li>
-                    <a href="#" id="bg-5"></a>
-                </li>
-            </ul>
-            <div class="style-toggle closed">
-                <span aria-hidden="true" class="hightop-gear"></span>
-            </div>
+           
         </div>
     </div>
 <?php 

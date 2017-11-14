@@ -106,58 +106,31 @@ class Db{
 	function unSetSessions(){
 		session_destroy();
 	}
-	function  getLogin($username, $password){
+	function  getLogin($email, $password){
 		if(!isset($_SESSION)) {
 			session_start();
 		}
-		$to_add = array("id","username", "branch_id", "personId");
 		$password = md5($password);
-		$results = $this->getfrec("staff", implode(",",$to_add), "username=BINARY '$username' AND password='$password' AND status=1", "", "");
-		if(count($results) > 0){
-		   $_SESSION['Logged'] = true;
-		   foreach($results as $key => $value){
-				if(!is_numeric($key)){
-				   if(in_array($key, $to_add)){
-					   $_SESSION[$key] =  $value;
-				   }
-			  }
-		   }
-		   $access_levels = $this->getfarray("staff_roles", "role_id","personId=".$results['personId'], "", "");
-			if($access_levels){
-				$levels  = array();
-				foreach($access_levels as $single){
-					
-					$levels[] = $single['role_id'];//This will keep all access levels and can checked by doing if in_array($_SESSION['access_levels']) whenever you are checking a user role.
-					switch($single["role_id"]){
-						case 1://Administrator 1
-							$this->setSessions("admin", true);
-						break;
-						case 2://Loan Officer 2
-							$this->setSessions("loans_officer", true);
-						break;
-						
-						case 3: //Branch Manager 3
-							$this->setSessions("branch_manager", true);
-						break;
-						case 4://Branch Credit Committee
-							$this->setSessions("branch_credit", true);
-						break;
-						case 5://Management Credit Committee
-							$this->setSessions("management_credit", true);
-						break;
-						case 6: //Executive board committee
-							$this->setSessions("executive_board", true);
-						break;
-						case 7://Accountant
-							$this->setSessions("accountant", true);
-						break;
-					}
-					
-				}
-				$this->setSessions("access_levels", $levels);
-				$this->setSessions("staffId", $results['id']);
-				return $_SESSION;
-			}  
+		$results = $this->getfrec("staff", "id, firstname, lastname, othername, email, position", "email=BINARY '$email' AND password='$password' AND status=1", "", "");
+		if($results){
+		   $access_level = $this->getfrec("position", "access_level", "id=".$results['position'], "", "");
+			
+			switch($access_level["access_level"]){
+				case 1://Administrator 1
+					$this->setSessions("admin", true);
+				break;
+				case 2://Field Officer 2
+					$this->setSessions("field_officer", true);
+				break;
+				
+				case 3: //Management Staff 3
+					$this->setSessions("management_staff", true);
+				break;
+			}
+			$this->setSessions("logged", true);
+			$this->setSessions("gmt", $results['id']);
+			return $_SESSION;
+		 
 			
 		}
 		return false;

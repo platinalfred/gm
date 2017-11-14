@@ -337,7 +337,7 @@ $(document).ready(function(){
 				  "orderable": false
 			  } */],
 			  "autoWidth": false,
-			  columns:[ { data: 'name'},
+			  columns:[ { data: 'title'},
 					{ data: 'description'},
 					{ data: 'access_level'},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" id="'+data+'-position-tblPosition" href="#position" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-position-tblPosition" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}

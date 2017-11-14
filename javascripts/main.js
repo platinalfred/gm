@@ -348,33 +348,6 @@
       }
     });
 
-    /*
-     * =============================================================================
-     *   DataTables
-     * =============================================================================
-     */
-    $("#dataTable1").dataTable({
-      "sPaginationType": "full_numbers",
-      aoColumnDefs: [
-        {
-          bSortable: false,
-          aTargets: [0, -1]
-        }
-      ]
-    });
-    $('.table').each(function() {
-      return $(".table #checkAll").click(function() {
-        if ($(".table #checkAll").is(":checked")) {
-          return $(".table input[type=checkbox]").each(function() {
-            return $(this).prop("checked", true);
-          });
-        } else {
-          return $(".table input[type=checkbox]").each(function() {
-            return $(this).prop("checked", false);
-          });
-        }
-      });
-    });
 
     /*
      * =============================================================================
@@ -1118,7 +1091,7 @@
      *   FitVids
      * =============================================================================
      */
-    $(".timeline-content").fitVids();
+    //$(".timeline-content").fitVids();
 
     /*
      * =============================================================================
@@ -1177,7 +1150,7 @@
      *   Ladda loading buttons
      * =============================================================================
      */
-    Ladda.bind(".ladda-button:not(.progress-demo)", {
+    /* Ladda.bind(".ladda-button:not(.progress-demo)", {
       timeout: 2000
     });
     Ladda.bind(".ladda-button.progress-demo", {
@@ -1193,24 +1166,24 @@
           }
         }, 200);
       }
-    });
+    }); */
 
     /*
      * =============================================================================
      *   Dropzone File Upload
      * =============================================================================
      */
-    Dropzone.options.dropzoneDemo = {
+    /* Dropzone.options.dropzoneDemo = {
       paramName: "upload[file]",
       addRemoveLinks: true
-    };
+    }; */
 
     /*
      * =============================================================================
      *   Nestable
      * =============================================================================
      */
-    if ($('.nestable-list').length) {
+  /*   if ($('.nestable-list').length) {
       updateOutput = function(e) {
         var list, output;
         list = (e.length ? e : $(e.target));
@@ -1229,7 +1202,7 @@
       }).on("change", updateOutput);
       updateOutput($("#nestable").data("output", $("#nestable-output")));
       updateOutput($("#nestable2").data("output", $("#nestable2-output")));
-    }
+    } */
     $("#nestable-menu").on("click", function(e) {
       var action, target;
       target = $(e.target);
@@ -1241,7 +1214,7 @@
         return $(".dd").nestable("collapseAll");
       }
     });
-    return $("#nestable3").nestable();
+    //return $("#nestable3").nestable();
   });
 
 }).call(this);
