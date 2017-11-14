@@ -521,6 +521,7 @@ class Db{
 		return "(".implode(',', $array).")";
 	}
 	function addMultiple($table, $fields, $values){
+		//$fields data arrangement must match the $values arrangement
 		$fi = implode(",", $fields);
 		
 		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES ".implode(',', array_map("self::implode_array", $values));
@@ -549,11 +550,11 @@ class Db{
 	}
 	function set_update_query($table, $id, $data_array){
 		
-		$ins = "UPDATE ".$table. " SET ";
+		$update_sql = "UPDATE ".$table. " SET ";
 		foreach($data_array as $key => $value){
-			$ins .= " " . $key . "=" . $value . ",";
+			$update_sql .= " " . $key . "=" . $value . ",";
 		}
-		return substr_replace($ins," WHERE ".$id." = ".$data_array[$id].";",0,-1);
+		return substr_replace($update_sql," WHERE ".$id." = ".$data_array[$id].";",0,-1);
 	}
 	function update_single($table, $field, $value, $where) {
 		$value = $this->escape_value($value);

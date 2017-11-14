@@ -303,4 +303,9 @@ function showStatusMessage(message='', display_type='success'){
 /*$(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })*/
+$(document).ready(function(){
+jQuery.validator.addMethod("phoneUg", function(value, element) {
+  return this.optional(element) || /^(0|\+256)[2347]([0-9]{8})/.test(value);
+}, "Please enter valid phone number");
+});
 </script>
