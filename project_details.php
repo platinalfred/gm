@@ -1,5 +1,4 @@
 <?php
-session_start();
 $needed_files = array("dataTables", "iCheck", "jasny", "knockout", "moment");
 include("includes/header.php");
 ?>
@@ -22,15 +21,63 @@ $client_details = $client_obj->findById($projectDetails['client_id']);
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="widget-container fluid-height clearfix">
-				<div class="tabs-container">
+				<div class="tabs-container" id="project_page">
 					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#tab-1" ><i class="fa fa-briefcase"></i> Client</a></li>
-						<li><a data-toggle="tab" href="#tab-2"><i class="fa fa-group"></i> PAPs</a></li>
+						<li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-group"></i> PAPs</a></li>
+						<li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
 						<li><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
 					</ul>
 					<div class="tab-content">
-						<!-- Projects -->
+						<!-- Project Affected Persons section -->
 						<div id="tab-1" class="tab-pane active">
+							<div class="col-lg-12">
+								<div class="action-buttons">
+									<a  data-toggle="modal" href="#papModal" data-bind="click: resetForm"><i class="fa fa-plus"></i> Add New</a>
+								</div>
+								<div class="modal fade col-sm-10 col-sm-offset-1" id="papModal">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+												<h4 class="modal-title">Project Affected Persons</h4>
+											</div>
+											<div class="modal-body">
+												<?php include("add_pap_modal.php"); ?>
+											</div>
+										</div>
+								</div>
+							
+							</div>
+							<div class="heading">
+								<i class="fa fa-group"></i>Project Affected Persons
+							</div>
+							<div class="widget-content padded">
+								<table class="table table-bordered table-striped" id="tblPap">
+									<thead>
+										<th>PAP Ref</th>
+										<th>Names</th>
+										<th>District</th>
+										<!--th>County</th>
+										<th>SubCounty</th>
+										<th>Parish</th-->
+										<th>Village</th>
+										<th>Telephone</th>
+										<th>Way Leave</th>
+										<th>Right of Way</th>
+										<th>Total Take</th>
+										<th>Chainage</th>
+										<th>Improvements</th>
+										<th>Crops/Trees</th>
+										<th></th>
+									</thead>
+									<tbody>
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- end Projects content pane -->
+						<!-- Projects -->
+						<div id="tab-2" class="tab-pane">
 							<!-- Projects content pane -->
 							<div class="col-lg-12">
 								<div class="widget-container fluid-height clearfix">
@@ -70,54 +117,6 @@ $client_details = $client_obj->findById($projectDetails['client_id']);
 							</div>
 						</div>
 						<!-- end Projects content pane -->
-						<!-- Project Affected Persons section -->
-						<div id="tab-2" class="tab-pane">
-							<div class="col-lg-12">
-								<div class="action-buttons">
-									<a  data-toggle="modal" href="#papModal"><i class="fa fa-plus"></i> Add New</a>
-								</div>
-								<div class="modal fade col-sm-10 col-sm-offset-1" id="papModal">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
-												<h4 class="modal-title">Project Affected Persons</h4>
-											</div>
-											<div class="modal-body">
-												<?php include("add_pap_modal.php"); ?>
-											</div>
-										</div>
-								</div>
-							
-							</div>
-							<div class="heading">
-								<i class="fa fa-group"></i>Project Affected Persons
-							</div>
-							<div class="widget-content padded">
-								<table class="table table-bordered table-striped" id="tblPap">
-									<thead>
-										<th>PAP Ref</th>
-										<th>Names</th>
-										<th>District</th>
-										<th>County</th>
-										<th>SubCounty</th>
-										<th>Parish</th>
-										<th>Village</th>
-										<th>Telephone</th>
-										<th>Way Leave</th>
-										<th>Right of Way</th>
-										<th>Total Take</th>
-										<th>Chainage</th>
-										<th>Improvements</th>
-										<th>Crops/Trees</th>
-										<th></th>
-									</thead>
-									<tbody>
-										
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<!-- end Projects content pane -->
 						<!-- Coverage section -->
 						<div id="tab-3" class="tab-pane">
 							<div class="col-lg-5">
@@ -141,6 +140,7 @@ $client_details = $client_obj->findById($projectDetails['client_id']);
 									<table class="table table-bordered table-striped" id="tblProjectCoverage">
 										<thead>
 											<th>District</th>
+											<th>Action</th>
 										</thead>
 										<tbody>
 											

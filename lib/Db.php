@@ -490,34 +490,44 @@ class Db{
 		} 
 		return mysqli_error($this->conn); 
 	}
+	function implode_array($array){
+		return "(".implode(',', $array).")";
+	}
 	function addMultiple($table, $fields, $values){
+		//$fields data arrangement must match the $values arrangement
 		$fi = implode(",", $fields);
 		
-		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES ".implode(',', array_map("implode_array", $values));
+		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES ".implode(',', array_map("self::implode_array", $values));
 		//echo $ins;
 		$inse = $this->conn->query($ins);
 		if($inse){
 			return true;
 		}
 		return false;
-	}
-	function implode_array($array){
-		return "(".implode(',', $array).")";
 	}
 	function numberFormat($no){  
 		$format_number = number_format($no, 2, '.', ',');
 		return $format_number;
 	}
-	function updateMultiple($table, $data, $pk){
-		$fi = implode(",", $fields);
-		
-		$ins = "UPDATE ".$table. " (".$fi.") VALUES ".implode(',', array_map("implode_array", $values));
-		//echo $ins;
-		$inse = $this->conn->query($ins);
+	function updateMultiple($table, $data, $pkey){
+		$insert_stmt = "";
+		foreach($data as $update_row){
+			$insert_stmt .= set_update_query($table, $pkey, $update_row);
+		}
+		//echo ;
+		$inse = $this->conn->query($insert_stmt);
 		if($inse){
 			return true;
 		}
 		return false;
+	}
+	function set_update_query($table, $id, $data_array){
+		
+		$update_sql = "UPDATE ".$table. " SET ";
+		foreach($data_array as $key => $value){
+			$update_sql .= " " . $key . "=" . $value . ",";
+		}
+		return substr_replace($update_sql," WHERE ".$id." = ".$data_array[$id].";",0,-1);
 	}
 	function update_single($table, $field, $value, $where) {
 		$value = $this->escape_value($value);

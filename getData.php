@@ -46,8 +46,8 @@ if(isset($_POST['tbl'])){
 		case "pap_details":
 			$pap_crop_tree_obj = new PAP_CropTree();
 			$pap_improvement_obj = new PAP_Improvement();
-			$output['pap_improvements'] = $pap_crop_tree_obj->findPapImprovements("pap_id".$_POST['pap_id']);
-			$output['pap_crop_trees'] = $pap_improvement_obj->findPapCropTrees("pap_id".$_POST['pap_id']);
+			$output['pap_crop_trees'] = $pap_crop_tree_obj->findPapCropTrees("pap_id=".$_POST['pap_id']);
+			$output['pap_improvements'] = $pap_improvement_obj->findPapImprovements("pap_id=".$_POST['pap_id']);
 		break;
 		default:
 			echo "No data found!"; 

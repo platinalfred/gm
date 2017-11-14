@@ -60,6 +60,13 @@ if(isset($_GET['tbl'])){
 				$msg =  "Success";
 			}
 		break;
+		case "tblProjectCoverage":
+			require_once("lib/ProjectCoverage.php");
+			$project_coverage_obj = new ProjectCoverage();
+			if($project_coverage_obj->deleteProjectCoverage("tbl_project_coverage", "id=".$_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
 		case "expense_types":
 			if($db->turnOff("expensetypes", "id=".$_GET['id'])){
 				$msg =  "Success";

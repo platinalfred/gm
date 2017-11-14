@@ -2,9 +2,11 @@
 //the view model for the page
 var DummyObject = function(){
 	var self = this;
+	self.rate_description = ko.observable(0);
 }
 var ViewModel = function() {
 		var self = this;
+		self.pap_details = ko.observable(); //pap_details_obj
 		self.project_districts = ko.observableArray(); //list of districts covered by this project
 		self.available_districts = ko.observableArray(); //list of districts available to be added to this project
 		self.district_property_rates = ko.observableArray(); //list of district property rates
@@ -16,12 +18,17 @@ var ViewModel = function() {
 		self.selectedPlants = ko.observableArray([new DummyObject()]);
 		self.serverDataPlants = ko.observableArray(); //data returned from the serve upon clicking the edit button
 		//operations
+		//districts
 		self.addDistrict = function(){self.selectedDistricts.push(new DummyObject());};
 		self.removeSelectedDistrict = function(selectedDistrict){self.selectedDistricts.remove(selectedDistrict);};
+		//improvements
 		self.addImprovement = function(){self.selectedImprovements.push(new DummyObject());};
 		self.removeSelectedImprovement = function(selectedImprovement){self.selectedImprovements.remove(selectedImprovement);};
+		self.removeServerDataImprovement = function(serverDataImprovement){self.serverDataImprovements.remove(serverDataImprovement);};
+		//plants
 		self.addPlant = function(){self.selectedPlants.push(new DummyObject());};
 		self.removeSelectedPlant = function(selectedPlant){self.selectedPlants.remove(selectedPlant);};
+		self.removeServerDataPlant = function(serverDataPlant){self.serverDataPlants.remove(serverDataPlant);};
 		//set options value after populating the select list
 		self.setOptionValue = function(propId) {
 			return function (option, item) {
@@ -55,15 +62,18 @@ var ViewModel = function() {
 				data:{tbl:"pap_details", pap_id:pap_id},
 				url: "getData.php",
 				success: function(response){
-					if(reponse.success){
 						self.serverDataImprovements(response.pap_improvements);
-						self.serverDataCropTrees(response.pap_crop_trees);
+						self.serverDataPlants(response.pap_crop_trees);
 						viewModel.serverDataImprovements.valueHasMutated();
-						viewModel.serverCropTrees.valueHasMutated();
-					}
+						viewModel.serverDataPlants.valueHasMutated();
 				}
 			})
 		};	
+		self.resetForm = function() {
+			self.pap_details(null);
+			if(self.serverDataImprovements().length>0)self.serverDataImprovements.removeAll();
+			if(self.serverDataPlants().length>0)self.serverDataPlants.removeAll();
+		}
 	};
 var viewModel = new ViewModel();
 var dTable = {};
@@ -120,25 +130,26 @@ $(document).ready(function(){
 						d.project_id = <?php echo $_GET['id']; ?>;
 					}
 			  },"columnDefs": [ {
-				  "targets": [2],
+				  "targets": [11],
 				  "orderable": false,
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
 			  columns:[ { data: 'pap_ref' },
-				  { data: 'firstname' },
+				  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 					{ data: 'district_name'},
-					{ data: 'county_name'},
-					{ data: 'subcounty_name'},
-					{ data: 'parish_name'},
+					/* { data: 'county_id'},
+					{ data: 'subcounty_id'},
+					{ data: 'parish_id'}, */
 					{ data: 'village'},
 					{ data: 'phone_contact'},
-					{ data: 'way_leave'},
-					{ data: 'rightofway'},
-					{ data: 'totaltake'},
-					{ data: 'chainage'},
-					{ data: 'chainage'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#projectModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-land_acquistion_category-landAcquisition" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
+					{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+					{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+					{ data: 'total_take', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+					{ data: 'chainage', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+					{ data: 'improvement_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+					{ data: 'crop_tree_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
 					
 					] ,
 			  buttons: [
@@ -188,13 +199,13 @@ $(document).ready(function(){
 					viewModel.project_districts.valueHasMutated();
 			  },
 			  "columnDefs": [ {
-				  "targets": [2],
+				  "targets": [0],
 				  "orderable": false,
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
 			  columns:[ { data: 'district_name' },
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal"  data-toggle="modal" href="#projectCoverageModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span class= "btn-danger btn-sm delete_me" id="'+data+'&amp;tbl=tbl_client"><i class="fa fa-trash-o"></i></span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a href="#" class= "btn-danger btn-sm delete_me" ><i class="fa fa-trash-o"></i></a>';}}
 					
 					] ,
 			  buttons: [
@@ -237,7 +248,7 @@ $(document).ready(function(){
 	TableManageButtons.init();
 });
 viewModel.getServerData();// get data to be populated on the page
-ko.applyBindings(viewModel);// , $("#loan_account_details")[0]
+ko.applyBindings(viewModel, $("#project_page")[0]); //
 
 //Functions being used in more than one instances / places
 //With this one function all settings will be sent to save_data.php for saving
@@ -269,8 +280,8 @@ function saveData(form,event){
 						}
 						else{
 						//if(frmId == 'tblPap'){
-							dTable[frmId].ajax.reload();
 						}
+						dTable[frmId].ajax.reload();
 					}, 2000);
 				}else{
 					
@@ -293,6 +304,7 @@ $('table#tblPap tbody').on( 'click', '.edit_me', function () {
 		data = dt.row($(row).prev()).data();
 	}
     // Display the update form
+	viewModel.pap_details(data);
 	viewModel.getPapDetails(data.id);
 	edit_data(data, 'tblPapForm'); /* */
 } );
@@ -304,14 +316,17 @@ $('table tbody').on('click', '.delete_me', function () {
 	if(confirmation){
 		var row = $(this).closest("tr");
 		var tbl = $(row).parent().parent();
-		
-		var del_attr = $(this).attr("id");
+		var dt = dTable[$(tbl).attr("id")];
+		var data = dt.row(row).data();
+		if(typeof(data)=='undefined'){
+			data = dt.row($(row).prev()).data();
+		}
+	
 		 $.ajax({ // create an AJAX call...
-			url: "delete.php?id="+del_attr, // the file to call
+			url: "delete.php?id="+data.id+"&tbl="+$(tbl).attr("id"), // the file to call
 			success: function(response) { // on success..
 				showStatusMessage(response, "success");
 				setTimeout(function(){
-					var dt = dTable[$(tbl).attr("id")];
 					dt.ajax.reload();
 				}, 300);
 			}			
@@ -320,5 +335,11 @@ $('table tbody').on('click', '.delete_me', function () {
 });
 
 $("#projectCoverageForm").validate({submitHandler: saveData});
-$("#tblPapForm").validate({submitHandler: saveData});
+$("#tblPapForm").validate({
+		rules: {
+			phone_contact: {
+				phoneUg: true
+			}
+		},submitHandler: saveData});
+
 </script>
