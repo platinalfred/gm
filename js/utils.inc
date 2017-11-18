@@ -1,4 +1,21 @@
-<script>//format numbers with thousands separator
+<script type="text/javascript">
+	ko.bindingHandlers.select2 = {
+		init: function(element, valueAccessor, allBindingsAccessor) {
+			$(element).select2(valueAccessor());
+
+			ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+				$(element).select2('destroy');
+			});
+		},
+		update: function(element, valueAccessor, allBindingsAccessor) {
+			var allBindings = allBindingsAccessor(),
+				value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
+			if (value) {
+				$(element).trigger('change');
+			}
+		}
+	}
+//format numbers with thousands separator
 	/*PICK DATA FOR DATA TABLE  */
 
 $('input.athousand_separator').keyup(function(event) {

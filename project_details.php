@@ -1,5 +1,5 @@
 <?php
-$needed_files = array("dataTables", "iCheck", "jasny", "knockout", "moment");
+$needed_files = array("dataTables", "iCheck", "jasny", "knockout", "select2", "moment");
 include("includes/header.php");
 ?>
 <?php
