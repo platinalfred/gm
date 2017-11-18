@@ -63,7 +63,7 @@ $client_details = $client_obj->findById($projectDetails['client_id']);
 										<th>Telephone</th>
 										<th>Way Leave</th>
 										<th>Right of Way</th>
-										<th>Total Take</th>
+										<th>Total Size</th>
 										<th>Chainage</th>
 										<th>Improvements</th>
 										<th>Crops/Trees</th>
