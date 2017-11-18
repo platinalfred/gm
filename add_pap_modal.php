@@ -6,13 +6,13 @@
             <div class="widget-content padded">
                 <form  id="tblPapForm" action="#" method="post" class="form-horizontal">
 						<fieldset>
-							<legend>Personal Details</legend>
+							<legend>PAP Details</legend>
 						<div class="col-lg-3">
 							<input type="hidden" name="tbl" value="tblPap">
 							<input type="hidden" name="id" >
 							<input type="hidden" name="project_id" value="<?php echo $_GET['id']; ?>" />
 							<div class="form-group" >
-								<label class="control-label">User Photo</label>
+								<label class="control-label">Attach PAP Photo</label>
 								<input name="photo_url" type="file" accept=".png,.jpeg,.gif,.jpg, image/gif,image/jpg,image/jpeg,image/pjpeg,image/png)" class="form-control"/>
 								<div data-bind="with:pap_details">
 									<img data-bind="attr:{src:'img/paps/pap_'+id+'.jpg'}" class="img-thumbnail img-responsive"/>
@@ -21,36 +21,36 @@
 						</div>
 						<div class="col-lg-5">
 							<div class="form-group" >
-								<label class="control-label col-md-5">First name</label>
+								<label class="control-label col-md-5">First Name</label>
 								<div class="col-md-7">
 									<input name="firstname" type="text" class="form-control" data-msg-required="Firstname be entered" required />
 								</div>
 							</div>
 							<div class="form-group" >
-								<label class="control-label col-md-5">First name</label>
+								<label class="control-label col-md-5">Surname</label>
 								<div class="col-md-7">
 									<input name="lastname" type="text" class="form-control" data-msg-required="Last name must be entered" required />
 								</div>
 							</div>
 							<div class="form-group" >
-								<label class="control-label col-md-5">Other name</label>
+								<label class="control-label col-md-5">Other Name</label>
 								<div class="col-md-7">
 									<input name="othername" type="text" class="form-control" />
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label class="control-label col-md-5">Phone contact</label>
+								<label class="control-label col-md-5">Phone Contact</label>
 								<div class="col-md-7">
 									<input name="phone_contact" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 07 or +256" required />
 								</div>
-							</div>
+							</div><!--
 							<div class="form-group">
-								<label class="control-label col-md-5">Physical Address</label>
+								<label class="control-label col-md-5">Phone Contact 2</label>
 								<div class="col-md-7">
-									<textarea name="physical_address" class="form-control" data-msg-required="Physical address must be entered" rows="2" required ></textarea>
+									<input name="phone_contact2" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 07 or +256" required />
 								</div>
-							</div>
+							</div>-->
 						</div>
 						<div class="col-lg-4">
 						
@@ -96,7 +96,7 @@
 								<div class="col-md-8">
 									<input name="way_leave" type="text" class="form-control" data-msg-required="Way leave must be entered" required />
 								</div>
-								<label class="control-label col-md-4">Sq. Mtrs</label>
+								<label class="control-label col-md-4">Acres</label>
 							</div>
 					</fieldset>
 						</div>
@@ -107,18 +107,18 @@
 								<div class="col-md-8">
 									<input name="rightofway" type="text" class="form-control" />
 								</div>
-								<label class="control-label col-md-4">Sq. Mtrs</label>
+								<label class="control-label col-md-4">Acres</label>
 							</div>
 					</fieldset>
 						</div>
 						<div class="col-lg-3">
 					<fieldset>
-						<legend>Total Take</legend>
+						<legend>Total Size</legend>
 							<div class="form-group" >
 								<div class="col-md-8">
 									<input name="total_take" type="text" class="form-control" />
 								</div>
-								<label class="control-label col-md-4">Sq. Mtrs</label>
+								<label class="control-label col-md-4">Acres</label>
 							</div>
 					</fieldset>
 						</div>
