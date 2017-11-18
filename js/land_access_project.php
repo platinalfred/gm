@@ -224,7 +224,7 @@ function saveData(form,event){
 							location.reload(true);
 							//viewModel.getServerData();
 						}
-						if(frmId == 'tblLandProject'){
+						if(frmId == 'tblLandProject' && id_input != ""){
 							location.replace('project_details.php?id='+response.project_id);
 							//dTable[frmId].ajax.reload();
 						}

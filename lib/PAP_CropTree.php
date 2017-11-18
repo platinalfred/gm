@@ -29,9 +29,9 @@ class PAP_CropTree extends Db {
 		return false;
 	}
 	public function updatePapCropTrees($data){
-		$fields = array_slice(self::$db_fields, 1);
-		if($this->updateMultiple(self::$table_name, $data, "id")){
-			return true;
+		if(!empty($data)){
+			$fields = array_slice(self::$db_fields, 1);
+			return $this->updateMultiple(self::$table_name, $data, "id");
 		}
 		return false;
 	}

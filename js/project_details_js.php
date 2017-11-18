@@ -146,7 +146,7 @@ $(document).ready(function(){
 					{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 					{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 					{ data: 'total_take', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-					{ data: 'chainage', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+					{ data: 'chainage'},
 					{ data: 'improvement_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
 					{ data: 'crop_tree_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}

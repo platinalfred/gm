@@ -1,20 +1,4 @@
 <script type="text/javascript">
-	ko.bindingHandlers.select2 = {
-		init: function(element, valueAccessor, allBindingsAccessor) {
-			$(element).select2(valueAccessor());
-
-			ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
-				$(element).select2('destroy');
-			});
-		},
-		update: function(element, valueAccessor, allBindingsAccessor) {
-			var allBindings = allBindingsAccessor(),
-				value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
-			if (value) {
-				$(element).trigger('change');
-			}
-		}
-	}
 //format numbers with thousands separator
 	/*PICK DATA FOR DATA TABLE  */
 
@@ -308,7 +292,7 @@ function showStatusMessage(message='', display_type='success'){
 	function edit_data(data_array, form){
 		$.each(data_array, function(key, val){
 			$.map($('#'+form+' [name="'+key+'"]'), function(named_item){
-				$(named_item).val(val);
+				$(named_item).val(val).trigger('change');
 			});
 		});		
 	}
@@ -324,5 +308,21 @@ $(document).ready(function(){
 jQuery.validator.addMethod("phoneUg", function(value, element) {
   return this.optional(element) || /^(0|\+256)[2347]([0-9]{8})/.test(value);
 }, "Please enter valid phone number");
+	ko.bindingHandlers.select2 = {
+		init: function(element, valueAccessor, allBindingsAccessor) {
+			$(element).select2(valueAccessor());
+
+			ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+				$(element).select2('destroy');
+			});
+		},
+		update: function(element, valueAccessor, allBindingsAccessor) {
+			var allBindings = allBindingsAccessor(),
+				value = ko.utils.unwrapObservable(allBindings.value || allBindings.selectedOptions);
+			if (value) {
+				$(element).trigger('change');
+			}
+		}
+	}
 });
 </script>

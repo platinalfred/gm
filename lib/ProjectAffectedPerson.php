@@ -29,10 +29,6 @@ class ProjectAffectedPerson extends Db {
 	public function addPap($data){
 		$fields =array_slice(self::$db_fields, 1);
 		$data['pap_ref'] = "PAP_".time();
-		$data['project_id'] = 1;
-		$data['county_id'] = 17;
-		$data['subcounty_id'] = 451;
-		$data['parish_id'] = 321;
 		$data['date_created'] = time();
 		$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
 		return $this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data));
