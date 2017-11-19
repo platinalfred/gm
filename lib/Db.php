@@ -512,22 +512,25 @@ class Db{
 	function updateMultiple($table, $data, $pkey){
 		$insert_stmt = "";
 		foreach($data as $update_row){
-			$insert_stmt .= set_update_query($table, $pkey, $update_row);
+			$insert_stmt .= self::set_update_query($table, $pkey, $update_row);
 		}
 		//echo ;
 		$inse = $this->conn->query($insert_stmt);
 		if($inse){
 			return true;
 		}
+		//else return mysqli_error($this->conn);
 		return false;
 	}
 	function set_update_query($table, $id, $data_array){
 		
-		$update_sql = "UPDATE ".$table. " SET ";
+		$update_sql = "UPDATE `".$table. "` SET ";
 		foreach($data_array as $key => $value){
-			$update_sql .= " " . $key . "=" . $value . ",";
+			$update_sql .= " `" . $key . "`=" . $value . ",";
 		}
-		return substr_replace($update_sql," WHERE ".$id." = ".$data_array[$id].";",0,-1);
+		$query = substr_replace($update_sql," WHERE `".$id."` = ".$data_array[$id].";",-1,1);
+		//echo $query;
+		return $query;
 	}
 	function update_single($table, $field, $value, $where) {
 		$value = $this->escape_value($value);

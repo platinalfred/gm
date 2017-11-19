@@ -225,8 +225,10 @@ function saveData(form,event){
 							//viewModel.getServerData();
 						}
 						if(frmId == 'tblLandProject'){
-							location.replace('project_details.php?id='+response.project_id);
-							//dTable[frmId].ajax.reload();
+							if(id_input != "")
+								location.replace('project_details.php?id='+response.project_id);
+							else
+								dTable[frmId].ajax.reload();
 						}
 					}, 2000);
 				}else{

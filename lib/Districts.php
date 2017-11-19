@@ -6,7 +6,7 @@ class Districts extends Db {
 	protected static $db_fields = array("id", "district_name");
 	
 	public function findById($id){
-		$result = $this->getrec(self::$table_name, "id=".$id, "");
+		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
 		return !empty($result) ? $result:false;
 	}
 	

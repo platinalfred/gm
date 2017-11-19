@@ -14,7 +14,7 @@ function save_file($files, $files_dir, $file_name){
 					mkdir($files_dir, 0777, true);
 				}else{
 					if(file_exists($files_dir.$file_name.".".$extension))
-						unlink(file_exists($files_dir.$file_name.".".$extension));
+						unlink($files_dir.$file_name.".".$extension);
 				}
 				$feedback = move_uploaded_file($files['photo_url']['tmp_name'], $files_dir.$file_name.".".$extension);
 			}
@@ -240,7 +240,7 @@ if(isset($_POST['tbl'])){
 						if(isset($plant['id'])&&is_numeric($plant['id'])){
 							$update_multiple_data[$key]['id'] = $plant['id'];
 							if($plant['crop_description_rate_id']!=""&&$plant['rate']!=""&&$plant['quantity']!=""){
-								$update_multiple_data[$key]['pap_id'] = $plant['pap_id'];
+								$update_multiple_data[$key]['pap_id'] = $pap_id;
 								$update_multiple_data[$key]['crop_description_rate_id'] = $plant['crop_description_rate_id'];
 								$update_multiple_data[$key]['rate'] = $plant['rate'];
 								$update_multiple_data[$key]['quantity'] = $plant['quantity'];
@@ -249,7 +249,7 @@ if(isset($_POST['tbl'])){
 						}
 						else{
 							if($plant['crop_description_rate_id']!=""&&$plant['rate']!=""&&$plant['quantity']!=""){
-								$add_multiple_data[$key]['pap_id'] = $plant['pap_id'];
+								$add_multiple_data[$key]['pap_id'] = $pap_id;
 								$add_multiple_data[$key]['crop_description_rate_id'] = $plant['crop_description_rate_id'];
 								$add_multiple_data[$key]['rate'] = $plant['rate'];
 								$add_multiple_data[$key]['quantity'] = $plant['quantity'];
@@ -258,7 +258,7 @@ if(isset($_POST['tbl'])){
 							}
 						}
 					}
-					if($pap_crop_tree_obj->addPapCropTrees($add_multiple_data) && $pap_crop_tree_obj->updatePapCropTree($add_multiple_data)){
+					if($pap_crop_tree_obj->addPapCropTrees($add_multiple_data) || $pap_crop_tree_obj->updatePapCropTrees($update_multiple_data)){
 						$response['success'] = true;
 						$response['message'][] = "PAP crops and trees successfully updated!";
 					}
@@ -270,7 +270,7 @@ if(isset($_POST['tbl'])){
 						if(isset($improvement['id'])&&is_numeric($improvement['id'])){
 							if($improvement['district_property_rate_id']!=""&&$improvement['rate']!=""&&$improvement['quantity']!=""){
 								$update_multiple_data[$key]['id'] = $improvement['id'];
-								$update_multiple_data[$key]['pap_id'] = $improvement['pap_id'];
+								$update_multiple_data[$key]['pap_id'] = $pap_id;
 								$update_multiple_data[$key]['district_property_rate_id'] = $improvement['district_property_rate_id'];
 								$update_multiple_data[$key]['rate'] = $improvement['rate'];
 								$update_multiple_data[$key]['quantity'] = $improvement['quantity'];
@@ -279,7 +279,7 @@ if(isset($_POST['tbl'])){
 						}
 						else{
 							if($improvement['district_property_rate_id']!=""&&$improvement['rate']!=""&&$improvement['quantity']!=""){
-								$add_multiple_data[$key]['pap_id'] = $improvement['pap_id'];
+								$add_multiple_data[$key]['pap_id'] = $pap_id;
 								$add_multiple_data[$key]['district_property_rate_id'] = $improvement['district_property_rate_id'];
 								$add_multiple_data[$key]['rate'] = $improvement['rate'];
 								$add_multiple_data[$key]['quantity'] = $improvement['quantity'];
@@ -288,9 +288,9 @@ if(isset($_POST['tbl'])){
 							}
 						}
 					}
-					if($pap_improvement_obj->addPapImprovements($add_multiple_data) && $pap_crop_tree_obj->updatePapCropTree($add_multiple_data)){
+					if($pap_improvement_obj->addPapImprovements($add_multiple_data) || $pap_crop_tree_obj->updatePapImprovements($update_multiple_data)){
 						$response['success'] = true;
-						$response['message'][] = "PAP crops and properties successfully updated!";
+						$response['message'][] = "PAP properties successfully updated!";
 					}
 					if(!empty($_FILES)&&save_file($_FILES,"./img/paps/", "pap_".$pap_id)){
 						$response['success'] = true;
@@ -324,12 +324,50 @@ if(isset($_POST['tbl'])){
 					}
 					if($pap_improvement_obj->addPapImprovements($improvements)){
 						$response['success'] = true;
-						$response['message'][] = "PAP properties successfully updated!";
+						$response['message'][] = "PAP improvements successfully updated!";
 					}
 					if(!empty($_FILES)&&save_file($_FILES,"./img/paps/", "pap_".$pap_id)){
 						$response['success'] = true;
 						$response['message'][] = "PAP photo successfully updated!";
 					}
+				}
+			}
+			$output = json_encode($response);
+		break;
+		case "tblPapCrop":
+			$pap_crop_tree_obj = new PAP_CropTree();
+			$response = array();
+			$response['success'] = false;
+			$response['message'] = "PAP crop/tree details could not be saved. Please try again or contact admin for assistance!";
+			if($data['id'] != ""){
+				if($pap_crop_tree_obj->updatePapCropTree($data)){ //saving only one crop to the database
+						$response['success'] = true;
+						$response['message'] = "PAP crop/tree successfully updated!";
+				}
+			}else{
+				$data['date_created'] = time();
+				$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+				if($pap_crop_tree_obj->addPapCropTree($data)){
+					$response['message'] = true;
+				}
+			}
+			$output = json_encode($response);
+		break;
+		case "tblPapImprovement":
+			$pap_improvement_obj = new PAP_Improvement();
+			$response = array();
+			$response['success'] = false;
+			$response['message'] = "PAP improvement details could not be saved. Please try again or contact admin for assistance!";
+			if($data['id'] != ""){
+				if($pap_improvement_obj->updatePapImprovement($data)){ //saving only one mprovement to the database
+					$response['success'] = true;
+					$response['message'] = "PAP improvement successfully updated!";
+				}
+			}else{
+				$data['date_created'] = time();
+				$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+				if($pap_improvement_obj->addPapImprovement($data)){
+					$response['success'] = true;
 				}
 			}
 			$output = json_encode($response);

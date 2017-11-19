@@ -3,7 +3,7 @@ $curdir = dirname(__FILE__);
 require_once($curdir.'/Db.php');
 class PAP_Improvement extends Db {
 	protected static $table_name  = "tbl_pap_improvement";
-	protected static $db_fields = array("id", "district_property_rate_id", "unit", "quantity", "rate", "pap_id", "date_created", "created_by","modified_by");
+	protected static $db_fields = array("id", "pap_id",  "district_property_rate_id", "rate", "quantity","date_created", "created_by","modified_by");
 	
 	public function findById($id){
 		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
@@ -22,20 +22,36 @@ class PAP_Improvement extends Db {
 	public function addPapImprovements($data){
 		if(!empty($data)){
 			$fields =array_slice(self::$db_fields, 1);
-			if($this->addMultiple(self::$table_name, $fields, $data)){
+			return $this->addMultiple(self::$table_name, $fields, $data);
+		}
+		return false;
+	}
+	public function addPapImprovement($data){
+		$fields =array_slice(self::$db_fields, 1);
+		$data['pap_ref'] = "PAP_".time();
+		$data['date_created'] = time();
+		$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+		return $this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data));
+	}
+	public function updatePapImprovements($data){
+		if(!empty($data)){
+			$fields = array_slice(self::$db_fields, 1);
+			if($this->updateMultiple(self::$table_name, $data, "id")){
 				return true;
 			}
 		}
 		return false;
 	}
-	public function updatePapImprovements($data){
+	public function updatePapImprovement($data){
 		$fields = array_slice(self::$db_fields, 1);
-		if($this->updateMultiple(self::$table_name, $data, "id")){
+		$id = $data['id'];
+		unset($data['id'], $data['tbl']);
+		if($this->updateSpecial(self::$table_name, $data, "id=".$id)){
 			return true;
 		}
 		return false;
 	}
-	public function deletePap($id){
+	public function deletePapImprovement($id){
 		if($this->del(self::$table_name, "id=".$id)){
 			return true;
 		}

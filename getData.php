@@ -39,7 +39,7 @@ if(isset($_POST['tbl'])){
 			$project_coverage_obj = new ProjectCoverage();
 			$output['data'] = $project_coverage_obj->findAll("`project_id`=".$_POST['project_id']);
 		break;
-		case "paps":
+		case "project_paps":
 			$pap_obj = new ProjectAffectedPerson();
 			$output['data'] = $pap_obj->findAll("`project_id`=".$_POST['project_id']);
 		break;
@@ -48,6 +48,14 @@ if(isset($_POST['tbl'])){
 			$pap_improvement_obj = new PAP_Improvement();
 			$output['pap_crop_trees'] = $pap_crop_tree_obj->findPapCropTrees("pap_id=".$_POST['pap_id']);
 			$output['pap_improvements'] = $pap_improvement_obj->findPapImprovements("pap_id=".$_POST['pap_id']);
+		break;
+		case "pap_crops":
+			$pap_crop_tree_obj = new PAP_CropTree();
+			$output['data'] = $pap_crop_tree_obj->findPapCropTrees("pap_id=".$_POST['pap_id']);
+		break;
+		case "pap_improvements":
+			$pap_improvement_obj = new PAP_Improvement();
+			$output['data'] = $pap_improvement_obj->findPapImprovements("pap_id=".$_POST['pap_id']);
 		break;
 		default:
 			echo "No data found!"; 
