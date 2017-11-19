@@ -12,7 +12,7 @@ class Counties extends Db {
 	public function findCounties(){
 		$table = self::$table_name . " c JOIN tbl_district d ON c.district = d.id";
 		$fields = "`c`.`id`,`c`.`county_name`,`d`.`district_name`";
-		$result = $this->getfarray($table, $fields, "", "district_name", "");
+		$result = $this->getfarray($table, $fields, "c.active=1", "district_name", "");
 		return !empty($result) ? $result : false;
 	}
 	public function findAll(){

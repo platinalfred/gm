@@ -397,7 +397,7 @@ $(document).ready(function(){
 			  "autoWidth": false,
 			  columns:[ { data: 'county_name' },
 					{ data: 'district_name'},
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-cropdescription-tblCropDescription"  href="edit_croptree_rate.php?id='+data+'" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription-tblCropDescription" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblCounties-tblCountys"  href="#county" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblCounties-tblCountys" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [
@@ -476,7 +476,7 @@ $(document).ready(function(){
 			  columns:[ { data: 'subcounty_name' },
 						{ data: 'county_name' },
 					{ data: 'district_name'},
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-cropdescription-tblCropDescription"  href="edit_croptree_rate.php?id='+data+'" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription-tblCropDescription" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblSubCounties-tblSubCountys"  href="#subcounty" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblSubCounties-tblSubCountys" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [
@@ -556,7 +556,7 @@ $(document).ready(function(){
 					{data: 'subcounty_name' },
 					{ data: 'county_name' },
 					{ data: 'district_name'},
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblParish-tblParishs"  href="edit_croptree_rate.php?id='+data+'" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblParish-tblParishs" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblParish-tblParishs"  href="#parish" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblParish-tblParishs" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [
@@ -637,7 +637,7 @@ $(document).ready(function(){
 					{data: 'subcounty_name' },
 					{ data: 'county_name' },
 					{ data: 'district_name'},
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblVillage-tblVillages"  href="" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblVillage-tblVillages" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblVillage-tblVillages"  href="#village" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblVillage-tblVillages" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [

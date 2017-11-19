@@ -22,7 +22,7 @@ class Parish extends Db {
 	public function findParishes(){
 		$table = self::$table_name . " p JOIN tbl_subcounty s ON p.subcounty = s.id JOIN tbl_county c ON s.county = c.id JOIN tbl_district d ON c.district = d.id";
 		$fields = "`p`.`id`,`p`.`parish_name`,`s`.`subcounty_name`,`c`.`county_name`,`d`.`district_name`";
-		$result = $this->getfarray($table, $fields, "", "district_name", "");
+		$result = $this->getfarray($table, $fields, "p.active=1", "district_name", "");
 		return !empty($result) ? $result : false;
 	}
 	public function addParish($data){

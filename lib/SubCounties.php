@@ -12,7 +12,7 @@ class SubCounties extends Db {
 	public function findSubCounties(){
 		$table = self::$table_name . " s JOIN tbl_county c ON s.county = c.id JOIN tbl_district d ON c.district = d.id";
 		$fields = "`s`.`id`,`s`.`subcounty_name`,`c`.`county_name`,`d`.`district_name`";
-		$result = $this->getfarray($table, $fields, "", "district_name", "");
+		$result = $this->getfarray($table, $fields, "s.active=1", "district_name", "");
 		return !empty($result) ? $result : false;
 	}
 	public function findAll(){
