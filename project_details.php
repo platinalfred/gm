@@ -50,6 +50,7 @@ if(!$projectDetails)
 							<div class="widget-content padded">
 								<table class="table table-bordered table-striped" id="tblPap">
 									<thead>
+										<tr>
 										<th>PAP Ref</th>
 										<th>Names</th>
 										<th>District</th>
@@ -65,10 +66,23 @@ if(!$projectDetails)
 										<th>Improvements</th>
 										<th>Crops/Trees</th>
 										<th></th>
+										</tr>
 									</thead>
 									<tbody>
-										
 									</tbody>
+									<tfoot>
+										<tr>
+											<th>Total</th>
+											<th colspan="4">&nbsp;</th>
+											<th>0</th>
+											<th>0</th>
+											<th>0</th>
+											<th>&nbsp;</th>
+											<th>0</th>
+											<th>0</th>
+											<th>&nbsp;</th>
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 						</div>
@@ -259,16 +273,26 @@ if(!$projectDetails)
 							<div class="widget-content padded">
 								<table class="table table-bordered table-striped" id="tblPapCrop">
 									<thead>
-										<th>#</th>
-										<th>Crop</th>
-										<th>Description</th>
-										<th>Rate</th>
-										<th>Quantity</th>
-										<th>Amount</th>
-										<th></th>
+										<tr>
+											<th>#</th>
+											<th>Crop</th>
+											<th>Description</th>
+											<th>Rate</th>
+											<th>Quantity</th>
+											<th>Amount</th>
+											<th></th>
+										</tr>
 									</thead>
 									<tbody>
 									</tbody>
+									<tfoot>
+										<tr>
+											<th>Total</th>
+											<th colspan="4">&nbsp;</th>
+											<th>Amount</th>
+											<th></th>
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 						</div>
@@ -307,8 +331,13 @@ if(!$projectDetails)
 											<th></th>
 										</thead>
 										<tbody>
-											
 										</tbody>
+										<tfoot>
+											<th>Total</th>
+											<th colspan="4">&nbsp;</th>
+											<th>Amount</th>
+											<th></th>
+										</tfoot>
 									</table>
 								</div>
 							</div>

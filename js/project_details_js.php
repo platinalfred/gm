@@ -139,6 +139,13 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
+			  "footerCallback": function (tfoot, data, start, end, display ) {
+				var api = this.api(), cols = [5,6,7,9,10];
+				$.each(cols, function(key, val){
+					var total = api.column(val).data().sum();
+					$(api.column(val).footer()).html( curr_format(Math.round(total)) );
+				});
+			  },
 			  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 				  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 					{ data: 'district_name'},
@@ -204,6 +211,12 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
+			  "footerCallback": function (tfoot, data, start, end, display ) {
+				var api = this.api()
+					var total = api.column(5).data().sum();
+					var pageTotal = api.column(5, { page: 'current'} ).data().sum();
+					$(api.column(5).footer()).html( curr_format(Math.round(pageTotal) + ' (' + total + ')') );
+			  },
 			  columns:[ { data: 'id'},
 				  { data: 'croptype' },
 					{ data: 'cropdescription'},
@@ -261,6 +274,12 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
+			  "footerCallback": function (tfoot, data, start, end, display ) {
+				var api = this.api()
+					var total = api.column(5).data().sum();
+					var pageTotal = api.column(5, { page: 'current'} ).data().sum();
+					$(api.column(5).footer()).html( curr_format(Math.round(pageTotal) + ' (' + total + ')') );
+			  },
 			  columns:[ { data: 'id'},
 				  { data: 'propertytype' },
 					{ data: 'propertydescription'},
