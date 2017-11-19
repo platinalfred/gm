@@ -15,6 +15,25 @@ if(isset($_POST['tbl'])){
 			$treecroptypes = new TreeCropTypes();
 			$output['data'] = $treecroptypes->findAll();
 		break;
+		case "districts":
+			$districts = new Districts();
+			$output['data'] = $districts->findAll();
+		break;
+		case "counties":
+			$counties = new Counties();
+			$output['data'] = $counties->findCounties();
+		break;
+		case "subcounties":
+			$subcounties = new SubCounties();
+			$output['data'] = $subcounties->findSubCounties();
+		break;
+		case "parishes":
+			$parish = new Parish();
+			$output['data'] = $parish->findParishes();
+		break;case "villages":
+			$villages = new Village();
+			$output['data'] = $villages->findVillages();
+		break;
 		break;
 		case "propertytypes":
 			$propertytypes = new PropertyTypes();

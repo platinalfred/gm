@@ -91,6 +91,30 @@ if(isset($_GET['tbl'])){
 				$msg =  "Success";
 			}
 		break;
+		case "tblDistrict":
+			if($db->turnOff("tbl_district", "id=".$_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
+		case "tblCounties":
+			if($db->turnOff("tbl_county", "id=".$_GET['id'])){
+				$msg =  "Success";
+			}
+		break;case "tblSubCounties":
+			if($db->turnOff("tbl_subcounty", "id=".$_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
+		case "tblParish":
+			if($db->turnOff("tbl_parish", "id=".$_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
+		case "tblVillage":
+			if($db->turnOff("tbl_village", "id=".$_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
 		
 		/*case "":
 		break; */

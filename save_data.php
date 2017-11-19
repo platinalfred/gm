@@ -49,6 +49,96 @@ if(isset($_POST['tbl'])){
 			}
 			$output = json_encode($response);
 		break;
+		case "village":
+			$village = new Village();
+			$response = array();
+			if($data['id'] != ""){
+				if($village->updateVillage($data)){
+					$response = "success";
+				}else{ 
+					$response =  "Village data could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				if($village->addVillage($data)){
+					$response = "success";
+				}else{ 
+					$response = "Village data could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			$output = $response;
+		break;
+		case "parish":
+			$parish = new Parish();
+			$response = array();
+			if($data['id'] != ""){
+				if($parish->updateParish($data)){
+					$response = "success";
+				}else{ 
+					$response =  "Parish data could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				if($parish->addParish($data)){
+					$response = "success";
+				}else{ 
+					$response = "Parish data could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			$output = $response;
+		break;
+		case "subcounty":
+			$subcounties = new SubCounties();
+			$response = array();
+			if($data['id'] != ""){
+				if($subcounties->updateSubCounty($data)){
+					$response = "success";
+				}else{ 
+					$response =  "SubCounty data could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				if($subcounties->addSubCounty($data)){
+					$response = "success";
+				}else{ 
+					$response = "SubCounty data could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			$output = $response;
+		break;
+		case "county":
+			$counties = new Counties();
+			$response = array();
+			if($data['id'] != ""){
+				if($counties->updateCounty($data)){
+					$response = "success";
+				}else{ 
+					$response =  "County data could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				if($counties->addCounty($data)){
+					$response = "success";
+				}else{ 
+					$response = "County data could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			$output = $response;
+		break;
+		case "ditricts":
+			$districts = new Districts();
+			$response = array();
+			if($data['id'] != ""){
+				if($districts->updateDistrict($data)){
+					$response = "success";
+				}else{ 
+					$response =  "District data could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				if($districts->addDistrict($data)){
+					$response = "success";
+				}else{ 
+					$response = "District data could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			$output = $response;
+		break;
 		case "tblStaff":
 			$staff_obj = new Staff();
 			$response = array();

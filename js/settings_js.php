@@ -1,6 +1,90 @@
 <script>
 var dTable = new Object();
+var ViewModel = function() {
+	var self = this;
+	self.districtsList = ko.observableArray();	
+	self.countiesList = ko.observableArray();	
+	self.subcountiesList = ko.observableArray();	
+	self.parishesList = ko.observableArray();
+
+	//useful variables for the form
+	self.district = ko.observable();
+	self.county = ko.observable();
+	self.scounty = ko.observable();
+	self.parish = ko.observable();
+	
+	self.filteredCountiesList = ko.computed(function() {
+		if(self.district()){
+			return ko.utils.arrayFilter(self.countiesList(), function(county) {
+					
+				return (parseInt(self.district().id)==parseInt(county.district));
+				
+			});
+		}
+	});	
+	self.filteredSCountiesList = ko.computed(function() {
+		if(self.county()){
+			return ko.utils.arrayFilter(self.subcountiesList(), function(scounty) {
+				return (parseInt(self.county().id)==parseInt(scounty.county));
+			});
+		}
+	});	
+	self.filteredParishesList = ko.computed(function() {
+		if(self.scounty()){
+			return ko.utils.arrayFilter(self.parishesList(), function(parish) {
+				return (parseInt(self.scounty().id)==parseInt(parish.subcounty));
+			});
+		}
+	});
+	
+	//set options value afterwards
+	self.setOptionValue = function(propId) {
+		return function (option, item) {
+			if (item === undefined) {
+				option.value = "";
+			} else {
+				option.value = item[propId];
+			}
+		}
+	};	
+	//Retrieve page data from the server
+	self.getServerData = function(tbl) {
+		$.ajax({
+			type: "post",
+			dataType: "json",
+			data:{origin:tbl},
+			url: "geographical_details.php",
+			success: function(response){
+				switch(tbl){
+					case "counties":
+						self.districtsList(response.districts);
+					break;
+					case "subcounties":
+						self.districtsList(response.districts);
+						self.countiesList(response.counties);
+					break;
+					case "parishes":
+						self.districtsList(response.districts);
+						self.countiesList(response.counties);
+						self.subcountiesList(response.subcounties);	
+					break;
+					case "villages":
+						self.districtsList(response.districts);
+						self.countiesList(response.counties);
+						self.subcountiesList(response.subcounties);	
+						self.parishesList(response.parishes);
+					break;
+					default:
+					break;
+				}
+			}
+		})
+	};
+}
+ var viewModel = new ViewModel();
+ ko.applyBindings(viewModel, $("#tab-6")[0]); //
 $(document).ready(function(){
+	
 	//This function is supposed to make sure when the pop up is not an edit no data is displayed in the form. It picks the id field and makes sure if empty then the form is empty for adding new data
 	$('.modal').on('show.bs.modal', function (e) {
 		var id = $(this).find('input[name="id"]').val();
@@ -9,6 +93,7 @@ $(document).ready(function(){
 			frm[0].reset(); 
 		}
 	});
+	
 	/* Number inputs a thousandsSeparator separator */
 		$('input.athousand_separator').keyup(function(event) {
 
@@ -69,41 +154,46 @@ $(document).ready(function(){
 	saveData();
 	
 	/*To have a form editable first add a class .edit_me on the row, also add an Id-tbl_name-formId and also add an empty id field in the form */
-	
+
 	//With this one function all settings will be sent to save_data.php for saving
 	function saveData(){
 		$(".save").click(function(){
 			var frm = $(this).closest("form");
 			var frmdata = frm.serialize();
 			var frmId = frm.attr('id');
-			var id_input = frm.find("input[name = 'id']").val();
+			var id_input = frm.find().val();
+			var reset = frm.find("input[name = 'noreset']").length;
+			
+			enableDisableButton(frm, true);
 			$.ajax({
 				url: "save_data.php",
 				type: 'POST',
 				data: frmdata,
 				success: function (response) {
-					if(id_input == ""){
-						frm[0].reset();
-					}
+					
 					if($.trim(response) == "success"){
 						showStatusMessage("Data successfully saved" ,"success");
 						
 						setTimeout(function(){
 							dTable[frmId].ajax.reload();
 						}, 2000);
-						if(id_input == ""){
+						if(id_input == "" && reset < 1){
 							frm[0].reset();
 						}
+						enableDisableButton(frm, false);
 					}else{
 						
 						showStatusMessage(response, "fail");
+						enableDisableButton(frm, false);
 					}
+					
 					
 				}
 			});
 			return false;
 		});
 	}
+	
 	//Functions being used in more than one instances / places
 		/* Delete whenever a Delete Button has been clicked */
 	 function deleteDataTableRowData(){
@@ -199,6 +289,383 @@ $(document).ready(function(){
 			//$("#datatable-buttons").DataTable();
 		  }
 	  /*-- End Land Acquisition category--*/
+	  /* -- Disticts Table --- */
+			if ($("#tblDistrict").length) {
+			  dTable['tblDistricts'] = $('#tblDistrict').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			  "ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+					 
+						d.tbl = 'districts';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },"columnDefs": [ {
+				  "targets": [1],
+				  "orderable": false,
+				  "searchable": false
+			  }/* , {
+				  "targets": [0],
+				  "orderable": false
+			  } */],
+			  "autoWidth": false,
+			  columns:[ { data: 'district_name' },
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" href="#districts"  id="'+data+'-tblDistrict-tblDistricts" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-tblDistrict-tblDistricts" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm btn-white"
+				},
+			  ],
+			  responsive: true,
+			});
+			//$("#datatable-buttons").DataTable();
+		  }
+	  /*-- End District--*/ 
+	  /*-- Counties--*/
+		if ($("#tblCounty").length) {
+			  dTable['tblCountys'] = $('#tblCounty').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			  
+			initComplete: function () {
+				var select_header = ['','Districts'];
+				this.api().columns([1]).every( function () {
+					var column = this;
+					var col_index = column.index();
+					var select = $('<select class="form-control input-sm"><option value="">All '+select_header[col_index]+'</option></select>')
+						.appendTo( $("#county"+col_index).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+							);
+							console.log(val);
+							column
+								.search( val ? '^'+val+'$' : '', true, false )
+								.draw();
+						} );
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				} );
+			},
+			"ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'counties';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },/*"columnDefs": [ { 
+				  "targets": [1], 
+				  "orderable": false,
+				  "searchable": false
+			  } , {
+				  "targets": [0],
+				  "orderable": false
+			  } ],*/
+			  "autoWidth": false,
+			  columns:[ { data: 'county_name' },
+					{ data: 'district_name'},
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblCounties-tblCountys"  href="#county" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblCounties-tblCountys" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- End Counties--*/
+	  /*-- Sub Counties--*/
+		if ($("#tblSubCounty").length) {
+			  dTable['tblSubCountys'] = $('#tblSubCounty').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			initComplete: function () {
+				var select_header = ['','County','Districts'];
+				this.api().columns([1,2]).every( function () {
+					var column = this;
+					var col_index = column.index();
+					var select = $('<select class="form-control input-sm"><option value="">All '+select_header[col_index]+'</option></select>')
+						.appendTo( $("#subcounty"+col_index).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+							);
+							console.log(val);
+							column
+								.search( val ? '^'+val+'$' : '', true, false )
+								.draw();
+						} );
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				} );
+			},
+			"ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'subcounties';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },/*"columnDefs": [ { 
+				  "targets": [1], 
+				  "orderable": false,
+				  "searchable": false
+			  } , {
+				  "targets": [0],
+				  "orderable": false
+			  } ],*/
+			  "autoWidth": false,
+			  columns:[ { data: 'subcounty_name' },
+						{ data: 'county_name' },
+					{ data: 'district_name'},
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblSubCounties-tblSubCountys"  href="#subcounty" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblSubCounties-tblSubCountys" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- End SubCounties--*/
+	  /*-- Parishes--*/
+		if ($("#tblParish").length) {
+			  dTable['tblParishs'] = $('#tblParish').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			initComplete: function () {
+				var select_header = ['', 'SubCounty','County','Districts'];
+				this.api().columns([1,2,3]).every( function () {
+					var column = this;
+					var col_index = column.index();
+					var select = $('<select class="form-control input-sm"><option value="">All '+select_header[col_index]+'</option></select>')
+						.appendTo( $("#parish"+col_index).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+							);
+							console.log(val);
+							column
+								.search( val ? '^'+val+'$' : '', true, false )
+								.draw();
+						} );
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				} );
+			},
+			"ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'parishes';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },/*"columnDefs": [ { 
+				  "targets": [1], 
+				  "orderable": false,
+				  "searchable": false
+			  } , {
+				  "targets": [0],
+				  "orderable": false
+			  } ],*/
+			  "autoWidth": false,
+			  columns:[ { data: 'parish_name' },
+					{data: 'subcounty_name' },
+					{ data: 'county_name' },
+					{ data: 'district_name'},
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblParish-tblParishs"  href="#parish" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblParish-tblParishs" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- End Parishes----*/ 
+	  /*-- Parishes--*/
+		if ($("#tblVillage").length) {
+			  dTable['tblVillages'] = $('#tblVillage').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			initComplete: function () {
+				var select_header = ['', 'Parish', 'SubCounty','County','Districts'];
+				this.api().columns([1,2,3,4]).every( function () {
+					var column = this;
+					var col_index = column.index();
+					var select = $('<select class="form-control input-sm"><option value="">All '+select_header[col_index]+'</option></select>')
+						.appendTo( $("#village"+col_index).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+							);
+							console.log(val);
+							column
+								.search( val ? '^'+val+'$' : '', true, false )
+								.draw();
+						} );
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				} );
+			},
+			"ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'villages';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },/*"columnDefs": [ { 
+				  "targets": [1], 
+				  "orderable": false,
+				  "searchable": false
+			  } , {
+				  "targets": [0],
+				  "orderable": false
+			  } ],*/
+			  "autoWidth": false,
+			  columns:[ { data: 'village_name' },
+					{ data: 'parish_name' },
+					{data: 'subcounty_name' },
+					{ data: 'county_name' },
+					{ data: 'district_name'},
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblVillage-tblVillages"  href="#village" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblVillage-tblVillages" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- End Village----*/
 	  /* -- Land Acquisition category Unit Data Table --- */
 			if ($("#land_acquistion_category_unit").length) {
 			  dTable['landAcquisitionUnit'] = $('#land_acquistion_category_unit').DataTable({
@@ -771,7 +1238,7 @@ $(document).ready(function(){
 			});
 		}
 	  /*-- End crop description--*/
-	  /*-- property description--*/
+	  
 		if ($("#propertyDescription").length) {
 			  dTable['tblPropertyDescription'] = $('#propertyDescription').DataTable({
 			  dom: "lfrtipB",
@@ -829,231 +1296,7 @@ $(document).ready(function(){
 			  responsive: true,
 			});
 		}
-	  /*-- End crop description--*/
-		/*Loan Product Types */
-	  	if ($("#loan_product_types").length) {
-			  dTable['tblLoanProductType'] = $('#loan_product_types').DataTable({
-			  dom: "lfrtipB",
-			  "processing": true,
-			  "ajax": {
-				  "url":"settings_data.php",
-				  "dataType": "JSON",
-				  "type": "POST",
-				  "data":  function(d){
-						d.tbl = 'loan_product_types';
-						//d.start_date = getStartDate();
-						//d.end_date = getEndDate();
-					}
-			  },"columnDefs": [ {
-				  "targets": [2],
-				  "orderable": false,
-				  "searchable": false
-			  }/* , {
-				  "targets": [0],
-				  "orderable": false
-			  } */],
-			  "autoWidth": false,
-			  columns:[ { data: 'typeName'},
-			  { data: 'description'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" id="'+data+'-loan_product_types-tblLoanProductType" href="#loan_product_type" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-loan_product_types-tblLoanProductType" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
-					
-					] ,
-			  buttons: [
-				{
-				  extend: "copy",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "csv",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "excel",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "pdfHtml5",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "print",
-				  className: "btn-sm"
-				},
-			  ],
-			  responsive: true,
-			});
-			//$("#datatable-buttons").DataTable();
-		}
-		/*END Loan Product Types- --*/
-		/* Security Type */
-		if ($("#security_types").length) {
-			  dTable['tblSecurityType'] = $('#security_types').DataTable({
-			  dom: "lfrtipB",
-			  "processing": true,
-			  "ajax": {
-				  "url":"settings_data.php",
-				  "dataType": "JSON",
-				  "type": "POST",
-				  "data":  function(d){
-						d.tbl = 'security_types';
-						//d.start_date = getStartDate();
-						//d.end_date = getEndDate();
-					}
-			  },"columnDefs": [ {
-				  "targets": [2],
-				  "orderable": false,
-				  "searchable": false
-			  }/* , {
-				  "targets": [0],
-				  "orderable": false
-			  } */],
-			  "autoWidth": false,
-			  columns:[ { data: 'name'},
-			  { data: 'description'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" id="'+data+'-security_types-tblSecurityType" href="#security_type" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-security_types-tblSecurityType"  class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
-					
-					] ,
-			  buttons: [
-				{
-				  extend: "copy",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "csv",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "excel",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "pdfHtml5",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "print",
-				  className: "btn-sm"
-				},
-			  ],
-			  responsive: true,
-			});
-			//$("#datatable-buttons").DataTable();
-		}
-		
-
-		/*END Sec Types- --*/
-		
-		/* Relationship Type */
-		if ($("#relationship_types").length) {
-			  dTable['tblRelationType'] = $('#relationship_types').DataTable({
-			  dom: "lfrtipB",
-			  "processing": true,
-			  "ajax": {
-				  "url":"settings_data.php",
-				  "dataType": "JSON",
-				  "type": "POST",
-				  "data":  function(d){
-						d.tbl = 'relationship_types';
-						//d.start_date = getStartDate();
-						//d.end_date = getEndDate();
-					}
-			  },"columnDefs": [ {
-				  "targets": [2],
-				  "orderable": false,
-				  "searchable": false
-			  }/* , {
-				  "targets": [0],
-				  "orderable": false
-			  } */],
-			  "autoWidth": false,
-			  columns:[ { data: 'rel_type'},
-			  { data: 'description'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" id="'+data+'-relationship_type-tblRelationType" href="#relation_type" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-relationship_type-tblRelationType" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
-					
-					] ,
-			  buttons: [
-				{
-				  extend: "copy",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "csv",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "excel",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "pdfHtml5",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "print",
-				  className: "btn-sm"
-				},
-			  ],
-			  responsive: true,
-			});
-			//$("#datatable-buttons").DataTable();
-		}
-		/*END relationship Types- --*/
-		/* Address Type */
-		if ($("#adress_types").length) {
-			  dTable['tblAddressType'] = $('#adress_types').DataTable({
-			  dom: "lfrtipB",
-			  "processing": true,
-			  "ajax": {
-				  "url":"settings_data.php",
-				  "dataType": "JSON",
-				  "type": "POST",
-				  "data":  function(d){
-						d.tbl = 'address_type';
-						//d.start_date = getStartDate();
-						//d.end_date = getEndDate();
-					}
-			  },"columnDefs": [ {
-				  "targets": [2],
-				  "orderable": false,
-				  "searchable": false
-			  }/* , {
-				  "targets": [0],
-				  "orderable": false
-			  } */],
-			  "autoWidth": false,
-			  columns:[ { data: 'address_type'},
-			  { data: 'description'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" href="#edi_address_type" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-address_types-tblAddressType" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
-					
-					] ,
-			  buttons: [
-				{
-				  extend: "copy",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "csv",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "excel",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "pdfHtml5",
-				  className: "btn-sm"
-				},
-				{
-				  extend: "print",
-				  className: "btn-sm"
-				},
-			  ],
-			  responsive: true,
-			});
-			//$("#datatable-buttons").DataTable();
-		}
-		/*End Address Types- --*/
-	
+	  /*-- END property description--*/
 	};
 	TableManageButtons = function() {
 	  "use strict";
