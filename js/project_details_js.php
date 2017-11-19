@@ -11,6 +11,10 @@ var ViewModel = function() {
 		self.available_districts = ko.observableArray(); //list of districts available to be added to this project
 		self.district_property_rates = ko.observableArray(); //list of district property rates
 		self.district_crop_rates = ko.observableArray(); //list of district crop rates
+		<?php if(isset($_GET['pap_id'])):?>
+		self.crop_rate_description = ko.observable(); //crop rate object when adding or saving crops
+		self.property_rate_description = ko.observable(); //property rate object when adding or saving properties
+		<?php endif; ?>
 		
 		self.selectedDistricts = ko.observableArray([new DummyObject()]);
 		self.selectedImprovements = ko.observableArray([new DummyObject()]);
@@ -116,7 +120,7 @@ $(document).ready(function(){
 	}
 
 	var handleDataTableButtons = function() {
-		/* -- Land Acquisition category Data Table --- */
+		/* -- Project Affected Person Data Table --- */
 		if ($("#tblPap").length) {
 			  dTable['tblPap'] = $('#tblPap').DataTable({
 			  dom: "lfrtipB",
@@ -126,7 +130,7 @@ $(document).ready(function(){
 				  "dataType": "JSON",
 				  "type": "POST",
 				  "data":  function(d){
-						d.tbl = 'paps';
+						d.tbl = 'project_paps';
 						d.project_id = <?php echo $_GET['id']; ?>;
 					}
 			  },"columnDefs": [ {
@@ -135,7 +139,7 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
-			  columns:[ { data: 'pap_ref' },
+			  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 				  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 					{ data: 'district_name'},
 					/* { data: 'county_id'},
@@ -178,7 +182,121 @@ $(document).ready(function(){
 			});
 			//$("#datatable-buttons").DataTable();
 		}
-	  /*-- End Land Acquisition category--*/
+	  /*-- End Project Affected Person DataTable--*/
+		/* -- PAP Crops Data Table --- */
+		if ($("#tblPapCrop").length) {
+			  dTable['tblPapCrop'] = $('#tblPapCrop').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  "ajax": {
+				  "url":"getData.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'pap_crops';
+						<?php if(isset($_GET['pap_id'])): ?>
+						d.pap_id = <?php echo $_GET['pap_id']; ?>;
+						<?php endif;?>
+					}
+			  },"columnDefs": [ {
+				  "targets": [6],
+				  "orderable": false,
+				  "searchable": false
+			  }],
+			  "autoWidth": false,
+			  columns:[ { data: 'id'},
+				  { data: 'croptype' },
+					{ data: 'cropdescription'},
+					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));}},
+					{ data: 'quantity'},
+					{ data: 'rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data)*parseInt(full.quantity));}},
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papCropModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm btn-white"
+				},
+			  ],
+			  responsive: true,
+			});
+			//$("#datatable-buttons").DataTable();
+		}
+	  /*-- End PAP Crops DataTable--*/
+		/* -- PAP Imrpovements Data Table --- */
+		if ($("#tblPapImprovement").length) {
+			  dTable['tblPapImprovement'] = $('#tblPapImprovement').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  "ajax": {
+				  "url":"getData.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'pap_improvements';
+						<?php if(isset($_GET['pap_id'])): ?>
+						d.pap_id = <?php echo $_GET['pap_id']; ?>;
+						<?php endif;?>
+					}
+			  },"columnDefs": [ {
+				  "targets": [6],
+				  "orderable": false,
+				  "searchable": false
+			  }],
+			  "autoWidth": false,
+			  columns:[ { data: 'id'},
+				  { data: 'propertytype' },
+					{ data: 'propertydescription'},
+					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));} },
+					{ data: 'quantity'},
+					{ data: 'rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data)*parseInt(full.quantity));}},
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papImprovementModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm btn-white"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm btn-white"
+				},
+			  ],
+			  responsive: true,
+			});
+			//$("#datatable-buttons").DataTable();
+		}
+	  /*-- End PAP Crops DataTable--*/
 	  /* -- Clients Data Table --- */
 	  if ($("#tblProjectCoverage").length) {
 			  dTable['tblProjectCoverage'] = $('#tblProjectCoverage').DataTable({
@@ -285,7 +403,7 @@ function saveData(form,event){
 					}, 2000);
 				}else{
 					
-					showStatusMessage(response, "fail");
+					showStatusMessage(response.message, "fail");
 				}
 				
 			}
@@ -295,18 +413,21 @@ function saveData(form,event){
 	//});
 }
 //clicking the update icon
-$('table#tblPap tbody').on( 'click', '.edit_me', function () {
+$('table tbody').on( 'click', '.edit_me', function () {
 	var row = $(this).closest("tr");
 	var tbl = $(row).parent().parent();
-	var dt = dTable[$(tbl).attr("id")];
+	tbl_id = $(tbl).attr("id");
+	var dt = dTable[tbl_id];
 	var data = dt.row(row).data();
 	if(typeof(data)=='undefined'){
 		data = dt.row($(row).prev()).data();
 	}
-    // Display the update form
-	viewModel.pap_details(data);
-	viewModel.getPapDetails(data.id);
-	edit_data(data, 'tblPapForm'); /* */
+	<?php if(!isset($_GET['pap_id'])): ?>
+		// Display the update form
+		viewModel.pap_details(data);
+		viewModel.getPapDetails(data.id);
+	<?php endif;?>
+	edit_data(data, tbl_id+'Form'); /* */
 } );
 
 /* Delete whenever a Delete Button has been clicked */
@@ -335,6 +456,8 @@ $('table tbody').on('click', '.delete_me', function () {
 });
 
 $("#projectCoverageForm").validate({submitHandler: saveData});
+$("#tblPapImprovementForm").validate({submitHandler: saveData});
+$("#tblPapCropForm").validate({submitHandler: saveData});
 $("#tblPapForm").validate({
 		rules: {
 			phone_contact: {

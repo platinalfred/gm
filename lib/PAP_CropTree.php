@@ -28,6 +28,13 @@ class PAP_CropTree extends Db {
 		}
 		return false;
 	}
+	public function addPapCropTree($data){
+		$fields =array_slice(self::$db_fields, 1);
+		$data['pap_ref'] = "PAP_".time();
+		$data['date_created'] = time();
+		$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+		return $this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data));
+	}
 	public function updatePapCropTrees($data){
 		if(!empty($data)){
 			$fields = array_slice(self::$db_fields, 1);
@@ -35,7 +42,16 @@ class PAP_CropTree extends Db {
 		}
 		return false;
 	}
-	public function deletePap($id){
+	public function updatePapCropTree($data){
+		$fields = array_slice(self::$db_fields, 1);
+		$id = $data['id'];
+		unset($data['id'], $data['tbl']);
+		if($this->updateSpecial(self::$table_name, $data, "id=".$id)){
+			return true;
+		}
+		return false;
+	}
+	public function deletePapCropTree($id){
 		if($this->del(self::$table_name, "id=".$id)){
 			return true;
 		}

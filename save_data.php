@@ -244,6 +244,44 @@ if(isset($_POST['tbl'])){
 			}
 			$output = json_encode($response);
 		break;
+		case "tblPapCrop":
+			$pap_crop_tree_obj = new PAP_CropTree();
+			$response = array();
+			$response['success'] = false;
+			$response['message'] = "PAP crop/tree details could not be saved. Please try again or contact admin for assistance!";
+			if($data['id'] != ""){
+				if($pap_crop_tree_obj->updatePapCropTree($data)){ //saving only one crop to the database
+						$response['success'] = true;
+						$response['message'] = "PAP crop/tree successfully updated!";
+				}
+			}else{
+				$data['date_created'] = time();
+				$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+				if($pap_crop_tree_obj->addPapCropTree($data)){
+					$response['message'] = true;
+				}
+			}
+			$output = json_encode($response);
+		break;
+		case "tblPapImprovement":
+			$pap_improvement_obj = new PAP_Improvement();
+			$response = array();
+			$response['success'] = false;
+			$response['message'] = "PAP improvement details could not be saved. Please try again or contact admin for assistance!";
+			if($data['id'] != ""){
+				if($pap_improvement_obj->updatePapImprovement($data)){ //saving only one mprovement to the database
+					$response['success'] = true;
+					$response['message'] = "PAP improvement successfully updated!";
+				}
+			}else{
+				$data['date_created'] = time();
+				$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+				if($pap_improvement_obj->addPapImprovement($data)){
+					$response['success'] = true;
+				}
+			}
+			$output = json_encode($response);
+		break;
 		case "district_rate":
 			$districtcroprate = new DistrictCropRate();
 			if($data['id'] != ""){

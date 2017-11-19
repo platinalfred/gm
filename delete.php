@@ -67,6 +67,20 @@ if(isset($_GET['tbl'])){
 				$msg =  "Success";
 			}
 		break;
+		case "tblPapCrop":
+			require_once("lib/PAP_CropTree.php");
+			$pap_crop_tree_obj = new PAP_CropTree();
+			if($pap_crop_tree_obj->deletePapCropTree($_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
+		case "tblPapImprovement":
+			require_once("lib/PAP_Improvementphp");
+			$pap_improvement_obj = new PAP_Improvement();
+			if($pap_improvement_obj->deletePapImprovement($_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
 		case "expense_types":
 			if($db->turnOff("expensetypes", "id=".$_GET['id'])){
 				$msg =  "Success";
