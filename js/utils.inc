@@ -12,6 +12,9 @@ $('input.athousand_separator').keyup(function(event) {
 	  return numberWithCommas(value);
   });
 });
+function enableDisableButton(frm, status){
+	$(frm).find(":input[type=submit], :button[type=submit]").prop("disabled", status);
+}
 function numberWithCommas(x) {
 	var parts = x.toString().split(".");
 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");

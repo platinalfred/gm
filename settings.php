@@ -4,7 +4,16 @@ $needed_files = array("dataTables", "iCheck", "jasny", "knockout", "moment");
 include("includes/header.php");
 $tree_crop_description = new TreeCropTypesDescription();
 $districts = new Districts();
+$counties = new Counties();
+$subcounties = new SubCounties();
+$parishes = new Parish();
+$villages = new Village();
 $propertytypedescription = new PropertyTypeDescription();
+$all_ditricts = $districts->findAll();
+$all_counties = $counties->findAll();							
+$all_subcounties = $subcounties->findAll();							
+$all_parishes = $parishes->findAll();							
+$all_villages = $villages->findAll();							
 ?>
 <div class="container-fluid main-content">
 	<div class="page-title">
@@ -31,18 +40,17 @@ $propertytypedescription = new PropertyTypeDescription();
 							<ul class="dropdown-menu">
 								<!---->
 								<!--<li class=""><a data-toggle="tab" role="tab" href="#tab-15" href="#">Repayment Duration</a></li> -->
-								<li class=""><a role="tab" data-toggle="tab" href="#tab-6" >Id Card Types</a></li>
-								<li class=""><a data-toggle="tab" role="tab" href="#tab-16" href="#">Security Types</a></li>
+								<li class=""><a role="tab" data-toggle="tab" href="#tab-6" >Districts</a></li>
+								<!--li class=""><a data-toggle="tab" role="tab" href="#tab-16" href="#">Security Types</a></li>
 								
-								<!--<li class=""><a data-toggle="tab" role="tab" href="#tab-18" href="#">Address Type</a></li>-->
 								<li class=""><a data-toggle="tab" role="tab" href="#tab-19" href="#">Marital Status</a></li>
-								<li class=""><a data-toggle="tab" role="tab" href="#tab-22" href="#">Expense Type</a></li>
+								<li class=""><a data-toggle="tab" role="tab" href="#tab-22" href="#">Expense Type</a></li !-->
 							</ul>
 						</li>
 					</ul>
 					<div class="tab-content">
 						<!---  Land Access Category Unit   --->
-						<div id="tab-2" class="tab-pane active">
+						<div id="tab-2" class="tab-pane ">
 							<div class="col-lg-12">
 								<div class="action-buttons">
 									<a  data-toggle="modal" href="#categoryUnitModal"><i class="fa fa-plus"></i> Add New</a>
@@ -78,6 +86,381 @@ $propertytypedescription = new PropertyTypeDescription();
 								</table>
 							</div>
 						
+						</div>
+						<!---  Districts   --->
+						<div id="tab-6" class="tab-pane active">
+							<div class="tabs-container">
+								<ul class="nav nav-tabs">
+									<li class="active"><a data-toggle="tab" href="#district_tab"><i class="fa fa-list"></i> Districts</a></li>
+									<li><a data-bind='click:function(){ getServerData("counties") }' data-toggle="tab" href="#county_tab" ><i class="fa fa-briefcase"></i> Counties</a></li>
+									<li><a data-bind='click:function(){ getServerData("subcounties") } ' data-toggle="tab" href="#subcounty_tab" ><i class="fa fa-briefcase"></i> Sub Counties</a></li>
+									<li><a data-bind='click:function(){ getServerData("parishes") }' data-toggle="tab" href="#parish_tab" ><i class="fa fa-briefcase"></i> Parishes</a></li>
+									<li><a data-bind='click:function(){ getServerData("villages") }' data-toggle="tab" href="#village_tab" ><i class="fa fa-briefcase"></i> Villages</a></li>
+								</ul>
+								<div class="tab-content">
+									<div id="district_tab" class="tab-pane active">
+										<div class="col-lg-12">
+											<div class="action-buttons">
+												<a  data-toggle="modal" href="#districts"><i class="fa fa-plus"></i> Add New</a>
+											</div>
+											<div id="districts" class="modal fade" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-sm-12">
+																	<p>Add /Update District</p>
+																	<div class="ibox-content">
+																		<form class="form-horizontal" id="tblDistricts">
+																			<input type="hidden" name="id" >
+																			<input type="hidden" name="tbl"  value="ditricts">
+																			<div class="form-group"><label class="col-lg-2 control-label">Name</label>
+																				<div class="col-lg-10"><input type="text" name="district_name" placeholder="Name" class="form-control"> 
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<div class="col-lg-offset-2 col-lg-10">
+																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="heading">
+											<i class="fa fa-bars"></i>Districts
+										</div>
+										<div class="widget-content padded">
+											<table class="table table-bordered table-striped" id="tblDistrict">
+												<thead>
+													<th>Name</th>
+													<th></th>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div id="county_tab" class="tab-pane">
+										<div class="col-lg-12">
+											<div class="action-buttons">
+												<a  data-toggle="modal" href="#county"><i class="fa fa-plus"></i> Add New</a>
+											</div>
+											<div id="county" class="modal fade" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-sm-12">
+																	<p>Add /Update County</p>
+																	<div class="ibox-content">
+																		<form class="form-horizontal" id="tblCountys">
+																			<input type="hidden" name="id" >
+																			<input type="hidden" name="tbl"  value="county">
+																			<div class="form-group"><label class="col-lg-2 control-label">District</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="village_district" name="district"data-bind='options: districtsList, optionsText: "district_name", optionsCaption: "Select distict...", optionsAfterRender: setOptionValue("id"), value: district'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group"><label class="col-lg-2 control-label">Name</label>
+																				<div class="col-lg-10"><input type="text" name="county_name" placeholder="Name" class="form-control"> 
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<div class="col-lg-offset-2 col-lg-10">
+																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="heading">
+											<i class="fa fa-bars"></i>Counties
+										</div>
+										<div class="widget-content padded">
+											<table class="table table-bordered table-striped" id="tblCounty">
+												<thead>
+													<tr>
+														<th id="county0">&nbsp;</th>
+														<th id="county1">&nbsp;</th>
+														<th></th>
+													</tr>
+													<tr>
+														<th>County Name</th>
+														<th>District Name</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div id="subcounty_tab" class="tab-pane">
+										<div class="col-lg-12">
+											<div class="action-buttons">
+												<a  data-toggle="modal" href="#subcounty"><i class="fa fa-plus"></i> Add New</a>
+											</div>
+											<div id="subcounty" class="modal fade" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-sm-12">
+																	<p>Add /Update SubCounty</p>
+																	<div class="ibox-content">
+																		<form class="form-horizontal" id="tblSubCountys">
+																			<input type="hidden" name="id" >
+																			<input type="hidden" name="noreset" >
+																			<input type="hidden" name="tbl"  value="subcounty">
+																			<div class="form-group">	
+																				<label class="col-lg-2 control-label">District</label>
+																				<div class="col-lg-10">
+																					<select class="select2able"  name="district"data-bind='options: districtsList, optionsText: "district_name", optionsCaption: "Select distict...", optionsAfterRender: setOptionValue("id"), value: district'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group"><label class="col-lg-2 control-label">County</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="village_county" name="county"   data-bind='options: filteredCountiesList, optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: setOptionValue("id"), value: county'>
+																					</select>
+																				</div>
+																			</div>
+																			
+																			<div class="form-group"><label class="col-lg-2 control-label">Name</label>
+																				<div class="col-lg-10"><input required type="text" name="subcounty_name" placeholder="Name" class="form-control" > 
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<div class="col-lg-offset-2 col-lg-10">
+																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="heading">
+											<i class="fa fa-bars"></i>SubCounties
+										</div>
+										<div class="widget-content padded">
+											<table class="table table-bordered table-striped" id="tblSubCounty">
+												<thead>
+													<tr>
+														<th id="subcounty0">&nbsp;</th>
+														<th id="subcounty1">&nbsp;</th>
+														<th id="subcounty2">&nbsp;</th>
+														<th></th>
+													</tr>
+													<tr>
+														<th>Subcounty</th>
+														<th >County</th>
+														<th >District</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div id="parish_tab" class="tab-pane">
+										<div class="col-lg-12">
+											<div class="action-buttons">
+												<a  data-toggle="modal" href="#parish"><i class="fa fa-plus"></i> Add New</a>
+											</div>
+											<div id="parish" class="modal fade" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-sm-12">
+																	<p>Add /Update Parish</p>
+																	<div class="ibox-content">
+																		<form class="form-horizontal" id="tblParishs">
+																			<input type="hidden" name="id" >
+																			<input type="hidden" name="noreset" >
+																			<input type="hidden" name="tbl"  value="parish">
+																			<div class="form-group">	
+																				<label class="col-lg-2 control-label">District</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="village_district" name="district"data-bind='options: districtsList, optionsText: "district_name", optionsCaption: "Select distict...", optionsAfterRender: setOptionValue("id"), value: district'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group"><label class="col-lg-2 control-label">County</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="village_county" name="county"   data-bind='options: filteredCountiesList, optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: setOptionValue("id"), value: county'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-lg-2 control-label">Sub county</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="" name="subcounty" data-bind='options: filteredSCountiesList, optionsText: "subcounty_name", optionsCaption: "Select subcounty...", optionsAfterRender: setOptionValue("id"), value: scounty'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group"><label class="col-lg-2 control-label">Name</label>
+																				<div class="col-lg-10"><input type="text" name="parish_name" placeholder="Name" class="form-control"> 
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<div class="col-lg-offset-2 col-lg-10">
+																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="heading">
+											<i class="fa fa-bars"></i>Parishes
+										</div>
+										<div class="widget-content padded">
+											<table class="table table-bordered table-striped" id="tblParish">
+												<thead>
+													<tr>
+														<th id="parish0">&nbsp;</th>
+														<th id="parish1">&nbsp;</th>
+														<th id="parish2">&nbsp;</th>
+														<th id="parish3">&nbsp;</th>
+														<th></th>
+													</tr>
+													<tr>
+														<th>Parish</th>
+														<th>Subcounty</th>
+														<th >County</th>
+														<th >District</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div id="village_tab" class="tab-pane">
+										<div class="col-lg-12">
+											<div class="action-buttons">
+												<a  data-toggle="modal" href="#villages"><i class="fa fa-plus"></i> Add New</a>
+											</div>
+											<div id="villages" class="modal fade" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-body">
+															<div class="row">
+																<div class="col-sm-12">
+																	<p>Add /Update Village</p>
+																	<div class="ibox-content">
+																		<form class="form-horizontal" id="tblVillages">
+																			<input type="hidden" name="id" >
+																			<input type="hidden" name="tbl"  value="village">
+																			<div class="form-group">
+																				<label class="col-lg-2 control-label">District</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="village_district" name="district"data-bind='options: districtsList, optionsText: "district_name", optionsCaption: "Select distict...", optionsAfterRender: setOptionValue("id"), value: district'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group"><label class="col-lg-2 control-label">County</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="village_county" name="county"   data-bind='options: filteredCountiesList, optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: setOptionValue("id"), value: county'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group"><label class="col-lg-2 control-label">Sub county</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="village_subcounty" name="subcounty" data-bind='options: filteredSCountiesList, optionsText: "subcounty_name", optionsCaption: "Select subcounty...", optionsAfterRender: setOptionValue("id"), value: scounty'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group"><label class="col-lg-2 control-label">Parish</label>
+																				<div class="col-lg-10">
+																					<select class="select2able" id="village_parish" name="parish"   data-bind='options: filteredParishesList, optionsText: "parish_name", optionsCaption: "Select parish...", optionsAfterRender: setOptionValue("id"), value: parish'>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group"><label class="col-lg-2 control-label">Name</label>
+																				<div class="col-lg-10"><input type="text" name="village_name" placeholder="Name" class="form-control"> 
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<div class="col-lg-offset-2 col-lg-10">
+																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="heading">
+											<i class="fa fa-bars"></i>Villages
+										</div>
+										<div class="widget-content padded">
+											<table class="table table-bordered table-striped" id="tblVillage">
+												<thead>
+													<tr>
+														<th id="village0">&nbsp;</th>
+														<th id="village1">&nbsp;</th>
+														<th id="village2">&nbsp;</th>
+														<th id="village3">&nbsp;</th>
+														<th id="village4">&nbsp;</th>
+														<th></th>
+													</tr>
+													<tr>
+														<th>Village</th>
+														<th>Parish</th>
+														<th>Subcounty</th>
+														<th >County</th>
+														<th >District</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 						<!-- Tree or Crop Types -->
 						<div id="tab-3" class="tab-pane">
