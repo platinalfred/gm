@@ -54,7 +54,7 @@ include("lib/Libraries.php");
 	<?php 
 	 }
 	 ?>
-    
+    <script src="js/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<script src="js/jquery-2.1.1.js" type="text/javascript"></script>
     <script src="js/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
