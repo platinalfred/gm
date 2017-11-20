@@ -54,7 +54,6 @@ include("lib/Libraries.php");
 	<?php 
 	 }
 	 ?>
-    <script src="js/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<script src="js/jquery-2.1.1.js" type="text/javascript"></script>
     <script src="js/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -104,11 +103,13 @@ include("lib/Libraries.php");
     <script src="javascripts/jquery.nestable.js" type="text/javascript"></script>
     <script src="javascripts/main.js" type="text/javascript"></script>
     <script src="javascripts/respond.js" type="text/javascript"></script>
-    <script src="javascripts/knockout-3.4.2.js" type="text/javascript"></script>
 	<!-- PNotify -->
 	<script src="js/plugins/pnotify/dist/pnotify.js"></script>
 	<script src="js/plugins/pnotify/dist/pnotify.buttons.js"></script>
 	<script src="js/plugins/pnotify/dist/pnotify.nonblock.js"></script>
+	
+    <script src="js/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="javascripts/knockout-3.4.2.js" type="text/javascript"></script>
 	<?php
 	if(in_array("dataTables", $needed_files)){
 		?>

@@ -64,6 +64,7 @@ var ViewModel = function() {
 		self.countiesList = ko.observableArray(<?=json_encode($counties)?>);	
 		self.subcountiesList = ko.observableArray(<?=json_encode($subcounties)?>);	
 		self.parishesList = ko.observableArray(<?=json_encode($parishes)?>);
+		self.villagesList = ko.observableArray(<?=json_encode($villages)?>);
 
 		//useful variables for the form
 		self.district = ko.observable();
@@ -91,6 +92,13 @@ var ViewModel = function() {
 			if(self.scounty()){
 				return ko.utils.arrayFilter(self.parishesList(), function(parish) {
 					return (parseInt(self.scounty().id)==parseInt(parish.subcounty));
+				});
+			}
+		});
+		self.filteredVillagesList = ko.computed(function() {
+			if(self.parish()){
+				return ko.utils.arrayFilter(self.villagesList(), function(village) {
+					return (parseInt(self.parish().id)==parseInt(village.parish));
 				});
 			}
 		});
@@ -138,10 +146,6 @@ var ViewModel = function() {
 					self.district_property_rates(response.district_property_rates);
 					self.district_crop_rates(response.district_crop_rates);
 					viewModel.available_districts.valueHasMutated();
-						
-						self.countiesList(response.counties);
-						self.subcountiesList(response.subcounties);	
-						self.parishesList(response.parishes);
 					<?php endif;?> 
 				}
 			})
@@ -240,7 +244,7 @@ $(document).ready(function(){
 					/* { data: 'county_id'},
 					{ data: 'subcounty_id'},
 					{ data: 'parish_id'}, */
-					{ data: 'village'},
+					{ data: 'village_id'},
 					{ data: 'phone_contact'},
 					{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 					{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
@@ -537,23 +541,28 @@ $('table tbody').on( 'click', '.edit_me', function () {
 		viewModel.pap_details(data);
 		viewModel.getPapDetails(data.id);
 	<?php else:?>
+		//we need to set the village object accordingly
+		viewModel.village(ko.utils.arrayFirst(viewModel.villagesList(), function(currentParish){
+			return (data.parish_id == currentParish.id);
+		}));
+		$('#parish_id').val(data.fk_parish_id);
 		//we need to set the parish object accordingly
-		viewModel.parish(ko.utils.arrayFirst(pspModel.parishesList(), function(currentParish){
+		viewModel.parish(ko.utils.arrayFirst(viewModel.parishesList(), function(currentParish){
 			return (data.parish_id == currentParish.id);
 		}));
 		$('#parish_id').val(data.fk_parish_id);
 		//as well as the scounty object
-		viewModel.scounty(ko.utils.arrayFirst(pspModel.scountiesList(), function(currentSCounty){
+		viewModel.scounty(ko.utils.arrayFirst(viewModel.subcountiesList(), function(currentSCounty){
 			return (data.subcounty_id == currentSCounty.id);
 		}));
 		$('#subcounty_id').val(data.subcounty_id);
 		//and the county object
-		viewModel.county(ko.utils.arrayFirst(pspModel.countiesList(), function(currentCounty){
+		viewModel.county(ko.utils.arrayFirst(viewModel.countiesList(), function(currentCounty){
 			return (data.county_id == currentCounty.id);
 		}));
 		$('#county_id').val(data.county_id);
 		//finally the district object
-		viewModel.district(ko.utils.arrayFirst(pspModel.project_districts(), function(currentDistrict){
+		viewModel.district(ko.utils.arrayFirst(viewModel.project_districts(), function(currentDistrict){
 			return (data.district_id == currentDistrict.id);
 		}));
 	<?php endif;?>

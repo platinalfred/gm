@@ -64,27 +64,28 @@
 							<div class="form-group">
 								<label class="control-label col-md-5">County</label>
 								<div class="col-md-7">
-									<select id="county_id" name="county_id" class="select2able" data-bind='options: filteredCountiesList(), optionsText: "district_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id"), value:county'></select>
+									<select id="county_id" name="county_id" class="select2able" data-bind='options: filteredCountiesList(), optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id"), value:county, select2:{dropdownParent:"#papModal"}'></select>
 								</div>
 							</div>
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">Subcounty</label>
 								<div class="col-md-7">
-									<select id="subcounty_id" name="subcounty_id" class="select2able" data-bind='options: filteredSCountiesList, optionsText: "district_name", optionsCaption: "Select subcounty...", optionsAfterRender: $root.setOptionValue("id"), value:scounty'></select>
+									<select id="subcounty_id" name="subcounty_id" class="select2able" data-bind='options: filteredSCountiesList, optionsText: "subcounty_name", optionsCaption: "Select subcounty...", optionsAfterRender: $root.setOptionValue("id"), value:scounty'></select>
 								</div>
 							</div>
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">Parish</label>
 								<div class="col-md-7">
-									<select id="parish_id" name="parish_id" class="select2able" data-bind='options: filteredParishesList, optionsText: "district_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id"), value:parish'></select>
+									<select id="parish_id" name="parish_id" class="select2able" data-bind='options: filteredParishesList, optionsText: "parish_name", optionsCaption: "Select parish...", optionsAfterRender: $root.setOptionValue("id"), value:parish'></select>
 								</div>
 							</div>
-							<div class="form-group" >
+						
+							<div class="form-group">
 								<label class="control-label col-md-5">Village</label>
 								<div class="col-md-7">
-									<input name="village" type="text" class="form-control" data-msg-required="Village must be entered" required />
+									<select id="village_id" name="village_id" class="select2able" data-bind='options: filteredParishesList, optionsText: "village_name", optionsCaption: "Select village...", optionsAfterRender: $root.setOptionValue("id"), value:parish'></select>
 								</div>
 							</div>
 						</div>

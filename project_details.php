@@ -17,11 +17,13 @@ if(!$projectDetails)
 	<?php if(!isset($_GET['pap_id'])):
 		$county_obj = new Counties();
 		$subcounty_obj = new SubCounties();
-		$parish_obj = new Parish(); /* */
+		$parish_obj = new Parish();
+		$village_obj = new Village(); /* */
 		//administrative units lists
 		$counties = $county_obj->findAll();
 		$subcounties = $subcounty_obj->findAll();
 		$parishes = $parish_obj->findAll();
+		$villages = $village_obj->findAll();
 	?>
 	<div class="row">
 		<div class="col-lg-12">
@@ -190,6 +192,7 @@ if(!$projectDetails)
 					$county_obj = new Counties();
 					$subcounty_obj = new SubCounties();
 					$parish_obj = new Parish();
+					$village_obj = new Village();
 					$pap_details = $pap_obj->findById($_GET['pap_id']);
 					if(!$pap_details)
 						die("The page you are looking for does not exist");
@@ -198,6 +201,7 @@ if(!$projectDetails)
 					$county_details = $county_obj->findById($pap_details['county_id']);
 					$subcounty_details = $subcounty_obj->findById($pap_details['subcounty_id']);
 					$parish_details = $parish_obj->findById($pap_details['parish_id']);
+					$village_details = $village_obj->findById($pap_details['village_id']);
 					
 				?>
 				<div class="tabs-container" id="project_page">
@@ -234,7 +238,7 @@ if(!$projectDetails)
 												<strong>County </strong>: <?=$county_details['county_name']?>, 
 												<strong>Sub County </strong>: <?=$subcounty_details['county_name']?>, 
 												<strong></i> Parish </strong>: <?=$parish_details['parish_name']?>, 
-												<strong>Village:</strong> <?=$pap_details['village']?> </div>
+												<strong>Village:</strong> <?=$village_details['village_name']?> </div>
 											</div>
 											<div class="row">
 											<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 3 ):?>
