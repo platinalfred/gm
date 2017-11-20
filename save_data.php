@@ -11,13 +11,13 @@ function save_file($files, $files_dir, $file_name = ""){
 				$feedback =  false;
 			}else{
 				$filename = $file_name === ""?$files['name']:($file_name.".".$extension);
-				if(!file_exists($files_dir)){
+				if(!is_dir($files_dir)){
 					mkdir($files_dir, 0777, true);
 				}else{
 					if(file_exists($files_dir.$filename))
-						unlink($files_dir.$file_name.".".$extension);
+						unlink($files_dir.$filename);
 				}
-				if(move_uploaded_file($files['tmp_name'], $files_dir.$filename.".".$extension)){
+				if(move_uploaded_file($files['tmp_name'], $files_dir.strtolower($filename))){
 					$feedback = $filename;
 				}
 				else $feedback = false;

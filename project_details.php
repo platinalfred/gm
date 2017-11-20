@@ -386,10 +386,28 @@ if(!$projectDetails)
 										<div class="col-md-3">
 											<div class="img-thumbnail">
 												<a href='#' data-bind="confirmClick: { message: 'Are you sure?', click: $root.removeServerPapPhoto }" class="pull-right" title="Delete this photo"><span class="fa fa-times danger"></span></a>
-												<img data-bind="attr: {src: 'img/paps/pap_'+pap_id+'/'+file_name}" class="img-responsive img-thumbnail" />
+												<a  href="" data-toggle="modal" data-bind="attr: {'data-target':'#pap_photo'+$index()}" ><img data-bind="attr: {src: 'img/paps/pap_'+pap_id+'/'+file_name}" class="img-responsive img-thumbnail" /></a>
+												
 												<hr/>
 												<p data-bind="text:description, click: $root.openTextArea" title="Click to edit"></p>
 												<textarea class="form-control hideit" data-bind="value:description, event: {blur: $root.hideTextArea}" placeholder="Caption this photo"></textarea>
+											</div>
+											<div class="modal fade" tabindex="-1" data-bind="attr: {'id':'#pap_photo'+$index()}" role="dialog" aria-hidden="true">
+													<div class="modal-dialog modal-xl">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+															</div>
+														<div class="modal-body">
+															<div class="img-thumbnail" style="text-align:center;">
+																<img data-bind="attr: {src: 'img/paps/pap_'+pap_id+'/'+file_name}" class="img-responsive img-thumbnail" />
+															<hr/>
+															<p data-bind="text:description, click: $root.openTextArea" title="Click to edit"></p>
+															<textarea class="form-control hideit" data-bind="value:description, event: {blur: $root.hideTextArea}" placeholder="Caption this photo"></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 										<!--ko if: (($index()+1)%4==0||($index()+1)==$root.serverPapPhotos.length) -->
