@@ -28,9 +28,11 @@ if(isset($_POST['tbl'])){
 			$output['clients'] = $client_obj->getSelectList();
 		break;
 		case "project_details":
+			//geography
 			$project_coverage_obj = new ProjectCoverage();
 			$district_property_rate_obj = new DistrictPropertyRate();
 			$district_crop_rate_obj = new DistrictCropRate();
+			
 			$output['available_districts'] = $project_coverage_obj->findAvailableDistricts($_POST['project_id']);
 			$output['district_property_rates'] = $district_property_rate_obj->findDistrictPropertyRates();
 			$output['district_crop_rates'] = $district_crop_rate_obj->findDistrictCropRates();

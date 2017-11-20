@@ -48,5 +48,29 @@ class ProjectAffectedPerson extends Db {
 		}
 		return false;
 	}
+	public function getPapPhotoById($id){
+		$result = $this->getrec('tbl_pap_photos', "`id`=" . $id, "", "");
+		return !empty($result) ? $result : false;
+	}
+	public function getPapPhotos($where = ""){
+		$result_array = $this->getarray('tbl_pap_photos', $where, "", "");
+		return !empty($result_array) ? $result_array : false;
+	}
+	public function savePapPhotoDetails($data){
+		$data['date_created'] = time();
+		$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
+		return $this->addSpecial('tbl_pap_photos', $data);
+	}
+	public function updatePapPhotoDetails($data){
+		$id = $data['id'];
+		unset($data['id'], $data['tbl']);
+		return $this->updateSpecial('tbl_pap_photos', $data, "id=".$id);
+	}
+	public function deletePapPhoto($id){
+		if($this->del('tbl_pap_photos', "id=".$id)){
+			return true;
+		}
+		return false;
+	}
 }
 ?>

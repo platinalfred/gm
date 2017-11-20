@@ -75,11 +75,27 @@ if(isset($_GET['tbl'])){
 			}
 		break;
 		case "tblPapImprovement":
-			require_once("lib/PAP_Improvementphp");
+			require_once("lib/PAP_Improvement.php");
 			$pap_improvement_obj = new PAP_Improvement();
 			if($pap_improvement_obj->deletePapImprovement($_GET['id'])){
 				$msg =  "Success";
 			}
+		break;
+		case "tblPapPhoto":
+			require_once("lib/ProjectAffectedPerson.php");
+			$pap_obj = new ProjectAffectedPerson();
+				$response['success'] = false;
+			//first delete the photo then also from the db
+			$pap_photo = $pap_obj->getPapPhotoById($_GET['id']);
+			$the_file = "img/paps/pap_" . $pap_photo['pap_id'] . "/" . $pap_photo['file_name'];
+			//echo $the_file;
+			if(file_exists($the_file)) //delete the file if it really exists in the file system
+				unlink($the_file);
+			if($pap_obj->deletePapPhoto($_GET['id'])){
+				$response['success'] = true;
+				$response['message'] = "Successfully deleted";
+			}
+			$msg = json_encode($response);
 		break;
 		case "expense_types":
 			if($db->turnOff("expensetypes", "id=".$_GET['id'])){

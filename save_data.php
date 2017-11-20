@@ -1,22 +1,26 @@
 <?php
 require_once('lib/Libraries.php');
-function save_file($files, $files_dir, $file_name){
+function save_file($files, $files_dir, $file_name = ""){
 	$feedback = true;
 	//upload any file that came with this data
-	if ($files['photo_url']['error'] == UPLOAD_ERR_OK) {
+	if ($files['error'] == UPLOAD_ERR_OK) {
 		$allowedExts = array("gif", "jpeg", "jpg", "png", "JPG", "PNG", "GIF");
-		$extension = end(explode(".", $files['photo_url']["name"]));
-		if(($files['photo_url']["size"] < 200000000) && in_array($extension, $allowedExts)){ 							
-			if($files['photo_url']['error'] > 0){
+		$extension = strtolower(end(explode(".", $files["name"])));
+		if(($files["size"] < 200000000) && in_array($extension, $allowedExts)){ 							
+			if($files['error'] > 0){
 				$feedback =  false;
 			}else{
+				$filename = $file_name === ""?$files['name']:($file_name.".".$extension);
 				if(!file_exists($files_dir)){
 					mkdir($files_dir, 0777, true);
 				}else{
-					if(file_exists($files_dir.$file_name.".".$extension))
+					if(file_exists($files_dir.$filename))
 						unlink($files_dir.$file_name.".".$extension);
 				}
-				$feedback = move_uploaded_file($files['photo_url']['tmp_name'], $files_dir.$file_name.".".$extension);
+				if(move_uploaded_file($files['tmp_name'], $files_dir.$filename.".".$extension)){
+					$feedback = $filename;
+				}
+				else $feedback = false;
 			}
 		} 
 	} 
@@ -292,7 +296,7 @@ if(isset($_POST['tbl'])){
 						$response['success'] = true;
 						$response['message'][] = "PAP properties successfully updated!";
 					}
-					if(!empty($_FILES)&&save_file($_FILES,"./img/paps/", "pap_".$pap_id)){
+					if(!empty($_FILES)&&save_file($_FILES['photo_url'],"./img/paps/", "pap_".$pap_id)){
 						$response['success'] = true;
 						$response['message'][] = "PAP photo successfully updated!";
 					}
@@ -368,6 +372,45 @@ if(isset($_POST['tbl'])){
 				$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
 				if($pap_improvement_obj->addPapImprovement($data)){
 					$response['success'] = true;
+				}
+			}
+			$output = json_encode($response);
+		break;
+		case "tblPapPhotos":
+			$pap_obj = new ProjectAffectedPerson();
+			$response = array();
+			$response['success'] = false;
+			if(isset($data['id'])&&is_numeric($data['id'])){
+				if($pap_obj->updatePapPhotoDetails($data)){
+					$response['success'] = true;
+					$response['message'] = "PAP photo details successfully updated!";
+				}
+			}else{
+				for($count = 0; $count < count($_FILES["pap_photos"]["name"]); $count++){
+					$_FILES["pap_photo"]["name"] = $_FILES["pap_photos"]["name"][$count];
+					$_FILES["pap_photo"]["type"] = $_FILES["pap_photos"]["type"][$count];
+					$_FILES["pap_photo"]["tmp_name"] = $_FILES["pap_photos"]["tmp_name"][$count];
+					$_FILES["pap_photo"]["error"] = $_FILES["pap_photos"]["error"][$count];
+					$_FILES["pap_photo"]["size"] = $_FILES["pap_photos"]["size"][$count];
+					
+					if(($file_extension = save_file($_FILES['pap_photo'],"./img/paps/pap_" . $data['pap_id'] . "/")) ){		
+						$data["pap_photos"][$count]['file_name'] = $file_extension;
+						$data["pap_photos"][$count]['pap_id'] = $data['pap_id'];
+						//print_r($data[$count]);
+						if($pap_obj->savePapPhotoDetails($data["pap_photos"][$count])){
+							$response['success'] = true;
+							$response['message'][$count] = "PAP photo successfully saved!";
+						}
+						else{
+							$response['message'][$count] = "PAP photo details could not be saved. Please try again or contact admin for assistance!";
+						}
+					}
+					else {
+						$response['message'][$count] = "PAP photo could not be uploaded. Please try again or contact admin for assistance!";
+					}
+				}
+				if($response['success']){
+					$response['pap_photos'] = $pap_obj->getPapPhotos("`pap_id`=" . $data['pap_id']);
 				}
 			}
 			$output = json_encode($response);

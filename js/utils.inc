@@ -308,9 +308,10 @@ function showStatusMessage(message='', display_type='success'){
   $('[data-toggle="tooltip"]').tooltip()
 })*/
 $(document).ready(function(){
-jQuery.validator.addMethod("phoneUg", function(value, element) {
-  return this.optional(element) || /^(0|\+256)[2347]([0-9]{8})/.test(value);
-}, "Please enter valid phone number");
+	jQuery.validator.addMethod("phoneUg", function(value, element) {
+	  return this.optional(element) || /^(0|\+256)[2347]([0-9]{8})/.test(value);
+	}, "Please enter valid phone number");
+	
 	ko.bindingHandlers.select2 = {
 		init: function(element, valueAccessor, allBindingsAccessor) {
 			$(element).select2(valueAccessor());
@@ -325,6 +326,17 @@ jQuery.validator.addMethod("phoneUg", function(value, element) {
 			if (value) {
 				$(element).trigger('change');
 			}
+		}
+	}
+	ko.bindingHandlers.confirmClick = {
+		init: function(element, valueAccessor, allBindings, viewModel) {
+			var value = valueAccessor();
+			var message = ko.unwrap(value.message);
+			var click = value.click;
+			ko.applyBindingsToNode(element, { click: function () {
+				if (confirm(message))
+					return click.apply(this, Array.prototype.slice.apply(arguments));
+			}}, viewModel);
 		}
 	}
 });
