@@ -14,7 +14,15 @@ if(!$projectDetails)
 ?>
 <div class="container-fluid main-content">
 	<div class="page-title"><h4><a href="project_details.php?id=<?=$_GET['id']?>"><?php echo $projectDetails['project_title']; ?></a></h4></div>
-	<?php if(!isset($_GET['pap_id'])):?>
+	<?php if(!isset($_GET['pap_id'])):
+		$county_obj = new Counties();
+		$subcounty_obj = new SubCounties();
+		$parish_obj = new Parish(); /* */
+		//administrative units lists
+		$counties = $county_obj->findAll();
+		$subcounties = $subcounty_obj->findAll();
+		$parishes = $parish_obj->findAll();
+	?>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="widget-container fluid-height clearfix">
@@ -50,6 +58,7 @@ if(!$projectDetails)
 							<div class="widget-content padded">
 								<table class="table table-bordered table-striped" id="tblPap">
 									<thead>
+										<tr>
 										<th>PAP Ref</th>
 										<th>Names</th>
 										<th>District</th>
@@ -65,10 +74,23 @@ if(!$projectDetails)
 										<th>Improvements</th>
 										<th>Crops/Trees</th>
 										<th></th>
+										</tr>
 									</thead>
 									<tbody>
-										
 									</tbody>
+									<tfoot>
+										<tr>
+											<th>Total</th>
+											<th colspan="4">&nbsp;</th>
+											<th>0</th>
+											<th>0</th>
+											<th>0</th>
+											<th>&nbsp;</th>
+											<th>0</th>
+											<th>0</th>
+											<th>&nbsp;</th>
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 						</div>
@@ -165,13 +187,18 @@ if(!$projectDetails)
 				<?php
 					$pap_obj = new ProjectAffectedPerson();
 					$district_obj = new Districts();
-					/* $county_obj = new County();
-					$subcounty_obj = new SubCounty();
-					$parish_obj = new Parish(); */
+					$county_obj = new Counties();
+					$subcounty_obj = new SubCounties();
+					$parish_obj = new Parish();
 					$pap_details = $pap_obj->findById($_GET['pap_id']);
 					if(!$pap_details)
 						die("The page you are looking for does not exist");
+					$pap_photos = $pap_obj->getPapPhotos("`pap_id`=" . $_GET['pap_id']); // the paps photos
 					$district_details = $district_obj->findById($pap_details['district_id']);
+					$county_details = $county_obj->findById($pap_details['county_id']);
+					$subcounty_details = $subcounty_obj->findById($pap_details['subcounty_id']);
+					$parish_details = $parish_obj->findById($pap_details['parish_id']);
+					
 				?>
 				<div class="tabs-container" id="project_page">
 					<ul class="nav nav-tabs">
@@ -203,12 +230,11 @@ if(!$projectDetails)
 												<div class="col-md-8">&nbsp;</div>
 											</div>
 											<div class="row">
-												<div class="col-md-2"><strong><i class="fa fa-map-marker"></i> District </strong></div>
-												<div class="col-md-2"><?=$district_details['district_name']?></div>
-												<div class="col-md-2"><strong>Village:</strong> </div>
-												<div class="col-md-2"><?=$pap_details['village']?></div>
-												<div class="col-md-4" id="<?php=$pap_details['subcounty_id']; ?><?=$pap_details['parish_id']?>">&nbsp;
-												</div>
+												<div class="col-md-12"><strong><i class="fa fa-map-marker"></i> District </strong>: <?=$district_details['district_name']?>, 
+												<strong>County </strong>: <?=$county_details['county_name']?>, 
+												<strong>Sub County </strong>: <?=$subcounty_details['county_name']?>, 
+												<strong></i> Parish </strong>: <?=$parish_details['parish_name']?>, 
+												<strong>Village:</strong> <?=$pap_details['village']?> </div>
 											</div>
 											<div class="row">
 											<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 3 ):?>
@@ -259,16 +285,26 @@ if(!$projectDetails)
 							<div class="widget-content padded">
 								<table class="table table-bordered table-striped" id="tblPapCrop">
 									<thead>
-										<th>#</th>
-										<th>Crop</th>
-										<th>Description</th>
-										<th>Rate</th>
-										<th>Quantity</th>
-										<th>Amount</th>
-										<th></th>
+										<tr>
+											<th>#</th>
+											<th>Crop</th>
+											<th>Description</th>
+											<th>Rate</th>
+											<th>Quantity</th>
+											<th>Amount</th>
+											<th></th>
+										</tr>
 									</thead>
 									<tbody>
 									</tbody>
+									<tfoot>
+										<tr>
+											<th>Total</th>
+											<th colspan="4">&nbsp;</th>
+											<th>Amount</th>
+											<th></th>
+										</tr>
+									</tfoot>
 								</table>
 							</div>
 						</div>
@@ -298,22 +334,72 @@ if(!$projectDetails)
 								<div class="widget-content padded">
 									<table class="table table-bordered table-striped" id="tblPapImprovement">
 										<thead>
-											<th>#</th>
-											<th>Improvement</th>
-											<th>Description</th>
-											<th>Rate</th>
-											<th>Quantity</th>
-											<th>Amount</th>
-											<th></th>
+											<tr>
+												<th>#</th>
+												<th>Improvement</th>
+												<th>Description</th>
+												<th>Rate</th>
+												<th>Quantity</th>
+												<th>Amount</th>
+												<th></th>
+											</tr>
 										</thead>
 										<tbody>
-											
 										</tbody>
+										<tfoot>
+											<tr>
+												<th>Total</th>
+												<th colspan="4">&nbsp;</th>
+												<th>Amount</th>
+												<th></th>
+											</tr>
+										</tfoot>
 									</table>
 								</div>
 							</div>
 						</div>
 						<!-- end PAP Improvements pane -->
+						<!-- PAP Photos section -->
+						<div id="tab-4" class="tab-pane">
+							<div class="col-lg-12">
+								<div class="action-buttons">
+									<a  data-toggle="modal" href="#papPhotosModal"><i class="fa fa-plus"></i> Add Photos</a>
+								</div>
+								<div class="heading">
+									<i class="fa fa-group"></i>PAP Photos
+								</div>
+								<div class="modal fade" id="papPhotosModal">
+									<div class="col-md-8 col-md-offset-2">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+												<h4 class="modal-title">PAP Photos</h4>
+											</div>
+											<div class="modal-body">
+												<?php include("add_pap_photo.php"); ?>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="widget-content padded">
+									<!--ko foreach: $root.serverPapPhotos-->
+										<div class="col-md-3">
+											<div class="img-thumbnail">
+												<a href='#' data-bind="confirmClick: { message: 'Are you sure?', click: $root.removeServerPapPhoto }" class="pull-right" title="Delete this photo"><span class="fa fa-times danger"></span></a>
+												<img data-bind="attr: {src: 'img/paps/pap_'+pap_id+'/'+file_name}" class="img-responsive img-thumbnail" />
+												<hr/>
+												<p data-bind="text:description, click: $root.openTextArea" title="Click to edit"></p>
+												<textarea class="form-control hideit" data-bind="value:description, event: {blur: $root.hideTextArea}" placeholder="Caption this photo"></textarea>
+											</div>
+										</div>
+										<!--ko if: (($index()+1)%4==0||($index()+1)==$root.serverPapPhotos.length) -->
+										<div class="clearfix" style="border-top:5px;"></div><!-- close the row tag-->
+										<!--/ko-->
+									<!--/ko-->
+								</div>
+							</div>
+						</div>
+						<!-- end PAP Photos pane -->
 					</div>
 				</div>
 			</div>

@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">District <span data-bind="text: ($index()+1)"></span></label>
                         <div class="col-md-7">
-							<select name="district_id[]" class="form-control" data-bind="options: $root.available_districts, optionsText: 'district_name', optionsCaption: 'Select district...', optionsAfterRender: $root.setOptionValue('id')"></select>
+							<select class="select2able" name="district_id[]" data-bind="options: $root.available_districts, optionsText: 'district_name', optionsCaption: 'Select district...', optionsAfterRender: $root.setOptionValue('id'), select2:{dropdownParent:'#projectCoverageModal'}"></select>
                         </div>
                         <div class="col-md-1">
 							<a href="#" data-bind="click: $root.removeSelectedDistrict" class="text-danger"><i class="fa fa-times"></i></a>

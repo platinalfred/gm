@@ -6,7 +6,7 @@ class SubCounties extends Db {
 	protected static $db_fields = array("id", "subcounty_name", "county");
 	
 	public function findById($id){
-		$result = $this->getrec(self::$table_name, "id=".$id, "");
+		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
 		return !empty($result) ? $result:false;
 	}
 	public function findSubCounties(){

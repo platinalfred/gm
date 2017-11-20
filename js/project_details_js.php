@@ -11,25 +11,106 @@ var ViewModel = function() {
 		self.available_districts = ko.observableArray(); //list of districts available to be added to this project
 		self.district_property_rates = ko.observableArray(); //list of district property rates
 		self.district_crop_rates = ko.observableArray(); //list of district crop rates
-		<?php if(isset($_GET['pap_id'])):?>
+		
+		<?php if(isset($_GET['pap_id'])):?> //this should only appear when we are in the pap details page
 		self.crop_rate_description = ko.observable(); //crop rate object when adding or saving crops
 		self.property_rate_description = ko.observable(); //property rate object when adding or saving properties
+		//photos
+		self.papPhotos = ko.observableArray([new DummyObject()]);
+		self.serverPapPhotos = ko.observableArray(<?=json_encode($pap_photos)?>); //data returned from the serve upon clicking the edit button
+		self.addPapPhoto = function(){self.papPhotos.push(new DummyObject());};
+		self.removePapPhoto = function(papPhoto){self.papPhotos.remove(papPhoto);};
+		
+		self.removeServerPapPhoto = function(serverPapPhoto){
+			//first delete from the server, if successful, then delete from the local copy of the array if successful
+			$.ajax({
+				url:'delete.php',
+				type:'get',
+				data:{tbl:'tblPapPhoto', id:serverPapPhoto.id},
+				dataType:'json',
+				success:function(result){
+					if( result.success )
+						self.serverPapPhotos.remove(serverPapPhoto);
+					else
+						alert("Photo could not be deleted");
+				}			
+			});
+		};
+		self.openTextArea = function(serverPapPhoto, event) {
+			$(event.target).addClass('hideit').next().removeClass('hideit');
+		};
+		self.hideTextArea = function(serverPapPhoto, event) {
+			//send the content to the server to be updated, if description was changed
+			$.ajax({
+				url:'save_data.php',
+				type:'post',
+				data:{tbl: 'tblPapPhotos', id:serverPapPhoto.id, description:serverPapPhoto.description},
+				dataType:'json',
+				success:function(response){
+					if( response.success ){
+						console.log(response.message);
+						showStatusMessage("Photo details successfully saved" ,"success");
+						setTimeout(function(){
+						}, 500);
+					}else{
+						
+						showStatusMessage("Photo could not be updated:\n" + response.message, "fail");
+					}
+				}			
+			});
+			$(event.target).addClass('hideit').prev().removeClass('hideit').text(serverPapPhoto.description);
+		};
+		<?php else:?>
+		self.countiesList = ko.observableArray(<?=json_encode($counties)?>);	
+		self.subcountiesList = ko.observableArray(<?=json_encode($subcounties)?>);	
+		self.parishesList = ko.observableArray(<?=json_encode($parishes)?>);
+
+		//useful variables for the form
+		self.district = ko.observable();
+		self.county = ko.observable();
+		self.scounty = ko.observable();
+		self.parish = ko.observable();
+		
+		self.filteredCountiesList = ko.computed(function() {
+			if(self.district()){
+				return ko.utils.arrayFilter(self.countiesList(), function(county) {
+						
+					return (parseInt(self.district().id)==parseInt(county.district));
+					
+				});
+			}
+		});	
+		self.filteredSCountiesList = ko.computed(function() {
+			if(self.county()){
+				return ko.utils.arrayFilter(self.subcountiesList(), function(scounty) {
+					return (parseInt(self.county().id)==parseInt(scounty.county));
+				});
+			}
+		});	
+		self.filteredParishesList = ko.computed(function() {
+			if(self.scounty()){
+				return ko.utils.arrayFilter(self.parishesList(), function(parish) {
+					return (parseInt(self.scounty().id)==parseInt(parish.subcounty));
+				});
+			}
+		});
 		<?php endif; ?>
 		
-		self.selectedDistricts = ko.observableArray([new DummyObject()]);
-		self.selectedImprovements = ko.observableArray([new DummyObject()]);
-		self.serverDataImprovements = ko.observableArray(); //data returned from the serve upon clicking the edit button
-		self.selectedPlants = ko.observableArray([new DummyObject()]);
-		self.serverDataPlants = ko.observableArray(); //data returned from the serve upon clicking the edit button
+		
 		//operations
 		//districts
+		self.selectedDistricts = ko.observableArray([new DummyObject()]);
 		self.addDistrict = function(){self.selectedDistricts.push(new DummyObject());};
 		self.removeSelectedDistrict = function(selectedDistrict){self.selectedDistricts.remove(selectedDistrict);};
 		//improvements
+		self.selectedImprovements = ko.observableArray([new DummyObject()]);
+		self.serverDataImprovements = ko.observableArray(); //data returned from the serve upon clicking the edit button
 		self.addImprovement = function(){self.selectedImprovements.push(new DummyObject());};
 		self.removeSelectedImprovement = function(selectedImprovement){self.selectedImprovements.remove(selectedImprovement);};
 		self.removeServerDataImprovement = function(serverDataImprovement){self.serverDataImprovements.remove(serverDataImprovement);};
 		//plants
+		self.selectedPlants = ko.observableArray([new DummyObject()]);
+		self.serverDataPlants = ko.observableArray(); //data returned from the serve upon clicking the edit button
 		self.addPlant = function(){self.selectedPlants.push(new DummyObject());};
 		self.removeSelectedPlant = function(selectedPlant){self.selectedPlants.remove(selectedPlant);};
 		self.removeServerDataPlant = function(serverDataPlant){self.serverDataPlants.remove(serverDataPlant);};
@@ -51,10 +132,17 @@ var ViewModel = function() {
 				data:{tbl:"project_details", project_id:<?php echo $_GET['id']; ?>},
 				url: "getData.php",
 				success: function(response){
+					<?php if(isset($_GET['pap_id'])):?> 
+					<?php else:?>
 					self.available_districts(response.available_districts);
 					self.district_property_rates(response.district_property_rates);
 					self.district_crop_rates(response.district_crop_rates);
 					viewModel.available_districts.valueHasMutated();
+						
+						self.countiesList(response.counties);
+						self.subcountiesList(response.subcounties);	
+						self.parishesList(response.parishes);
+					<?php endif;?> 
 				}
 			})
 		};
@@ -139,6 +227,13 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
+			  "footerCallback": function (tfoot, data, start, end, display ) {
+				var api = this.api(), cols = [5,6,7,9,10];
+				$.each(cols, function(key, val){
+					var total = api.column(val).data().sum();
+					$(api.column(val).footer()).html( curr_format(Math.round(total)) );
+				});
+			  },
 			  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 				  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 					{ data: 'district_name'},
@@ -204,6 +299,12 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
+			  "footerCallback": function (tfoot, data, start, end, display ) {
+				var api = this.api()
+					var total = api.column(5).data().sum();
+					var pageTotal = api.column(5, { page: 'current'} ).data().sum();
+					$(api.column(5).footer()).html( curr_format(Math.round(pageTotal) + ' (' + total + ')') );
+			  },
 			  columns:[ { data: 'id'},
 				  { data: 'croptype' },
 					{ data: 'cropdescription'},
@@ -261,6 +362,12 @@ $(document).ready(function(){
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
+			  "footerCallback": function (tfoot, data, start, end, display ) {
+				var api = this.api()
+					var total = api.column(5).data().sum();
+					var pageTotal = api.column(5, { page: 'current'} ).data().sum();
+					$(api.column(5).footer()).html( curr_format(Math.round(pageTotal) + ' (' + total + ')') );
+			  },
 			  columns:[ { data: 'id'},
 				  { data: 'propertytype' },
 					{ data: 'propertydescription'},
@@ -396,10 +503,12 @@ function saveData(form,event){
 							//location.reload(true);
 							viewModel.getServerData();
 						}
-						else{
-						//if(frmId == 'tblPap'){
+						if(frmId == 'tblPapPhotoForm'){
+							viewModel.serverPapPhotos(response.pap_photos);
+							console.log(viewModel.serverPapPhotos());
 						}
-						dTable[frmId].ajax.reload();
+						if(typeof dTable[frmId] != 'undefined')
+							dTable[frmId].ajax.reload();
 					}, 2000);
 				}else{
 					
@@ -422,12 +531,32 @@ $('table tbody').on( 'click', '.edit_me', function () {
 	if(typeof(data)=='undefined'){
 		data = dt.row($(row).prev()).data();
 	}
+	edit_data(data, tbl_id+'Form');
 	<?php if(!isset($_GET['pap_id'])): ?>
 		// Display the update form
 		viewModel.pap_details(data);
 		viewModel.getPapDetails(data.id);
+	<?php else:?>
+		//we need to set the parish object accordingly
+		viewModel.parish(ko.utils.arrayFirst(pspModel.parishesList(), function(currentParish){
+			return (data.parish_id == currentParish.id);
+		}));
+		$('#parish_id').val(data.fk_parish_id);
+		//as well as the scounty object
+		viewModel.scounty(ko.utils.arrayFirst(pspModel.scountiesList(), function(currentSCounty){
+			return (data.subcounty_id == currentSCounty.id);
+		}));
+		$('#subcounty_id').val(data.subcounty_id);
+		//and the county object
+		viewModel.county(ko.utils.arrayFirst(pspModel.countiesList(), function(currentCounty){
+			return (data.county_id == currentCounty.id);
+		}));
+		$('#county_id').val(data.county_id);
+		//finally the district object
+		viewModel.district(ko.utils.arrayFirst(pspModel.project_districts(), function(currentDistrict){
+			return (data.district_id == currentDistrict.id);
+		}));
 	<?php endif;?>
-	edit_data(data, tbl_id+'Form'); /* */
 } );
 
 /* Delete whenever a Delete Button has been clicked */
@@ -457,6 +586,7 @@ $('table tbody').on('click', '.delete_me', function () {
 
 $("#projectCoverageForm").validate({submitHandler: saveData});
 $("#tblPapImprovementForm").validate({submitHandler: saveData});
+$("#tblPapPhotoForm").validate({submitHandler: saveData});
 $("#tblPapCropForm").validate({submitHandler: saveData});
 $("#tblPapForm").validate({
 		rules: {
