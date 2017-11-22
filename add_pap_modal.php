@@ -85,12 +85,12 @@
 							<div class="form-group">
 								<label class="control-label col-md-5">Village</label>
 								<div class="col-md-7">
-									<select id="village_id" name="village_id" class="select2able" data-bind='options: filteredParishesList, optionsText: "village_name", optionsCaption: "Select village...", optionsAfterRender: $root.setOptionValue("id"), value:parish'></select>
+									<select id="village_id" name="village_id" class="select2able" data-bind='options: filteredVillagesList, optionsText: "village_name", optionsCaption: "Select village...", optionsAfterRender: $root.setOptionValue("id"), value:id'></select>
 								</div>
 							</div>
 						</div>
 					</fieldset>
-					<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 3 ):?>
+					<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
 						<div class="col-lg-3">
 					<fieldset>
 						<legend>Way Leave</legend>
@@ -103,7 +103,7 @@
 					</fieldset>
 						</div>
 					<?php endif;?>
-					<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 3 ):?>
+					<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
 						<div class="col-lg-3">
 					<fieldset>
 						<legend>Right of way</legend>
@@ -116,7 +116,7 @@
 					</fieldset>
 						</div>
 					<?php endif;?>
-					<?php if( $projectDetails['project_category_unit'] == 3 ):?>
+					<?php if( $projectDetails['project_category_unit'] == 5 ):?>
 						<div class="col-lg-3">
 					<fieldset>
 						<legend>Total Size</legend>
@@ -158,7 +158,7 @@
 									<label class="control-label" data-bind="text: propertytype + ' - ' + propertydescription"></label>
 								</div>
 								<div class="col-md-4">
-									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'improvement['+$index()+'][quantity]'}, value:quantity" data-msg-required="Enter quantity" required />
+									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'improvement['+$index()+'][quantity]'}, value:quantity" data-msg-required="Enter quantity"  />
 									<input type="hidden" data-bind="attr:{name:'improvement['+$index()+'][rate]'}, value:rate" />
 								</div>
 								<div class="col-md-1">
@@ -169,10 +169,10 @@
 							<!-- ko foreach: selectedImprovements -->
 							<div class="form-group">
 								<div class="col-md-7">
-									<select class="select2able" data-bind="options: $root.district_property_rates, optionsText: function(item){ return item.propertytype + ' - ' + item.propertydescription;}, optionsCaption: 'Select improvement...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'improvement['+($index()+($root.serverDataImprovements()?$root.serverDataImprovements().length:0))+'][district_property_rate_id]'}, select2:{dropdownParent:'#papModal'}" data-msg-required="An option must be selected" required></select>
+									<select class="select2able" data-bind="options: $root.district_property_rates, optionsText: function(item){ return item.propertytype + ' - ' + item.propertydescription;}, optionsCaption: 'Select improvement...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'improvement['+($index()+($root.serverDataImprovements()?$root.serverDataImprovements().length:0))+'][district_property_rate_id]'}, select2:{dropdownParent:'#papModal'}" data-msg-required="An option must be selected" ></select>
 								</div>
 								<div class="col-md-4">
-									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'improvement['+($index()+($root.serverDataImprovements()?$root.serverDataImprovements().length:0))+'][quantity]'}"  data-msg-required="Enter Quantity" required />
+									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'improvement['+($index()+($root.serverDataImprovements()?$root.serverDataImprovements().length:0))+'][quantity]'}"  data-msg-required="Enter Quantity"  />
 									<!--ko with:rate_description-->
 									<input type="hidden" data-bind="attr:{name:'improvement['+($parentContext.$index()+($root.serverDataImprovements()?$root.serverDataImprovements().length:0))+'][rate]'}, value:rate" />
 									<!--/ko-->
