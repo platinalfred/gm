@@ -18,12 +18,15 @@ if(!$projectDetails)
 		$county_obj = new Counties();
 		$subcounty_obj = new SubCounties();
 		$parish_obj = new Parish();
-		$village_obj = new Village(); /* */
+		$village_obj = new Village();
+		$tenure_obj = new Tenure(); /* */
 		//administrative units lists
 		$counties = $county_obj->findAll();
 		$subcounties = $subcounty_obj->findAll();
 		$parishes = $parish_obj->findAll();
 		$villages = $village_obj->findAll();
+		//land tenures
+		$tenures = $tenure_obj->findAll();
 	?>
 	<div class="row">
 		<div class="col-lg-12">

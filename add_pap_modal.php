@@ -90,6 +90,20 @@
 							</div>
 						</div>
 					</fieldset>
+						<div class="col-lg-3">
+					<fieldset>
+						<legend>Land Tenure</legend>
+							<div class="form-group" >
+								<div class="col-md-8">
+									<select name="tenure" id="tenure" data-bind="value: tenure" class="form-control">
+										<?php foreach($tenures as $tenure):?>
+											<option value="<?=$tenure['id']?>"><?=$tenure['title']?></value>
+										<?php endforeach;?>
+									</select>
+								</div>
+								<label class="control-label col-md-4">Acres</label>
+							</div>
+					</fieldset>
 					<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
 						<div class="col-lg-3">
 					<fieldset>
@@ -109,7 +123,7 @@
 						<legend>Right of way</legend>
 							<div class="form-group" >
 								<div class="col-md-8">
-									<input name="rightofway" type="text" class="form-control" />
+									<input name="rightofway" type="text" class="form-control" data-msg-required="Required field" required />
 								</div>
 								<label class="control-label col-md-4">Acres</label>
 							</div>

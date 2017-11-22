@@ -112,13 +112,13 @@ var ViewModel = function() {
 		self.addDistrict = function(){self.selectedDistricts.push(new DummyObject());};
 		self.removeSelectedDistrict = function(selectedDistrict){self.selectedDistricts.remove(selectedDistrict);};
 		//improvements
-		self.selectedImprovements = ko.observableArray([new DummyObject()]);
+		self.selectedImprovements = ko.observableArray();
 		self.serverDataImprovements = ko.observableArray(); //data returned from the serve upon clicking the edit button
 		self.addImprovement = function(){self.selectedImprovements.push(new DummyObject());};
 		self.removeSelectedImprovement = function(selectedImprovement){self.selectedImprovements.remove(selectedImprovement);};
 		self.removeServerDataImprovement = function(serverDataImprovement){self.serverDataImprovements.remove(serverDataImprovement);};
 		//plants
-		self.selectedPlants = ko.observableArray([new DummyObject()]);
+		self.selectedPlants = ko.observableArray();
 		self.serverDataPlants = ko.observableArray(); //data returned from the serve upon clicking the edit button
 		self.addPlant = function(){self.selectedPlants.push(new DummyObject());};
 		self.removeSelectedPlant = function(selectedPlant){self.selectedPlants.remove(selectedPlant);};
