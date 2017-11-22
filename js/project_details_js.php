@@ -71,6 +71,7 @@ var ViewModel = function() {
 		self.county = ko.observable();
 		self.scounty = ko.observable();
 		self.parish = ko.observable();
+		self.village = ko.observable();
 		
 		self.filteredCountiesList = ko.computed(function() {
 			if(self.district()){

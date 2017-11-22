@@ -85,7 +85,7 @@
 							<div class="form-group">
 								<label class="control-label col-md-5">Village</label>
 								<div class="col-md-7">
-									<select id="village_id" name="village_id" class="select2able" data-bind='options: filteredVillagesList, optionsText: "village_name", optionsCaption: "Select village...", optionsAfterRender: $root.setOptionValue("id"), value:id'></select>
+									<select id="village_id" name="village_id" class="select2able" data-bind='options: filteredVillagesList, optionsText: "village_name", optionsCaption: "Select village...", optionsAfterRender: $root.setOptionValue("id"), value:village'></select>
 								</div>
 							</div>
 						</div>
