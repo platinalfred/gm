@@ -176,41 +176,6 @@ var viewModel = new ViewModel();
 var dTable = {};
 $(document).ready(function(){
 	//deleteDataTableRowData();
-	//This function is supposed to make sure when the pop up is not an edit, no data is displayed in the form. It picks the id field and makes sure if empty then the form is empty for adding new data
-	function showStatusMessage(message='', display_type='success'){
-		new PNotify({
-			  title: "Action response",
-			  text: message,
-			  type: display_type,
-			  styling: 'bootstrap3',
-			  sound: true,
-			  hide:true,
-			  buttons: {
-				closer_hover: false,
-			},
-			confirm: {
-				confirm: true,
-				buttons: [{
-					text: 'Ok',
-					addClass: 'btn-primary',
-					click: function(notice) {
-						notice.remove();
-					}
-				},
-				null]
-			},
-			animate: {
-				animate: true,
-				in_class: 'zoomInLeft',
-				out_class: 'zoomOutRight'
-			},
-			  nonblock: {
-				  nonblock: true
-			  }
-			  
-		  });
-		
-	}
 
 	var handleDataTableButtons = function() {
 		/* -- Project Affected Person Data Table --- */
@@ -236,7 +201,7 @@ $(document).ready(function(){
 				var api = this.api(), cols = [5,6,7,9,10];
 				$.each(cols, function(key, val){
 					var total = api.column(val).data().sum();
-					$(api.column(val).footer()).html( curr_format(Math.round(total)) );
+					$(api.column(val).footer()).html( curr_format(total) );
 				});
 			  },
 			  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
@@ -305,16 +270,28 @@ $(document).ready(function(){
 			  }],
 			  "autoWidth": false,
 			  "footerCallback": function (tfoot, data, start, end, display ) {
-				var api = this.api()
-					var total = api.column(5).data().sum();
-					var pageTotal = api.column(5, { page: 'current'} ).data().sum();
-					$(api.column(5).footer()).html( curr_format(Math.round(pageTotal) + ' (' + total + ')') );
+				  var api = this.api();
+				  //get data arrays for the respective columns
+				  var totalQty = api.column(4).data();
+				  var totalAmount = api.column(5).data();
+				  var pageQty = api.column(4, { page: 'current'}).data();
+				  var pageAmount = api.column(5, { page: 'current'}).data();
+				  
+				  var total = 0, pageTotal = 0;
+				  $.each(totalQty, function(key, val){ //summing up the overall total
+					  total += (parseInt(val)*parseFloat(totalAmount[key]))
+				  });
+				  $.each(pageQty, function(key, val){ //summing up the page total
+					  pageTotal += (parseInt(val)*parseFloat(pageAmount[key]))
+				  });
+				  
+					$(api.column(5).footer()).html( curr_format(pageTotal) + ' (' + curr_format(total) + ')' );
 			  },
 			  columns:[ { data: 'id'},
 				  { data: 'croptype' },
 					{ data: 'cropdescription'},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));}},
-					{ data: 'quantity'},
+					{ data: 'quantity', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));}},
 					{ data: 'rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data)*parseInt(full.quantity));}},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papCropModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
 					
@@ -368,9 +345,20 @@ $(document).ready(function(){
 			  }],
 			  "autoWidth": false,
 			  "footerCallback": function (tfoot, data, start, end, display ) {
-				var api = this.api()
-					var total = api.column(5).data().sum();
-					var pageTotal = api.column(5, { page: 'current'} ).data().sum();
+				  var api = this.api();
+				  //get data arrays for the respective columns
+				  var totalQty = api.column(4).data();
+				  var totalAmount = api.column(5).data();
+				  var pageQty = api.column(4, { page: 'current'}).data();
+				  var pageAmount = api.column(5, { page: 'current'}).data();
+				  
+				  var total = 0, pageTotal = 0;
+				  $.each(totalQty, function(key, val){ //summing up the overall total
+					  total += (parseInt(val)*parseFloat(totalAmount[key]))
+				  });
+				  $.each(pageQty, function(key, val){ //summing up the page total
+					  pageTotal += (parseInt(val)*parseFloat(pageAmount[key]))
+				  });
 					$(api.column(5).footer()).html( curr_format(Math.round(pageTotal) + ' (' + total + ')') );
 			  },
 			  columns:[ { data: 'id'},

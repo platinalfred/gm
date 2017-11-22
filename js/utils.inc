@@ -329,4 +329,39 @@ $(document).ready(function(){
 		}
 	}
 });
+//This function is supposed to make sure when the pop up is not an edit, no data is displayed in the form. It picks the id field and makes sure if empty then the form is empty for adding new data
+function showStatusMessage(message='', display_type='success'){
+	new PNotify({
+		  title: "Action response",
+		  text: message,
+		  type: display_type,
+		  styling: 'bootstrap3',
+		  sound: true,
+		  hide:true,
+		  buttons: {
+			closer_hover: false,
+		},
+		confirm: {
+			confirm: true,
+			buttons: [{
+				text: 'Ok',
+				addClass: 'btn-primary',
+				click: function(notice) {
+					notice.remove();
+				}
+			},
+			null]
+		},
+		animate: {
+			animate: true,
+			in_class: 'zoomInLeft',
+			out_class: 'zoomOutRight'
+		},
+		  nonblock: {
+			  nonblock: true
+		  }
+		  
+	  });
+	
+}
 </script>

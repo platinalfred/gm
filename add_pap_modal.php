@@ -94,23 +94,25 @@
 					<fieldset>
 						<legend>Land Tenure</legend>
 							<div class="form-group" >
-								<div class="col-md-8">
-									<select name="tenure" id="tenure" data-bind="value: tenure" class="form-control">
+								<label class="control-label col-md-5">Land Tenure</label>
+								<div class="col-md-7">
+									<select name="tenure" id="tenure" data-bind="value: tenure" class="form-control" data-msg-required="Required"  required >
+										<option>Select option ...</option>
 										<?php foreach($tenures as $tenure):?>
 											<option value="<?=$tenure['id']?>"><?=$tenure['title']?></value>
 										<?php endforeach;?>
 									</select>
 								</div>
-								<label class="control-label col-md-4">Acres</label>
 							</div>
 					</fieldset>
+						</div>
 					<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
-						<div class="col-lg-3">
+						<div class="col-lg-2">
 					<fieldset>
 						<legend>Way Leave</legend>
 							<div class="form-group" >
 								<div class="col-md-8">
-									<input name="way_leave" type="text" class="form-control" data-msg-required="Way leave must be entered" required />
+									<input name="way_leave" type="text" class="form-control" data-msg-required="Way leave must be entered" />
 								</div>
 								<label class="control-label col-md-4">Acres</label>
 							</div>
@@ -118,12 +120,12 @@
 						</div>
 					<?php endif;?>
 					<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
-						<div class="col-lg-3">
+						<div class="col-lg-2">
 					<fieldset>
 						<legend>Right of way</legend>
 							<div class="form-group" >
 								<div class="col-md-8">
-									<input name="rightofway" type="text" class="form-control" data-msg-required="Required field" required />
+									<input name="rightofway" type="text" class="form-control" data-msg-required="Required field" />
 								</div>
 								<label class="control-label col-md-4">Acres</label>
 							</div>
@@ -131,7 +133,7 @@
 						</div>
 					<?php endif;?>
 					<?php if( $projectDetails['project_category_unit'] == 5 ):?>
-						<div class="col-lg-3">
+						<div class="col-lg-2">
 					<fieldset>
 						<legend>Total Size</legend>
 							<div class="form-group" >

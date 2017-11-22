@@ -24,5 +24,6 @@ require_once("ProjectCoverage.php");
 require_once("ProjectAffectedPerson.php");
 require_once("PAP_CropTree.php");
 require_once("PAP_Improvement.php");
+require_once("Tenure.php");
 require_once("Staff.php");
 ?>
