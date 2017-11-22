@@ -112,7 +112,7 @@
 						<legend>Way Leave</legend>
 							<div class="form-group" >
 								<div class="col-md-8">
-									<input name="way_leave" type="text" class="form-control" data-msg-required="Way leave must be entered" />
+									<input name="way_leave" type="text" class="form-control" data-msg-required="Required" />
 								</div>
 								<label class="control-label col-md-4">Acres</label>
 							</div>

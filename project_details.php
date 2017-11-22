@@ -64,21 +64,27 @@ if(!$projectDetails)
 								<table class="table table-bordered table-striped" id="tblPap">
 									<thead>
 										<tr>
-										<th>PAP Ref</th>
-										<th>Names</th>
-										<th>District</th>
-										<!--th>County</th>
-										<th>SubCounty</th>
-										<th>Parish</th-->
-										<th>Village</th>
-										<th>Telephone</th>
-										<th>Way Leave</th>
-										<th>Right of Way</th>
-										<th>Total Size</th>
-										<th>Chainage</th>
-										<th>Improvements</th>
-										<th>Crops/Trees</th>
-										<th></th>
+											<th>PAP Ref</th>
+											<th>Names</th>
+											<th>District</th>
+											<!--th>County</th>
+											<th>SubCounty</th>
+											<th>Parish</th-->
+											<th>Village</th>
+											<th>Telephone</th>
+											<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
+											<th>Way Leave</th>
+											<?php endif;?>
+											<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
+											<th>Right of Way</th>
+											<?php endif;?>
+											<?php if( $projectDetails['project_category_unit'] == 5 ):?>
+											<th>Total Size</th>
+											<?php endif;?>
+											<th>Chainage</th>
+											<th>Improvements</th>
+											<th>Crops/Trees</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -87,9 +93,15 @@ if(!$projectDetails)
 										<tr>
 											<th>Total</th>
 											<th colspan="4">&nbsp;</th>
+											<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
 											<th>0</th>
+											<?php endif;?>
+											<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
 											<th>0</th>
+											<?php endif;?>
+											<?php if( $projectDetails['project_category_unit'] == 5 ):?>
 											<th>0</th>
+											<?php endif;?>
 											<th>&nbsp;</th>
 											<th>0</th>
 											<th>0</th>
