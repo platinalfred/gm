@@ -129,6 +129,7 @@ class Db{
 			}
 			$this->setSessions("logged", true);
 			$this->setSessions("gmt", $results['id']);
+			$this->setSessions("firstname", $results['firstname']." ".$results['lastname']);
 			return $_SESSION;
 		 
 			
@@ -698,7 +699,7 @@ class Db{
 		else $sel = "SELECT  DISTINCT ". $field . " FROM ".$table;
 		if ($ordby != "") $sel = $sel." ORDER BY ".$ordby;
 		if ($limit != "") $sel = $sel." LIMIT ".$limit;
-		
+		echo $sel;
 		$q = $this->conn->query($sel);
 		if($q){
 			$res = $this->buildOut($q);

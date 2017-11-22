@@ -16,6 +16,12 @@
                         </div>
                     </div>
 					<div class="form-group">
+                        <label class="control-label col-md-4">Distance Allowance</label>
+                        <div class="col-md-7">
+							<textarea name="project_title" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+					<div class="form-group">
                         <label class="control-label col-md-4">Project Reference</label>
                         <div class="col-md-7">
                             <div class="input-group">

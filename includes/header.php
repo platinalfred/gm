@@ -1,6 +1,9 @@
 <?php 
 session_start();
 include("lib/Libraries.php");
+if(!isset($_SESSION['logged'])){ 
+	header("location:logout.php");
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -166,18 +169,14 @@ include("lib/Libraries.php");
                 <div class="pull-right">
                     <ul class="nav navbar-nav pull-right">
                        <li class="dropdown user hidden-xs">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">John Smith<b class="caret"></b></a>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#"><?php  echo $_SESSION['firstname']; ?><b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="#">
                                         <i class="fa fa-user"></i>My Account</a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        <i class="fa fa-gear"></i>Account Settings</a>
-                                </li>
-                                <li>
-                                    <a href="login1.html">
+                                    <a href="logout.php">
                                         <i class="fa fa-sign-out"></i>Logout</a>
                                 </li>
                             </ul>

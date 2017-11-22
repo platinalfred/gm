@@ -27,7 +27,7 @@ class Counties extends Db {
 	
 	public function findCountyName($id){
 		$result = $this->getfrec(self::$table_name, "county_name", "id=".$id, "", "");
-		return !empty($result) ? $result['district_name'] : false;
+		return !empty($result) ? $result['county_name'] : false;
 	}
 	public function addCounty($data){
 		$fields =array_slice(self::$db_fields, 1);

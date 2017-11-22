@@ -3,7 +3,7 @@ $curdir = dirname(__FILE__);
 require_once($curdir.'/Db.php');
 class LandAcquisition extends Db {
 	protected static $table_name  = "land_access_project";
-	protected static $db_fields = array("id","client_id", "project_title", "project_category_unit", "project_reference", "date_added", "modified_by", "active");
+	protected static $db_fields = array("id","client_id", "project_title", "project_category_unit", "project_reference", "date_added", "modified_by", "disturbance_allowance", "active");
 	
 	public function findById($id){
 		$result = $this->getrec(self::$table_name, "id=".$id, "", "");

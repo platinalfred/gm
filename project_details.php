@@ -202,6 +202,7 @@ if(!$projectDetails)
 					$pap_photos = $pap_obj->getPapPhotos("`pap_id`=" . $_GET['pap_id']); // the paps photos
 					$district_details = $district_obj->findById($pap_details['district_id']);
 					$county_details = $county_obj->findById($pap_details['county_id']);
+				
 					$subcounty_details = $subcounty_obj->findById($pap_details['subcounty_id']);
 					$parish_details = $parish_obj->findById($pap_details['parish_id']);
 					$village_details = $village_obj->findById($pap_details['village_id']);
@@ -238,8 +239,8 @@ if(!$projectDetails)
 											</div>
 											<div class="row">
 												<div class="col-md-12"><strong><i class="fa fa-map-marker"></i> District </strong>: <?=$district_details['district_name']?>, 
-												<strong>County </strong>: <?=$county_details['county_name']?>, 
-												<strong>Sub County </strong>: <?=$subcounty_details['county_name']?>, 
+												<strong>County </strong>: <?php echo $county_obj->findCountyName($pap_details['county_id']); ?>, 
+												<strong>Sub County </strong>: <?=$subcounty_details['subcounty_name']?>, 
 												<strong></i> Parish </strong>: <?=$parish_details['parish_name']?>, 
 												<strong>Village:</strong> <?=$village_details['village_name']?> </div>
 											</div>
