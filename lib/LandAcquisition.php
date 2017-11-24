@@ -15,7 +15,7 @@ class LandAcquisition extends Db {
 		$table = self::$table_name. " JOIN `land_access_project_category_unit` ON `land_access_project_category_unit`.`id` = `project_category_unit` JOIN `tbl_client` ON `tbl_client`.`id` = `client_id`";
 		// JOIN `staff` ON `land_access_project`.`created_by` = `staff`.`id`
 		
-		$fields = "`land_access_project`.`id`, `project_title`, `client_id`, `client_names`, `project_title`, `project_reference`, `land_access_project`.`date_added`, `title` as `project_category`, `project_category_unit`";
+		$fields = "`land_access_project`.`id`, `project_title`,`disturbance_allowance`, `client_id`, `client_names`, `project_title`, `project_reference`, `land_access_project`.`date_added`, `title` as `project_category`, `project_category_unit`";
 		
 		$result_array = $this->getfarray($table, $fields, "", "", "");
 		

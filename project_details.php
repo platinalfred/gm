@@ -33,13 +33,14 @@ if(!$projectDetails)
 			<div class="widget-container fluid-height clearfix">
 				<div class="tabs-container" id="project_page">
 					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-group"></i> PAPs</a></li>
+						<li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
+						<li ><a data-toggle="tab" href="#tab-1"><i class="fa fa-group"></i> PAPs</a></li>
 						<li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
-						<li><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
+						
 					</ul>
 					<div class="tab-content">
 						<!-- Project Affected Persons section -->
-						<div id="tab-1" class="tab-pane active">
+						<div id="tab-1" class="tab-pane ">
 							<div class="col-lg-12">
 								<div class="action-buttons">
 									<a  data-toggle="modal" href="#papModal" data-bind="click: resetForm"><i class="fa fa-plus"></i> Add New</a>
@@ -113,7 +114,7 @@ if(!$projectDetails)
 						</div>
 						<!-- end Projects content pane -->
 						<!-- Projects -->
-						<div id="tab-2" class="tab-pane">
+						<div id="tab-2" class="tab-pane ">
 							<!-- Client Details pane -->
 							<?php 
 								//retrieve the client's details
@@ -160,7 +161,7 @@ if(!$projectDetails)
 						</div>
 						<!-- end Projects content pane -->
 						<!-- Coverage section -->
-						<div id="tab-3" class="tab-pane">
+						<div id="tab-3" class="tab-pane active">
 							<div class="col-lg-5">
 								<div class="action-buttons">
 									<a  data-toggle="modal" href="#projectCoverageModal"><i class="fa fa-plus"></i> Add District</a>

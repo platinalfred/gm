@@ -29,43 +29,14 @@ var ViewModel = function() {
 var viewModel = new ViewModel();
 var dTable = {};
 $(document).ready(function(){
+	$("#distance_allowance").keyup(function(){
+		
+		var input = $(this);
+		checkInput(input);
+		handleChange(input);
+	});
 	//deleteDataTableRowData();
 	//This function is supposed to make sure when the pop up is not an edit, no data is displayed in the form. It picks the id field and makes sure if empty then the form is empty for adding new data
-	function showStatusMessage(message='', display_type='success'){
-		new PNotify({
-			  title: "Action response",
-			  text: message,
-			  type: display_type,
-			  styling: 'bootstrap3',
-			  sound: true,
-			  hide:true,
-			  buttons: {
-				closer_hover: false,
-			},
-			confirm: {
-				confirm: true,
-				buttons: [{
-					text: 'Ok',
-					addClass: 'btn-primary',
-					click: function(notice) {
-						notice.remove();
-					}
-				},
-				null]
-			},
-			animate: {
-				animate: true,
-				in_class: 'zoomInLeft',
-				out_class: 'zoomOutRight'
-			},
-			  nonblock: {
-				  nonblock: true
-			  }
-			  
-		  });
-		
-	}
-
 	var handleDataTableButtons = function() {
 		/* -- Land Acquisition category Data Table --- */
 		if ($("#tblLandProject").length) {
@@ -90,6 +61,7 @@ $(document).ready(function(){
 				  { data: 'client_names' },
 					{ data: 'project_reference'},
 					{ data: 'project_category'},
+					{ data: 'disturbance_allowance'},
 					{ data: 'date_added'},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#projectModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-land_acquistion_category-landAcquisition" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
 					

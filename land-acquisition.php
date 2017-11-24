@@ -47,6 +47,7 @@ include("includes/header.php");
 												<th>Client Name</th>
 												<th class="hidden-xs">Project Reference</th>
 												<th class="hidden-xs">Project Category</th>
+												<th class="hidden-xs">Disturbance Allowance</th>
 												<th class="hidden-xs">Date Added</th>
 												<th></th>
 											</thead>
