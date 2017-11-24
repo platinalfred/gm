@@ -28,7 +28,7 @@ include("includes/header.php");
 												<h4 class="modal-title">Land Acess Project</h4>
 											</div>
 											<div class="modal-body">
-												<?php include("add_land_project_modal.php"); ?>
+												<?php include_once("add_land_project_modal.php"); ?>
 											</div>
 										</div>
 									</div>

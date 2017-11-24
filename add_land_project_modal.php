@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="col-lg-12">
         <div class="widget-container fluid-height clearfix">
@@ -18,7 +17,7 @@
 					<div class="form-group">
                         <label class="control-label col-md-4">Distance Allowance</label>
                         <div class="col-md-7">
-							<textarea name="project_title" class="form-control" rows="2"></textarea>
+							<input type="number" max="100" name="distance_allowant" class="form-control" required >
                         </div>
                     </div>
 					<div class="form-group">

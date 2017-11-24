@@ -117,7 +117,7 @@ if(!$projectDetails)
 							<!-- Client Details pane -->
 							<?php 
 								//retrieve the client's details
-								require_once('lib\Client.php');
+								require_once('lib/Client.php');
 								$client_obj = new Client();
 								$client_details = $client_obj->findById($projectDetails['client_id']);
 							?>
