@@ -224,7 +224,12 @@ if(!$projectDetails)
 				<div class="tabs-container" id="project_page">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> <?=$pap_details['firstname']?> <?=$pap_details['lastname']?> <?=$pap_details['othername']?> - Details</a></li>
-						<li><a data-toggle="tab" href="#tab-5"><i class="fa fa-globe"></i> Land</a></li>
+						<?php 
+						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 5 || $projectDetails['project_category_unit'] == 4 ){ ?>
+							<li><a data-toggle="tab" href="#tab-5"><i class="fa fa-globe"></i> Land</a></li>
+						<?php 
+						}
+						?>
 						<li><a data-toggle="tab" href="#tab-3"><i class="fa fa-home"></i> Improvements</a></li>
 						<li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-pagelines"></i> Crops & Trees</a></li>
 						<li><a data-toggle="tab" href="#tab-4"><i class="fa fa-user"></i> Photos</a></li>
@@ -280,7 +285,88 @@ if(!$projectDetails)
 							</div>
 						</div>
 						<!-- end PAP Details pane -->
-						<!-- PAP crops section -->
+						<?php 
+						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 5 || $projectDetails['project_category_unit'] == 4 ){ ?>
+							<!-- Land crops section -->
+							<div id="tab-5" class="tab-pane">
+								<div class="widget-content padded">
+									<div class="row">
+										<div class="col-lg-5">
+											<div class="widget-container fluid-height clearfix">
+												<div class="heading">
+													<i class="fa fa-bars"></i>Land Valuation
+												</div>
+												<div class="widget-content padded">
+													<form id="tblLandPapForm" action="#" method="post" class="form-horizontal">
+														<input type="hidden" name="tbl" value="tblLandPap">
+														<input type="hidden" value="<?php echo $_GET['pap_id']; ?>" name="id" >
+														<?php 
+														if($projectDetails['project_category_unit'] == 1){ ?>
+															<div class="form-group">
+																<label class="control-label col-md-4">Right of Way(Acres)</label>
+																<div class="col-md-7"> 
+																<?php echo $pap_details['rightofway'];; ?></div>
+															</div>
+															<?php
+														}elseif($projectDetails['project_category_unit'] == 4){ ?>
+															<div class="form-group">
+																<label class="control-label col-md-4">Right of Way (Acres)</label>
+																<div class="col-md-7"> 
+																<?php  echo $pap_details['rightofway'];; ?></div>
+															</div>
+															<div class="form-group">
+																<label class="control-label col-md-4">Wayleave (Acres)</label>
+																<div class="col-md-7"> 
+																<?php echo $pap_details['way_leave'];; ?></div>
+															</div>
+															<?php
+														}elseif($projectDetails['project_category_unit'] == 5){ ?>
+															<div class="form-group">
+																<label class="control-label col-md-4">Total Take Size (Acres)</label>
+																<div class="col-md-7"> 
+																<?php echo $pap_details['total_take']; ?></div>
+															</div>
+														<?php
+														}
+														?>
+														
+														
+														<div class="form-group">
+															<label class="control-label col-md-4">Rate per Acre (U.shs)</label>
+															<div class="col-md-7">
+																<input type="text" value="<?php echo $pap_details['rate_per_acre']; ?>" name="rate_per_acre" class="form-control athousand_separator" required >
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="control-label col-md-4">Land Interest (%age)</label>
+															<div class="col-md-7">
+																<input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest" value="<?php echo $pap_details['land_interest']; ?>" class="form-control" required >
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="control-label col-md-4">Diminution Level (%age)</label>
+															<div class="col-md-7">
+																<input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" value="<?php echo $pap_details['diminution_rate']; ?>"class="form-control" required >
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="control-label col-md-4">&nbsp;</label>
+															<div class="col-md-7">
+																<button class="btn btn-primary" type="submit">Submit</button>
+																<button class="btn btn-default-outline" data-dismiss="modal" >Cancel </button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- end PAP crops pane -->
+						<?php 
+						}
+						?>
 						<div id="tab-2" class="tab-pane">
 							<div class="col-lg-12">
 								<div class="action-buttons">

@@ -7,9 +7,9 @@ $('input.athousand_separator').keyup(function(event) {
   if(event.which >= 37 && event.which <= 40){
 	event.preventDefault();
   }
-
   $(this).val(function(index, value) {
 	  value = value.replace(/,/g,'');
+	  //alert(numberWithCommas(value));
 	  return numberWithCommas(value);
   });
 });

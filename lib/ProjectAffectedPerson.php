@@ -72,6 +72,11 @@ class ProjectAffectedPerson extends Db {
 		unset($data['id'], $data['tbl']);
 		return $this->updateSpecial('tbl_pap_photos', $data, "id=".$id);
 	}
+	public function addLandValuation($data){
+		$id = $data['id'];
+		unset($data['id'], $data['tbl']);
+		return $this->updateSpecial(self::$table_name, $data, "id=".$id);
+	}
 	public function deletePapPhoto($id){
 		if($this->del('tbl_pap_photos', "id=".$id)){
 			return true;

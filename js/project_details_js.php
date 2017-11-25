@@ -608,6 +608,7 @@ $("#projectCoverageForm").validate({submitHandler: saveData});
 $("#tblPapImprovementForm").validate({submitHandler: saveData});
 $("#tblPapPhotoForm").validate({submitHandler: saveData});
 $("#tblPapCropForm").validate({submitHandler: saveData});
+$("#tblLandPapForm").validate({submitHandler: saveData});
 $("#tblPapForm").validate({
 		rules: {
 			phone_contact: {

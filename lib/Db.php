@@ -563,6 +563,7 @@ class Db{
 			}
 		}
 		$update_sql = "UPDATE ".$table. " SET ".substr($sql,0,-1)." WHERE ".$where;
+		//echo $update_sql;
 		 $updated = $this->conn->query($update_sql);
 		if($updated){
 			return true;
