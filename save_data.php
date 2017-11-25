@@ -264,7 +264,7 @@ if(isset($_POST['tbl'])){
 					}
 					if($pap_crop_tree_obj->addPapCropTrees($add_multiple_data) || $pap_crop_tree_obj->updatePapCropTrees($update_multiple_data)){
 						$response['success'] = true;
-						$response['message'][] = "PAP crops and trees successfully updated!";
+						$response['message'][] = "PAP crops and trees successfully saved!";
 					}
 					//then the properties/improvements
 					unset($add_multiple_data, $update_multiple_data);
@@ -292,16 +292,17 @@ if(isset($_POST['tbl'])){
 							}
 						}
 					}
-					if($pap_improvement_obj->addPapImprovements($add_multiple_data) || $pap_crop_tree_obj->updatePapImprovements($update_multiple_data)){
+					if($pap_improvement_obj->addPapImprovements($add_multiple_data) || $pap_improvement_obj->updatePapImprovements($update_multiple_data)){
 						$response['success'] = true;
-						$response['message'][] = "PAP properties successfully updated!";
+						$response['message'][] = "PAP properties successfully saved!";
 					}
 					if(!empty($_FILES)&&save_file($_FILES['photo_url'],"./img/paps/", "pap_".$pap_id)){
 						$response['success'] = true;
 						$response['message'][] = "PAP photo successfully updated!";
 					}
 				}
-			}else{
+			}
+			else{
 				unset($data['id']);
 				$pap_id = $pap_obj->addPap($data);
 				if(is_numeric($pap_id)){

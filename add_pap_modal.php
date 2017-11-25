@@ -99,7 +99,7 @@
 									<select name="tenure" id="tenure" data-bind="value: tenure" class="form-control" data-msg-required="Required"  required >
 										<option>Select option ...</option>
 										<?php foreach($tenures as $tenure):?>
-											<option value="<?=$tenure['id']?>"><?=$tenure['title']?></value>
+											<option value="<?=$tenure['id']?>"><?=$tenure['title']?></option>
 										<?php endforeach;?>
 									</select>
 								</div>

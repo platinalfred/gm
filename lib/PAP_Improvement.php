@@ -3,7 +3,7 @@ $curdir = dirname(__FILE__);
 require_once($curdir.'/Db.php');
 class PAP_Improvement extends Db {
 	protected static $table_name  = "tbl_pap_improvement";
-	protected static $db_fields = array("id", "pap_id",  "district_property_rate_id", "rate", "quantity","date_created", "created_by","modified_by");
+	protected static $db_fields = array("id", "pap_id",  "district_property_rate_id", "rate", "quantity","date_created","modified_by", "created_by");
 	
 	public function findById($id){
 		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
