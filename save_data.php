@@ -369,6 +369,17 @@ if(isset($_POST['tbl'])){
 			}
 			$output = json_encode($response);
 		break;
+		case "tblLandPap":
+			$pap_obj = new ProjectAffectedPerson();
+			$response = array();
+			$response['success'] = false;
+			$response['message'] = "PAP land valuation could not be added!";
+			if($pap_obj->addLandValuation($data)){
+				$response['message'] = true;
+			}
+			
+			$output = json_encode($response);
+		break;
 		case "tblPapImprovement":
 			$pap_improvement_obj = new PAP_Improvement();
 			$response = array();
