@@ -7,7 +7,6 @@ if(!isset($_SESSION['staff_id']))
 
 require_once("lib/Libraries.php");
 $db = new Db();
-
 if(isset($_GET['tbl'])){
 	$msg = "Could not delete item";
 	switch($_GET['tbl']){
@@ -80,6 +79,20 @@ if(isset($_GET['tbl'])){
 			if($pap_improvement_obj->deletePapImprovement($_GET['id'])){
 				$msg =  "Success";
 			}
+		break;
+		case "tblPap":
+			$pap = new ProjectAffectedPerson();
+			if(isset($_GET['turn_off'])){
+				if($pap->turnOffPap($_GET['id'])){
+					$msg =  "Success";
+				}
+			}else{
+				if($pap->deletePap($_GET['id'])){
+					$msg =  "Success";
+				}
+			}
+			
+			
 		break;
 		case "tblPapPhoto":
 			require_once("lib/ProjectAffectedPerson.php");

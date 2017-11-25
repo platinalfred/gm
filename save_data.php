@@ -3,27 +3,27 @@ require_once('lib/Libraries.php');
 function save_file($files, $files_dir, $file_name = ""){
 	$feedback = true;
 	//upload any file that came with this data
-	if ($files['error'] == UPLOAD_ERR_OK) {
+	if ($files['photo_url']['error'] == UPLOAD_ERR_OK) {
 		$allowedExts = array("gif", "jpeg", "jpg", "png", "JPG", "PNG", "GIF");
-		$extension = strtolower(end(explode(".", $files["name"])));
-		if(($files["size"] < 200000000) && in_array($extension, $allowedExts)){ 							
-			if($files['error'] > 0){
+		$extension = strtolower(end(explode(".", $files['photo_url']["name"])));
+		if(($files['photo_url']["size"] < 200000000) && in_array($extension, $allowedExts)){ 							
+			if($files['photo_url']['error'] > 0){
 				$feedback =  false;
 			}else{
-				$filename = $file_name === ""?$files['name']:($file_name.".".$extension);
+				$filename = $files['photo_url']['name'];
 				if(!is_dir($files_dir)){
 					mkdir($files_dir, 0777, true);
 				}else{
 					if(file_exists($files_dir.$filename))
 						unlink($files_dir.$filename);
 				}
-				if(move_uploaded_file($files['tmp_name'], $files_dir.strtolower($filename))){
+				if(move_uploaded_file($files['photo_url']['tmp_name'], $files_dir.strtolower($filename))){
 					$feedback = $filename;
 				}
 				else $feedback = false;
 			}
 		} 
-	} 
+	}  
 	return $feedback;
 }
 $output = "";

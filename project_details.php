@@ -13,7 +13,8 @@ if(!$projectDetails)
 	header("Location: error_404.php");
 ?>
 <div class="container-fluid main-content">
-	<div class="page-title"><h4><a href="project_details.php?id=<?=$_GET['id']?>"><?php echo $projectDetails['project_title']; ?></a></h4></div>
+	<div class="page-title" > <h4 ><a href="project_details.php?id=<?=$_GET['id']?>"><?php echo $projectDetails['project_title']; ?></a><?php if(isset($_GET['pap_id'])){ ?> < <a href="project_details.php?id=<?php echo $_GET['id'];?>#tab-1"> Paps</a> < Pap detais <?php } ?></h4> </div>
+	<div style="clear:float;"></div>
 	<?php if(!isset($_GET['pap_id'])):
 		$county_obj = new Counties();
 		$subcounty_obj = new SubCounties();
@@ -33,13 +34,14 @@ if(!$projectDetails)
 			<div class="widget-container fluid-height clearfix">
 				<div class="tabs-container" id="project_page">
 					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-group"></i> PAPs</a></li>
+						<li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
+						<li ><a data-toggle="tab" href="#tab-1"><i class="fa fa-group"></i> PAPs</a></li>
 						<li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
-						<li><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
+						
 					</ul>
 					<div class="tab-content">
 						<!-- Project Affected Persons section -->
-						<div id="tab-1" class="tab-pane active">
+						<div id="tab-1" class="tab-pane ">
 							<div class="col-lg-12">
 								<div class="action-buttons">
 									<a  data-toggle="modal" href="#papModal" data-bind="click: resetForm"><i class="fa fa-plus"></i> Add New</a>
@@ -113,13 +115,12 @@ if(!$projectDetails)
 						</div>
 						<!-- end Projects content pane -->
 						<!-- Projects -->
-						<div id="tab-2" class="tab-pane">
+						<div id="tab-2" class="tab-pane ">
 							<!-- Client Details pane -->
 							<?php 
-								//retrieve the client's details
-								require_once('lib\Client.php');
-								$client_obj = new Client();
-								$client_details = $client_obj->findById($projectDetails['client_id']);
+							//retrieve the client's details
+							$client_obj = new Client();
+							$client_details = $client_obj->findById($projectDetails['client_id']);
 							?>
 							<div class="col-lg-12">
 								<div class="widget-container fluid-height clearfix">
@@ -160,7 +161,7 @@ if(!$projectDetails)
 						</div>
 						<!-- end Projects content pane -->
 						<!-- Coverage section -->
-						<div id="tab-3" class="tab-pane">
+						<div id="tab-3" class="tab-pane active">
 							<div class="col-lg-5">
 								<div class="action-buttons">
 									<a  data-toggle="modal" href="#projectCoverageModal"><i class="fa fa-plus"></i> Add District</a>
@@ -223,8 +224,9 @@ if(!$projectDetails)
 				<div class="tabs-container" id="project_page">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> <?=$pap_details['firstname']?> <?=$pap_details['lastname']?> <?=$pap_details['othername']?> - Details</a></li>
-						<li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Crops</a></li>
+						<li><a data-toggle="tab" href="#tab-5"><i class="fa fa-globe"></i> Land</a></li>
 						<li><a data-toggle="tab" href="#tab-3"><i class="fa fa-home"></i> Improvements</a></li>
+						<li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-pagelines"></i> Crops & Trees</a></li>
 						<li><a data-toggle="tab" href="#tab-4"><i class="fa fa-user"></i> Photos</a></li>
 					</ul>
 					<div class="tab-content">

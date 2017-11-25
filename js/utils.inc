@@ -13,6 +13,19 @@ $('input.athousand_separator').keyup(function(event) {
 	  return numberWithCommas(value);
   });
 });
+
+//Only numbers
+function checkInput(input) {
+	var invalidChars = /[^0-9]/gi
+	if(invalidChars.test(input.value)) {
+        input.value = input.value.replace(invalidChars,"");
+    }
+}
+//% input restrictions
+function handleChange(input) {
+	if (input.value < 0) input.value = 0;
+	if (input.value > 100) input.value = 100;
+}
 function enableDisableButton(frm, status){
 	$(frm).find(":input[type=submit], :button[type=submit]").prop("disabled", status);
 }

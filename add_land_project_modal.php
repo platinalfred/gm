@@ -1,9 +1,8 @@
-
 <div class="row">
     <div class="col-lg-12">
         <div class="widget-container fluid-height clearfix">
             <div class="heading">
-                <i class="fa fa-bars"></i>Basic Components
+                <i class="fa fa-bars"></i>Project Details
             </div>
             <div class="widget-content padded">
                 <form id="tblLandProjectForm" action="#" method="post" class="form-horizontal">
@@ -18,7 +17,7 @@
 					<div class="form-group">
                         <label class="control-label col-md-4">Distance Allowance</label>
                         <div class="col-md-7">
-							<textarea name="project_title" class="form-control" rows="2"></textarea>
+							<input type="number" id="distance_allowance" onkeyup="handleChange(this), checkInput(this);" name="disturbance_allowance" class="form-control" required >
                         </div>
                     </div>
 					<div class="form-group">

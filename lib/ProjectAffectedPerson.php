@@ -48,6 +48,12 @@ class ProjectAffectedPerson extends Db {
 		}
 		return false;
 	}
+	public function turnOffPap($id){
+		if($this->turnOff(self::$table_name, "id=".$id)){
+			return true;
+		}
+		return false;
+	}
 	public function getPapPhotoById($id){
 		$result = $this->getrec('tbl_pap_photos', "`id`=" . $id, "", "");
 		return !empty($result) ? $result : false;
