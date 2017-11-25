@@ -15,7 +15,7 @@
 								<label class="control-label">Attach PAP Photo</label>
 								<input name="photo_url" type="file" accept=".png,.jpeg,.gif,.jpg, image/gif,image/jpg,image/jpeg,image/pjpeg,image/png)" class="form-control"/>
 								<div data-bind="with:pap_details">
-									<img data-bind="attr:{src:'img/paps/pap_'+id+'.jpg'}" class="img-thumbnail img-responsive"/>
+									<img data-bind="attr:{src:'img/paps/'+profile_pic}" class="img-thumbnail img-responsive"/>
 								</div>
 							</div>
 						</div>
