@@ -792,7 +792,7 @@ $all_villages = $villages->findAll();
 																	</div>
 																	<div class="form-group"><label class="col-lg-2 control-label">Property Rate</label>
 																		<div class="col-lg-10">
-																			<input name="rate" placeholder="rate" class="form-control" required></input>
+																			<input name="rate" placeholder="rate" class="form-control athousand_separator" required></input>
 																		</div>
 																	</div>
 																	<div class="form-group">
@@ -862,7 +862,7 @@ $all_villages = $villages->findAll();
 							<div class="panel-body">
 								<div class="col-lg-2 col-offset-sm-8">
 									<div class="action-buttons">
-										<a  data-toggle="modal" href="#propertyrate"><i class="fa fa-plus"></i> Add Property rate</a>
+										<a  data-toggle="modal" href="#propertyrate"><i class="fa fa-plus"></i> Add improvement rate</a>
 									</div>
 									<div id="propertyrate" class="modal fade" aria-hidden="true">
 										<div class="modal-dialog">
@@ -906,7 +906,7 @@ $all_villages = $villages->findAll();
 																	</div>
 																	<div class="form-group"><label class="col-lg-2 control-label">Property Rate</label>
 																		<div class="col-lg-10">
-																			<input name="rate" placeholder="rate" class="form-control" required></input>
+																			<input type="text" name="rate" placeholder="rate" class="form-control athousand_separator" required></input>
 																		</div>
 																	</div>
 																	<div class="form-group">

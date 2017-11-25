@@ -94,60 +94,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	/* Number inputs a thousandsSeparator separator */
-		$('input.athousand_separator').keyup(function(event) {
-
-		  // skip for arrow keys
-		  if(event.which >= 37 && event.which <= 40){
-		   event.preventDefault();
-		  }
-
-		  $(this).val(function(index, value) {
-			  value = value.replace(/,/g,'');
-			  return numberWithCommas(value);
-		  });
-		});
-
-	function numberWithCommas(x) {
-			var parts = x.toString().split(".");
-			parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-			return parts.join(".");
-		}
-	/* End a thousandsSeparator on an input*/
-	function showStatusMessage(message='', display_type='success'){
-		new PNotify({
-			  title: "Action response",
-			  text: message,
-			  type: display_type,
-			  styling: 'bootstrap3',
-			  sound: true,
-			  hide:true,
-			  buttons: {
-				closer_hover: false,
-			},
-			confirm: {
-				confirm: true,
-				buttons: [{
-					text: 'Ok',
-					addClass: 'btn-primary',
-					click: function(notice) {
-						notice.remove();
-					}
-				},
-				null]
-			},
-			animate: {
-				animate: true,
-				in_class: 'zoomInLeft',
-				out_class: 'zoomOutRight'
-			},
-			  nonblock: {
-				  nonblock: true
-			  }
-			  
-		  });
-		
-	}
+	
 /* ====  COMMON FUNCTIONS ==== */
 	
 	deleteDataTableRowData();
@@ -176,11 +123,12 @@ $(document).ready(function(){
 						
 						setTimeout(function(){
 							dTable[frmId].ajax.reload();
+							enableDisableButton(frm, false);
 						}, 2000);
 						if(id_input == "" && reset < 1){
 							frm[0].reset();
 						}
-						enableDisableButton(frm, false);
+						
 					}else{
 						
 						showStatusMessage(response, "fail");

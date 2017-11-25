@@ -13,7 +13,7 @@ if(!$projectDetails)
 	header("Location: error_404.php");
 ?>
 <div class="container-fluid main-content">
-	<div class="page-title" > <h4 ><a href="project_details.php?id=<?=$_GET['id']?>"><?php echo $projectDetails['project_title']; ?></a><?php if(isset($_GET['pap_id'])){ ?> < <a href="project_details.php?id=<?php echo $_GET['id'];?>#tab-1"> Paps</a> < Pap detais <?php } ?></h4> </div>
+	<div class="page-title" > <h4 ><a href="project_details.php?id=<?=$_GET['id']?>"><?php echo $projectDetails['project_title']; ?></a><?php if(isset($_GET['pap_id'])){ ?> <i class="fa fa-chevron-right"></i> <a href="project_details.php?id=<?php echo $_GET['id'];?>#tab-1"> Paps</a> <i class="fa fa-chevron-right"></i> Pap detais <?php } ?></h4> </div>
 	<div style="clear:float;"></div>
 	<?php if(!isset($_GET['pap_id'])):
 		$county_obj = new Counties();
@@ -83,6 +83,7 @@ if(!$projectDetails)
 											<?php if( $projectDetails['project_category_unit'] == 5 ):?>
 											<th>Total Size</th>
 											<?php endif;?>
+											
 											<th>Chainage</th>
 											<th>Improvements</th>
 											<th>Crops/Trees</th>
@@ -113,10 +114,11 @@ if(!$projectDetails)
 								</table>
 							</div>
 						</div>
+
 						<!-- end Projects content pane -->
 						<!-- Projects -->
 						<div id="tab-2" class="tab-pane ">
-							<!-- Client Details pane -->
+							<!-- Client Details pane  -->
 							<?php 
 							//retrieve the client's details
 							$client_obj = new Client();
