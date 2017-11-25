@@ -88,11 +88,15 @@ if(isset($_GET['tbl'])){
 				}
 			}else{
 				if($pap->deletePap($_GET['id'])){
+					$pap_improvement_obj = new PAP_Improvement();
+					$pap_crop_tree_obj = new PAP_CropTree();
+					
+					$pap_crop_tree_obj->deletePapCropTree("`pap_id` = ".$_GET['id']);
+					$pap_improvement_obj->deletePapImprovement("`pap_id` = ".$_GET['id']);
+					
 					$msg =  "Success";
 				}
 			}
-			
-			
 		break;
 		case "tblPapPhoto":
 			require_once("lib/ProjectAffectedPerson.php");

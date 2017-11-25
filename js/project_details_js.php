@@ -225,7 +225,7 @@ $(document).ready(function(){
 						/* { data: 'county_id'},
 						{ data: 'subcounty_id'},
 						{ data: 'parish_id'}, */
-						{ data: 'village_id'},
+						{ data: 'village_name'},
 						{ data: 'phone_contact'},
 						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
 						{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},

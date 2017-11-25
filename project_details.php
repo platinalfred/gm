@@ -250,7 +250,7 @@ if(!$projectDetails)
 												<div class="col-md-2"><strong>REF#</strong></div>
 												<div class="col-md-3"><?=$pap_details['pap_ref']?></div>
 												<div class="col-md-7">&nbsp;</div>
-											<div class="padded"><img src='img/paps/pap_<?=$pap_details['id']?>.jpg' class="img-thumbnail img-responsive" alt="<?=$pap_details['firstname']?> <?=$pap_details['lastname']?> <?=$pap_details['othername']?>" /></div>
+											<div class="padded"><img src='img/paps/<?=$pap_details['photo_url']?>' class="img-thumbnail img-responsive" alt="<?=$pap_details['firstname']?> <?=$pap_details['lastname']?> <?=$pap_details['othername']?>" /></div>
 										</div>
 										<div class="col-md-8">
 											<div class="row">

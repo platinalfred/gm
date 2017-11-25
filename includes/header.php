@@ -192,7 +192,7 @@ if(!isset($_SESSION['logged'])){
                             <a class="current" href="dashboard.php"><span aria-hidden="true" class="hightop-home"></span>Dashboard</a>
                         </li>
 						<li>
-                            <a href="">
+                            <a href="reports.php">
                                 <span aria-hidden="true" class="hightop-charts"></span>Reports</a>
                         </li>
                         <li>

@@ -27,6 +27,10 @@ if(isset($_POST['tbl'])){
 			$client_obj = new Client();
 			$output['clients'] = $client_obj->getSelectList();
 		break;
+		case "project_report":
+			$report_obj = new Report();
+			$output['data'] = $report_obj->getProjectReport();
+		break;
 		case "project_details":
 			//geography
 			$project_coverage_obj = new ProjectCoverage();

@@ -52,7 +52,7 @@ class PAP_CropTree extends Db {
 		return false;
 	}
 	public function deletePapCropTree($id){
-		if($this->del(self::$table_name, "id=".$id)){
+		if($this->del(self::$table_name, (is_numeric($id)?("id=".$id):$id))){
 			return true;
 		}
 		return false;

@@ -3,21 +3,22 @@ require_once('lib/Libraries.php');
 function save_file($files, $files_dir, $file_name = ""){
 	$feedback = true;
 	//upload any file that came with this data
-	if ($files['photo_url']['error'] == UPLOAD_ERR_OK) {
+	if ($files['error'] == UPLOAD_ERR_OK) {
 		$allowedExts = array("gif", "jpeg", "jpg", "png", "JPG", "PNG", "GIF");
-		$extension = strtolower(end(explode(".", $files['photo_url']["name"])));
-		if(($files['photo_url']["size"] < 200000000) && in_array($extension, $allowedExts)){ 							
-			if($files['photo_url']['error'] > 0){
+		$extension = strtolower(end(explode(".", $files["name"])));
+		if(($files["size"] < 200000000) && in_array($extension, $allowedExts)){ 							
+			if($files['error'] > 0){
 				$feedback =  false;
-			}else{
-				$filename = $files['photo_url']['name'];
+			}
+			else{
+				$filename = $file_name === ""?$files['name']:($file_name.".".$extension);
 				if(!is_dir($files_dir)){
 					mkdir($files_dir, 0777, true);
 				}else{
 					if(file_exists($files_dir.$filename))
 						unlink($files_dir.$filename);
 				}
-				if(move_uploaded_file($files['photo_url']['tmp_name'], $files_dir.strtolower($filename))){
+				if(move_uploaded_file($files['tmp_name'], $files_dir.strtolower($filename))){
 					$feedback = $filename;
 				}
 				else $feedback = false;
@@ -227,10 +228,18 @@ if(isset($_POST['tbl'])){
 			$pap_crop_tree_obj = new PAP_CropTree();
 			$pap_improvement_obj = new PAP_Improvement();
 			
-			//lerts extract out the plants and the improvements from the array
-			$improvements = $data['improvement'];
-			$plants = $data['plant'];
-			unset($data['tbl'], $data['plant'], $data['improvement']);
+			//lets extract out the plants and the improvements from the array
+			$improvements = array();
+			if(isset($data['improvement'])){
+				$improvements = $data['improvement'];
+				unset($data['improvement']);
+			}
+			$plants = array();
+			if(isset($data['plant'])){
+				$plants = $data['plant'];
+				unset($data['plant']);
+			}
+			unset($data['tbl']);
 			
 			$response = array();
 			$response['success'] = false;
@@ -264,7 +273,7 @@ if(isset($_POST['tbl'])){
 					}
 					if($pap_crop_tree_obj->addPapCropTrees($add_multiple_data) || $pap_crop_tree_obj->updatePapCropTrees($update_multiple_data)){
 						$response['success'] = true;
-						$response['message'][] = "PAP crops and trees successfully updated!";
+						$response['message'][] = "PAP crops and trees successfully saved!";
 					}
 					//then the properties/improvements
 					unset($add_multiple_data, $update_multiple_data);
@@ -292,16 +301,18 @@ if(isset($_POST['tbl'])){
 							}
 						}
 					}
-					if($pap_improvement_obj->addPapImprovements($add_multiple_data) || $pap_crop_tree_obj->updatePapImprovements($update_multiple_data)){
+					if($pap_improvement_obj->addPapImprovements($add_multiple_data) || $pap_improvement_obj->updatePapImprovements($update_multiple_data)){
 						$response['success'] = true;
-						$response['message'][] = "PAP properties successfully updated!";
+						$response['message'][] = "PAP properties successfully saved!";
 					}
-					if(!empty($_FILES)&&save_file($_FILES['photo_url'],"./img/paps/", "pap_".$pap_id)){
+					if(!empty($_FILES)&&($file_name = save_file($_FILES['photo_url'],"img/paps/", "pap_".$pap_id))){
+						$pap_obj->updatePap(array('id'=>$pap_id, 'photo_url'=>$file_name));
 						$response['success'] = true;
-						$response['message'][] = "PAP photo successfully updated!";
+						$response['message'][] = "PAP photo successfully saved!";
 					}
 				}
-			}else{
+			}
+			else{
 				unset($data['id']);
 				$pap_id = $pap_obj->addPap($data);
 				if(is_numeric($pap_id)){
@@ -330,9 +341,10 @@ if(isset($_POST['tbl'])){
 						$response['success'] = true;
 						$response['message'][] = "PAP improvements successfully updated!";
 					}
-					if(!empty($_FILES)&&save_file($_FILES,"./img/paps/", "pap_".$pap_id)){
+					if(!empty($_FILES)&&($file_name = save_file($_FILES['photo_url'],"img/paps/", "pap_".$pap_id))){
+						$pap_obj->updatePap(array('id'=>$pap_id, 'photo_url'=>$file_name));
 						$response['success'] = true;
-						$response['message'][] = "PAP photo successfully updated!";
+						$response['message'][] = "PAP photo successfully saved!";
 					}
 				}
 			}
@@ -404,8 +416,8 @@ if(isset($_POST['tbl'])){
 					$_FILES["pap_photo"]["error"] = $_FILES["pap_photos"]["error"][$count];
 					$_FILES["pap_photo"]["size"] = $_FILES["pap_photos"]["size"][$count];
 					
-					if(($file_extension = save_file($_FILES['pap_photo'],"./img/paps/pap_" . $data['pap_id'] . "/")) ){		
-						$data["pap_photos"][$count]['file_name'] = $file_extension;
+					if(($file_name = save_file($_FILES['pap_photo'],"./img/paps/pap_" . $data['pap_id'] . "/")) ){		
+						$data["pap_photos"][$count]['file_name'] = $file_name;
 						$data["pap_photos"][$count]['pap_id'] = $data['pap_id'];
 						//print_r($data[$count]);
 						if($pap_obj->savePapPhotoDetails($data["pap_photos"][$count])){
