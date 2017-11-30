@@ -13,22 +13,22 @@ var ViewModel = function() {
 	self.scounty = ko.observable();
 	self.parish = ko.observable();
 	
-	self.filteredCountiesList = ko.computed(function() {
+	/* self.filteredCountiesList = ko.computed(function() {
 		if(self.district()){
 			return ko.utils.arrayFilter(self.countiesList(), function(county) {
 					
-				return (parseInt(self.district().id)==parseInt(county.district));
+				return (parseInt(self.district().id)==parseInt(scounty.district));
 				
 			});
 		}
-	});	
+	}); */	
 	self.filteredSCountiesList = ko.computed(function() {
-		if(self.county()){
+		if(self.district()){
 			return ko.utils.arrayFilter(self.subcountiesList(), function(scounty) {
-				return (parseInt(self.county().id)==parseInt(scounty.county));
+				return (parseInt(self.district().id)==parseInt(scounty.district));
 			});
 		}
-	});	
+	}); 	
 	self.filteredParishesList = ko.computed(function() {
 		if(self.scounty()){
 			return ko.utils.arrayFilter(self.parishesList(), function(parish) {
@@ -56,21 +56,21 @@ var ViewModel = function() {
 			url: "geographical_details.php",
 			success: function(response){
 				switch(tbl){
-					case "counties":
+					/* case "counties":
 						self.districtsList(response.districts);
-					break;
+					break; */
 					case "subcounties":
 						self.districtsList(response.districts);
-						self.countiesList(response.counties);
+						//self.countiesList(response.counties);
 					break;
 					case "parishes":
 						self.districtsList(response.districts);
-						self.countiesList(response.counties);
+						//self.countiesList(response.counties);
 						self.subcountiesList(response.subcounties);	
 					break;
 					case "villages":
 						self.districtsList(response.districts);
-						self.countiesList(response.counties);
+						//self.countiesList(response.counties);
 						self.subcountiesList(response.subcounties);	
 						self.parishesList(response.parishes);
 					break;
@@ -83,8 +83,60 @@ var ViewModel = function() {
 }
  var viewModel = new ViewModel();
  ko.applyBindings(viewModel, $("#tab-6")[0]); //
+ 
+ 
+ var CropViewModel = function(){
+	var self = this;
+	self.tree_crop_type = ko.observable();
+	self.all_attached = ko.observableArray();
+	self.all_crop_descriptions = ko.observableArray();
+	
+	self.getServerData = function(crop_tree_id){
+		
+		$.ajax({
+			url:"getData.php",
+			type: 'POST',
+			data:{crop_id:crop_tree_id, tbl:"crop_types"},
+			dataType:'json',
+			success: function(response){
+				self.all_attached(response.all_attached);
+				self.all_crop_descriptions(response.all_crop_descriptions);
+				
+			}
+		});
+	};
+};
+var cropViewModel = new CropViewModel();
+ko.applyBindings(cropViewModel, $("#tree_crop_description")[0]);
+
+
+	
+function saveCrops(crop_id){
+	$(".saveCropTreeDescription").click(function(){
+		var frm = $(this).closest("form");
+		var frmdata = frm.serialize();
+		$.ajax({
+			url: "save_data.php",
+			type: 'POST',
+			data: frmdata,
+			success: function (response) {
+				if(response.trim() == "success"){
+					showStatusMessage("Descriptions successfully saved, Please re-open the crop/tree type to see your selections" ,"success");
+					setTimeout(function(){
+						cropViewModel.getServerData(crop_id);
+					}, 2000);
+				}else{
+					showStatusMessage("Your description could not be saved, Please refresh the page anad try again or contact administrator for assistance." ,"fail");
+				}
+				
+			}
+		});
+		return false;
+	});
+}	
 $(document).ready(function(){
 	
+
 	//This function is supposed to make sure when the pop up is not an edit no data is displayed in the form. It picks the id field and makes sure if empty then the form is empty for adding new data
 	$('.modal').on('show.bs.modal', function (e) {
 		var id = $(this).find('input[name="id"]').val();
@@ -383,8 +435,8 @@ $(document).ready(function(){
 			  "deferRender": true,
 			  "order": [[ 1, 'asc' ]],*/
 			initComplete: function () {
-				var select_header = ['','County','Districts'];
-				this.api().columns([1,2]).every( function () {
+				var select_header = ['','Districts'];
+				this.api().columns([1]).every( function () {
 					var column = this;
 					var col_index = column.index();
 					var select = $('<select class="form-control input-sm"><option value="">All '+select_header[col_index]+'</option></select>')
@@ -422,7 +474,6 @@ $(document).ready(function(){
 			  } ],*/
 			  "autoWidth": false,
 			  columns:[ { data: 'subcounty_name' },
-						{ data: 'county_name' },
 					{ data: 'district_name'},
 					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblSubCounties-tblSubCountys"  href="#subcounty" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblSubCounties-tblSubCountys" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
@@ -462,8 +513,8 @@ $(document).ready(function(){
 			  "deferRender": true,
 			  "order": [[ 1, 'asc' ]],*/
 			initComplete: function () {
-				var select_header = ['', 'SubCounty','County','Districts'];
-				this.api().columns([1,2,3]).every( function () {
+				var select_header = ['', 'SubCounty','Districts'];
+				this.api().columns([1,2]).every( function () {
 					var column = this;
 					var col_index = column.index();
 					var select = $('<select class="form-control input-sm"><option value="">All '+select_header[col_index]+'</option></select>')
@@ -502,7 +553,6 @@ $(document).ready(function(){
 			  "autoWidth": false,
 			  columns:[ { data: 'parish_name' },
 					{data: 'subcounty_name' },
-					{ data: 'county_name' },
 					{ data: 'district_name'},
 					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblParish-tblParishs"  href="#parish" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblParish-tblParishs" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
@@ -542,8 +592,8 @@ $(document).ready(function(){
 			  "deferRender": true,
 			  "order": [[ 1, 'asc' ]],*/
 			initComplete: function () {
-				var select_header = ['', 'Parish', 'SubCounty','County','Districts'];
-				this.api().columns([1,2,3,4]).every( function () {
+				var select_header = ['', 'Parish', 'SubCounty','Districts'];
+				this.api().columns([1,2,3]).every( function () {
 					var column = this;
 					var col_index = column.index();
 					var select = $('<select class="form-control input-sm"><option value="">All '+select_header[col_index]+'</option></select>')
@@ -583,7 +633,6 @@ $(document).ready(function(){
 			  columns:[ { data: 'village_name' },
 					{ data: 'parish_name' },
 					{data: 'subcounty_name' },
-					{ data: 'county_name' },
 					{ data: 'district_name'},
 					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-tblVillage-tblVillages"  href="#village" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblVillage-tblVillages" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
@@ -870,7 +919,7 @@ $(document).ready(function(){
 				  "orderable": false
 			  } */],
 			  "autoWidth": false,
-			  columns:[ { data: 'title', render: function ( data, type, full, meta ) { return '<a  id="'+full.id +'-treeCropsTypes-tblTreeCrops"  href="crop_types_description.php?id='+full.id +'" class="ls-modal"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
+			  columns:[ { data: 'title', render: function ( data, type, full, meta ) { return '<a  id="'+full.id +'-treeCropsTypes-tblTreeCrops"  class="ls-modal crops"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
 					{ data: 'description'},//
 					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
 					
@@ -1257,9 +1306,22 @@ $(document).ready(function(){
 	
 	TableManageButtons.init();
 	//This helps load a page into a bootstrap modal
-	$('.table tbody').on('click', 'tr .ls-modal', function (e) {
+	$('.table tbody').on('click', 'tr .crops', function (e) {
+		var row = $(this).closest("tr");
+		var data = dTable['tblTreeCrops'].row(row).data();
+		if(typeof(data)=='undefined'){
+			data = dTable['tblTreeCrops'].row($(row).prev()).data();
+		}
+		var  id 
+		var d_id = $(this).attr("id");
+		var arr = d_id.split("-");
+		id = arr[0]; //The  row id  
 		e.preventDefault();
-		$('#croptypes_desc').modal('show').find('.modal-body').load($(this).attr('href'));
+		cropViewModel.tree_crop_type(data);
+		cropViewModel.getServerData(id);
+		saveCrops(id);
+		$('#croptypes_desc').modal('show');//find('.modal-body').load($(this).attr('href'))
+		
 	});
 	//This helps load a page into a bootstrap modal
 	$('.table tbody').on('click', 'tr .edit_propety_rate', function (e) {

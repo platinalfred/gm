@@ -376,6 +376,7 @@ if(isset($_POST['tbl'])){
 			$response['message'] = "PAP land valuation could not be added!";
 			if($pap_obj->addLandValuation($data)){
 				$response['message'] = true;
+				$response['success'] = true;
 			}
 			
 			$output = json_encode($response);

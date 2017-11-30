@@ -82,8 +82,13 @@ if(!$projectDetails)
 											<?php endif;?>
 											<?php if( $projectDetails['project_category_unit'] == 5 ):?>
 											<th>Total Size</th>
+											<?php endif;
+											if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ||$projectDetails['project_category_unit'] == 5 ):?>
+												<th>Rate per Acre</th>	
+												<th>Land Interest(%)</th>	
+												<th>Diminution(%)</th>	
+												<th>Row Land Value(U.shs)</th>	
 											<?php endif;?>
-											
 											<th>Chainage</th>
 											<th>Improvements</th>
 											<th>Crops/Trees</th>
@@ -104,6 +109,12 @@ if(!$projectDetails)
 											<?php endif;?>
 											<?php if( $projectDetails['project_category_unit'] == 5 ):?>
 											<th>0</th>
+											<?php endif; 
+											if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ||$projectDetails['project_category_unit'] == 5 ):?>
+												<th>&nbsp;</th>	
+												<th>&nbsp;</th>	
+												<th>&nbsp;</th>	
+												<th>&nbsp;</th>	
 											<?php endif;?>
 											<th>&nbsp;</th>
 											<th>0</th>
@@ -278,6 +289,7 @@ if(!$projectDetails)
 												<div class="col-md-2"><strong><i class="fa fa-map-marker"></i> Total Take</strong></div>
 												<div class="col-md-2"><?php echo $pap_details['total_take']; ?> acres</div>
 											<?php endif;?>
+												
 												<div class="col-md-2"><strong><i class="fa fa-map-marker"></i> Chainage</strong></div>
 												<div class="col-md-2">km <?php echo $pap_details['total_take']; ?></div>
 											</div>

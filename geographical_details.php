@@ -7,23 +7,23 @@ if(isset($_POST['origin'])){
 	$subcounties = new SubCounties();
 	$parishes = new Parish();
 	switch($data['origin']){
-		case "counties":
+		/* case "counties":
 			$districts = new Districts();
 			$result['districts'] =  $districts->findAll();
-		break;
+		break; */
 		case "subcounties":
 			$result['districts'] =  $districts->findAll();
-			$result['counties'] =  $counties->findAll();
+			//$result['counties'] =  $counties->findAll();
 		break;
 		
 		case "parishes":
 			$result['districts'] =  $districts->findAll();
-			$result['counties'] =  $counties->findAll();
+			//$result['counties'] =  $counties->findAll();
 			$result['subcounties'] =  $subcounties->findAll();
 		break;
 		case "villages":
 			$result['districts'] =  $districts->findAll();
-			$result['counties'] =  $counties->findAll();
+			//$result['counties'] =  $counties->findAll();
 			$result['subcounties'] =  $subcounties->findAll();
 			$result['parishes'] =  $parishes->findAll();
 		break;

@@ -63,6 +63,12 @@ if(isset($_POST['tbl'])){
 			$pap_improvement_obj = new PAP_Improvement();
 			$output['data'] = $pap_improvement_obj->findPapImprovements("pap_id=".$_POST['pap_id']);
 		break;
+		case "crop_types":
+			$treecroptypedescription = new TreeCropTypesDescription();
+			$crop_description = new CropDescription();
+			$output['all_attached'] = $treecroptypedescription->findCropTreeDescription("`tree_crop_id`=" . $_POST['crop_id']);
+			$output['all_crop_descriptions'] = $crop_description->findAll("id NOT IN (SELECT `crop_description_id` FROM `tree_crop_types_description` WHERE `tree_crop_id`=".$_POST['crop_id'].")");
+		break;
 		default:
 			echo "No data found!"; 
 		break;

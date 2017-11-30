@@ -523,6 +523,13 @@ class Db{
 		//else return mysqli_error($this->conn);
 		return false;
 	}
+	function cleanData($a) {
+		if(preg_match("/^[0-9,]+$/", $a)){
+			$a = str_replace( ',', '', $a);
+		}
+		return $a;
+
+	}
 	function set_update_query($table, $id, $data_array){
 		
 		$update_sql = "UPDATE `".$table. "` SET ";

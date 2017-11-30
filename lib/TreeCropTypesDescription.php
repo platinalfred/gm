@@ -17,10 +17,10 @@ class TreeCropTypesDescription extends Db {
 		$result = $this->getarray(self::$table_name, "crop_description_id=".$id, "", "");
 		return !empty($result) ? $result:false;
 	}
-	public function findCropTreeDescription(){
+	public function findCropTreeDescription($where = ""){
 		$table = self::$table_name . " JOIN tbl_tree_or_crop_types ON tree_crop_id = tbl_tree_or_crop_types.id JOIN tbl_crop_description ON crop_description_id = tbl_crop_description.id";
 		$fields = "`tree_crop_types_description`.`id`, tbl_tree_or_crop_types.`title` as cropname, tbl_crop_description.`title` as cropdescription";
-		$result = $this->getfarray($table, $fields, "", "cropname", "");
+		$result = $this->getfarray($table, $fields, $where, "cropname", "");
 		return !empty($result) ? $result : false;
 	}
 	public function findAll(){

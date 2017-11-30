@@ -61,12 +61,12 @@
 								</div>
 							</div>
 						
-							<div class="form-group">
+							<!--div class="form-group">
 								<label class="control-label col-md-5">County</label>
 								<div class="col-md-7">
 									<select id="county_id" name="county_id" class="select2able" data-bind='options: filteredCountiesList(), optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id"), value:county, select2:{dropdownParent:"#papModal"}'></select>
 								</div>
-							</div>
+							</div -->
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">Subcounty</label>

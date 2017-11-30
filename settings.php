@@ -10,10 +10,10 @@ $parishes = new Parish();
 $villages = new Village();
 $propertytypedescription = new PropertyTypeDescription();
 $all_ditricts = $districts->findAll();
-$all_counties = $counties->findAll();							
-$all_subcounties = $subcounties->findAll();							
-$all_parishes = $parishes->findAll();							
-$all_villages = $villages->findAll();							
+//$all_counties = $counties->findAll();							
+//$all_subcounties = $subcounties->findAll();							
+//$all_parishes = $parishes->findAll();							
+//$all_villages = $villages->findAll();							
 ?>
 <div class="container-fluid main-content">
 	<div class="page-title">
@@ -26,21 +26,23 @@ $all_villages = $villages->findAll();
 					<ul class="nav nav-tabs">
 						
 						<li  class="active"><a data-toggle="tab" href="#tab-2" >Land Acquisition Types</a></li>
-						<li class=""><a data-toggle="tab" href="#tab-3" >Tree or Crop Types</a></li>
 						<li><a data-toggle="tab" href="#tab-5" >Crop Description</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-3" >Tree or Crop Types</a></li>
 						<li class=""><a data-toggle="tab" role="tab" href="#tab-11" href="#">Crop/Tree Rates</a></li>
-						<li class=""><a data-toggle="tab"  href="#tab-8" href="#">Improvement</a></li>
+						
 						<li class=""><a data-toggle="tab"  href="#tab-7" href="#">Improvement Description</a></li>
+						<li class=""><a data-toggle="tab"  href="#tab-8" href="#">Improvement</a></li>
 						<li class=""><a data-toggle="tab" role="tab" href="#tab-12" href="#">Improvement Rates</a></li>
-						<li class=""><a data-toggle="tab"  href="#tab-9" >Access Levels</a></li>
-						<li><a data-toggle="tab" href="#tab-23" >Positions</a></li>
-						<li><a data-toggle="tab" href="#tab-17" >Expense Types</a></li>
+						<li class=""><a role="tab" data-toggle="tab" href="#tab-6" >Districts</a></li>
+						<li><a data-toggle="tab" role="tab" href="#tab-17" >Expense Types</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">More <b class="caret"></b></a>
 							<ul class="dropdown-menu">
+							    <li><a data-toggle="tab" role="tab" href="#tab-23" >Positions</a></li>
+								<li class=""><a data-toggle="tab"  href="#tab-9" >Access Levels</a></li>
 								<!---->
 								<!--<li class=""><a data-toggle="tab" role="tab" href="#tab-15" href="#">Repayment Duration</a></li> -->
-								<li class=""><a role="tab" data-toggle="tab" href="#tab-6" >Districts</a></li>
+								
 								<!--li class=""><a data-toggle="tab" role="tab" href="#tab-16" href="#">Security Types</a></li>
 								
 								<li class=""><a data-toggle="tab" role="tab" href="#tab-19" href="#">Marital Status</a></li>
@@ -50,7 +52,7 @@ $all_villages = $villages->findAll();
 					</ul>
 					<div class="tab-content">
 						<!---  Land Access Category Unit   --->
-						<div id="tab-2" class="tab-pane ">
+						<div id="tab-2" class="tab-pane active">
 							<div class="col-lg-12">
 								<div class="action-buttons">
 									<a  data-toggle="modal" href="#categoryUnitModal"><i class="fa fa-plus"></i> Add New</a>
@@ -88,11 +90,12 @@ $all_villages = $villages->findAll();
 						
 						</div>
 						<!---  Districts   --->
-						<div id="tab-6" class="tab-pane active">
+						<div id="tab-6" class="tab-pane">
+						    <br/>
 							<div class="tabs-container">
 								<ul class="nav nav-tabs">
 									<li class="active"><a data-toggle="tab" href="#district_tab"><i class="fa fa-list"></i> Districts</a></li>
-									<li><a data-bind='click:function(){ getServerData("counties") }' data-toggle="tab" href="#county_tab" ><i class="fa fa-briefcase"></i> Counties</a></li>
+									<!--<li><a data-bind='click:function(){ getServerData("counties") }' data-toggle="tab" href="#county_tab" ><i class="fa fa-briefcase"></i> Counties</a></li> -->
 									<li><a data-bind='click:function(){ getServerData("subcounties") } ' data-toggle="tab" href="#subcounty_tab" ><i class="fa fa-briefcase"></i> Sub Counties</a></li>
 									<li><a data-bind='click:function(){ getServerData("parishes") }' data-toggle="tab" href="#parish_tab" ><i class="fa fa-briefcase"></i> Parishes</a></li>
 									<li><a data-bind='click:function(){ getServerData("villages") }' data-toggle="tab" href="#village_tab" ><i class="fa fa-briefcase"></i> Villages</a></li>
@@ -236,13 +239,13 @@ $all_villages = $villages->findAll();
 																					</select>
 																				</div>
 																			</div>
-																			<div class="form-group"><label class="col-lg-2 control-label">County</label>
+																			<!--div class="form-group"><label class="col-lg-2 control-label">County</label>
 																				<div class="col-lg-10">
 																					<select class="select2able" id="village_county" name="county"   data-bind='options: filteredCountiesList, optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: setOptionValue("id"), value: county'>
 																					</select>
 																				</div>
-																			</div>
-																			
+																			</div -->
+																		
 																			<div class="form-group"><label class="col-lg-2 control-label">Name</label>
 																				<div class="col-lg-10"><input required type="text" name="subcounty_name" placeholder="Name" class="form-control" > 
 																				</div>
@@ -270,13 +273,13 @@ $all_villages = $villages->findAll();
 												<thead>
 													<tr>
 														<th id="subcounty0">&nbsp;</th>
+														<!--<th id="subcounty1">&nbsp;</th>-->
 														<th id="subcounty1">&nbsp;</th>
-														<th id="subcounty2">&nbsp;</th>
 														<th></th>
 													</tr>
 													<tr>
 														<th>Subcounty</th>
-														<th >County</th>
+														<!--<th >County</th>-->
 														<th >District</th>
 														<th></th>
 													</tr>
@@ -311,12 +314,12 @@ $all_villages = $villages->findAll();
 																					</select>
 																				</div>
 																			</div>
-																			<div class="form-group"><label class="col-lg-2 control-label">County</label>
+																			<!--div class="form-group"><label class="col-lg-2 control-label">County</label>
 																				<div class="col-lg-10">
 																					<select class="select2able" id="village_county" name="county"   data-bind='options: filteredCountiesList, optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: setOptionValue("id"), value: county'>
 																					</select>
 																				</div>
-																			</div>
+																			</div -->
 																			<div class="form-group">
 																				<label class="col-lg-2 control-label">Sub county</label>
 																				<div class="col-lg-10">
@@ -352,14 +355,14 @@ $all_villages = $villages->findAll();
 													<tr>
 														<th id="parish0">&nbsp;</th>
 														<th id="parish1">&nbsp;</th>
+														<!--<th id="parish2">&nbsp;</th>-->
 														<th id="parish2">&nbsp;</th>
-														<th id="parish3">&nbsp;</th>
 														<th></th>
 													</tr>
 													<tr>
 														<th>Parish</th>
 														<th>Subcounty</th>
-														<th >County</th>
+														<!--<th >County</th>-->
 														<th >District</th>
 														<th></th>
 													</tr>
@@ -393,12 +396,12 @@ $all_villages = $villages->findAll();
 																					</select>
 																				</div>
 																			</div>
-																			<div class="form-group"><label class="col-lg-2 control-label">County</label>
+																			<!--<div class="form-group"><label class="col-lg-2 control-label">County</label>
 																				<div class="col-lg-10">
 																					<select class="select2able" id="village_county" name="county"   data-bind='options: filteredCountiesList, optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: setOptionValue("id"), value: county'>
 																					</select>
 																				</div>
-																			</div>
+																			</div>-->
 																			<div class="form-group"><label class="col-lg-2 control-label">Sub county</label>
 																				<div class="col-lg-10">
 																					<select class="select2able" id="village_subcounty" name="subcounty" data-bind='options: filteredSCountiesList, optionsText: "subcounty_name", optionsCaption: "Select subcounty...", optionsAfterRender: setOptionValue("id"), value: scounty'>
@@ -440,15 +443,15 @@ $all_villages = $villages->findAll();
 														<th id="village0">&nbsp;</th>
 														<th id="village1">&nbsp;</th>
 														<th id="village2">&nbsp;</th>
+														<!--<th id="village3">&nbsp;</th>-->
 														<th id="village3">&nbsp;</th>
-														<th id="village4">&nbsp;</th>
 														<th></th>
 													</tr>
 													<tr>
 														<th>Village</th>
 														<th>Parish</th>
 														<th>Subcounty</th>
-														<th >County</th>
+														<!--<th >County</th>-->
 														<th >District</th>
 														<th></th>
 													</tr>
@@ -484,8 +487,8 @@ $all_villages = $villages->findAll();
 																		<div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
 																		</div>
 																	</div>
-																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
-																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Notes</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="add Note" class="form-control"></textarea></div>
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
@@ -505,6 +508,32 @@ $all_villages = $villages->findAll();
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-body">
+													<div class="row" id="tree_crop_description">
+														<div class="col-sm-12" data-bind="with:tree_crop_type">
+															<h3><span data-bind="text:title"></span> Tree/Crop Type</h3>
+															<div data-bind="foreach: $parent.all_attached"><p data-bind="text:cropdescription"></p></div>
+															<div class="ibox-content">
+																<p><b>Attach possible description to <span data-bind="text:title"></span> crop/tree type</b></p>
+																<form class="form-horizontal" >
+																	<input type="hidden" value="treecroptypedescription" name="tbl">
+																	<input type="hidden" data-bind="value:id" name="tree_crop_id">
+																	<div class="form-group">
+																		<div class=" col-md-12">Choose description</div>
+																		<!--ko foreach: $parent.all_crop_descriptions-->
+																			<div class="col-md-4">
+																			 <label class="checkbox"><input data-bind="value:id" type="checkbox" name="crop_description_id[]"><span data-bind="text: title"></span></label>
+																			 </div>
+																		<!--/ko-->
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary saveCropTreeDescription" type="button">Attach description</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div>										
 												</div>
 											</div>
 										</div>
@@ -517,7 +546,7 @@ $all_villages = $villages->findAll();
 												<thead>
 												<tr>
 													<th>Title</th>
-													<th>Description</th>
+													<th>Notes</th>
 													<th></th>
 												</tr>
 												</thead>
@@ -525,7 +554,7 @@ $all_villages = $villages->findAll();
 												<tfoot>
 													<tr>
 														<th>Title</th>
-														<th>Description</th>
+														<th>Notes</th>
 														<th></th>
 													</tr>
 												</tfoot>
@@ -559,8 +588,8 @@ $all_villages = $villages->findAll();
 																		<div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
 																		</div>
 																	</div>
-																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
-																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Notes</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="add note" class="form-control"></textarea></div>
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
@@ -584,7 +613,7 @@ $all_villages = $villages->findAll();
 												<thead>
 												<tr>
 													<th>Title</th>
-													<th>Description</th>
+													<th>Notes</th>
 													<th></th>
 												</tr>
 												</thead>
@@ -592,7 +621,7 @@ $all_villages = $villages->findAll();
 												<tfoot>
 													<tr>
 														<th>Title</th>
-														<th>Description</th>
+														<th>Notes</th>
 														<th></th>
 													</tr>
 												</tfoot>
@@ -625,8 +654,8 @@ $all_villages = $villages->findAll();
 																		<div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
 																		</div>
 																	</div>
-																	<div class="form-group"><label class="col-lg-2 control-label">Description</label>
-																		<div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
+																	<div class="form-group"><label class="col-lg-2 control-label">Notes</label>
+																		<div class="col-lg-10"><textarea  name="description" placeholder="notes" class="form-control"></textarea></div>
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
@@ -650,7 +679,7 @@ $all_villages = $villages->findAll();
 												<thead>
 												<tr>
 													<th>Title</th>
-													<th>Description</th>
+													<th>Notes</th>
 													<th></th>
 												</tr>
 												</thead>
@@ -658,7 +687,7 @@ $all_villages = $villages->findAll();
 												<tfoot>
 													<tr>
 														<th>Title</th>
-														<th>Description</th>
+														<th>Notes</th>
 														<th></th>
 													</tr>
 												</tfoot>
