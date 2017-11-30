@@ -26,8 +26,8 @@ $all_ditricts = $districts->findAll();
 					<ul class="nav nav-tabs">
 						
 						<li  class="active"><a data-toggle="tab" href="#tab-2" >Land Acquisition Types</a></li>
-						<li><a data-toggle="tab" href="#tab-5" >Crop Description</a></li>
-						<li class=""><a data-toggle="tab" href="#tab-3" >Tree or Crop Types</a></li>
+						<li><a data-toggle="tab" href="#tab-5" >Crop/Tree Description</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-3" >Crop/Tree Types</a></li>
 						<li class=""><a data-toggle="tab" role="tab" href="#tab-11" href="#">Crop/Tree Rates</a></li>
 						
 						<li class=""><a data-toggle="tab"  href="#tab-7" href="#">Improvement Description</a></li>
