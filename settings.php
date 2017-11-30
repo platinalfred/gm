@@ -805,7 +805,7 @@ $all_ditricts = $districts->findAll();
 																			</select>
 																		</div>
 																	</div>
-																	<div class="form-group"><label class="col-lg-2 control-label">Crop/Tree Rate</label>
+																	<div class="form-group"><label class="col-lg-2 control-label">Crop/Tree </label>
 																		<div class="col-lg-10">
 																			 <select class="select2able" name="croptree_id">
 																				<?php 
@@ -819,7 +819,7 @@ $all_ditricts = $districts->findAll();
 																			</select>
 																		</div>
 																	</div>
-																	<div class="form-group"><label class="col-lg-2 control-label">Property Rate</label>
+																	<div class="form-group"><label class="col-lg-2 control-label"> Rate</label>
 																		<div class="col-lg-10">
 																			<input name="rate" placeholder="rate" class="form-control athousand_separator" required></input>
 																		</div>
@@ -919,7 +919,7 @@ $all_ditricts = $districts->findAll();
 																			</select>
 																		</div>
 																	</div>
-																	<div class="form-group"><label class="col-lg-2 control-label">Poperty Type description</label>
+																	<div class="form-group"><label class="col-lg-2 control-label">Improvement Type </label>
 																		<div class="col-lg-10">
 																			 <select class="select2able" name="propertytypedescription_id">
 																				<?php 
@@ -933,7 +933,7 @@ $all_ditricts = $districts->findAll();
 																			</select>
 																		</div>
 																	</div>
-																	<div class="form-group"><label class="col-lg-2 control-label">Property Rate</label>
+																	<div class="form-group"><label class="col-lg-2 control-label"> Rate</label>
 																		<div class="col-lg-10">
 																			<input type="text" name="rate" placeholder="rate" class="form-control athousand_separator" required></input>
 																		</div>

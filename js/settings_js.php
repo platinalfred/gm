@@ -92,7 +92,8 @@ var ViewModel = function() {
 	self.all_crop_descriptions = ko.observableArray();
 	
 	self.getServerData = function(crop_tree_id){
-		
+		if(self.all_attached().length>0){self.all_attached.removeAll();}
+		if(self.all_crop_descriptions().length>0){self.all_crop_descriptions.removeAll();}
 		$.ajax({
 			url:"getData.php",
 			type: 'POST',
@@ -1123,10 +1124,10 @@ $(document).ready(function(){
 			  columns:[ { data: 'district_name' },
 					{ data: 'croptype'},
 					{ data: 'cropdescription'},//, render: function ( data, type, full, meta ) {return full.firstname + ' ' + full.othername + ' ' + full.lastname;}
-					{ data: 'rate'},
+					{ data: 'rate', function ( data, type, full, meta ) { return curr_format(data); }},
 					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
 					
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-cropdescription-tblCropDescription"  href="edit_croptree_rate.php?id='+data+'" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription-tblCropDescription" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-cropdescription_rate-tblDistrictCropRate"  href="edit_croptree_rate.php?id='+data+'" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription_rate-tblDistrictCropRate" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [
@@ -1206,10 +1207,10 @@ $(document).ready(function(){
 			  columns:[ { data: 'district_name' },
 					{ data: 'propertytype'},
 					{ data: 'propertydescription'},//, render: function ( data, type, full, meta ) {return full.firstname + ' ' + full.othername + ' ' + full.lastname;}
-					{ data: 'rate'},
+					{ data: 'rate', render: function ( data, type, full, meta ) {return curr_format(data); }},
 					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
 					
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  href="edit_propety_rate.php?id='+data+'"     class="btn btn-white btn-sm edit_propety_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription-tblCropDescription" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  href="#property"    id="'+data+'-property_rate-tblPropertyRate" class="btn btn-white btn-sm edit_propety_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-property_rate-tblPropertyRate" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [

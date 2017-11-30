@@ -85,8 +85,8 @@ if(!$projectDetails)
 											<?php endif;
 											if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ||$projectDetails['project_category_unit'] == 5 ):?>
 												<th>Rate per Acre</th>	
-												<th>Land Interest(%)</th>	
-												<th>Diminution(%)</th>	
+												<th>Land Interest(%)</th>
+												<th>Diminution(%)</th>
 												<th>Row Land Value(U.shs)</th>	
 											<?php endif;?>
 											<th>Chainage</th>
