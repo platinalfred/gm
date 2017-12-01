@@ -269,6 +269,118 @@ $(document).ready(function(){
 				//$("#datatable-buttons").DataTable();
 			}
 		  /*-- End Project Affected Person DataTable--*/
+			/* -- Project Summary Report --- */
+			//we have to set column indices based on the type of the project
+			var cols = [5,6,7], totals_col = 6; //the index for columns where  the totals appear
+			var last_col = 24; //the final index table column
+			<?php if( !($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4) ):?>
+				cols.pop(); last_col--;
+			<?php endif;?>
+			<?php if( !($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4) ):?>
+				cols.pop(); last_col--;
+			<?php endif;?>
+			<?php if( !($projectDetails['project_category_unit'] == 5) ):?>
+				cols.pop(); last_col--;
+			<?php endif;?>
+				cols.push(last_col-2,last_col-1);
+			
+			if ($("#tblProjectReport").length) {
+				  dTable['tblProjectReport'] = $('#tblProjectReport').DataTable({
+				  dom: "lfrtipB",
+				  "processing": true,
+				  "ajax": {
+					  "url":"getData.php",
+					  "dataType": "JSON",
+					  "type": "POST",
+					  "data":  function(d){
+							d.tbl = 'project_paps';
+							d.project_id = <?php echo $_GET['id']; ?>;
+						}
+				  },"columnDefs": [ {
+					  "targets": [last_col],
+					  "orderable": false,
+					  "searchable": false
+				  }],
+				  "autoWidth": false,
+				  "footerCallback": function (tfoot, data, start, end, display ) {
+					var api = this.api();
+					$.each(cols, function(key, val){
+						var total = api.column(val).data().sum();
+						$(api.column(val).footer()).html( curr_format(total) );
+					});
+				  },
+				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
+					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
+						{ data: 'district_name'},
+						/* { data: 'county_id'},
+						{ data: 'subcounty_id'},
+						{ data: 'parish_id'}, */
+						{ data: 'village_name'},
+						{ data: 'phone_contact'},
+						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
+						{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+						<?php endif;?>
+						<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
+						{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+						<?php endif;?>
+						<?php if( $projectDetails['project_category_unit'] == 5 ):?>
+						{ data: 'total_take', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+						<?php endif;?>
+						{ data: 'chainage'},
+						{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'land_interest', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'diminution_rate', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'row_value', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'wl_value', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'wl_value', render: function( data, type, full, meta ) {return data?curr_format((parseFloat(data):0)+(full.row_value?parseFloat(full.row_value):0));}},
+						{ data: 'propertytype'},
+						{ data: 'propertydescription'},
+						{ data: 'improvement_quantity', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'improvement_rate', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'improvement_value', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'croptype'},
+						{ data: 'cropdescription'},
+						{ data: 'crop_quantity', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'crop_rate', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'crop_tree_value', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						//subtotal
+						{ data: 'crop_tree_value', render: function( data, type, full, meta ) {
+								improvements_value = full.improvement_value?full.improvement_value:0;
+								crop_tree_value = full.improvement_value?full.crop_tree_value:0;
+								wl_value = full.wl_value?full.wl_value:0;
+								row_value = full.row_value?full.row_value:0;
+								return curr_format(parseFloat(improvements_value)+parseFloat(crop_tree_value)+parseFloat(wl_value)+parseFloat(row_value));
+							}
+						}
+						
+						] ,
+				  buttons: [
+					{
+					  extend: "copy",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "csv",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "excel",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "pdfHtml5",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "print",
+					  className: "btn-sm btn-white"
+					},
+				  ],
+				  responsive: true,
+				});
+				//$("#datatable-buttons").DataTable();
+			}
+		  /*-- End Project Affected Person DataTable--*/
 		<?php endif;?>
 		/* -- PAP Crops Data Table --- */
 		if ($("#tblPapCrop").length) {
