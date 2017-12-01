@@ -61,19 +61,19 @@ var ViewModel = function() {
 			$(event.target).addClass('hideit').prev().removeClass('hideit').text(serverPapPhoto.description);
 		};
 		<?php else:?>
-		self.countiesList = ko.observableArray(<?=json_encode($counties)?>);	
+		//self.countiesList = ko.observableArray(<?=json_encode($counties)?>);	
 		self.subcountiesList = ko.observableArray(<?=json_encode($subcounties)?>);	
 		self.parishesList = ko.observableArray(<?=json_encode($parishes)?>);
 		self.villagesList = ko.observableArray(<?=json_encode($villages)?>);
 
 		//useful variables for the form
 		self.district = ko.observable();
-		self.county = ko.observable();
+		//self.county = ko.observable();
 		self.scounty = ko.observable();
 		self.parish = ko.observable();
 		self.village = ko.observable();
 		
-		self.filteredCountiesList = ko.computed(function() {
+		/* self.filteredCountiesList = ko.computed(function() {
 			if(self.district()){
 				return ko.utils.arrayFilter(self.countiesList(), function(county) {
 						
@@ -81,11 +81,11 @@ var ViewModel = function() {
 					
 				});
 			}
-		});	
+		});	 */
 		self.filteredSCountiesList = ko.computed(function() {
-			if(self.county()){
+			if(self.district()){
 				return ko.utils.arrayFilter(self.subcountiesList(), function(scounty) {
-					return (parseInt(self.county().id)==parseInt(scounty.county));
+					return (parseInt(self.district().id)==parseInt(scounty.district));
 				});
 			}
 		});	
@@ -181,8 +181,8 @@ $(document).ready(function(){
 		<?php if(isset($projectDetails)):?>
 			/* -- Project Affected Person Data Table --- */
 			//we have to set column indices based on the type of the project
-			var cols = [5,6,7], totals_col = 6; //the index for columns where  the totals appear
-			var last_col = 11; //the final index table column
+			var cols = [5,11,12], totals_col = 7; //the index for columns where  the totals appear
+			var last_col = 15; //the final index table column
 			<?php if( !($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4) ):?>
 				cols.pop(); last_col--;
 			<?php endif;?>
@@ -236,122 +236,25 @@ $(document).ready(function(){
 						<?php if( $projectDetails['project_category_unit'] == 5 ):?>
 						{ data: 'total_take', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 						<?php endif;?>
+						<?php if( $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 5 ):?>
+							{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+							{ data: 'land_interest', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+							{ data: 'diminution_rate', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+							
+							<?php 
+							if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ){ ?>
+								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * parseFloat(full.land_interest) * parseFloat(full.rightofway) ):0; }},
+							<?php	
+							}elseif($projectDetails['project_category_unit'] == 5){ ?>
+								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * parseFloat(full.land_interest)* parseFloat(full.total_take)):0;  }},
+							<?php
+							}
+						endif; 
+						?>
 						{ data: 'chainage'},
 						{ data: 'improvement_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
 						{ data: 'crop_tree_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
 						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>'}}
-						
-						] ,
-				  buttons: [
-					{
-					  extend: "copy",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "csv",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "excel",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "pdfHtml5",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "print",
-					  className: "btn-sm btn-white"
-					},
-				  ],
-				  responsive: true,
-				});
-				//$("#datatable-buttons").DataTable();
-			}
-		  /*-- End Project Affected Person DataTable--*/
-			/* -- Project Summary Report --- */
-			//we have to set column indices based on the type of the project
-			var cols = [5,6,7], totals_col = 6; //the index for columns where  the totals appear
-			var last_col = 24; //the final index table column
-			<?php if( !($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4) ):?>
-				cols.pop(); last_col--;
-			<?php endif;?>
-			<?php if( !($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4) ):?>
-				cols.pop(); last_col--;
-			<?php endif;?>
-			<?php if( !($projectDetails['project_category_unit'] == 5) ):?>
-				cols.pop(); last_col--;
-			<?php endif;?>
-				cols.push(last_col-2,last_col-1);
-			
-			if ($("#tblProjectReport").length) {
-				  dTable['tblProjectReport'] = $('#tblProjectReport').DataTable({
-				  dom: "lfrtipB",
-				  "processing": true,
-				  "ajax": {
-					  "url":"getData.php",
-					  "dataType": "JSON",
-					  "type": "POST",
-					  "data":  function(d){
-							d.tbl = 'project_paps';
-							d.project_id = <?php echo $_GET['id']; ?>;
-						}
-				  },"columnDefs": [ {
-					  "targets": [last_col],
-					  "orderable": false,
-					  "searchable": false
-				  }],
-				  "autoWidth": false,
-				  "footerCallback": function (tfoot, data, start, end, display ) {
-					var api = this.api();
-					$.each(cols, function(key, val){
-						var total = api.column(val).data().sum();
-						$(api.column(val).footer()).html( curr_format(total) );
-					});
-				  },
-				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
-					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
-						{ data: 'district_name'},
-						/* { data: 'county_id'},
-						{ data: 'subcounty_id'},
-						{ data: 'parish_id'}, */
-						{ data: 'village_name'},
-						{ data: 'phone_contact'},
-						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
-						{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-						<?php endif;?>
-						<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
-						{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-						<?php endif;?>
-						<?php if( $projectDetails['project_category_unit'] == 5 ):?>
-						{ data: 'total_take', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-						<?php endif;?>
-						{ data: 'chainage'},
-						{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'land_interest', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'diminution_rate', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'row_value', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'wl_value', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'wl_value', render: function( data, type, full, meta ) {return data?curr_format((parseFloat(data):0)+(full.row_value?parseFloat(full.row_value):0));}},
-						{ data: 'propertytype'},
-						{ data: 'propertydescription'},
-						{ data: 'improvement_quantity', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'improvement_rate', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'improvement_value', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'croptype'},
-						{ data: 'cropdescription'},
-						{ data: 'crop_quantity', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'crop_rate', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'crop_tree_value', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						//subtotal
-						{ data: 'crop_tree_value', render: function( data, type, full, meta ) {
-								improvements_value = full.improvement_value?full.improvement_value:0;
-								crop_tree_value = full.improvement_value?full.crop_tree_value:0;
-								wl_value = full.wl_value?full.wl_value:0;
-								row_value = full.row_value?full.row_value:0;
-								return curr_format(parseFloat(improvements_value)+parseFloat(crop_tree_value)+parseFloat(wl_value)+parseFloat(row_value));
-							}
-						}
 						
 						] ,
 				  buttons: [
@@ -680,10 +583,10 @@ $('table tbody').on( 'click', '.edit_me', function () {
 		}));
 		$('#subcounty_id').val(data.subcounty_id);
 		//and the county object
-		viewModel.county(ko.utils.arrayFirst(viewModel.countiesList(), function(currentCounty){
+		/* viewModel.county(ko.utils.arrayFirst(viewModel.countiesList(), function(currentCounty){
 			return (data.county_id == currentCounty.id);
-		}));
-		$('#county_id').val(data.county_id);
+		})); */
+		//$('#county_id').val(data.county_id);
 		//finally the district object
 		viewModel.district(ko.utils.arrayFirst(viewModel.project_districts(), function(currentDistrict){
 			return (data.district_id == currentDistrict.id);

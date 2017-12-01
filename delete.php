@@ -42,6 +42,13 @@ if(isset($_GET['tbl'])){
 				$msg =  "Ooups! Could not delete crop description.";
 			}
 		break;
+		case "cropdescription_rate":
+			if($db->del("tbl_district_croptree_rate","id=".$_GET['id'])){
+				$msg =  "Successfully deleted  crop description.";
+			}else{
+				$msg =  "Ooups! Could not delete crop description.";
+			}
+		break;
 		case "propertydescription":
 			if($db->update_single("tbl_property_description", "active", 0, "id=".$_GET['id'])){
 				$msg =  "Successfully deleted  property description.";

@@ -42,7 +42,7 @@
 							<div class="form-group">
 								<label class="control-label col-md-5">Phone Contact</label>
 								<div class="col-md-7">
-									<input name="phone_contact" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 07 or +256" required />
+									<input name="phone_contact" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 07 or +256"  />
 								</div>
 							</div><!--
 							<div class="form-group">
@@ -61,12 +61,12 @@
 								</div>
 							</div>
 						
-							<div class="form-group">
+							<!--div class="form-group">
 								<label class="control-label col-md-5">County</label>
 								<div class="col-md-7">
 									<select id="county_id" name="county_id" class="select2able" data-bind='options: filteredCountiesList(), optionsText: "county_name", optionsCaption: "Select county...", optionsAfterRender: $root.setOptionValue("id"), value:county, select2:{dropdownParent:"#papModal"}'></select>
 								</div>
-							</div>
+							</div -->
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">Subcounty</label>
@@ -96,7 +96,7 @@
 							<div class="form-group" >
 								<label class="control-label col-md-5">Land Tenure</label>
 								<div class="col-md-7">
-									<select name="tenure" id="tenure" data-bind="value: tenure" class="form-control" data-msg-required="Required"  required >
+									<select name="tenure" id="tenure" data-bind="value: tenure" class="form-control"   >
 										<option>Select option ...</option>
 										<?php foreach($tenures as $tenure):?>
 											<option value="<?=$tenure['id']?>"><?=$tenure['title']?></option>
@@ -151,7 +151,7 @@
 							<div class="form-group" >
 								<label class="control-label col-md-5">Km</label>
 								<div class="col-md-7">
-									<input name="chainage" type="text" class="form-control" data-msg-required="Chainage point must be entered" required />
+									<input name="chainage" type="text" class="form-control" data-msg-required="Chainage point must be entered"  />
 								</div>
 							</div>
 					</fieldset>

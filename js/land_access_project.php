@@ -52,7 +52,7 @@ $(document).ready(function(){
 						d.tbl = 'land_access_project';
 					}
 			  },"columnDefs": [ {
-				  "targets": [2],
+				  "targets": [],
 				  "orderable": false,
 				  "searchable": false
 			  }],

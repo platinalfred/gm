@@ -192,50 +192,23 @@ if(!isset($_SESSION['logged'])){
                             <a class="current" href="dashboard.php"><span aria-hidden="true" class="hightop-home"></span>Dashboard</a>
                         </li>
 						<li>
-                            <a href="reports.php">
+                            <a href="#">
                                 <span aria-hidden="true" class="hightop-charts"></span>Reports</a>
                         </li>
                         <li>
                             <a href="administration.php"><span aria-hidden="true" class="hightop-feed"></span>Administration</a>
                         </li>
-                        <li>
-                            <a data-toggle="dropdown" href="#"><span aria-hidden="true" class="hightop-assign"></span>Assignments</a>
-                            <!-- class="dropdown" <b class="caret"></b> <ul class="dropdown-menu">
-                                <li>
-                                    <a href="buttons.html">Buttons</a>
-                                </li>
-                                <li>
-                                    <a href="fontawesome.html">Font Awesome Icons</a>
-                                </li>
-                                <li>
-                                    <a href="glyphicons.html">Glyphicons</a>
-                                </li>
-                                <li>
-                                    <a href="components.html">Components</a>
-                                </li>
-                                <li>
-                                    <a href="widgets.html">Widgets</a>
-                                </li>
-                                <li>
-                                    <a href="nestable-lists.html">Nestable Lists</a>
-                                </li>
-                                <li>
-                                    <a href="typo.html">Typography</a>
-                                </li>
-                                <li>
-                                    <a href="grid.html">Grid Layout</a>
-                                </li>
-                            </ul>
-							-->
-						</li>
-                        <li>
+						<li>
+                            <a href="administration.php"><span aria-hidden="true" class="hightop-feed"></span> Assignments</a>
+                        </li>
+						<li>
                             <a href="land-acquisition.php">
                                 <span aria-hidden="true" class="hightop-forms"></span>Land Acquisition
 							</a>
                         </li>
                         <li >
                             <a data-toggle="dropdown" href="#">
-                                <span aria-hidden="true" class="hightop-money"></span>Income
+                                <span aria-hidden="true" class="hightop-pages"></span>Income
 							</a>
                         </li>
                         <li>

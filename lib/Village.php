@@ -15,8 +15,8 @@ class Village extends Db {
 		return !empty($result_array) ? $result_array : false;
 	}
 	public function findVillages(){
-		$table = self::$table_name . " v JOIN tbl_parish p ON v.parish = p.id  JOIN tbl_subcounty s ON p.subcounty = s.id JOIN tbl_county c ON s.county = c.id JOIN tbl_district d ON c.district = d.id";
-		$fields = "`v`.`id`,`v`.`village_name`,`p`.`parish_name`,`s`.`subcounty_name`,`c`.`county_name`,`d`.`district_name`";
+		$table = self::$table_name . " v JOIN tbl_parish p ON v.parish = p.id  JOIN tbl_subcounty s ON p.subcounty = s.id JOIN tbl_district d ON s.district = d.id";
+		$fields = "`v`.`id`,`v`.`village_name`,`p`.`parish_name`,`s`.`subcounty_name`,`d`.`district_name`";
 		$result = $this->getfarray($table, $fields, "v.active=1", "district_name", "");
 		return !empty($result) ? $result : false;
 	}

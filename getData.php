@@ -38,8 +38,8 @@ if(isset($_POST['tbl'])){
 			$district_crop_rate_obj = new DistrictCropRate();
 			
 			$output['available_districts'] = $project_coverage_obj->findAvailableDistricts($_POST['project_id']);
-			$output['district_property_rates'] = $district_property_rate_obj->findDistrictPropertyRates();
-			$output['district_crop_rates'] = $district_crop_rate_obj->findDistrictCropRates();
+			$output['district_property_rates'] = $district_property_rate_obj->findDistrictPropertyRates("`district_id` IN (SELECT `district_id` FROM `tbl_project_coverage` WHERE `project_id` = ".$_POST['project_id'].")");
+			$output['district_crop_rates'] = $district_crop_rate_obj->findDistrictCropRates("`district_id` IN (SELECT `district_id` FROM `tbl_project_coverage` WHERE `project_id` = ".$_POST['project_id'].")");
 		break;
 		case "project_coverage":
 			$project_coverage_obj = new ProjectCoverage();
@@ -62,6 +62,12 @@ if(isset($_POST['tbl'])){
 		case "pap_improvements":
 			$pap_improvement_obj = new PAP_Improvement();
 			$output['data'] = $pap_improvement_obj->findPapImprovements("pap_id=".$_POST['pap_id']);
+		break;
+		case "crop_types":
+			$treecroptypedescription = new TreeCropTypesDescription();
+			$crop_description = new CropDescription();
+			$output['all_attached'] = $treecroptypedescription->findCropTreeDescription("`tree_crop_id`=" . $_POST['crop_id']);
+			$output['all_crop_descriptions'] = $crop_description->findAll("id NOT IN (SELECT `crop_description_id` FROM `tree_crop_types_description` WHERE `tree_crop_id`=".$_POST['crop_id'].")");
 		break;
 		default:
 			echo "No data found!"; 

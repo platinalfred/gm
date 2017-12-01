@@ -17,7 +17,7 @@ class Db{
 	public function __construct(){
 	   $this->server = "localhost";
 	   $this->user = "root";
-	   $this->password = "admin2016#";
+	   $this->password = "";
 	   $this->database = "gmt";
 	   $this->connectDB();
 	   
@@ -523,6 +523,13 @@ class Db{
 		//else return mysqli_error($this->conn);
 		return false;
 	}
+	function cleanData($a) {
+		if(preg_match("/^[0-9,]+$/", $a)){
+			$a = str_replace( ',', '', $a);
+		}
+		return $a;
+
+	}
 	function set_update_query($table, $id, $data_array){
 		
 		$update_sql = "UPDATE `".$table. "` SET ";
@@ -563,7 +570,7 @@ class Db{
 			}
 		}
 		$update_sql = "UPDATE ".$table. " SET ".substr($sql,0,-1)." WHERE ".$where;
-		//echo $update_sql;
+		echo $update_sql;
 		 $updated = $this->conn->query($update_sql);
 		if($updated){
 			return true;
