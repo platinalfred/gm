@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2017 at 02:40 PM
+-- Generation Time: Nov 28, 2017 at 07:10 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.5.35
 
@@ -570,20 +570,28 @@ CREATE TABLE `tbl_paps` (
   `way_leave` decimal(8,2) DEFAULT NULL,
   `rightofway` decimal(8,2) DEFAULT NULL,
   `total_take` decimal(8,2) DEFAULT NULL,
+  `diminution_rate` decimal(5,2) NOT NULL,
+  `rate_per_acre` decimal(12,2) NOT NULL,
+  `land_interest` decimal(5,2) NOT NULL,
   `chainage` varchar(30) NOT NULL,
   `date_created` int(11) NOT NULL COMMENT 'Timestamp of the moment the member was added',
   `created_by` int(11) NOT NULL COMMENT 'Reference to staff who created this record',
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Timestamp of the moment the member was modified',
   `modified_by` int(11) NOT NULL COMMENT 'Reference to staff who modified the record',
-  `comment` text
+  `comment` text,
+  `active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_paps`
 --
 
-INSERT INTO `tbl_paps` (`id`, `project_id`, `pap_ref`, `firstname`, `lastname`, `othername`, `phone_contact`, `district_id`, `county_id`, `subcounty_id`, `parish_id`, `village_id`, `photo_url`, `way_leave`, `rightofway`, `total_take`, `chainage`, `date_created`, `created_by`, `date_modified`, `modified_by`, `comment`) VALUES
-(1, 1, 'PAP_1510756252', 'Alfred', 'Platin ', 'Mugasa', '0702771124', 22, 17, 451, 321, 0, NULL, '0.23', '1.01', '2.00', '200.00', 1510756252, 1, '2017-11-15 14:30:52', 1, NULL);
+INSERT INTO `tbl_paps` (`id`, `project_id`, `pap_ref`, `firstname`, `lastname`, `othername`, `phone_contact`, `district_id`, `county_id`, `subcounty_id`, `parish_id`, `village_id`, `photo_url`, `way_leave`, `rightofway`, `total_take`, `diminution_rate`, `rate_per_acre`, `land_interest`, `chainage`, `date_created`, `created_by`, `date_modified`, `modified_by`, `comment`, `active`) VALUES
+(2, 3, 'PAP_1511365820', 'Alfred', 'platin', 'Mugasa', '0702771124', 31, 1, 1, 1, 1, NULL, '0.00', '1.00', '0.00', '0.00', '0.00', '0.00', '0+100', 1511365820, 1, '2017-11-22 15:50:20', 1, NULL, 1),
+(3, 3, 'PAP_1511365825', 'Alfred', 'platin', 'Mugasa', '0702771124', 31, 1, 1, 1, 1, NULL, '0.00', '1.00', '0.00', '0.00', '0.00', '0.00', '0+100', 1511365825, 1, '2017-11-22 15:50:25', 1, NULL, 1),
+(4, 3, 'PAP_1511365841', 'Alfred', 'platin', 'Mugasa', '0702771124', 31, 1, 1, 1, 1, NULL, '0.00', '1.00', '0.00', '0.00', '0.00', '0.00', '0+100', 1511365841, 1, '2017-11-22 15:50:41', 1, NULL, 1),
+(5, 3, 'PAP_1511367071', 'Brayan', 'Wamani', 'Matovu', '0701108282', 31, 1, 1, 1, 1, NULL, '0.00', '2.00', '0.00', '0.00', '0.00', '0.00', '100+200', 1511367071, 1, '2017-11-22 16:11:11', 1, NULL, 1),
+(6, 6, 'PAP_1511612577', 'Alfred', 'Platin', 'Mugasa', '0702771124', 31, 1, 1, 1, 1, NULL, '0.00', '0.00', '12.00', '80.00', '15.00', '100.00', '0+200', 1511612577, 1, '2017-11-25 14:37:12', 1, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -627,6 +635,14 @@ CREATE TABLE `tbl_pap_improvement` (
   `modified_by` int(11) NOT NULL,
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_pap_improvement`
+--
+
+INSERT INTO `tbl_pap_improvement` (`id`, `pap_id`, `district_property_rate_id`, `rate`, `quantity`, `created_by`, `date_created`, `modified_by`, `date_modified`) VALUES
+(1, 1, 2, '20000.00', 4, 1, 1511616207, 1, '2017-11-25 13:23:27'),
+(2, 1, 6, '2000.00', 400, 1, 1511617096, 1, '2017-11-25 13:38:16');
 
 -- --------------------------------------------------------
 
@@ -698,7 +714,8 @@ INSERT INTO `tbl_project_coverage` (`id`, `project_id`, `district_id`, `created_
 (6, 3, 28, 1, 1510668603, 1, '2017-11-14 14:10:03'),
 (7, 3, 5, 1, 1510668603, 1, '2017-11-14 14:10:03'),
 (8, 3, 4, 1, 1510668603, 1, '2017-11-14 14:10:03'),
-(9, 1, 31, 1, 1511173409, 1, '2017-11-20 10:23:29');
+(9, 1, 31, 1, 1511173409, 1, '2017-11-20 10:23:29'),
+(10, 2, 22, 1, 1511365671, 1, '2017-11-22 15:47:51');
 
 -- --------------------------------------------------------
 
@@ -1184,7 +1201,7 @@ ALTER TABLE `tbl_district_property_rate`
 -- AUTO_INCREMENT for table `tbl_paps`
 --
 ALTER TABLE `tbl_paps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tbl_pap_crop_tree`
 --
@@ -1194,7 +1211,7 @@ ALTER TABLE `tbl_pap_crop_tree`
 -- AUTO_INCREMENT for table `tbl_pap_improvement`
 --
 ALTER TABLE `tbl_pap_improvement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tbl_pap_photos`
 --
@@ -1209,7 +1226,7 @@ ALTER TABLE `tbl_parish`
 -- AUTO_INCREMENT for table `tbl_project_coverage`
 --
 ALTER TABLE `tbl_project_coverage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tbl_property_description`
 --

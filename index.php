@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html>
 
@@ -53,13 +54,15 @@
 <body class="login1 signup">
 	<?php 
 	if(isset($_POST['tbl']) && $_POST['tbl'] == "gmt103932092030932"){
-		session_start();
+           
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 		require_once("lib/Staff.php");
 		$staff = new Staff();
 		if($staff->getLogin($email, $password)){
-			if($_SESSION['field_officer']){
+                     /*print_r($_SESSION);
+                     die();*/
+			if(isset($_SESSION['field_officer'])){
 				header("Location:land-acquisition.php");
 			}else{
 				header("Location:main.php");

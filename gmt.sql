@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2017 at 06:11 PM
+-- Generation Time: Nov 13, 2017 at 12:16 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.5.35
 
@@ -102,6 +102,44 @@ CREATE TABLE `land_access` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `land_access_crops_or_economic_trees`
+--
+
+CREATE TABLE `land_access_crops_or_economic_trees` (
+  `id` int(11) NOT NULL,
+  `pap_id` int(11) NOT NULL,
+  `type_of_crop` int(11) NOT NULL,
+  `crop_description` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL COMMENT 'Square Metres/Metres',
+  `rate` double NOT NULL COMMENT 'U.shs',
+  `crops_value` double(10,2) NOT NULL,
+  `land_value` double(10,2) NOT NULL,
+  `improvement_value` double(10,2) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
+  `modified_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `land_access_improvement`
+--
+
+CREATE TABLE `land_access_improvement` (
+  `pap_id` int(11) NOT NULL,
+  `property` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `area_covered` decimal(10,0) NOT NULL,
+  `rate` double(10,2) NOT NULL,
+  `date_modified` datetime NOT NULL,
+  `date_added` datetime NOT NULL,
+  `modified_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `land_access_project`
 --
 
@@ -112,9 +150,7 @@ CREATE TABLE `land_access_project` (
   `project_category_unit` int(11) NOT NULL,
   `project_reference` varchar(100) NOT NULL,
   `client_id` int(11) NOT NULL,
-  `disturbance_allowance` int(11) NOT NULL,
   `date_added` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
   `date_modified` datetime NOT NULL,
   `modified_by` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL
@@ -124,12 +160,8 @@ CREATE TABLE `land_access_project` (
 -- Dumping data for table `land_access_project`
 --
 
-INSERT INTO `land_access_project` (`id`, `project_title`, `project_category`, `project_category_unit`, `project_reference`, `client_id`, `disturbance_allowance`, `date_added`, `created_by`, `date_modified`, `modified_by`, `active`) VALUES
-(1, 'Rehabilitation of Rwizi settlers', NULL, 4, 'REF837N', 4, 0, '2017-11-10 12:18:59', 0, '0000-00-00 00:00:00', 1, 1),
-(2, 'Land title', NULL, 4, 'GREA2016', 4, 0, '2017-11-10 12:20:59', 0, '0000-00-00 00:00:00', 1, 1),
-(3, 'Standard Gauge Railway for Ntungamo', NULL, 1, 'NME2311', 3, 0, '2017-11-10 12:34:52', 0, '0000-00-00 00:00:00', 1, 1),
-(4, 'UNRA', NULL, 1, 'yewuwjh', 1, 0, '2017-11-22 04:17:21', 0, '0000-00-00 00:00:00', 1, 1),
-(5, 'UNRA', NULL, 1, 'yewuwjh', 1, 0, '2017-11-22 04:17:23', 0, '0000-00-00 00:00:00', 1, 1);
+INSERT INTO `land_access_project` (`id`, `project_title`, `project_category`, `project_category_unit`, `project_reference`, `client_id`, `date_added`, `date_modified`, `modified_by`, `active`) VALUES
+(1, 'Resettlement Action Plan for the Gulu Packwach Electricity Transmission Line - Part 04', NULL, 4, 'Project_04', 3, '2017-11-11 06:31:53', '0000-00-00 00:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -179,8 +211,7 @@ CREATE TABLE `land_access_project_category_unit` (
 INSERT INTO `land_access_project_category_unit` (`id`, `title`, `category`, `description`, `date_added`, `added_by`, `date_modified`, `active`) VALUES
 (1, 'Right of way', 1, 'This involves full utilization of the entire piece of land. In other words, land ownership is totally transferred from the primary owner, to the body in charge.\r\nExamples of activities that require this type of acquisition are road construction, Laying water pipelines, and etc. This type majorly falls under the Permanent land acquisition Category.\r\nAnd the agencies involved here are UNRA & NWSC', '2017-11-09 06:08:58', 0, '2017-11-09 05:18:43', 1),
 (2, 'Way Leaves', 2, 'In this type of acquisition, land is used limitedly depending on the activity at hand.  In other words, the primary land owner is allowed to use this particular piece of land to some extent. A good example on this is say, assuming electricity power lines are passed through some oneâ€™s land, it would not imply that he would no longer be using that land completely, he could still  use it for activities like farming but limited to only growing short crops like beans, maize, and etc. but not for crops like Bananas, trees and etc. REA is the only agency involved', '2017-11-09 06:12:16', 0, '2017-11-09 05:18:48', 1),
-(4, 'Right of way and Way leaves', 3, 'Combines both right of way and wayleaves', '2017-11-09 06:20:31', 0, '2017-11-09 05:20:40', 1),
-(5, 'Total Size', 1, 'Applicable incase of Roads, Agriculture, Oil and Gas, and Water Sector Projects', '2017-11-15 05:05:09', 0, '2017-11-15 16:05:09', 1);
+(4, 'Right of way and Way leaves', 3, 'Combines both right of way and wayleaves', '2017-11-09 06:20:31', 0, '2017-11-09 05:20:40', 1);
 
 -- --------------------------------------------------------
 
@@ -230,7 +261,7 @@ CREATE TABLE `person` (
 
 CREATE TABLE `position` (
   `id` int(11) NOT NULL,
-  `title` varchar(156) NOT NULL,
+  `name` varchar(156) NOT NULL,
   `access_level` int(11) NOT NULL,
   `description` text,
   `active` tinyint(1) NOT NULL DEFAULT '1'
@@ -240,10 +271,31 @@ CREATE TABLE `position` (
 -- Dumping data for table `position`
 --
 
-INSERT INTO `position` (`id`, `title`, `access_level`, `description`, `active`) VALUES
+INSERT INTO `position` (`id`, `name`, `access_level`, `description`, `active`) VALUES
 (1, 'Administrator', 1, 'Admin', 1),
 (2, 'Field Staff', 2, 'Field operators/ data collectors', 1),
 (3, 'Management Staff', 3, 'Management Staff', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff`
+--
+
+CREATE TABLE `staff` (
+  `id` int(11) NOT NULL,
+  `person_id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `username` varchar(120) NOT NULL,
+  `password` text NOT NULL,
+  `access_level` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `start_date` date NOT NULL,
+  `end_date` date DEFAULT NULL,
+  `date_added` date NOT NULL,
+  `added_by` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -254,52 +306,27 @@ INSERT INTO `position` (`id`, `title`, `access_level`, `description`, `active`) 
 CREATE TABLE `tbl_client` (
   `id` int(11) NOT NULL,
   `client_names` varchar(150) NOT NULL,
-  `physical_address` varchar(150) NOT NULL,
+  `physical_address` varchar(100) NOT NULL,
   `postal_address` varchar(100) NOT NULL,
-  `phone_contact1` varchar(15) NOT NULL,
-  `phone_contact2` varchar(15) NOT NULL,
-  `email_contact1` varchar(60) NOT NULL,
-  `email_contact2` varchar(60) NOT NULL,
-  `website` varchar(100) NOT NULL,
+  `phone_contact1` varchar(30) NOT NULL,
+  `phone_contact2` varchar(30) DEFAULT NULL,
+  `email_contact1` varchar(100) NOT NULL,
+  `email_contact2` varchar(100) DEFAULT NULL,
+  `website` varchar(100) DEFAULT 'http://www.somewebsite.com',
   `created_by` int(11) NOT NULL,
   `date_created` int(11) NOT NULL,
   `modified_by` int(11) NOT NULL,
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Records of all the clients worked with';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_client`
 --
 
 INSERT INTO `tbl_client` (`id`, `client_names`, `physical_address`, `postal_address`, `phone_contact1`, `phone_contact2`, `email_contact1`, `email_contact2`, `website`, `created_by`, `date_created`, `modified_by`, `date_modified`) VALUES
-(1, 'Uganda Electricity Transmission Company', 'Nakasero Road Road, Kampala', '10347, Kampala', '0414989029', '0414083093', 'procurement@uetcl.go.ug', 'contact@uetcl.go.ug', '', 0, 1510235600, 1, '2017-11-10 10:51:14'),
-(2, 'Uganda National Roads Authority', 'Mackinnon Road, Kampala', '45989, Kampala', '0312837837', '', 'info@unra.go.ug', '', '', 0, 1510236100, 1, '2017-11-10 10:48:47'),
-(3, 'Uganda Railways Corporation', 'Nasser Road, Kampala', '938939, Kampala', '0438939030', '', 'info@urc.go.ug', '', '', 0, 1510236271, 1, '2017-11-09 11:04:31'),
-(4, 'Electricity Regulatory Authority', 'Electricity Towers, Nakasero, Kampala', '98083, Kampala', '0414319082', '', 'info@era.go.ug', 'contact@era.go.ug', '', 0, 1510236852, 1, '2017-11-09 11:14:12');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_county`
---
-
-CREATE TABLE `tbl_county` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `county_name` varchar(50) NOT NULL,
-  `district` int(11) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Districts in Uganda';
-
---
--- Dumping data for table `tbl_county`
---
-
-INSERT INTO `tbl_county` (`id`, `county_name`, `district`, `active`) VALUES
-(1, 'Bugahya', 31, 1),
-(2, 'Dakabela', 107, 1),
-(3, 'Kyabigambiire', 0, 1),
-(4, 'Buhaguzi', 31, 1),
-(7, 'Buseruka', 31, 1);
+(1, 'Electricity Regulatory Authority', 'Hannington Road, Nakasero', '48302, Kampala', '0775484938', '0775493893', 'procurement@era.go.ug', 'info@era.go.ug', NULL, 0, 1510417466, 1, '2017-11-11 16:40:02'),
+(2, 'Uganda National Roads Authority', 'Ssezibwa Road, Kampala', '7093, Kampala', '0312039038', '0413294849', 'logistics@unra.go.ug', 'info@unra.go.ug', NULL, 0, 1510418717, 1, '2017-11-11 16:45:17'),
+(3, 'Uganda Electricity Transmission Company Limited', 'Bishop Kivengere Road', '8940, Kampala', '0414984049', '0414949393', 'procurement@unra.go.ug', '', NULL, 0, 1510418879, 1, '2017-11-11 16:47:59');
 
 -- --------------------------------------------------------
 
@@ -322,8 +349,8 @@ CREATE TABLE `tbl_crop_description` (
 INSERT INTO `tbl_crop_description` (`id`, `tree_type_id`, `title`, `description`, `active`) VALUES
 (1, 0, 'Mature', '', 1),
 (2, 0, 'Average', '', 0),
-(3, 0, 'Building', '', 0),
-(4, 0, 'Building Pole', '', 0),
+(3, 0, 'Building', '', 1),
+(4, 0, 'Building Pole', '', 1),
 (5, 0, 'Electric', '', 1),
 (6, 0, 'Firewood', '', 1),
 (7, 0, 'Mature Good', '', 1),
@@ -332,186 +359,6 @@ INSERT INTO `tbl_crop_description` (`id`, `tree_type_id`, `title`, `description`
 (10, 0, 'Young', '', 1),
 (11, 0, 'Timber', '', 1),
 (12, 0, 'Telephone', '', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_district`
---
-
-CREATE TABLE `tbl_district` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `district_name` varchar(50) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Districts in Uganda';
-
---
--- Dumping data for table `tbl_district`
---
-
-INSERT INTO `tbl_district` (`id`, `district_name`, `active`) VALUES
-(1, 'ABIM', 1),
-(2, 'ADJUMANI', 1),
-(3, 'AGAGO', 1),
-(4, 'ALEBTONG', 1),
-(5, 'AMOLATAR', 1),
-(6, 'AMUDAT', 1),
-(7, 'AMURIA', 1),
-(8, 'AMURU', 1),
-(9, 'APAC', 1),
-(10, 'ARUA', 1),
-(11, 'BUDAKA', 1),
-(12, 'BUDUDA', 1),
-(13, 'BUGIRI', 1),
-(14, 'BUHWEJU', 1),
-(15, 'BUIKWE', 1),
-(16, 'BUKEDEA', 1),
-(17, 'BUKOMANSIMBI', 1),
-(18, 'BUKWO', 1),
-(19, 'BULAMBULI', 1),
-(20, 'BULIISA', 1),
-(21, 'BUNDIBUGYO', 1),
-(22, 'BUSHENYI', 1),
-(23, 'BUSIA', 1),
-(24, 'BUTALEJA', 1),
-(25, 'BUTAMBALA', 1),
-(26, 'BUVUMA', 1),
-(27, 'BUYENDE', 1),
-(28, 'DOKOLO', 1),
-(29, 'GOMBA', 1),
-(30, 'GULU', 1),
-(31, 'HOIMA', 1),
-(32, 'IBANDA', 1),
-(33, 'IGANGA', 1),
-(34, 'ISINGIRO', 1),
-(35, 'JINJA', 1),
-(36, 'KAABONG', 1),
-(37, 'KABALE', 1),
-(38, 'KABAROLE', 1),
-(39, 'KABERAMAIDO', 1),
-(40, 'KALANGALA', 1),
-(41, 'KALIRO', 1),
-(42, 'KALUNGU', 1),
-(43, 'KAMPALA', 1),
-(44, 'KAMULI', 1),
-(45, 'KAMWENGE', 1),
-(46, 'KANUNGU', 1),
-(47, 'KAPCHORWA', 1),
-(48, 'KASESE', 1),
-(49, 'KATAKWI', 1),
-(50, 'KAYUNGA', 1),
-(51, 'KIBAALE', 1),
-(52, 'KIBOGA', 1),
-(53, 'KIBUKU', 1),
-(54, 'KIRUHURA', 1),
-(55, 'KIRYANDONGO', 1),
-(56, 'KISORO', 1),
-(57, 'KITGUM', 1),
-(58, 'KOBOKO', 1),
-(59, 'KOLE', 1),
-(60, 'KOTIDO', 1),
-(61, 'KUMI', 1),
-(62, 'KWEEN', 1),
-(63, 'KYANKWANZI', 1),
-(64, 'KYEGEGWA', 1),
-(65, 'KYENJOJO', 1),
-(66, 'LAMWO', 1),
-(67, 'LIRA', 1),
-(68, 'LUUKA', 1),
-(69, 'LUWEERO', 1),
-(70, 'LWENGO', 1),
-(71, 'LYANTONDE', 1),
-(72, 'MANAFWA', 1),
-(73, 'MARACHA', 1),
-(74, 'MASAKA', 1),
-(75, 'MASINDI', 1),
-(76, 'MAYUGE', 1),
-(77, 'MBALE', 1),
-(78, 'MBARARA', 1),
-(79, 'MITOOMA', 1),
-(80, 'MITYANA', 1),
-(81, 'MOROTO', 1),
-(82, 'MOYO', 1),
-(83, 'MPIGI', 1),
-(84, 'MUBENDE', 1),
-(85, 'MUKONO', 1),
-(86, 'NAKAPIRIPIRIT', 1),
-(87, 'NAKASEKE', 1),
-(88, 'NAKASONGOLA', 1),
-(89, 'NAMAYINGO', 1),
-(90, 'NAMUTUMBA', 1),
-(91, 'NAPAK', 1),
-(92, 'NEBBI', 1),
-(93, 'NGORA', 1),
-(94, 'NTOROKO', 1),
-(95, 'NTUNGAMO', 1),
-(96, 'NWOYA', 1),
-(97, 'OTUKE', 1),
-(98, 'OYAM', 1),
-(99, 'PADER', 1),
-(100, 'PALLISA', 1),
-(101, 'RAKAI', 1),
-(102, 'RUBIRIZI', 1),
-(103, 'RUKUNGIRI', 1),
-(104, 'SERERE', 1),
-(105, 'SHEEMA', 1),
-(106, 'SIRONKO', 1),
-(107, 'SOROTI', 1),
-(108, 'SSEMBABULE', 1),
-(109, 'TORORO', 1),
-(110, 'WAKISO', 1),
-(111, 'YUMBE', 1),
-(112, 'ZOMBO', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_district_croptree_rate`
---
-
-CREATE TABLE `tbl_district_croptree_rate` (
-  `id` int(11) NOT NULL,
-  `district_id` int(11) NOT NULL,
-  `croptree_id` int(11) NOT NULL,
-  `rate` double(12,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_district_croptree_rate`
---
-
-INSERT INTO `tbl_district_croptree_rate` (`id`, `district_id`, `croptree_id`, `rate`) VALUES
-(1, 1, 1, 20000.00),
-(2, 1, 2, 4000.00),
-(3, 31, 4, 4000.00),
-(4, 31, 3, 4000.00);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_district_property_rate`
---
-
-CREATE TABLE `tbl_district_property_rate` (
-  `id` int(11) NOT NULL,
-  `district_id` int(11) NOT NULL,
-  `propertytypedescription_id` int(11) NOT NULL,
-  `rate` double(12,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_district_property_rate`
---
-
-INSERT INTO `tbl_district_property_rate` (`id`, `district_id`, `propertytypedescription_id`, `rate`) VALUES
-(2, 1, 2, 20000.00),
-(3, 1, 1, 10000.00),
-(4, 1, 1, 10000.00),
-(5, 1, 1, 10000.00),
-(6, 1, 3, 2000.00),
-(7, 31, 4, 10000.00),
-(8, 31, 1, 10000.00),
-(9, 31, 3, 10000.00);
 
 -- --------------------------------------------------------
 
@@ -531,29 +378,18 @@ CREATE TABLE `tbl_paps` (
   `county_id` int(11) DEFAULT NULL,
   `subcounty_id` int(5) NOT NULL,
   `parish_id` int(11) NOT NULL,
-  `village_id` int(11) NOT NULL,
+  `village` int(11) NOT NULL,
   `photo_url` varchar(100) DEFAULT NULL,
   `way_leave` decimal(8,2) DEFAULT NULL,
   `rightofway` decimal(8,2) DEFAULT NULL,
   `total_take` decimal(8,2) DEFAULT NULL,
-  `chainage` varchar(30) NOT NULL,
+  `chainage` decimal(8,2) NOT NULL,
   `date_created` int(11) NOT NULL COMMENT 'Timestamp of the moment the member was added',
   `created_by` int(11) NOT NULL COMMENT 'Reference to staff who created this record',
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Timestamp of the moment the member was modified',
   `modified_by` int(11) NOT NULL COMMENT 'Reference to staff who modified the record',
   `comment` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_paps`
---
-
-INSERT INTO `tbl_paps` (`id`, `project_id`, `pap_ref`, `firstname`, `lastname`, `othername`, `phone_contact`, `district_id`, `county_id`, `subcounty_id`, `parish_id`, `village_id`, `photo_url`, `way_leave`, `rightofway`, `total_take`, `chainage`, `date_created`, `created_by`, `date_modified`, `modified_by`, `comment`) VALUES
-(1, 1, 'PAP_1510756252', 'Alfred', 'Platin ', 'Mugasa', '0702771124', 22, 17, 451, 321, 0, NULL, '0.23', '1.01', '2.00', '200.00', 1510756252, 1, '2017-11-15 14:30:52', 1, NULL),
-(2, 3, 'PAP_1511365820', 'Alfred', 'platin', 'Mugasa', '0702771124', 31, 1, 1, 1, 1, NULL, '0.00', '1.00', '0.00', '0+100', 1511365820, 1, '2017-11-22 15:50:20', 1, NULL),
-(3, 3, 'PAP_1511365825', 'Alfred', 'platin', 'Mugasa', '0702771124', 31, 1, 1, 1, 1, NULL, '0.00', '1.00', '0.00', '0+100', 1511365825, 1, '2017-11-22 15:50:25', 1, NULL),
-(4, 3, 'PAP_1511365841', 'Alfred', 'platin', 'Mugasa', '0702771124', 31, 1, 1, 1, 1, NULL, '0.00', '1.00', '0.00', '0+100', 1511365841, 1, '2017-11-22 15:50:41', 1, NULL),
-(5, 3, 'PAP_1511367071', 'Brayan', 'Wamani', 'Matovu', '0701108282', 31, 1, 1, 1, 1, NULL, '0.00', '2.00', '0.00', '100+200', 1511367071, 1, '2017-11-22 16:11:11', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -573,24 +409,6 @@ CREATE TABLE `tbl_pap_crop_tree` (
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tbl_pap_crop_tree`
---
-
-INSERT INTO `tbl_pap_crop_tree` (`id`, `pap_id`, `crop_description_rate_id`, `rate`, `quantity`, `created_by`, `date_created`, `modified_by`, `date_modified`) VALUES
-(1, 1, 1, '20000.00', 30000, 1, 1510756252, 1, '2017-11-15 14:30:52'),
-(2, 2, 1, '20000.00', 5, 1, 1511365820, 1, '2017-11-22 15:50:20'),
-(3, 2, 4, '4000.00', 2, 1, 1511365820, 1, '2017-11-22 15:50:20'),
-(4, 2, 3, '4000.00', 8, 1, 1511365820, 1, '2017-11-22 15:50:20'),
-(5, 3, 1, '20000.00', 5, 1, 1511365825, 1, '2017-11-22 15:50:25'),
-(6, 3, 4, '4000.00', 2, 1, 1511365825, 1, '2017-11-22 15:50:25'),
-(7, 3, 3, '4000.00', 8, 1, 1511365825, 1, '2017-11-22 15:50:25'),
-(8, 4, 1, '20000.00', 5, 1, 1511365841, 1, '2017-11-22 15:50:41'),
-(9, 4, 4, '4000.00', 2, 1, 1511365841, 1, '2017-11-22 15:50:41'),
-(10, 4, 3, '4000.00', 8, 1, 1511365841, 1, '2017-11-22 15:50:41'),
-(11, 5, 2, '4000.00', 1, 1, 1511367071, 1, '2017-11-22 16:11:11'),
-(12, 5, 3, '4000.00', 4, 1, 1511367071, 1, '2017-11-22 16:11:11');
-
 -- --------------------------------------------------------
 
 --
@@ -601,6 +419,7 @@ CREATE TABLE `tbl_pap_improvement` (
   `id` int(11) NOT NULL,
   `pap_id` int(11) NOT NULL,
   `district_property_rate_id` int(11) NOT NULL,
+  `unit` varchar(30) NOT NULL,
   `rate` decimal(12,2) NOT NULL,
   `quantity` smallint(6) NOT NULL,
   `created_by` int(11) NOT NULL,
@@ -608,62 +427,6 @@ CREATE TABLE `tbl_pap_improvement` (
   `modified_by` int(11) NOT NULL,
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_pap_improvement`
---
-
-INSERT INTO `tbl_pap_improvement` (`id`, `pap_id`, `district_property_rate_id`, `rate`, `quantity`, `created_by`, `date_created`, `modified_by`, `date_modified`) VALUES
-(1, 4, 2, '10000.00', 2, 1, 1511365820, 1, '2017-11-22 15:50:20'),
-(2, 6, 3, '2000.00', 2, 1, 1511365820, 1, '2017-11-22 15:50:20'),
-(3, 4, 2, '10000.00', 3, 1, 1511365825, 1, '2017-11-22 15:50:25'),
-(4, 6, 3, '2000.00', 3, 1, 1511365825, 1, '2017-11-22 15:50:25'),
-(5, 4, 2, '10000.00', 4, 1, 1511365842, 1, '2017-11-22 15:50:42'),
-(6, 6, 3, '2000.00', 4, 1, 1511365842, 1, '2017-11-22 15:50:42'),
-(7, 6, 2, '2000.00', 5, 1, 1511367071, 1, '2017-11-22 16:11:11'),
-(8, 3, 4, '10000.00', 5, 1, 1511367071, 1, '2017-11-22 16:11:11'),
-(9, 2, 2, '20000.00', 5, 1, 1511367071, 1, '2017-11-22 16:11:11');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_pap_photos`
---
-
-CREATE TABLE `tbl_pap_photos` (
-  `id` int(11) NOT NULL,
-  `pap_id` int(11) NOT NULL,
-  `file_name` varchar(100) NOT NULL,
-  `description` varchar(150) NOT NULL,
-  `date_created` int(11) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `date_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modified_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Photos for each class';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_parish`
---
-
-CREATE TABLE `tbl_parish` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `parish_name` varchar(50) NOT NULL,
-  `subcounty` int(11) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Districts in Uganda';
-
---
--- Dumping data for table `tbl_parish`
---
-
-INSERT INTO `tbl_parish` (`id`, `parish_name`, `subcounty`, `active`) VALUES
-(1, 'Bulindi', 1, 1),
-(2, 'Kibaire', 1, 1),
-(3, 'Kisabagwa', 1, 1),
-(4, 'Kibugubya', 1, 1),
-(5, 'Kibingo', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -675,28 +438,11 @@ CREATE TABLE `tbl_project_coverage` (
   `id` int(11) NOT NULL,
   `project_id` int(11) NOT NULL,
   `district_id` int(11) NOT NULL,
-  `created_by` int(11) NOT NULL,
   `date_created` int(11) NOT NULL,
-  `modified_by` int(11) NOT NULL,
-  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_by` int(11) NOT NULL,
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modified_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_project_coverage`
---
-
-INSERT INTO `tbl_project_coverage` (`id`, `project_id`, `district_id`, `created_by`, `date_created`, `modified_by`, `date_modified`) VALUES
-(1, 1, 78, 1, 1510578284, 1, '2017-11-13 13:04:44'),
-(2, 1, 22, 1, 1510578284, 1, '2017-11-13 13:04:44'),
-(3, 1, 54, 1, 1510578284, 1, '2017-11-13 13:04:44'),
-(4, 1, 52, 1, 1510579030, 1, '2017-11-13 13:17:10'),
-(5, 3, 9, 1, 1510668603, 1, '2017-11-14 14:10:03'),
-(6, 3, 28, 1, 1510668603, 1, '2017-11-14 14:10:03'),
-(7, 3, 5, 1, 1510668603, 1, '2017-11-14 14:10:03'),
-(8, 3, 4, 1, 1510668603, 1, '2017-11-14 14:10:03'),
-(9, 1, 31, 1, 1511173409, 1, '2017-11-20 10:23:29'),
-(10, 3, 31, 1, 1511364625, 1, '2017-11-22 15:30:25'),
-(11, 3, 2, 1, 1511365172, 1, '2017-11-22 15:39:32');
 
 -- --------------------------------------------------------
 
@@ -757,48 +503,14 @@ INSERT INTO `tbl_property_type` (`id`, `title`, `description`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tbl_property_types_description`
+-- Table structure for table `tbl_property__types_description`
 --
 
-CREATE TABLE `tbl_property_types_description` (
+CREATE TABLE `tbl_property__types_description` (
   `id` int(11) NOT NULL,
   `property_type_id` int(11) NOT NULL,
   `property_description_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_property_types_description`
---
-
-INSERT INTO `tbl_property_types_description` (`id`, `property_type_id`, `property_description_id`) VALUES
-(1, 1, 2),
-(2, 1, 3),
-(3, 3, 1),
-(4, 1, 1),
-(5, 1, 4);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_subcounty`
---
-
-CREATE TABLE `tbl_subcounty` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `subcounty_name` varchar(50) NOT NULL,
-  `county` int(11) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Districts in Uganda';
-
---
--- Dumping data for table `tbl_subcounty`
---
-
-INSERT INTO `tbl_subcounty` (`id`, `subcounty_name`, `county`, `active`) VALUES
-(1, 'Kyabigambire', 1, 1),
-(2, 'Buseruka', 1, 1),
-(4, 'Buseruka', 1, 1),
-(5, 'Kitoba', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -828,27 +540,6 @@ INSERT INTO `tbl_tree_or_crop_types` (`id`, `title`, `description`) VALUES
 (10, 'Banana', ''),
 (11, 'Musambya', ''),
 (12, 'Kiko', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_village`
---
-
-CREATE TABLE `tbl_village` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `village_name` varchar(50) NOT NULL,
-  `parish` int(11) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Districts in Uganda';
-
---
--- Dumping data for table `tbl_village`
---
-
-INSERT INTO `tbl_village` (`id`, `village_name`, `parish`, `active`) VALUES
-(1, 'Kihambya', 1, 1),
-(2, 'Kakindo', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -887,17 +578,6 @@ CREATE TABLE `tree_crop_types_description` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tree_crop_types_description`
---
-
-INSERT INTO `tree_crop_types_description` (`id`, `tree_crop_id`, `crop_description_id`) VALUES
-(1, 8, 1),
-(2, 4, 1),
-(3, 4, 7),
-(4, 4, 9),
-(5, 4, 10);
-
---
 -- Indexes for dumped tables
 --
 
@@ -927,13 +607,16 @@ ALTER TABLE `land_access`
   ADD PRIMARY KEY (`pap_id`);
 
 --
+-- Indexes for table `land_access_improvement`
+--
+ALTER TABLE `land_access_improvement`
+  ADD PRIMARY KEY (`pap_id`);
+
+--
 -- Indexes for table `land_access_project`
 --
 ALTER TABLE `land_access_project`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `client_id` (`client_id`),
-  ADD KEY `project_category_unit` (`project_category_unit`),
-  ADD KEY `created_by` (`created_by`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `land_access_project_category`
@@ -954,41 +637,26 @@ ALTER TABLE `position`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `person_id` (`person_id`),
+  ADD KEY `branch_id` (`branch_id`),
+  ADD KEY `person_id_2` (`person_id`),
+  ADD KEY `person_id_3` (`person_id`);
+
+--
 -- Indexes for table `tbl_client`
 --
 ALTER TABLE `tbl_client`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_created_by` (`created_by`),
-  ADD KEY `fk_modified_by` (`modified_by`);
-
---
--- Indexes for table `tbl_county`
---
-ALTER TABLE `tbl_county`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `fk_created_by` (`created_by`);
 
 --
 -- Indexes for table `tbl_crop_description`
 --
 ALTER TABLE `tbl_crop_description`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_district`
---
-ALTER TABLE `tbl_district`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_district_croptree_rate`
---
-ALTER TABLE `tbl_district_croptree_rate`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_district_property_rate`
---
-ALTER TABLE `tbl_district_property_rate`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1021,29 +689,12 @@ ALTER TABLE `tbl_pap_improvement`
   ADD KEY `fk_improvement_description_rate_id` (`district_property_rate_id`);
 
 --
--- Indexes for table `tbl_pap_photos`
---
-ALTER TABLE `tbl_pap_photos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_modified_by` (`modified_by`),
-  ADD KEY `fk_created_by` (`created_by`),
-  ADD KEY `fk_pap_id` (`pap_id`) USING BTREE;
-
---
--- Indexes for table `tbl_parish`
---
-ALTER TABLE `tbl_parish`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `tbl_project_coverage`
 --
 ALTER TABLE `tbl_project_coverage`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_district_id` (`district_id`),
-  ADD KEY `fk_project_id` (`project_id`),
-  ADD KEY `fk_created_by` (`created_by`),
-  ADD KEY `fk_modified_by` (`modified_by`);
+  ADD KEY `fk_modified_by` (`modified_by`),
+  ADD KEY `fk_created_by` (`created_by`);
 
 --
 -- Indexes for table `tbl_property_description`
@@ -1058,27 +709,15 @@ ALTER TABLE `tbl_property_type`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tbl_property_types_description`
+-- Indexes for table `tbl_property__types_description`
 --
-ALTER TABLE `tbl_property_types_description`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_subcounty`
---
-ALTER TABLE `tbl_subcounty`
+ALTER TABLE `tbl_property__types_description`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tbl_tree_or_crop_types`
 --
 ALTER TABLE `tbl_tree_or_crop_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tbl_village`
---
-ALTER TABLE `tbl_village`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1118,10 +757,15 @@ ALTER TABLE `expensetypes`
 ALTER TABLE `land_access`
   MODIFY `pap_id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `land_access_improvement`
+--
+ALTER TABLE `land_access_improvement`
+  MODIFY `pap_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `land_access_project`
 --
 ALTER TABLE `land_access_project`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `land_access_project_category`
 --
@@ -1131,7 +775,7 @@ ALTER TABLE `land_access_project_category`
 -- AUTO_INCREMENT for table `land_access_project_category_unit`
 --
 ALTER TABLE `land_access_project_category_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `position`
 --
@@ -1141,62 +785,27 @@ ALTER TABLE `position`
 -- AUTO_INCREMENT for table `tbl_client`
 --
 ALTER TABLE `tbl_client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `tbl_county`
---
-ALTER TABLE `tbl_county`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tbl_crop_description`
 --
 ALTER TABLE `tbl_crop_description`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
--- AUTO_INCREMENT for table `tbl_district`
---
-ALTER TABLE `tbl_district`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
---
--- AUTO_INCREMENT for table `tbl_district_croptree_rate`
---
-ALTER TABLE `tbl_district_croptree_rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `tbl_district_property_rate`
---
-ALTER TABLE `tbl_district_property_rate`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
 -- AUTO_INCREMENT for table `tbl_paps`
 --
 ALTER TABLE `tbl_paps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tbl_pap_crop_tree`
 --
 ALTER TABLE `tbl_pap_crop_tree`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `tbl_pap_improvement`
---
-ALTER TABLE `tbl_pap_improvement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT for table `tbl_pap_photos`
---
-ALTER TABLE `tbl_pap_photos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tbl_parish`
---
-ALTER TABLE `tbl_parish`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tbl_project_coverage`
 --
 ALTER TABLE `tbl_project_coverage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tbl_property_description`
 --
@@ -1208,25 +817,15 @@ ALTER TABLE `tbl_property_description`
 ALTER TABLE `tbl_property_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
--- AUTO_INCREMENT for table `tbl_property_types_description`
+-- AUTO_INCREMENT for table `tbl_property__types_description`
 --
-ALTER TABLE `tbl_property_types_description`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `tbl_subcounty`
---
-ALTER TABLE `tbl_subcounty`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `tbl_property__types_description`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tbl_tree_or_crop_types`
 --
 ALTER TABLE `tbl_tree_or_crop_types`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `tbl_village`
---
-ALTER TABLE `tbl_village`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tenure`
 --
@@ -1236,7 +835,7 @@ ALTER TABLE `tenure`
 -- AUTO_INCREMENT for table `tree_crop_types_description`
 --
 ALTER TABLE `tree_crop_types_description`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
