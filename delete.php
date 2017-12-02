@@ -51,9 +51,37 @@ if(isset($_GET['tbl'])){
 		break;
 		case "propertydescription":
 			if($db->update_single("tbl_property_description", "active", 0, "id=".$_GET['id'])){
-				$msg =  "Successfully deleted  property description.";
+				$msg =  "Successfully deleted  improvement description.";
 			}else{
-				$msg =  "Ooups! Could not delete property description.";
+				$msg =  "Ooups! Could not delete improvement description.";
+			}
+		break;
+		case "delete_property_description":
+			if($db->del("tbl_property_types_description", "id=".$_GET['id'])){
+				$msg = 'success';
+			}else{
+				$msg = "Ooups! Could not delete improvement type description.";
+			}
+		break;
+		case "delete_crop_description":
+			if($db->del("tree_crop_types_description", "id=".$_GET['id'])){
+				$msg = 'success';
+			}else{
+				$msg = "Ooups! Could not delete crop type description.";
+			}
+		break;
+		case "tblPropertyRates":
+			if($db->del("tbl_district_property_rate",  "id=".$_GET['id'])){
+				$msg =  "Successfully deleted  improvement rate.";
+			}else{
+				$msg =  "Ooups! Could not delete improvement rate.";
+			}
+		break;
+		case "tblPropertyType":
+			if($db->update_single("tbl_property_type", "active", 0, "id=".$_GET['id'])){
+				$msg =  "Successfully deleted  improvement.";
+			}else{
+				$msg =  "Ooups! Could not delete improvement.";
 			}
 		break;
 		case "tbl_client":

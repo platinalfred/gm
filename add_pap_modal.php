@@ -5,8 +5,8 @@
             </div>
             <div class="widget-content padded">
                 <form  id="tblPapForm" action="#" method="post" class="form-horizontal">
-						<fieldset>
-							<legend>PAP Details</legend>
+					<fieldset>
+						<legend>PAP Details</legend>
 						<div class="col-lg-3">
 							<input type="hidden" name="tbl" value="tblPap">
 							<input type="hidden" name="id" >
@@ -18,8 +18,15 @@
 									<img data-bind="attr:{src:'img/paps/'+profile_pic}" class="img-thumbnail img-responsive"/>
 								</div>
 							</div>
+							
 						</div>
 						<div class="col-lg-5">
+							<div class="form-group" >
+								<label class="control-label col-md-5">PAP Reference</label>
+								<div class="col-md-7">
+									<input name="pap_ref" type="text" class="form-control" data-msg-required="PAP Reference" required />
+								</div>
+							</div>
 							<div class="form-group" >
 								<label class="control-label col-md-5">First Name</label>
 								<div class="col-md-7">
@@ -86,6 +93,23 @@
 								<label class="control-label col-md-5">Village</label>
 								<div class="col-md-7">
 									<select id="village_id" name="village_id" class="select2able" data-bind='options: filteredVillagesList, optionsText: "village_name", optionsCaption: "Select village...", optionsAfterRender: $root.setOptionValue("id"), value:village'></select>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-lg-8 offset-4">
+							<div class="form-group" >
+								<label class="control-label col-md-2" style="text-align:left;">Comment</label>
+								<div class="col-md-10">
+									<select name="comment" class="select2able">
+										<option>Select comment ...</option>
+										<?php 
+										$comment_obj = new Comments();
+										$comments = $comment_obj->findAll();
+										foreach($comments as $comment):?>
+											<option value="<?=$comment['details']?>"><?=$comment['details']?></option>
+										<?php endforeach;?>
+									</select>
 								</div>
 							</div>
 						</div>

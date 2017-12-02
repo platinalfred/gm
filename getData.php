@@ -69,6 +69,12 @@ if(isset($_POST['tbl'])){
 			$output['all_attached'] = $treecroptypedescription->findCropTreeDescription("`tree_crop_id`=" . $_POST['crop_id']);
 			$output['all_crop_descriptions'] = $crop_description->findAll("id NOT IN (SELECT `crop_description_id` FROM `tree_crop_types_description` WHERE `tree_crop_id`=".$_POST['crop_id'].")");
 		break;
+		case "improvement_desc":
+			$propertytypedescription = new PropertyTypeDescription();
+			$propertydescription = new PropertyDescription();
+			$output['all_attached_improvements'] = $propertytypedescription->findPropertyTypeDescription("`property_type_id`=" . $_POST['property_id']);
+			$output['all_improvements_description'] = $propertydescription->findAll("id NOT IN (SELECT `property_description_id` FROM `tbl_property_types_description` WHERE `property_type_id`=".$_POST['property_id'].")");
+		break;
 		default:
 			echo "No data found!"; 
 		break;

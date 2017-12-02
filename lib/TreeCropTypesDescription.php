@@ -19,7 +19,7 @@ class TreeCropTypesDescription extends Db {
 	}
 	public function findCropTreeDescription($where = ""){
 		$table = self::$table_name . " JOIN tbl_tree_or_crop_types ON tree_crop_id = tbl_tree_or_crop_types.id JOIN tbl_crop_description ON crop_description_id = tbl_crop_description.id";
-		$fields = "`tree_crop_types_description`.`id`, tbl_tree_or_crop_types.`title` as cropname, tbl_crop_description.`title` as cropdescription";
+		$fields = "`tree_crop_types_description`.`id`, tbl_tree_or_crop_types.`id` as crop_tree_id,tbl_tree_or_crop_types.`title` as cropname, tbl_crop_description.`title` as cropdescription";
 		$result = $this->getfarray($table, $fields, $where, "cropname", "");
 		return !empty($result) ? $result : false;
 	}
