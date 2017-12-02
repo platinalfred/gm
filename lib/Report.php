@@ -27,4 +27,3 @@ class Report extends Db {
 		return !empty($result_array) ? $result_array : false;
 	}
 }
-?>

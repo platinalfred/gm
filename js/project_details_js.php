@@ -181,19 +181,22 @@ $(document).ready(function(){
 		<?php if(isset($projectDetails)):?>
 			/* -- Project Affected Person Data Table --- */
 			//we have to set column indices based on the type of the project
-			var cols = [5,11,12], totals_col = 7; //the index for columns where  the totals appear
+			var cols = [5,10,11]; //the index for columns where  the totals appear
 			var last_col = 15; //the final index table column
-			<?php if( !($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4) ):?>
-				cols.pop(); last_col--;
+			<?php if( !($projectDetails['project_category_unit'] == 1) ):?>
+				cols = [5,8,10,11]; last_col = 12;
 			<?php endif;?>
-			<?php if( !($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4) ):?>
-				cols.pop(); last_col--;
+			<?php if( !($projectDetails['project_category_unit'] == 2) ):?>
+				cols = [5,7,8]; last_col = 9;;
+			<?php endif;?>
+			<?php if( !($projectDetails['project_category_unit'] == 4) ):?>
+				cols = [5,6,10,12,13]; last_col = 14;
 			<?php endif;?>
 			<?php if( !($projectDetails['project_category_unit'] == 5) ):?>
-				cols.pop(); last_col--;
+				cols = [5,8,10,11]; last_col = 12;;
 			<?php endif;?>
-				cols.push(last_col-2,last_col-1);
-			
+			console.log(cols);
+			console.log(last_col);
 			if ($("#tblPap").length) {
 				  dTable['tblPap'] = $('#tblPap').DataTable({
 				  dom: "lfrtipB",
@@ -211,7 +214,6 @@ $(document).ready(function(){
 					  "orderable": false,
 					  "searchable": false
 				  }],
-				  "autoWidth": false,
 				  "footerCallback": function (tfoot, data, start, end, display ) {
 					var api = this.api();
 					$.each(cols, function(key, val){
@@ -219,6 +221,7 @@ $(document).ready(function(){
 						$(api.column(val).footer()).html( curr_format(total) );
 					});
 				  },
+				  "autoWidth": false,
 				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name'},
@@ -239,18 +242,19 @@ $(document).ready(function(){
 						<?php if( $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 5 ):?>
 							{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 							{ data: 'land_interest', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+                                                <?php endif;
+                                                if ($projectDetails['project_category_unit'] == 4): ?>
 							{ data: 'diminution_rate', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-							
+						<?php endif;
+                                                if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>	
 							<?php 
 							if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ){ ?>
 								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * parseFloat(full.land_interest) * parseFloat(full.rightofway) ):0; }},
-							<?php	
-							}elseif($projectDetails['project_category_unit'] == 5){ ?>
+							<?php } else { ?>
 								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * parseFloat(full.land_interest)* parseFloat(full.total_take)):0;  }},
 							<?php
 							}
-						endif; 
-						?>
+						endif; ?>
 						{ data: 'chainage'},
 						{ data: 'improvement_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
 						{ data: 'crop_tree_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
