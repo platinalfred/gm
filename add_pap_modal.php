@@ -183,7 +183,7 @@
 					<div class="clearfix"></div>
                                         <div class="col-lg-6" data-bind="with: district">
 						<fieldset>
-							<legend>Improvements <a href="#" class="pull-right" data-bind="click: $parent.addImprovement, enable: ($parent.filteredDistrictPropertyRates().length)" title="Add another item"><i class="fa fa-plus"></i></a></legend>
+							<legend>Improvements <a href="#" class="pull-right" data-bind="click: $parent.addImprovement, enable: (typeof $parent.filteredDistrictPropertyRates() != 'undefined' && $parent.filteredDistrictPropertyRates().length)" title="Add another item"><i class="fa fa-plus"></i></a></legend>
 							<div class="form-group">
 								<label class="col-md-7">Improvement</label>
 								<label class="col-md-4">Quantity</label>
@@ -226,7 +226,7 @@
 					</div>
 					<div class="col-lg-6" data-bind="with: district">
 						<fieldset>
-							<legend>Crops/Trees <a href="#" class="pull-right" data-bind="click: $parent.addPlant, enable: ($parent.filteredDistrictCropRates().length)" title="Add another item"><i class="fa fa-plus"></i></a></legend>
+							<legend>Crops/Trees <a href="#" class="pull-right" data-bind="click: $parent.addPlant, enable: (typeof $parent.filteredDistrictCropRates() != 'undefined' && $parent.filteredDistrictCropRates().length)" title="Add another item"><i class="fa fa-plus"></i></a></legend>
 							<div class="form-group">
 								<!--label class="col-md-4">Plant</label-->
 								<label class="col-md-7">Description</label>

@@ -198,16 +198,16 @@ $(document).ready(function(){
 			//we have to set column indices based on the type of the project
 			var cols = [7,12,13]; //the index for columns where  the totals appear
 			var last_col = 15; //the final index table column
-			<?php if( !($projectDetails['project_category_unit'] == 1) ):?>
+			<?php if( ($projectDetails['project_category_unit'] == 1) ):?>
 				cols = [7,10,12,13]; last_col = 14;
 			<?php endif;?>
-			<?php if( !($projectDetails['project_category_unit'] == 2) ):?>
+			<?php if( ($projectDetails['project_category_unit'] == 2) ):?>
 				cols = [7,9,10]; last_col = 11;;
 			<?php endif;?>
-			<?php if( !($projectDetails['project_category_unit'] == 4) ):?>
+			<?php if( ($projectDetails['project_category_unit'] == 4) ):?>
 				cols = [7,8,12,14,15]; last_col = 16;
 			<?php endif;?>
-			<?php if( !($projectDetails['project_category_unit'] == 5) ):?>
+			<?php if( ($projectDetails['project_category_unit'] == 5) ):?>
 				cols = [7,10,12,13]; last_col = 14;
 			<?php endif;?>
 			if ($("#tblPap").length) {
