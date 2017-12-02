@@ -272,7 +272,7 @@ if (!$projectDetails)
                                                 <div class="col-md-2"><strong>REF#</strong></div>
                                                 <div class="col-md-3"><?= $pap_details['pap_ref'] ?></div>
                                                 <div class="col-md-7">&nbsp;</div>
-                                                <div class="padded"><img src='img/paps/<?= $pap_details['photo_url'] ?>' class="img-thumbnail img-responsive" alt="<?= $pap_details['firstname'] ?> <?= $pap_details['lastname'] ?> <?= $pap_details['othername'] ?>" /></div>
+                                                <div class="padded"><img src='img/paps/<?=$pap_details['photo_url'] ?>' class="img-thumbnail img-responsive" alt="<?= $pap_details['firstname'] ?> <?= $pap_details['lastname'] ?> <?= $pap_details['othername'] ?>" /></div>
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="row">
@@ -282,7 +282,6 @@ if (!$projectDetails)
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12"><strong><i class="fa fa-map-marker"></i> District </strong>: <?= $district_details['district_name'] ?>, 
-                                                        <strong>County </strong>: <?php echo $county_obj->findCountyName($pap_details['county_id']); ?>, 
                                                         <strong>Sub County </strong>: <?= $subcounty_details['subcounty_name'] ?>, 
                                                         <strong></i> Parish </strong>: <?= $parish_details['parish_name'] ?>, 
                                                         <strong>Village:</strong> <?= $village_details['village_name'] ?> </div>

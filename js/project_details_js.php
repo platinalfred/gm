@@ -11,10 +11,11 @@ var ViewModel = function() {
 		self.available_districts = ko.observableArray(); //list of districts available to be added to this project
 		self.district_property_rates = ko.observableArray(); //list of district property rates
 		self.district_crop_rates = ko.observableArray(); //list of district crop rates
-		
-		<?php if(isset($_GET['pap_id'])):?> //this should only appear when we are in the pap details page
+		self.district = ko.observable(<?php echo isset($district_details)?json_encode($district_details):""; ?>);
 		self.crop_rate_description = ko.observable(); //crop rate object when adding or saving crops
 		self.property_rate_description = ko.observable(); //property rate object when adding or saving properties
+		
+		<?php if(isset($_GET['pap_id'])):?> //this should only appear when we are in the pap details page
 		//photos
 		self.papPhotos = ko.observableArray([new DummyObject()]);
 		self.serverPapPhotos = ko.observableArray(<?=json_encode($pap_photos)?>); //data returned from the serve upon clicking the edit button
@@ -67,7 +68,6 @@ var ViewModel = function() {
 		self.villagesList = ko.observableArray(<?=json_encode($villages)?>);
 
 		//useful variables for the form
-		self.district = ko.observable();
 		//self.county = ko.observable();
 		self.scounty = ko.observable();
 		self.parish = ko.observable();
@@ -156,11 +156,11 @@ var ViewModel = function() {
 				data:{tbl:"project_details", project_id:<?php echo $_GET['id']; ?>},
 				url: "getData.php",
 				success: function(response){
+					self.district_property_rates(response.district_property_rates);
+					self.district_crop_rates(response.district_crop_rates);
 					<?php if(isset($_GET['pap_id'])):?> 
 					<?php else:?>
 					self.available_districts(response.available_districts);
-					self.district_property_rates(response.district_property_rates);
-					self.district_crop_rates(response.district_crop_rates);
 					viewModel.available_districts.valueHasMutated();
 					<?php endif;?> 
 				}
