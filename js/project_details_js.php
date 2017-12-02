@@ -181,19 +181,19 @@ $(document).ready(function(){
 		<?php if(isset($projectDetails)):?>
 			/* -- Project Affected Person Data Table --- */
 			//we have to set column indices based on the type of the project
-			var cols = [5,10,11]; //the index for columns where  the totals appear
+			var cols = [7,12,13]; //the index for columns where  the totals appear
 			var last_col = 15; //the final index table column
 			<?php if( !($projectDetails['project_category_unit'] == 1) ):?>
-				cols = [5,8,10,11]; last_col = 12;
+				cols = [7,10,12,13]; last_col = 14;
 			<?php endif;?>
 			<?php if( !($projectDetails['project_category_unit'] == 2) ):?>
-				cols = [5,7,8]; last_col = 9;;
+				cols = [7,9,10]; last_col = 11;;
 			<?php endif;?>
 			<?php if( !($projectDetails['project_category_unit'] == 4) ):?>
-				cols = [5,6,10,12,13]; last_col = 14;
+				cols = [7,8,12,14,15]; last_col = 16;
 			<?php endif;?>
 			<?php if( !($projectDetails['project_category_unit'] == 5) ):?>
-				cols = [5,8,10,11]; last_col = 12;;
+				cols = [7,10,12,13]; last_col = 14;
 			<?php endif;?>
 			console.log(cols);
 			console.log(last_col);
@@ -225,9 +225,9 @@ $(document).ready(function(){
 				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name'},
-						/* { data: 'county_id'},
-						{ data: 'subcounty_id'},
-						{ data: 'parish_id'}, */
+						/* { data: 'county_id'},*/
+						{ data: 'subcounty_name'},
+						{ data: 'parish_name'}, 
 						{ data: 'village_name'},
 						{ data: 'phone_contact'},
 						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>

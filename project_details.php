@@ -64,15 +64,15 @@ if (!$projectDetails)
                                     <i class="fa fa-group"></i>Project Affected Persons
                                 </div>
                                 <div class="widget-content padded">
-                                    <table class="table table-bordered table-striped" id="tblPap">
+                                    <table class="table table-bordered table-striped" id="tblPap" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>PAP Ref</th>
                                                 <th>Names</th>
                                                 <th>District</th>
-                                                <!--th>County</th>
-                                                <th>SubCounty</th>
-                                                <th>Parish</th-->
+                                                <!--th>County</th-->
+                                                <th>Sub County</th>
+                                                <th>Parish</th>
                                                 <th>Village</th>
                                                 <th>Telephone</th>
                                                 <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
@@ -107,7 +107,7 @@ if (!$projectDetails)
                                         <tfoot>
                                             <tr>
                                                 <th>Total</th>
-                                                <th colspan="4">&nbsp;</th>
+                                                <th colspan="6">&nbsp;</th>
                                                 <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
                                                     <th>0</th>
                                                 <?php endif; ?>

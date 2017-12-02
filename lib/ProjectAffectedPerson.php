@@ -3,7 +3,7 @@ $curdir = dirname(__FILE__);
 require_once($curdir.'/Db.php');
 class ProjectAffectedPerson extends Db {
 	protected static $table_name  = "tbl_paps";
-	protected static $db_fields = array("id","project_id", "pap_ref", "firstname", "othername", "lastname", "phone_contact", "district_id", "county_id", "subcounty_id","tenure", "parish_id", "village_id", "way_leave", "rightofway", "total_take", "chainage", "created_by","date_created","modified_by");
+	protected static $db_fields = array("id","project_id", "pap_ref", "firstname", "othername", "lastname", "phone_contact", "district_id", "county_id", "subcounty_id", "tenure", "parish_id", "village_id", "way_leave", "rightofway", "total_take", "chainage", "created_by","date_created","modified_by");
 	
 	public function findById($id){
 		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
@@ -12,11 +12,11 @@ class ProjectAffectedPerson extends Db {
 	public function findAll($where = 1){
 		$improvements = "(SELECT `pap_id`, COUNT(`id`) `improvement_cnt`,SUM(`rate`*`quantity`) `improvement_sum` FROM `tbl_pap_improvement` GROUP BY `pap_id`) `improvements`";
 		$crop_trees = "(SELECT `pap_id`, COUNT(`id`) `crop_tree_cnt`,SUM(`rate`*`quantity`) `crop_tree_sum` FROM `tbl_pap_crop_tree` GROUP BY `pap_id`) `crop_trees`";
-		$tables = "tbl_paps JOIN `tbl_district` ON `district_id` = `tbl_district`.`id` LEFT JOIN $improvements ON `tbl_paps`.`id` = `improvements`.`pap_id` LEFT JOIN $crop_trees ON `tbl_paps`.`id` = `crop_trees`.`pap_id` LEFT JOIN `tbl_village` ON `village_id` = `tbl_village`.`id`";
+		$tables = "tbl_paps JOIN `tbl_district` ON `district_id` = `tbl_district`.`id` JOIN `tbl_subcounty` ON `subcounty_id` = `tbl_subcounty`.`id` JOIN `tbl_parish` ON `parish_id` = `tbl_parish`.`id` LEFT JOIN $improvements ON `tbl_paps`.`id` = `improvements`.`pap_id` LEFT JOIN $crop_trees ON `tbl_paps`.`id` = `crop_trees`.`pap_id` LEFT JOIN `tbl_village` ON `village_id` = `tbl_village`.`id`";
 		
 		// LEFT JOIN `tbl_county` ON `county_id` = `tbl_county`.`id` LEFT JOIN `tbl_subcounty` ON `subcounty_id` = `tbl_subcounty`.`id` LEFT JOIN `tbl_parish` ON `parish_id` = `tbl_parish`.`id`
 		
-		$fields = "`tbl_paps`.`id`, `project_id`, `pap_ref`, `photo_url` `profile_pic`, `firstname`, `othername`, `lastname`, `phone_contact`, `district_id`, `district_name`, `county_id`, `subcounty_id`, `parish_id`, `village_id`, `village_name`, `way_leave`, `rightofway`, `total_take`, `chainage`, `crop_tree_cnt`, `crop_tree_sum`,`land_interest`,`rate_per_acre`,`diminution_rate`, `improvement_cnt`, `improvement_sum`";
+		$fields = "`tbl_paps`.`id`, `project_id`, `pap_ref`, `photo_url` `profile_pic`, `firstname`, `othername`, `lastname`, `phone_contact`, `district_id`, `district_name`, `county_id`, `subcounty_id`, `subcounty_name`, `tenure`, `parish_id`, `parish_name` ,`village_id`, `village_name`, `way_leave`, `rightofway`, `total_take`, `chainage`, `crop_tree_cnt`, `crop_tree_sum`,`land_interest`,`rate_per_acre`,`diminution_rate`, `improvement_cnt`, `improvement_sum`";
 		
 		$result_array = $this->getfarray($tables, $fields, $where, "", "");
 		return !empty($result_array) ? $result_array : false;
