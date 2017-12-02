@@ -81,4 +81,3 @@ if(isset($_POST['tbl'])){
 	}
 	echo json_encode($output);
 }
-?>

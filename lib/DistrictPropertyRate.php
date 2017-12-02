@@ -18,7 +18,7 @@ class DistrictPropertyRate extends Db {
 		d = tbl_district
 		*/
 		$table = self::$table_name . " dpr JOIN tbl_property_types_description ptd ON dpr.propertytypedescription_id = ptd.id JOIN tbl_property_description pd ON ptd.property_description_id = pd.id JOIN tbl_property_type pt ON ptd.property_type_id = pt.id JOIN tbl_district d ON  dpr.district_id = d.id";
-		$fields = "`dpr`.`id`, dpr.rate, d.district_name, pt.`title` as propertytype, pd.`title` as propertydescription";
+		$fields = "`dpr`.`id`, dpr.rate, d.district_name, district_id, pt.`title` as propertytype, pd.`title` as propertydescription";
 		$result = $this->getfarray($table, $fields, "", "district_name", "");
 		return !empty($result) ? $result : false;
 	}

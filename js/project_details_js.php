@@ -61,7 +61,7 @@ var ViewModel = function() {
 			$(event.target).addClass('hideit').prev().removeClass('hideit').text(serverPapPhoto.description);
 		};
 		<?php else:?>
-		//self.countiesList = ko.observableArray(<?=json_encode($counties)?>);	
+		//self.countiesList = ko.observableArray(<?php //json_encode($counties)?>);	
 		self.subcountiesList = ko.observableArray(<?=json_encode($subcounties)?>);	
 		self.parishesList = ko.observableArray(<?=json_encode($parishes)?>);
 		self.villagesList = ko.observableArray(<?=json_encode($villages)?>);
@@ -103,6 +103,20 @@ var ViewModel = function() {
 				});
 			}
 		});
+		self.filteredDistrictCropRates = ko.computed(function() {
+			if(self.district()){
+				return ko.utils.arrayFilter(self.district_crop_rates(), function(district_crop_rate) {
+					return (parseInt(self.district().id)==parseInt(district_crop_rate.district_id));
+				});
+			}
+		});
+		self.filteredDistrictPropertyRates = ko.computed(function() {
+			if(self.district()){
+				return ko.utils.arrayFilter(self.district_property_rates(), function(district_property_rate) {
+					return (parseInt(self.district().id)==parseInt(district_property_rate.district_id));
+				});
+			}
+		});
 		<?php endif; ?>
 		
 		
@@ -123,6 +137,7 @@ var ViewModel = function() {
 		self.addPlant = function(){self.selectedPlants.push(new DummyObject());};
 		self.removeSelectedPlant = function(selectedPlant){self.selectedPlants.remove(selectedPlant);};
 		self.removeServerDataPlant = function(serverDataPlant){self.serverDataPlants.remove(serverDataPlant);};
+                
 		//set options value after populating the select list
 		self.setOptionValue = function(propId) {
 			return function (option, item) {
@@ -195,8 +210,6 @@ $(document).ready(function(){
 			<?php if( !($projectDetails['project_category_unit'] == 5) ):?>
 				cols = [7,10,12,13]; last_col = 14;
 			<?php endif;?>
-			console.log(cols);
-			console.log(last_col);
 			if ($("#tblPap").length) {
 				  dTable['tblPap'] = $('#tblPap').DataTable({
 				  dom: "lfrtipB",

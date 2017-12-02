@@ -36,7 +36,7 @@
 							<div class="form-group" >
 								<label class="control-label col-md-5">Surname</label>
 								<div class="col-md-7">
-									<input name="lastname" type="text" class="form-control" data-msg-required="Last name must be entered" required />
+									<input name="lastname" type="text" class="form-control" data-msg-required="Last name must be entered" />
 								</div>
 							</div>
 							<div class="form-group" >
@@ -181,16 +181,16 @@
 					</fieldset>
 						</div>
 					<div class="clearfix"></div>
-					<div class="col-lg-6">
+                                        <div class="col-lg-6" data-bind="with: district">
 						<fieldset>
-							<legend>Improvements <a href="#" class="pull-right" data-bind="click: addImprovement, enable: available_districts().length>0" title="Add another item"><i class="fa fa-plus"></i></a></legend>
+							<legend>Improvements <a href="#" class="pull-right" data-bind="click: $parent.addImprovement, enable: ($parent.filteredDistrictPropertyRates().length)" title="Add another item"><i class="fa fa-plus"></i></a></legend>
 							<div class="form-group">
 								<label class="col-md-7">Improvement</label>
 								<label class="col-md-4">Quantity</label>
 								<div class="col-md-1">
 								</div>
 							</div>
-							<!-- ko foreach: serverDataImprovements -->
+							<!-- ko foreach: $parent.serverDataImprovements -->
 							<div class="form-group">
 								<div class="col-md-7">
 									<input type="hidden" data-bind="attr:{name:'improvement['+$index()+'][id]'}, value:id" />
@@ -206,10 +206,10 @@
 								</div>
 							</div>
 							<!--/ko-->
-							<!-- ko foreach: selectedImprovements -->
+							<!-- ko foreach: $parent.selectedImprovements -->
 							<div class="form-group">
 								<div class="col-md-7">
-									<select class="select2able" data-bind="options: $root.district_property_rates, optionsText: function(item){ return item.propertytype + ' - ' + item.propertydescription;}, optionsCaption: 'Select improvement...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'improvement['+($index()+($root.serverDataImprovements()?$root.serverDataImprovements().length:0))+'][district_property_rate_id]'}, select2:{dropdownParent:'#papModal'}" data-msg-required="An option must be selected" ></select>
+									<select class="select2able" data-bind="options: $root.filteredDistrictPropertyRates(), optionsText: function(item){ return item.propertytype + ' - ' + item.propertydescription;}, optionsCaption: 'Select improvement...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'improvement['+($index()+($root.serverDataImprovements()?$root.serverDataImprovements().length:0))+'][district_property_rate_id]'}, select2:{dropdownParent:'#papModal'}" data-msg-required="An option must be selected" ></select>
 								</div>
 								<div class="col-md-4">
 									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'improvement['+($index()+($root.serverDataImprovements()?$root.serverDataImprovements().length:0))+'][quantity]'}"  data-msg-required="Enter Quantity"  />
@@ -224,9 +224,9 @@
 							<!--/ko-->
 						</fieldset>
 					</div>
-					<div class="col-lg-6">
+					<div class="col-lg-6" data-bind="with: district">
 						<fieldset>
-							<legend>Crops/Trees <a href="#" class="pull-right" data-bind="click: addPlant, enable: available_districts().length>0" title="Add another item"><i class="fa fa-plus"></i></a></legend>
+							<legend>Crops/Trees <a href="#" class="pull-right" data-bind="click: $parent.addPlant, enable: ($parent.filteredDistrictCropRates().length)" title="Add another item"><i class="fa fa-plus"></i></a></legend>
 							<div class="form-group">
 								<!--label class="col-md-4">Plant</label-->
 								<label class="col-md-7">Description</label>
@@ -234,7 +234,7 @@
 								<div class="col-md-1">
 								</div>
 							</div>
-							<!-- ko foreach: serverDataPlants -->
+							<!-- ko foreach: $parent.serverDataPlants -->
 							<div class="form-group">
 								<div class="col-md-7">
 									<input type="hidden" data-bind="value:id, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][id]'}" />
@@ -251,11 +251,11 @@
 								</div>
 							</div>
 							<!--/ko-->
-							<!-- ko foreach: selectedPlants -->
+							<!-- ko foreach: $parent.selectedPlants -->
 							<div class="form-group">
 								<!--label class="control-label col-md-4">Plant <span data-bind="text: ($index()+1)"></span></label-->
 								<div class="col-md-7">
-									<select class="select2able" data-bind="options: $root.district_crop_rates, optionsText: function(item){ return item.croptype + ' - ' + item.cropdescription;}, optionsCaption: 'Select crop/tree...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][crop_description_rate_id]'}, select2:{dropdownParent:'#papModal'}" data-msg-required="Select an option" required></select>
+									<select class="select2able" data-bind="options: $root.filteredDistrictCropRates(), optionsText: function(item){ return item.croptype + ' - ' + item.cropdescription;}, optionsCaption: 'Select crop/tree...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][crop_description_rate_id]'}, select2:{dropdownParent:'#papModal'}" data-msg-required="Select an option" required></select>
 								</div>
 								<div class="col-md-4">
 									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][quantity]'}" data-msg-required="Enter quantity" required />
