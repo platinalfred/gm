@@ -78,14 +78,14 @@
 							<div class="form-group">
 								<label class="control-label col-md-5">Subcounty</label>
 								<div class="col-md-7">
-									<select id="subcounty_id" name="subcounty_id" class="select2able" data-bind='options: filteredSCountiesList, optionsText: "subcounty_name", optionsCaption: "Select subcounty...", optionsAfterRender: $root.setOptionValue("id"), value:scounty'></select>
+                                                                    <select id="subcounty_id" name="subcounty_id" class="select2able" data-bind='options: filteredSCountiesList, optionsText: "subcounty_name", optionsCaption: "Select subcounty...", optionsAfterRender: $root.setOptionValue("id"), value:scounty' data-msg-required="District must be selected" required ></select>
 								</div>
 							</div>
 						
 							<div class="form-group">
 								<label class="control-label col-md-5">Parish</label>
 								<div class="col-md-7">
-									<select id="parish_id" name="parish_id" class="select2able" data-bind='options: filteredParishesList, optionsText: "parish_name", optionsCaption: "Select parish...", optionsAfterRender: $root.setOptionValue("id"), value:parish'></select>
+									<select id="parish_id" name="parish_id" class="select2able" data-bind='options: filteredParishesList, optionsText: "parish_name", optionsCaption: "Select parish...", optionsAfterRender: $root.setOptionValue("id"), value:parish' data-msg-required="District must be selected" required ></select>
 								</div>
 							</div>
 						

@@ -552,7 +552,12 @@ function saveData(form,event){
 						}
 						if(frmId == 'tblPapPhotoForm'){
 							viewModel.serverPapPhotos(response.pap_photos);
-							console.log(viewModel.serverPapPhotos());
+						}
+						if(frmId == 'tblPapForm'){
+							viewModel.district(null);
+							viewModel.scounty(null);
+							viewModel.parish(null);
+							viewModel.village(null);
 						}
 						if(typeof dTable[frmId] != 'undefined')
 							dTable[frmId].ajax.reload();
