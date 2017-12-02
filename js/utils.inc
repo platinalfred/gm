@@ -169,7 +169,7 @@ function draw_pie_chart(url_data){
 	});
 }
 
-/* Save function called when various buttons with .save are clicked */
+/* 
 function saveData(){
 	$(".save").click(function(){
 		var fmid = $(this).closest("form");
@@ -194,6 +194,45 @@ function saveData(){
 			}
 		});
 
+		return false;
+	});
+}*/
+//Save function called when various buttons with .save are clicked , With this one function all settings will be sent to save_data.php for saving
+function saveData(){
+	$(".save").click(function(){
+		var frm = $(this).closest("form");
+		var frmdata = frm.serialize();
+		var frmId = frm.attr('id');
+		var id_input = frm.find().val();
+		var reset = frm.find("input[name = 'noreset']").length;
+		
+		enableDisableButton(frm, true);
+		$.ajax({
+			url: "save_data.php",
+			type: 'POST',
+			data: frmdata,
+			success: function (response) {
+				
+				if($.trim(response) == "success"){
+					showStatusMessage("Data successfully saved" ,"success");
+					
+					setTimeout(function(){
+						dTable[frmId].ajax.reload();
+						enableDisableButton(frm, false);
+					}, 2000);
+					if(id_input == "" && reset < 1){
+						frm[0].reset();
+					}
+					
+				}else{
+					
+					showStatusMessage(response, "fail");
+					enableDisableButton(frm, false);
+				}
+				
+				
+			}
+		});
 		return false;
 	});
 }

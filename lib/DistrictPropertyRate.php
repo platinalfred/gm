@@ -33,6 +33,7 @@ class DistrictPropertyRate extends Db {
 	} */
 	public function addDistrictPropertyRate($data){
 		$fields =array_slice(self::$db_fields, 1);
+		$data['rate'] = $this->stripCommasOnNumber($data['rate']);
 		if($this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data))){
 			return true;
 		}
@@ -42,6 +43,7 @@ class DistrictPropertyRate extends Db {
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];
 		unset($data['id']);
+		$data['rate'] = $this->stripCommasOnNumber($data['rate']);
 		if($this->update(self::$table_name, $fields, $this->generateAddFields($fields, $data), "id=".$id)){
 			return true;
 		}

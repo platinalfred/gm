@@ -144,6 +144,24 @@ if(isset($_POST['tbl'])){
 			}
 			$output = $response;
 		break;
+		case "comment":
+			$comment = new Comments();
+			$response = array();
+			if($data['id'] != ""){
+				if($comment->updateComment($data)){
+					$response = "success";
+				}else{ 
+					$response =  "Comment could not be updated. Please try again or contact admin for assistance!";
+				}
+			}else{
+				if($comment->addComment($data)){
+					$response = "success";
+				}else{ 
+					$response = "Comment could not be added. Please try again or contact admin for assistance!";
+				}
+			}
+			$output = $response;
+		break;
 		case "tblStaff":
 			$staff_obj = new Staff();
 			$response = array();
@@ -570,6 +588,20 @@ if(isset($_POST['tbl'])){
 				foreach($_POST['crop_description_id'] as $single){
 					$data['crop_description_id'] = $single;
 					$treecroptypedescription->addTreeCropTypesDescription($data);
+				}
+				$output =  "success";
+			}else{
+				$output = "There were no descriptions selected.";
+			}
+		break;
+		case "improvementtypedescription":
+			$propertytypedescription = new PropertyTypeDescription();
+			if(!empty($_POST['improvement_description_id'])){
+				$data['property_type_id'] = $_POST['property_type_id'];
+				
+				foreach($_POST['improvement_description_id'] as $single){
+					$data['property_description_id'] = $single;
+					$propertytypedescription->addPropertyTypeDescription($data);
 				}
 				$output =  "success";
 			}else{

@@ -90,7 +90,21 @@ var ViewModel = function() {
 	self.tree_crop_type = ko.observable();
 	self.all_attached = ko.observableArray();
 	self.all_crop_descriptions = ko.observableArray();
-	
+	self.removeCropDescription = function(data) {
+		$.ajax({ 
+			url:'delete.php', 
+			type:'get',
+			data:{id:data.id,tbl:"delete_crop_description"},
+			success:function(result){ 
+				if(result.trim() === "success"){
+					self.getServerData(data.crop_tree_id);
+					//self.all_attached_improvements.remove(data); //this is your items list array 
+				}else{
+					alert(result); 
+				}
+			}
+		}); 
+	};
 	self.getServerData = function(crop_tree_id){
 		if(self.all_attached().length>0){self.all_attached.removeAll();}
 		if(self.all_crop_descriptions().length>0){self.all_crop_descriptions.removeAll();}
@@ -110,6 +124,50 @@ var ViewModel = function() {
 var cropViewModel = new CropViewModel();
 ko.applyBindings(cropViewModel, $("#tree_crop_description")[0]);
 
+var ImprovementViewModel = function(){
+	var self = this;
+	self.improvement_type = ko.observable();
+	self.all_attached_improvements = ko.observableArray();
+	self.all_improvements_description = ko.observableArray();
+	//first delete from the server, if successful, then delete from the local copy of the array
+	self.removePropertyDescription = function(data) {
+		$.ajax({ 
+			url:'delete.php', 
+			type:'get',
+			data:{id:data.id,tbl:"delete_property_description"},
+			success:function(result){ 
+				if(result.trim() === "success"){
+					self.getServerData(data.property_id);
+					//self.all_attached_improvements.remove(data); //this is your items list array 
+				}else{
+					alert(result); 
+				}
+			}
+		}); 
+	};
+	self.getServerData = function(property_type_id){
+		if(self.all_attached_improvements().length>0){			
+			self.all_attached_improvements.removeAll();
+		}
+		if(self.all_improvements_description().length>0){		
+			self.all_improvements_description.removeAll();
+		}
+		$.ajax({
+			url:"getData.php",
+			type: 'POST',
+			data:{property_id:property_type_id, tbl:"improvement_desc"},
+			dataType:'json',
+			success: function(response){
+				self.all_attached_improvements(response.all_attached_improvements);
+				self.all_improvements_description(response.all_improvements_description);
+				
+			}
+		});
+	};
+};
+var improvementViewModel = new ImprovementViewModel();
+ko.applyBindings(improvementViewModel, $("#improvement_type_desc")[0]); 
+
 
 	
 function saveCrops(crop_id){
@@ -122,10 +180,33 @@ function saveCrops(crop_id){
 			data: frmdata,
 			success: function (response) {
 				if(response.trim() == "success"){
-					showStatusMessage("Descriptions successfully saved, Please re-open the crop/tree type to see your selections" ,"success");
+					showStatusMessage("Descriptions successfully saved." ,"success");
 					setTimeout(function(){
 						cropViewModel.getServerData(crop_id);
-					}, 2000);
+					}, 1000);
+				}else{
+					showStatusMessage("Your description could not be saved, Please refresh the page anad try again or contact administrator for assistance." ,"fail");
+				}
+				
+			}
+		});
+		return false;
+	});
+}	
+function saveImprovements(improvement_id){
+	$(".saveImprovementDescription").click(function(){
+		var frm = $(this).closest("form");
+		var frmdata = frm.serialize();
+		$.ajax({
+			url: "save_data.php",
+			type: 'POST',
+			data: frmdata,
+			success: function (response) {
+				if(response.trim() == "success"){
+					showStatusMessage("Descriptions successfully saved" ,"success");
+					setTimeout(function(){
+						improvementViewModel.getServerData(improvement_id);
+					}, 1000);
 				}else{
 					showStatusMessage("Your description could not be saved, Please refresh the page anad try again or contact administrator for assistance." ,"fail");
 				}
@@ -155,45 +236,7 @@ $(document).ready(function(){
 	
 	/*To have a form editable first add a class .edit_me on the row, also add an Id-tbl_name-formId and also add an empty id field in the form */
 
-	//With this one function all settings will be sent to save_data.php for saving
-	function saveData(){
-		$(".save").click(function(){
-			var frm = $(this).closest("form");
-			var frmdata = frm.serialize();
-			var frmId = frm.attr('id');
-			var id_input = frm.find().val();
-			var reset = frm.find("input[name = 'noreset']").length;
-			
-			enableDisableButton(frm, true);
-			$.ajax({
-				url: "save_data.php",
-				type: 'POST',
-				data: frmdata,
-				success: function (response) {
-					
-					if($.trim(response) == "success"){
-						showStatusMessage("Data successfully saved" ,"success");
-						
-						setTimeout(function(){
-							dTable[frmId].ajax.reload();
-							enableDisableButton(frm, false);
-						}, 2000);
-						if(id_input == "" && reset < 1){
-							frm[0].reset();
-						}
-						
-					}else{
-						
-						showStatusMessage(response, "fail");
-						enableDisableButton(frm, false);
-					}
-					
-					
-				}
-			});
-			return false;
-		});
-	}
+
 	
 	//Functions being used in more than one instances / places
 		/* Delete whenever a Delete Button has been clicked */
@@ -982,10 +1025,9 @@ $(document).ready(function(){
 				  "orderable": false
 			  } */],
 			  "autoWidth": false,
-			  columns:[ { data: 'title', render: function ( data, type, full, meta ) { return '<a  id="'+full.id +'-treeCropsTypes-tblTreeCrops"  href="propertytypedescription.php?id='+full.id +'" class="property_type"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
-					{ data: 'description'},//
-					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
-					
+			  columns:[ { data: 'title', render: function ( data, type, full, meta ) {
+					return '<a  id="'+full.id +'-tblPropertyType-tblPropertyTypes"  class="ls-modal improvement_type"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
+					{ data: 'description'},
 					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#propertytype"  id="'+data+'-tblPropertyType-tblPropertyTypes"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblPropertyType-tblPropertyTypes" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
@@ -1127,7 +1169,7 @@ $(document).ready(function(){
 					{ data: 'rate', function ( data, type, full, meta ) { return curr_format(data); }},
 					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
 					
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  id="'+data+'-cropdescription_rate-tblDistrictCropRate"  href="edit_croptree_rate.php?id='+data+'" class="btn btn-white btn-sm crop_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription_rate-tblDistrictCropRate" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#districtrate"  id="'+data+'-district_rate-tblDistrictCropRate" data-toggle="modal"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription_rate-tblDistrictCropRate" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>'; }}
 					
 					] ,
 			  buttons: [
@@ -1210,7 +1252,8 @@ $(document).ready(function(){
 					{ data: 'rate', render: function ( data, type, full, meta ) {return curr_format(data); }},
 					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
 					
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a  href="#property"    id="'+data+'-property_rate-tblPropertyRate" class="btn btn-white btn-sm edit_propety_rate"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-property_rate-tblPropertyRate" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) {
+					return '<a data-toggle="modal" href="#propertyrate"  id="'+data+'-tblPropertyRates-tblPropertyRate" data-toggle="modal"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblPropertyRates-tblPropertyRate" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>'; }}
 					
 					] ,
 			  buttons: [
@@ -1298,6 +1341,65 @@ $(document).ready(function(){
 			});
 		}
 	  /*-- END property description--*/
+	  
+	  /*-- Start Comment--*/
+	  
+	  if ($("#tblComments").length) {
+			  dTable['tblComment'] = $('#tblComments').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  /*"serverSide": true,
+			  "deferRender": true,
+			  "order": [[ 1, 'asc' ]],*/
+			  "ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'comments';
+						//d.start_date = getStartDate();
+						//d.end_date = getEndDate();
+					}
+			  },"columnDefs": [ {
+				  "targets": [],
+				  "orderable": false,
+				  "searchable": false
+			  }/* , {
+				  "targets": [0],
+				  "orderable": false
+			  } */],
+			  "autoWidth": false,
+			  columns:[ { data: 'details' },
+					
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal"  id="'+data+'-tblComments-tblComments" href="#propertydescription" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblComments-tblComments" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+		}
+	  /*-- END property description--*/
 	};
 	TableManageButtons = function() {
 	  "use strict";
@@ -1311,6 +1413,7 @@ $(document).ready(function(){
 	TableManageButtons.init();
 	//This helps load a page into a bootstrap modal
 	$('.table tbody').on('click', 'tr .crops', function (e) {
+		e.preventDefault();
 		var row = $(this).closest("tr");
 		var data = dTable['tblTreeCrops'].row(row).data();
 		if(typeof(data)=='undefined'){
@@ -1320,7 +1423,6 @@ $(document).ready(function(){
 		var d_id = $(this).attr("id");
 		var arr = d_id.split("-");
 		id = arr[0]; //The  row id  
-		e.preventDefault();
 		cropViewModel.tree_crop_type(data);
 		cropViewModel.getServerData(id);
 		saveCrops(id);
@@ -1329,12 +1431,27 @@ $(document).ready(function(){
 	});
 	//This helps load a page into a bootstrap modal
 	$('.table tbody').on('click', 'tr .edit_propety_rate', function (e) {
+		var row = $(this).closest("tr");
 		e.preventDefault();
 		$('#propertyrate_edt').modal('show').find('.modal-body').load($(this).attr('href'));
 	});
-	$('.table tbody').on('click', 'tr .property_type', function (e) {
+	$('.table tbody').on('click', 'tr .improvement_type', function (e) {
 		e.preventDefault();
-		$('#property_d').modal('show').find('.modal-body').load($(this).attr('href'));
+		e.preventDefault();
+		var row = $(this).closest("tr");
+		var data = dTable['tblPropertyTypes'].row(row).data();
+		if(typeof(data)=='undefined'){
+			data = dTable['tblPropertyTypes'].row($(row).prev()).data();
+		}
+		var  id 
+		var d_id = $(this).attr("id");
+		var arr = d_id.split("-");
+		id = arr[0]; //The  row id 
+		improvementViewModel.improvement_type(data);
+		improvementViewModel.getServerData(id);
+		saveImprovements(id);
+		$('#property_d').modal('show');
+		//$('#property_d').modal('show').find('.modal-body').load($(this).attr('href'));
 	});
 	$('.table tbody').on('click', 'tr .crop_rate', function (e) {
 		e.preventDefault();

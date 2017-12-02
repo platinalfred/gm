@@ -10,8 +10,9 @@ class PropertyDescription extends Db {
 		return !empty($result) ? $result:false;
 	}
 	
-	public function findAll(){
-		$result_array = $this->getarray(self::$table_name, "active=1", "", "");
+	public function findAll($where = ""){
+		$where .= ($where !== ""?" AND ": "")."active=1";
+		$result_array = $this->getarray(self::$table_name, $where, "", "");
 		return !empty($result_array) ? $result_array : false;
 	}
 	

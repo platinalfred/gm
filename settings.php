@@ -38,6 +38,7 @@ $all_ditricts = $districts->findAll();
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">More <b class="caret"></b></a>
 							<ul class="dropdown-menu">
+							    <li><a data-toggle="tab" role="tab" href="#tab-24" >Comments</a></li>
 							    <li><a data-toggle="tab" role="tab" href="#tab-23" >Positions</a></li>
 								<li class=""><a data-toggle="tab"  href="#tab-9" >Access Levels</a></li>
 								<!---->
@@ -511,7 +512,10 @@ $all_ditricts = $districts->findAll();
 													<div class="row" id="tree_crop_description">
 														<div class="col-sm-12" data-bind="with:tree_crop_type">
 															<h3><span data-bind="text:title"></span> Tree/Crop Type</h3>
-															<div data-bind="foreach: $parent.all_attached"><p data-bind="text:cropdescription"></p></div>
+															<div data-bind="foreach: $parent.all_attached">
+															<span data-bind="text:cropdescription"></span> &nbsp;<i class="fa fa-trash-o warning" style="color:red;cursor:pointer;" title="Remove description" data-bind="confirmClick: { message: 'Are you sure you would like to delete this item?', click: $root.removeCropDescription } "></i><br/><br/>
+															
+															</div>
 															<div class="ibox-content">
 																<p><b>Attach possible description to <span data-bind="text:title"></span> crop/tree type</b></p>
 																<form class="form-horizontal" >
@@ -741,6 +745,33 @@ $all_ditricts = $districts->findAll();
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-body">
+													<div class="row" id="improvement_type_desc">
+														<div class="col-sm-12" data-bind="with:improvement_type">
+															<h3><span data-bind="text:title"></span> Property Type</h3>
+															<div data-bind="foreach: $parent.all_attached_improvements"><span data-bind="text:propertydescription"></span> &nbsp;<i class="fa fa-trash-o warning" style="color:red;cursor:pointer;" title="Remove description" data-bind="confirmClick: { message: 'Are you sure you would like to delete this item?', click: $root.removePropertyDescription } "></i><br/><br/></div>
+															<div class="ibox-content">
+																<p><b>Attach possible description to <span data-bind="text:title"></span> crop/tree type</b></p>
+																<form class="form-horizontal" >
+																	<input type="hidden" value="improvementtypedescription" name="tbl">
+																	<input type="hidden" data-bind="value:id" name="property_type_id">
+																	<div class="form-group">
+																		<div class=" col-md-12">Choose description</div>
+																		<!--ko foreach: $parent.all_improvements_description-->
+																			<div class="col-md-4">
+																			 <label class="checkbox"><input data-bind="value:id" type="checkbox" name="improvement_description_id[]"><span data-bind="text: title"></span></label>
+																			 </div>
+																		<!--/ko-->
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary saveImprovementDescription" type="button">Attach description</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+													</div>										
+												
 												</div>
 											</div>
 										</div>
@@ -926,7 +957,7 @@ $all_ditricts = $districts->findAll();
 																				$alldata = $propertytypedescription->findPropertyTypeDescription();
 																				if($alldata){
 																					foreach($alldata as $single){ ?>
-																						<option value="<?php echo $single['id']; ?>"><?php echo $single['propertytype']." - ".$single['propertydescription']; ?></option>
+																						<option value="<?php echo $single['id']; ?>"><?php echo $single['improvementtypename']." - ".$single['propertydescription']; ?></option>
 																					<?php	
 																					}
 																				}?>
@@ -1264,33 +1295,68 @@ $all_ditricts = $districts->findAll();
 						</div>
 						<!-- End Expense Type-->
 						
-						<!--End Loan Product penality-->
-						
-						<div id="tab-14" class="tab-pane">
+						<!---  Comments   --->
+						<div id="tab-24" class="tab-pane">
+							<div class="panel-body">
+								<div class="col-lg-2 col-offset-sm-8">
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#comment"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+									<div id="comment" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Add /Update Comment</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" id="tblComment">
+																	<input type="hidden" name="id" >
+																	<input type="hidden" name="tbl"  value="comment">
+																	<div class="form-group"><label class="col-lg-2 control-label">Comments</label>
+																		<div class="col-lg-10">
+																			<textarea name="details" placeholder="comments" class="form-control"></textarea> 
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12" style="margin-top:10px;">
+									<div class="ibox-content">
+										<div class="table-responsive">
+											<table class="table table-striped table-bordered table-hover" id="tblComments">
+												<thead>
+												<tr>
+													<th>Comment</th>
+													<th></th>
+												</tr>
+												</thead>
+												<tbody></tbody>
+												<tfoot>
+													<tr>
+														<th>Comment</th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<!-- End Security Type-->
-						<!-- Security Type-->
-						<div id="tab-16" class="tab-pane">
-						</div>
-						<!-- End Security Type-->
-						
-						<!-- Adress Type -->
-						<div id="tab-18" class="tab-pane">
-						</div>
-						<!-- End Adress Type -->
-						<!-- Marital Status -->
-						<div id="tab-19" class="tab-pane">
-						</div>
-						<!-- End Marital Status -->
-						<!-- Expense Type -->
-						<div id="tab-22" class="tab-pane">
-						</div>
-						<!-- End Marital Status -->
-						
-						<!-- Deposit Products -->
-						<div id="tab-21" class="tab-pane">
-						</div>
-						<!-- End Deposit Products -->
+						<!-- End Comments -->
 					</div>
 				</div>
 			</div>

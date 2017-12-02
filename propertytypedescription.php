@@ -8,6 +8,57 @@ $propertytypes = new PropertyTypes();
 ?>
 <div class="row">
 	<div class="col-sm-12">
+		<p>Add Rate</p>
+		<div class="ibox-content">
+			<form class="form-horizontal" method="post" id="tblPropertyRate">
+				<input type="hidden" name="tbl" value="district_rate">
+				<input type="hidden" name="id" value="">
+				<div class="form-group">
+					<label class="control-label col-md-2">District</label>
+					<div class="col-lg-10">
+					  <select class="select2able" name="district_id" >
+							<?php 
+							$all_ditricts = $districts->findAll();
+							if($all_ditricts){
+								foreach($all_ditricts as $single){ ?>
+									<option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
+								<?php	
+								}
+							}?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group"><label class="col-lg-2 control-label">Crop/Tree </label>
+					<div class="col-lg-10">
+						 <select class="select2able" name="croptree_id">
+							<?php 
+							$alldata = $tree_crop_description->findCropTreeDescription();
+							if($alldata){
+								foreach($alldata as $single){ ?>
+									<option value="<?php echo $single['id']; ?>"><?php echo $single['cropname']." - ".$single['cropdescription']; ?></option>
+								<?php	
+								}
+							}?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group"><label class="col-lg-2 control-label"> Rate</label>
+					<div class="col-lg-10">
+						<input name="rate" placeholder="rate" class="form-control athousand_separator" required></input>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-offset-2 col-lg-10">
+						<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+												
+<div class="row">
+	<div class="col-sm-12">
 		<h3><?php echo $propertytypes->findPropertyName($_GET['id']); ?> </h3>
 		<?php
 		$all_attached = $propertytypesdescription->findByPropertyTypeId($_GET['id']);

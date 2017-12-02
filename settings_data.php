@@ -15,6 +15,10 @@ if(isset($_POST['tbl'])){
 			$treecroptypes = new TreeCropTypes();
 			$output['data'] = $treecroptypes->findAll();
 		break;
+		case "comments":
+			$comments = new Comments();
+			$output['data'] = $comments->findAll();
+		break;
 		case "districts":
 			$districts = new Districts();
 			$output['data'] = $districts->findAll();
