@@ -210,6 +210,35 @@ $(document).ready(function(){
 			<?php if( ($projectDetails['project_category_unit'] == 5) ):?>
 				cols = [7,10,12,13]; last_col = 14;
 			<?php endif;?>
+			if ($("#tblPapsReport").length) {
+				  dTable['tblPapsReport'] = $('#tblPapsReport').DataTable({
+				  dom: "Bfrtip",
+                                  searching: false,
+                                  ordering: false,
+                                  "paging": true,
+                                  "lengthChange": true,
+				  "autoWidth": false,
+				  buttons: [
+					{
+					  extend: "copy",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "excel",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "pdfHtml5",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "print",
+					  className: "btn-sm btn-white"
+					},
+				  ],
+				  responsive: false
+                              });
+                          }
 			if ($("#tblPap").length) {
 				  dTable['tblPap'] = $('#tblPap').DataTable({
 				  dom: "lfrtipB",
@@ -262,15 +291,82 @@ $(document).ready(function(){
                                                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>	
 							<?php 
 							if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ){ ?>
-								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * parseFloat(full.land_interest) * parseFloat(full.rightofway) ):0; }},
+								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * (parseFloat(full.land_interest)/100) * parseFloat(full.rightofway) ):0; }},
 							<?php } else { ?>
-								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * parseFloat(full.land_interest)* parseFloat(full.total_take)):0;  }},
+								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * (parseFloat(full.land_interest)/100)* parseFloat(full.total_take)):0;  }},
 							<?php
 							}
 						endif; ?>
 						{ data: 'chainage'},
 						{ data: 'improvement_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
 						{ data: 'crop_tree_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
+						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>'}}
+						
+						] ,
+				  buttons: [
+					{
+					  extend: "copy",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "csv",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "excel",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "pdfHtml5",
+					  className: "btn-sm btn-white"
+					},
+					{
+					  extend: "print",
+					  className: "btn-sm btn-white"
+					},
+				  ],
+				  responsive: true,
+				});
+				//$("#datatable-buttons").DataTable();
+			}
+		  /*-- End Project Affected Person DataTable--*/
+		  if ($("#tblPapCondensedReport").length) {
+				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
+				  dom: "lfrtipB",
+				  "processing": true,
+				  "createdRow": function ( row, data, index ) {
+						$.ajax({
+							"type" : "POST",
+							"url" : "getPapData.php",
+							"data" :{id:data.id, tbl:"crops"},
+							"success" : function(resp){
+								dTable['tblPapCondensedReport'].cell($('td', row).eq(5)).data(resp).draw();
+								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
+							}
+						});
+						
+					},
+					"ajax": {
+					  "url":"getData.php",
+					  "dataType": "JSON",
+					  "type": "POST",
+					  "data":  function(d){
+							d.tbl = 'project_paps_reports';
+							d.project_id = <?php echo $_GET['id']; ?>;
+						}
+				  },"columnDefs": [ {
+					  "target":5,
+					  "render":function( data, type, full, meta ){
+						  return "DF";
+					  }
+				  }],
+				  "autoWidth": false,
+				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
+					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
+						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
+						{ data: 'phone_contact'},
+						{ data: 'chainage'},
+						{data: 'id'},
 						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>'}}
 						
 						] ,
@@ -454,7 +550,7 @@ $(document).ready(function(){
 	  /* -- Clients Data Table --- */
 	  if ($("#tblProjectCoverage").length) {
 			  dTable['tblProjectCoverage'] = $('#tblProjectCoverage').DataTable({
-			  dom: "lfrtipB",
+			  dom: "Brt",
 			  "processing": true,
 			  "ajax": {
 				  "url":"getData.php",

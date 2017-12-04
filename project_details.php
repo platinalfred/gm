@@ -3,14 +3,16 @@ $needed_files = array("dataTables", "iCheck", "jasny", "knockout", "select2", "m
 include("includes/header.php");
 ?>
 <?php
-if (!isset($_GET['id']))
+if (!isset($_GET['id'])) {
     header('Location: error_404.php');
+}
 require_once('lib/LandAcquisition.php');
 $land_acquisition_object = new LandAcquisition();
 $projectDetails = $land_acquisition_object->findById($_GET['id']);
 //if the request comes up empty, redirect to the invalid page-title
-if (!$projectDetails)
+if (!$projectDetails) {
     header("Location: error_404.php");
+}
 ?>
 <div class="container-fluid main-content">
     <div class="page-title" > <h4 ><a href="project_details.php?id=<?= $_GET['id'] ?>"><?php echo $projectDetails['project_title']; ?></a><?php if (isset($_GET['pap_id'])) { ?> <i class="fa fa-chevron-right"></i> <a href="project_details.php?id=<?php echo $_GET['id']; ?>#tab-1"> Paps</a> <i class="fa fa-chevron-right"></i> Pap detais <?php } ?></h4> </div>
@@ -21,7 +23,10 @@ if (!$projectDetails)
         $subcounty_obj = new SubCounties();
         $parish_obj = new Parish();
         $village_obj = new Village();
-        $tenure_obj = new Tenure(); /* */
+        $tenure_obj = new Tenure();
+        $paps_obj = new ProjectAffectedPerson();
+        $pap_crop_tree_obj = new PAP_CropTree();
+        $pap_improvement_obj = new PAP_Improvement();
         //administrative units lists
         $counties = $county_obj->findAll();
         $subcounties = $subcounty_obj->findAll();
@@ -29,6 +34,8 @@ if (!$projectDetails)
         $villages = $village_obj->findAll();
         //land tenures
         $tenures = $tenure_obj->findAll();
+        //Project Report
+        $project_paps = $paps_obj->findAll("project_id = " . $_GET['id']);
         ?>
         <div class="row">
             <div class="col-lg-12">
@@ -38,6 +45,8 @@ if (!$projectDetails)
                             <li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
                             <li ><a data-toggle="tab" href="#tab-1"><i class="fa fa-group"></i> PAPs</a></li>
                             <li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
+                            <li><a data-toggle="tab" href="#tab-4" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
+                            <li ><a data-toggle="tab" href="#tab-5"><i class="fa fa-bar-chart-o"></i> PAPs Condensed Report</a></li>
 
                         </ul>
                         <div class="tab-content">
@@ -64,7 +73,7 @@ if (!$projectDetails)
                                     <i class="fa fa-group"></i>Project Affected Persons
                                 </div>
                                 <div class="widget-content padded">
-                                    <table class="table table-bordered table-striped" id="tblPap" width="100%">
+                                    <table class="table table-bordered table-striped widerTable" id="tblPap" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>PAP Ref</th>
@@ -219,6 +228,34 @@ if (!$projectDetails)
                                 </div>
                             </div>
                             <!-- end Coverage pane -->
+                            <?php include("project_report.php"); ?>
+ 						<!-- Project Affected Persons Report section -->
+						<div id="tab-5" class="tab-pane ">
+							<div class="heading">
+								<i class="fa fa-group"></i>PAPs Condensed Report
+							</div>
+							<div class="widget-content padded">
+								<table class="table table-bordered table-striped" id="tblPapCondensedReport">
+									<thead>
+										<tr>
+											<th>PAP Ref</th>
+											<th>Names</th>
+											<th>Location</th>
+											<th>Telephone</th>
+											<th>Chainage</th>
+											<th>Tree Crops (Quantity)</th>
+											<!--th>Improvements (Quantity)</th-->
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<!-- End PAP Report Section -->
+
                         </div>
                     </div>
                 </div>
@@ -235,6 +272,9 @@ if (!$projectDetails)
                     $subcounty_obj = new SubCounties();
                     $parish_obj = new Parish();
                     $village_obj = new Village();
+                    $pap_crop_tree_obj = new PAP_CropTree();
+                    $pap_improvement_obj = new PAP_Improvement();
+                    
                     $pap_details = $pap_obj->findById($_GET['pap_id']);
                     if (!$pap_details)
                         die("The page you are looking for does not exist");

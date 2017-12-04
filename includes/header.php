@@ -157,6 +157,8 @@ if(!isset($_SESSION['logged'])){
 		.hideit{
 		  display: none;
 		}
+                .widget-content{overflow-x: scroll}
+                table.widerTable td, table.widerTable th {white-space: nowrap}
 	</style>
 	<script src="js/plugins/moment/min/moment.min.js"></script>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">

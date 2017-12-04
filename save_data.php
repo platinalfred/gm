@@ -336,7 +336,7 @@ if(isset($_POST['tbl'])){
 				if(is_numeric($pap_id)){
 					//we first deal with the plants/crops
 					foreach($plants as $key=>$plant){
-						if($plant['crop_description_rate_id']!=""&&$plant['rate']!=""&&$plant['quantity']!=""){
+						if($plant['crop_description_rate_id']!=""&&$plant['rate']!="" && $plant['quantity']!=""){
 							$plants[$key]['pap_id'] = $pap_id;
 							$plants[$key]['date_created'] = time();
 							$plants[$key]['created_by'] = $plants[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;

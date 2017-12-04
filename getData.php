@@ -49,6 +49,10 @@ if(isset($_POST['tbl'])){
 			$pap_obj = new ProjectAffectedPerson();
 			$output['data'] = $pap_obj->findAll("`project_id`=".$_POST['project_id']);
 		break;
+		case "project_paps_reports":
+			$pap_obj = new ProjectAffectedPerson();
+			$output['data'] = $pap_obj->findAll("`project_id`=".$_POST['project_id']);
+		break;
 		case "pap_details":
 			$pap_crop_tree_obj = new PAP_CropTree();
 			$pap_improvement_obj = new PAP_Improvement();

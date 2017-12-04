@@ -27,4 +27,5 @@ require_once("PAP_Improvement.php");
 require_once("Tenure.php");
 require_once("Staff.php");
 require_once("Comments.php");
+require_once("Report.php");
 ?>
