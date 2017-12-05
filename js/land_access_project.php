@@ -41,7 +41,7 @@ $(document).ready(function(){
 		/* -- Land Acquisition category Data Table --- */
 		if ($("#tblLandProject").length) {
 			  dTable['tblLandProject'] = $('#tblLandProject').DataTable({
-			  dom: "lfrtipB",
+			  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
 			  "processing": true,
 			  "ajax": {
 				  "url":"getData.php",
@@ -96,7 +96,7 @@ $(document).ready(function(){
 	  /* -- Clients Data Table --- */
 	  if ($("#tblClient").length) {
 			  dTable['tblClient'] = $('#tblClient').DataTable({
-			  dom: "lfrtipB",
+			  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
 			  "processing": true,
 			  "ajax": {
 				  "url":"getData.php",

@@ -212,7 +212,7 @@ $(document).ready(function(){
 			<?php endif;?>
 			if ($("#tblPapsReport").length) {
 				  dTable['tblPapsReport'] = $('#tblPapsReport').DataTable({
-				  dom: "Bfrtip",
+				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
                                   searching: false,
                                   ordering: false,
                                   "paging": true,
@@ -241,7 +241,7 @@ $(document).ready(function(){
                           }
 			if ($("#tblPap").length) {
 				  dTable['tblPap'] = $('#tblPap').DataTable({
-				  dom: "lfrtipB",
+				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
 				  "processing": true,
 				  "ajax": {
 					  "url":"getData.php",
@@ -332,7 +332,7 @@ $(document).ready(function(){
 		  /*-- End Project Affected Person DataTable--*/
 		  if ($("#tblPapCondensedReport").length) {
 				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
-				  dom: "lfrtipB",
+				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
 				  "processing": true,
 				  "createdRow": function ( row, data, index ) {
 						$.ajax({
@@ -401,7 +401,7 @@ $(document).ready(function(){
 		/* -- PAP Crops Data Table --- */
 		if ($("#tblPapCrop").length) {
 			  dTable['tblPapCrop'] = $('#tblPapCrop').DataTable({
-			  dom: "lfrtipB",
+			  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
 			  "processing": true,
 			  "ajax": {
 				  "url":"getData.php",
@@ -476,7 +476,7 @@ $(document).ready(function(){
 		/* -- PAP Imrpovements Data Table --- */
 		if ($("#tblPapImprovement").length) {
 			  dTable['tblPapImprovement'] = $('#tblPapImprovement').DataTable({
-			  dom: "lfrtipB",
+			  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
 			  "processing": true,
 			  "ajax": {
 				  "url":"getData.php",
