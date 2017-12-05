@@ -114,6 +114,8 @@
 							</div>
 						</div>
 					</fieldset>
+					
+					
 					<div class="col-lg-6">
 						<div class="col-lg-6">
 							<fieldset>
@@ -143,7 +145,8 @@
 									</div>
 							</fieldset>
 						</div>
-						<?php endif;
+						<?php 
+						endif;
 						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
 							<div class="col-lg-6">
 								<fieldset>
@@ -156,53 +159,54 @@
 										</div>
 								</fieldset>
 							</div>
-						<?php endif;
-						if( $projectDetails['project_category_unit'] == 5 ):?>
-						<div class="col-lg-6">
-							<fieldset>
-								<legend>Total Size</legend>
-									<div class="form-group" >
-										<div class="col-md-8">
-											<input name="total_take" type="text" class="form-control" />
+						<?php 
+						endif;
+						if( $projectDetails['project_category_unit'] == 5 ): ?>
+							<div class="col-lg-6">
+								<fieldset>
+									<legend>Total Size</legend>
+										<div class="form-group" >
+											<div class="col-md-8">
+												<input name="total_take" type="text" class="form-control" />
+											</div>
+											<label class="control-label col-md-4">Acres</label>
 										</div>
-										<label class="control-label col-md-4">Acres</label>
-									</div>
-							</fieldset>
-						</div>
+								</fieldset>
+							</div>
 						<?php 
 						endif; ?>
 					</div>
 					<div class="col-lg-4">
-						<fieldset>
-							<?php
-							if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5){
-								?>
-								<div class="form-group">
-									<label class="control-label col-md-4">Rate per Acre (U.shs)</label>
-									<div class="col-md-7">
-										<input type="text" value="" name="rate_per_acre" class="form-control athousand_separator" required >
-									</div>
+						<?php
+						if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5){
+							?>
+							<div class="form-group">
+								<label class="control-label col-md-4">Rate per Acre (U.shs)</label>
+								<div class="col-md-7">
+									<input type="text" value="" name="rate_per_acre" class="form-control athousand_separator" required >
 								</div>
-								<div class="form-group">
-									<label class="control-label col-md-4">Land Interest (%age)</label>
-									<div class="col-md-7">
-										<input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest" value="" class="form-control" required >
-									</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-4">Land Interest (%age)</label>
+								<div class="col-md-7">
+									<input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest" value="" class="form-control" required >
 								</div>
-								<?php 
-							}
-							if($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4){ 
-								?>
+							</div>
+							<?php 
+						}
+						if($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4){ 
+							?>
+							<fieldset>
 								<div class="form-group">
 									<label class="control-label col-md-4">Diminution Level (%age)</label>
 									<div class="col-md-7">
 										<input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" value=""class="form-control" required >
 									</div>
 								</div>
+							</fieldset>
 							<?php 
-							}	
-							?>
-						</fieldset>
+						}	
+						?>
 						
 					</div>
 					<div class="col-lg-2">
@@ -216,6 +220,8 @@
 								</div>
 						</fieldset>
 					</div>
+					
+					
 					<div class="clearfix"></div>
 					<div class="col-lg-6" data-bind="with: district">
 						<fieldset>
@@ -306,7 +312,6 @@
 							<!--/ko-->
 						</fieldset>
 					</div>
-					<br/>
 					<div class="col-lg-12"><hr/></div>
 					<div class="col-lg-4 col-lg-offset-3">
 						<div class="form-group">

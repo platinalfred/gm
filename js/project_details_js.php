@@ -648,7 +648,7 @@ $('table tbody').on( 'click', '.edit_me', function () {
 	<?php if(!isset($_GET['pap_id'])): ?>
 		// Display the update form
 		viewModel.pap_details(data);
-		viewModel.getPapDetails(data.id);
+		viewModel.getPapDetails(data.pap_d);
 	<?php else:?>
 		//we need to set the village object accordingly
 		viewModel.village(ko.utils.arrayFirst(viewModel.villagesList(), function(currentParish){

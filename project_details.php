@@ -43,10 +43,10 @@ if (!$projectDetails) {
                     <div class="tabs-container" id="project_page">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
-                            <li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
+							 <li ><a data-toggle="tab" href="#tab-5"><i class="fa fa-bar-chart-o"></i> PAPs</a></li>
                             <li><a data-toggle="tab" href="#tab-4" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
-                            <li ><a data-toggle="tab" href="#tab-5"><i class="fa fa-bar-chart-o"></i> PAPs Condensed Report</a></li>
-
+                            <li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
+                           
                         </ul>
                         <div class="tab-content">
                             
