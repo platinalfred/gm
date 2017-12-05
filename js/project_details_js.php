@@ -344,6 +344,15 @@ $(document).ready(function(){
 								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
 							}
 						});
+						$.ajax({
+							"type" : "POST",
+							"url" : "getPapData.php",
+							"data" :{id:data.id, tbl:"improvements"},
+							"success" : function(resp){
+								dTable['tblPapCondensedReport'].cell($('td', row).eq(6)).data(resp).draw();
+								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
+							}
+						});
 						
 					},
 					"ajax": {
@@ -367,6 +376,8 @@ $(document).ready(function(){
 						{ data: 'phone_contact'},
 						{ data: 'chainage'},
 						{data: 'id'},
+						{data: 'id'},
+						{data: 'comment'},
 						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>'}}
 						
 						] ,
