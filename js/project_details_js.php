@@ -191,7 +191,15 @@ var viewModel = new ViewModel();
 var dTable = {};
 $(document).ready(function(){
 	//deleteDataTableRowData();
-
+        function generateHTML(data_array){
+            cellHTML = "";
+            if(data_array){
+                $.each(data_array, function(key, val){
+                    cellHTML += '<p>'+val[0]+'(<span class="text-danger">'+val[1]+' @ '+val[2]+'</span>)</p>';
+                });
+            }
+            return cellHTML;
+        }
 	var handleDataTableButtons = function() {
 		<?php if(isset($projectDetails)):?>
 			/* -- Project Affected Person Data Table --- */
@@ -212,9 +220,9 @@ $(document).ready(function(){
 			<?php endif;?>
 			if ($("#tblPapsReport").length) {
 				  dTable['tblPapsReport'] = $('#tblPapsReport').DataTable({
-				  dom: "Bfrtip",
-                                  searching: false,
-                                  ordering: false,
+				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
+                                  "searching": false,
+                                  "ordering": false,
                                   "paging": true,
                                   "lengthChange": true,
 				  "autoWidth": false,
@@ -238,119 +246,34 @@ $(document).ready(function(){
 				  ],
 				  responsive: false
                               });
-                          }
-			if ($("#tblPap").length) {
-				  dTable['tblPap'] = $('#tblPap').DataTable({
-				  dom: "lfrtipB",
-				  "processing": true,
-				  "ajax": {
-					  "url":"getData.php",
-					  "dataType": "JSON",
-					  "type": "POST",
-					  "data":  function(d){
-							d.tbl = 'project_paps';
-							d.project_id = <?php echo $_GET['id']; ?>;
-						}
-				  },"columnDefs": [ {
-					  "targets": [last_col],
-					  "orderable": false,
-					  "searchable": false
-				  }],
-				  "footerCallback": function (tfoot, data, start, end, display ) {
-					var api = this.api();
-					$.each(cols, function(key, val){
-						var total = api.column(val).data().sum();
-						$(api.column(val).footer()).html( curr_format(total) );
-					});
-				  },
-				  "autoWidth": false,
-				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
-					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
-						{ data: 'district_name'},
-						/* { data: 'county_id'},*/
-						{ data: 'subcounty_name'},
-						{ data: 'parish_name'}, 
-						{ data: 'village_name'},
-						{ data: 'phone_contact'},
-						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
-						{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-						<?php endif;?>
-						<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
-						{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-						<?php endif;?>
-						<?php if( $projectDetails['project_category_unit'] == 5 ):?>
-						{ data: 'total_take', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-						<?php endif;?>
-						<?php if( $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 5 ):?>
-							{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-							{ data: 'land_interest', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-                                                <?php endif;
-                                                if ($projectDetails['project_category_unit'] == 4): ?>
-							{ data: 'diminution_rate', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
-						<?php endif;
-                                                if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>	
-							<?php 
-							if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ){ ?>
-								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * (parseFloat(full.land_interest)/100) * parseFloat(full.rightofway) ):0; }},
-							<?php } else { ?>
-								{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * (parseFloat(full.land_interest)/100)* parseFloat(full.total_take)):0;  }},
-							<?php
-							}
-						endif; ?>
-						{ data: 'chainage'},
-						{ data: 'improvement_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'crop_tree_sum', render: function( data, type, full, meta ) {return data?curr_format(parseInt(data)):0;}},
-						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>'}}
-						
-						] ,
-				  buttons: [
-					{
-					  extend: "copy",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "csv",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "excel",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "pdfHtml5",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "print",
-					  className: "btn-sm btn-white"
-					},
-				  ],
-				  responsive: true,
-				});
-				//$("#datatable-buttons").DataTable();
 			}
-		  /*-- End Project Affected Person DataTable--*/
-		  if ($("#tblPapCondensedReport").length) {
+		 if ($("#tblPapCondensedReport").length) {
 				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
-				  dom: "lfrtipB",
+				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
 				  "processing": true,
 				  "createdRow": function ( row, data, index ) {
+					var disp = {crops:9, improvement:10};
+					<?php if( ($projectDetails['project_category_unit'] == 1) ):?>
+						disp = {crops:9, improvement:10};
+					<?php endif;?>
+					<?php if( ($projectDetails['project_category_unit'] == 2) ):?>
+						disp = {crops:7, improvement:8};
+					<?php endif;?>
+					<?php if( ($projectDetails['project_category_unit'] == 4) ):?>
+						disp = {crops:11, improvement:12};
+					<?php endif;?>
+					<?php if( ($projectDetails['project_category_unit'] == 5) ):?>						
+						disp = {crops:9, improvement:10};
+
+					<?php endif;?>
 						$.ajax({
 							"type" : "POST",
 							"url" : "getPapData.php",
-							"data" :{id:data.id, tbl:"crops"},
+							"data" :{id:data.id, tbl:"crops_props"},
+                                                        "dataType":'json',
 							"success" : function(resp){
-								dTable['tblPapCondensedReport'].cell($('td', row).eq(11)).data(resp).draw();
-								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
-							}
-						});
-						$.ajax({
-							"type" : "POST",
-							"url" : "getPapData.php",
-							"data" :{id:data.id, tbl:"improvements"},
-							"success" : function(resp){
-								dTable['tblPapCondensedReport'].cell($('td', row).eq(12)).data(resp).draw();
-								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
+								dTable['tblPapCondensedReport'].cell($('td', row).eq(disp.crops)).data(generateHTML(resp.crops)).draw();
+								dTable['tblPapCondensedReport'].cell($('td', row).eq(disp.improvement)).data(generateHTML(resp.props)).draw();
 							}
 						});
 						
@@ -376,7 +299,7 @@ $(document).ready(function(){
 						{ data: 'phone_contact'},
 						{ data: 'chainage'},
 						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
-							{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+							{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data) *1 :0;}},
 						<?php 
 						endif;
 						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
@@ -388,14 +311,14 @@ $(document).ready(function(){
 						<?php 
 						endif;
 						if( $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 5 ): ?>
-							{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data? curr_format(data) * 1 :0;}},
+							{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data? curr_format(data*1) :0;}},
 							{ data: 'land_interest', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 							<?php endif;
                              if ($projectDetails['project_category_unit'] == 4): ?>
 							{ data: 'diminution_rate', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 							<?php 
 							endif;
-							if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): 
+							/* if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): 
 							
 								if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ){ ?>
 									{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * (parseFloat(full.land_interest)/100) * parseFloat(full.rightofway) ):0; }},
@@ -404,11 +327,12 @@ $(document).ready(function(){
 									{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * (parseFloat(full.land_interest)/100)* parseFloat(full.total_take)):0;  }},
 								<?php
 								}
-							endif; ?>
+							endif; */  ?>
+						{data: 'tenure_desc'},
 						{data: 'id'},
 						{data: 'id'},
 						{data: 'comment'},
-						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>'}}
+						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal"   class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>'}}
 						
 						] ,
 				  buttons: [
@@ -442,7 +366,7 @@ $(document).ready(function(){
 		/* -- PAP Crops Data Table --- */
 		if ($("#tblPapCrop").length) {
 			  dTable['tblPapCrop'] = $('#tblPapCrop').DataTable({
-			  dom: "lfrtipB",
+			  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
 			  "processing": true,
 			  "ajax": {
 				  "url":"getData.php",
@@ -517,7 +441,7 @@ $(document).ready(function(){
 		/* -- PAP Imrpovements Data Table --- */
 		if ($("#tblPapImprovement").length) {
 			  dTable['tblPapImprovement'] = $('#tblPapImprovement').DataTable({
-			  dom: "lfrtipB",
+			  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
 			  "processing": true,
 			  "ajax": {
 				  "url":"getData.php",

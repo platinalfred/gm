@@ -43,111 +43,13 @@ if (!$projectDetails) {
                     <div class="tabs-container" id="project_page">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
-                            <li ><a data-toggle="tab" href="#tab-1"><i class="fa fa-group"></i> PAPs</a></li>
                             <li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
                             <li><a data-toggle="tab" href="#tab-4" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
                             <li ><a data-toggle="tab" href="#tab-5"><i class="fa fa-bar-chart-o"></i> PAPs Condensed Report</a></li>
 
                         </ul>
                         <div class="tab-content">
-                            <!-- Project Affected Persons section -->
-                            <div id="tab-1" class="tab-pane ">
-                                <div class="col-lg-12">
-                                    <div class="action-buttons">
-                                        <a  data-toggle="modal" href="#papModal" data-bind="click: resetForm"><i class="fa fa-plus"></i> Add New</a>
-                                    </div>
-                                    <div class="modal fade col-sm-10 col-sm-offset-1" id="papModal">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
-                                                <h4 class="modal-title">Project Affected Persons</h4>
-                                            </div>
-                                            <div class="modal-body">
-											<?php include("add_pap_modal.php"); ?>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="heading">
-                                    <i class="fa fa-group"></i>Project Affected Persons
-                                </div>
-                                <div class="widget-content padded">
-                                    <table class="table table-bordered table-striped widerTable" id="tblPap" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>PAP Ref</th>
-                                                <th>Names</th>
-                                                <th>District</th>
-                                                <!--th>County</th-->
-                                                <th>Sub County</th>
-                                                <th>Parish</th>
-                                                <th>Village</th>
-                                                <th>Telephone</th>
-                                                <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
-                                                    <th>Way Leave</th>
-                                                <?php endif; ?>
-                                                <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4): ?>
-                                                    <th>Right of Way</th>
-                                                <?php endif; ?>
-                                                <?php if ($projectDetails['project_category_unit'] == 5): ?>
-                                                    <th>Total Take</th>
-                                                <?php endif;
-                                                if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
-                                                    ?>
-                                                    <th>Rate per Acre</th>	
-                                                    <th>Land Interest(%)</th>
-                                                <?php endif;
-                                                if ($projectDetails['project_category_unit'] == 4): ?>
-                                                    <th>Diminution(%)</th>
-                                                <?php endif;
-                                                if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
-                                                    ?>
-                                                    <th>Land Value(U.shs)</th>
-                                                <?php endif; ?>
-                                                <th>Chainage</th>
-                                                <th>Improvements</th>
-                                                <th>Crops/Trees</th>
-                                                <th>&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Total</th>
-                                                <th colspan="6">&nbsp;</th>
-                                                <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
-                                                    <th>0</th>
-                                                <?php endif; ?>
-                                                <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4): ?>
-                                                    <th>0</th>
-                                                <?php endif; ?>
-                                                <?php if ($projectDetails['project_category_unit'] == 5): ?>
-                                                    <th>&nbsp;</th>
-                                                <?php endif;
-                                                    if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
-                                                    ?>
-                                                    <th>&nbsp;</th>	
-                                                    <th>&nbsp;</th>
-                                                <?php endif;
-                                                if ($projectDetails['project_category_unit'] == 4): ?>	
-                                                    <th>&nbsp;</th>
-                                                <?php endif;
-                                                if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
-                                                ?>	
-                                                    <th>&nbsp;</th>
-                                                <?php endif; ?>
-                                                <th>&nbsp;</th>
-                                                <th>0</th>
-                                                <th>0</th>
-                                                <th>&nbsp;</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-
+                            
                             <!-- end Projects content pane -->
                             <!-- Projects -->
                             <div id="tab-2" class="tab-pane ">
@@ -248,9 +150,6 @@ if (!$projectDetails) {
 								</div>
 							</div>
 							<div class="heading">
-								<i class="fa fa-group"></i>Project Affected Persons
-							</div>
-							<div class="heading">
 								<i class="fa fa-group"></i>PAPs Condensed Report
 							</div>
 							<div class="widget-content padded">
@@ -282,12 +181,13 @@ if (!$projectDetails) {
 												<th>Diminution(%)</th>
 											<?php
 											endif;
-											if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
+											/* if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
 											?>
 												<th>Land Value(U.shs)</th>
 											<?php 
-											endif; 
+											endif;  */
 											?>
+											<th>Tenure</th>
 											<th>Tree Crops (Quantity @ Rate)</th>
 											<th>Improvements (Quantity @ Rate)</th>
 											

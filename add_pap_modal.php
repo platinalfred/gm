@@ -4,7 +4,7 @@
                 <i class="fa fa-bars"></i>Add Project Affected Person
             </div>
             <div class="widget-content padded">
-                <form  id="tblPapForm" action="#" method="post" class="form-horizontal">
+                <form  id="tblPapCondensedReportForm" action="#" method="post" class="form-horizontal">
 					<fieldset>
 						<legend>PAP Details</legend>
 						<div class="col-lg-3">

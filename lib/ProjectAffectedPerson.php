@@ -17,7 +17,7 @@ class ProjectAffectedPerson extends Db {
 		
 		// LEFT JOIN `tbl_county` ON `county_id` = `tbl_county`.`id` LEFT JOIN `tbl_subcounty` ON `subcounty_id` = `tbl_subcounty`.`id` LEFT JOIN `tbl_parish` ON `parish_id` = `tbl_parish`.`id`
 		
-		$fields = "`tbl_paps`.`id`, `project_id`, `pap_ref`,`comment`, `photo_url` `profile_pic`, `firstname`, `othername`, `lastname`, `phone_contact`, `district_id`, `district_name`, `county_id`, `subcounty_id`, `parish_id`, `village_id`, `village_name`,`subcounty_name`,`parish_name`, `way_leave`, `rightofway`, `total_take`, `chainage`, `crop_tree_cnt`, `land_interest`,`rate_per_acre`,`diminution_rate`, `improvement_cnt`";
+		$fields = "`tbl_paps`.`id`, `project_id`, `pap_ref`,`comment`, `photo_url` `profile_pic`, `firstname`, `othername`, `lastname`, `phone_contact`, `district_id`, `district_name`, `county_id`, `subcounty_id`, `parish_id`, `village_id`, `village_name`,`subcounty_name`,`parish_name`, `way_leave`, `tenure`,  `tenure`.`title` `tenure_desc`, `rightofway`, `total_take`, `chainage`, `crop_tree_cnt`, `land_interest`,`rate_per_acre`,`diminution_rate`, `improvement_cnt`";
 		
 		$result_array = $this->getfarray($tables, $fields, $where, "", "");
 		return !empty($result_array) ? $result_array : false;
@@ -43,12 +43,18 @@ class ProjectAffectedPerson extends Db {
 		$fields =array_slice(self::$db_fields, 1);
 		//$data['pap_ref'] = "PAP_".time();
 		$data['date_created'] = time();
+		if(isset($data['rate_per_acre']) &&  $data['rate_per_acre'] != ""){
+			$data['rate_per_acre'] = $this->stripCommasOnNumber($data['rate_per_acre']);
+		}
 		$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
 		return $this->addSpecial(self::$table_name, $data);
 	}
 	public function updatePap($data){
 		$id = $data['id'];
 		unset($data['id'], $data['tbl']);
+		if(isset($data['rate_per_acre']) && $data['rate_per_acre'] != ""){
+			$data['rate_per_acre'] = $this->stripCommasOnNumber($data['rate_per_acre']);
+		}
 		if($this->updateSpecial(self::$table_name, $data, "id=".$id)){
 			return true;
 		}
