@@ -340,7 +340,7 @@ $(document).ready(function(){
 							"url" : "getPapData.php",
 							"data" :{id:data.id, tbl:"crops"},
 							"success" : function(resp){
-								dTable['tblPapCondensedReport'].cell($('td', row).eq(5)).data(resp).draw();
+								dTable['tblPapCondensedReport'].cell($('td', row).eq(11)).data(resp).draw();
 								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
 							}
 						});
@@ -349,7 +349,7 @@ $(document).ready(function(){
 							"url" : "getPapData.php",
 							"data" :{id:data.id, tbl:"improvements"},
 							"success" : function(resp){
-								dTable['tblPapCondensedReport'].cell($('td', row).eq(6)).data(resp).draw();
+								dTable['tblPapCondensedReport'].cell($('td', row).eq(12)).data(resp).draw();
 								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
 							}
 						});
@@ -375,6 +375,36 @@ $(document).ready(function(){
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
 						{ data: 'phone_contact'},
 						{ data: 'chainage'},
+						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
+							{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+						<?php 
+						endif;
+						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
+							{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data)*1:0;}},
+						<?php 
+						endif;
+						if( $projectDetails['project_category_unit'] == 5 ):?>
+							{ data: 'total_take', render: function( data, type, full, meta ) {return data?curr_format(data)*1:0;}},
+						<?php 
+						endif;
+						if( $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 5 ): ?>
+							{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data? curr_format(data) * 1 :0;}},
+							{ data: 'land_interest', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+							<?php endif;
+                             if ($projectDetails['project_category_unit'] == 4): ?>
+							{ data: 'diminution_rate', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
+							<?php 
+							endif;
+							if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): 
+							
+								if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ){ ?>
+									{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * (parseFloat(full.land_interest)/100) * parseFloat(full.rightofway) ):0; }},
+								<?php 
+								} else { ?>
+									{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data ? curr_format(parseInt(full.rate_per_acre) * (parseFloat(full.land_interest)/100)* parseFloat(full.total_take)):0;  }},
+								<?php
+								}
+							endif; ?>
 						{data: 'id'},
 						{data: 'id'},
 						{data: 'comment'},

@@ -78,7 +78,7 @@
 							<div class="form-group">
 								<label class="control-label col-md-5">Subcounty</label>
 								<div class="col-md-7">
-                                                                    <select id="subcounty_id" name="subcounty_id" class="select2able" data-bind='options: filteredSCountiesList, optionsText: "subcounty_name", optionsCaption: "Select subcounty...", optionsAfterRender: $root.setOptionValue("id"), value:scounty' data-msg-required="Sub county must be selected" required ></select>
+											<select id="subcounty_id" name="subcounty_id" class="select2able" data-bind='options: filteredSCountiesList, optionsText: "subcounty_name", optionsCaption: "Select subcounty...", optionsAfterRender: $root.setOptionValue("id"), value:scounty' data-msg-required="Sub county must be selected" required ></select>
 								</div>
 							</div>
 						
@@ -114,73 +114,108 @@
 							</div>
 						</div>
 					</fieldset>
-						<div class="col-lg-3">
-					<fieldset>
-						<legend>Land Tenure</legend>
-							<div class="form-group" >
-								<label class="control-label col-md-5">Land Tenure</label>
-								<div class="col-md-7">
-									<select name="tenure" id="tenure" data-bind="value: tenure" class="form-control"   >
-										<option>Select option ...</option>
-										<?php foreach($tenures as $tenure):?>
-											<option value="<?=$tenure['id']?>"><?=$tenure['title']?></option>
-										<?php endforeach;?>
-									</select>
-								</div>
-							</div>
-					</fieldset>
-						</div>
-					<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
-						<div class="col-lg-2">
-					<fieldset>
-						<legend>Way Leave</legend>
-							<div class="form-group" >
-								<div class="col-md-8">
-									<input name="way_leave" type="text" class="form-control" data-msg-required="Required" />
-								</div>
-								<label class="control-label col-md-4">Acres</label>
-							</div>
-					</fieldset>
-						</div>
-					<?php endif;?>
-					<?php 
-					if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
-						<div class="col-lg-2">
+					<div class="col-lg-6">
+						<div class="col-lg-6">
 							<fieldset>
-								<legend>Right of way</legend>
+								<legend>Land Tenure</legend>
+									<div class="form-group" >
+										<label class="control-label col-md-5">Land Tenure</label>
+										<div class="col-md-7">
+											<select name="tenure" id="tenure" data-bind="value: tenure" class="form-control"   >
+												<option>Select option ...</option>
+												<?php foreach($tenures as $tenure):?>
+													<option value="<?=$tenure['id']?>"><?=$tenure['title']?></option>
+												<?php endforeach;?>
+											</select>
+										</div>
+									</div>
+							</fieldset>
+						</div>
+						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
+						<div class="col-lg-6">
+							<fieldset>
+								<legend>Way Leave</legend>
 									<div class="form-group" >
 										<div class="col-md-8">
-											<input name="rightofway" type="text" class="form-control" data-msg-required="Required field" />
+											<input name="way_leave" type="text" class="form-control" data-msg-required="Required" />
 										</div>
 										<label class="control-label col-md-4">Acres</label>
 									</div>
 							</fieldset>
 						</div>
-					<?php endif;?>
-					<?php if( $projectDetails['project_category_unit'] == 5 ):?>
-						<div class="col-lg-2">
-					<fieldset>
-						<legend>Total Size</legend>
-							<div class="form-group" >
-								<div class="col-md-8">
-									<input name="total_take" type="text" class="form-control" />
-								</div>
-								<label class="control-label col-md-4">Acres</label>
+						<?php endif;
+						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
+							<div class="col-lg-6">
+								<fieldset>
+									<legend>Right of way</legend>
+										<div class="form-group" >
+											<div class="col-md-8">
+												<input name="rightofway" type="text" class="form-control" data-msg-required="Required field" />
+											</div>
+											<label class="control-label col-md-4">Acres</label>
+										</div>
+								</fieldset>
 							</div>
-					</fieldset>
+						<?php endif;
+						if( $projectDetails['project_category_unit'] == 5 ):?>
+						<div class="col-lg-6">
+							<fieldset>
+								<legend>Total Size</legend>
+									<div class="form-group" >
+										<div class="col-md-8">
+											<input name="total_take" type="text" class="form-control" />
+										</div>
+										<label class="control-label col-md-4">Acres</label>
+									</div>
+							</fieldset>
 						</div>
-					<?php endif;?>
-						<div class="col-lg-3">
-					<fieldset>
-						<legend>Chainage</legend>
-							<div class="form-group" >
-								<label class="control-label col-md-5">Km</label>
-								<div class="col-md-7">
-									<input name="chainage" type="text" class="form-control" data-msg-required="Chainage point must be entered"  />
+						<?php 
+						endif; ?>
+					</div>
+					<div class="col-lg-4">
+						<fieldset>
+							<?php
+							if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5){
+								?>
+								<div class="form-group">
+									<label class="control-label col-md-4">Rate per Acre (U.shs)</label>
+									<div class="col-md-7">
+										<input type="text" value="" name="rate_per_acre" class="form-control athousand_separator" required >
+									</div>
 								</div>
-							</div>
-					</fieldset>
-						</div>
+								<div class="form-group">
+									<label class="control-label col-md-4">Land Interest (%age)</label>
+									<div class="col-md-7">
+										<input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest" value="" class="form-control" required >
+									</div>
+								</div>
+								<?php 
+							}
+							if($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4){ 
+								?>
+								<div class="form-group">
+									<label class="control-label col-md-4">Diminution Level (%age)</label>
+									<div class="col-md-7">
+										<input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" value=""class="form-control" required >
+									</div>
+								</div>
+							<?php 
+							}	
+							?>
+						</fieldset>
+						
+					</div>
+					<div class="col-lg-2">
+						<fieldset>
+							<legend>Chainage</legend>
+								<div class="form-group" >
+									<label class="control-label col-md-5">Km</label>
+									<div class="col-md-7">
+										<input name="chainage" type="text" class="form-control" data-msg-required="Chainage point must be entered"  />
+									</div>
+								</div>
+						</fieldset>
+					</div>
 					<div class="clearfix"></div>
 					<div class="col-lg-6" data-bind="with: district">
 						<fieldset>
@@ -270,42 +305,6 @@
 							</div>
 							<!--/ko-->
 						</fieldset>
-					</div>
-					<div class="col-lg-12"><hr/></div>
-					<div class="col-lg-12">
-						<div class="col-lg-6">
-							<fieldset>
-								<?php
-								if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5){
-									?>
-									<div class="form-group">
-										<label class="control-label col-md-4">Rate per Acre (U.shs)</label>
-										<div class="col-md-7">
-											<input type="text" value="" name="rate_per_acre" class="form-control athousand_separator" required >
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-md-4">Land Interest (%age)</label>
-										<div class="col-md-7">
-											<input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest" value="" class="form-control" required >
-										</div>
-									</div>
-									<?php 
-								}
-								if($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4){ 
-									?>
-									<div class="form-group">
-										<label class="control-label col-md-4">Diminution Level (%age)</label>
-										<div class="col-md-7">
-											<input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" value=""class="form-control" required >
-										</div>
-									</div>
-								<?php 
-								}	
-								?>
-							</fieldset>
-						
-						</div>
 					</div>
 					<br/>
 					<div class="col-lg-12"><hr/></div>
