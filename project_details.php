@@ -243,8 +243,9 @@ if (!$projectDetails) {
 											<th>Location</th>
 											<th>Telephone</th>
 											<th>Chainage</th>
-											<th>Tree Crops (Quantity)</th>
-											<!--th>Improvements (Quantity)</th-->
+											<th>Tree Crops (Quantity @ Rate)</th>
+											<th>Improvements (Quantity @ Rate)</th>
+											<th>Comment</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -363,14 +364,16 @@ if (!$projectDetails) {
                                                         <form id="tblLandPapForm" action="#" method="post" class="form-horizontal">
                                                             <input type="hidden" name="tbl" value="tblLandPap">
                                                             <input type="hidden" value="<?php echo $_GET['pap_id']; ?>" name="id" >
-                                                            <?php if ($projectDetails['project_category_unit'] == 1) { ?>
+                                                            <?php 
+															if ($projectDetails['project_category_unit'] == 1) { ?>
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4">Right of Way(Acres)</label>
                                                                     <div class="col-md-7"> 
                                                                         <?php echo $pap_details['rightofway'];
                                                                         ; ?></div>
                                                                 </div>
-                                                                <?php } elseif ($projectDetails['project_category_unit'] == 4) {
+                                                                <?php 
+															} elseif ($projectDetails['project_category_unit'] == 4) {
                                                                 ?>
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4">Right of Way (Acres)</label>
@@ -380,12 +383,11 @@ if (!$projectDetails) {
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4">Wayleave (Acres)</label>
-                                                                    <div class="col-md-7"> 
-                                                                <?php echo $pap_details['way_leave'];
-                                                                ; ?></div>
+                                                                    <div class="col-md-7">  <?php echo $pap_details['way_leave']; ?></div>
                                                                 </div>
-            <?php } elseif ($projectDetails['project_category_unit'] == 5) {
-            ?>
+																<?php 
+															} elseif ($projectDetails['project_category_unit'] == 5) {
+																?>
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4">Total Take Size (Acres)</label>
                                                                     <div class="col-md-7"> 

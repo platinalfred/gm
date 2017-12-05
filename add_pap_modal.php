@@ -143,17 +143,18 @@
 					</fieldset>
 						</div>
 					<?php endif;?>
-					<?php if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
+					<?php 
+					if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
 						<div class="col-lg-2">
-					<fieldset>
-						<legend>Right of way</legend>
-							<div class="form-group" >
-								<div class="col-md-8">
-									<input name="rightofway" type="text" class="form-control" data-msg-required="Required field" />
-								</div>
-								<label class="control-label col-md-4">Acres</label>
-							</div>
-					</fieldset>
+							<fieldset>
+								<legend>Right of way</legend>
+									<div class="form-group" >
+										<div class="col-md-8">
+											<input name="rightofway" type="text" class="form-control" data-msg-required="Required field" />
+										</div>
+										<label class="control-label col-md-4">Acres</label>
+									</div>
+							</fieldset>
 						</div>
 					<?php endif;?>
 					<?php if( $projectDetails['project_category_unit'] == 5 ):?>
@@ -181,7 +182,7 @@
 					</fieldset>
 						</div>
 					<div class="clearfix"></div>
-                                        <div class="col-lg-6" data-bind="with: district">
+					<div class="col-lg-6" data-bind="with: district">
 						<fieldset>
 							<legend>Improvements <a href="#" class="pull-right" data-bind="click: $parent.addImprovement, enable: (typeof $parent.filteredDistrictPropertyRates() != 'undefined' && $parent.filteredDistrictPropertyRates().length)" title="Add another item"><i class="fa fa-plus"></i></a></legend>
 							<div class="form-group">
@@ -270,6 +271,43 @@
 							<!--/ko-->
 						</fieldset>
 					</div>
+					<div class="col-lg-12"><hr/></div>
+					<div class="col-lg-12">
+						<div class="col-lg-6">
+							<fieldset>
+								<?php
+								if($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5){
+									?>
+									<div class="form-group">
+										<label class="control-label col-md-4">Rate per Acre (U.shs)</label>
+										<div class="col-md-7">
+											<input type="text" value="" name="rate_per_acre" class="form-control athousand_separator" required >
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-md-4">Land Interest (%age)</label>
+										<div class="col-md-7">
+											<input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest" value="" class="form-control" required >
+										</div>
+									</div>
+									<?php 
+								}
+								if($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4){ 
+									?>
+									<div class="form-group">
+										<label class="control-label col-md-4">Diminution Level (%age)</label>
+										<div class="col-md-7">
+											<input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" value=""class="form-control" required >
+										</div>
+									</div>
+								<?php 
+								}	
+								?>
+							</fieldset>
+						
+						</div>
+					</div>
+					<br/>
 					<div class="col-lg-12"><hr/></div>
 					<div class="col-lg-4 col-lg-offset-3">
 						<div class="form-group">
