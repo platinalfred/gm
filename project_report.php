@@ -1,5 +1,5 @@
 <!-- Project Affected Persons Report section -->
-<div id="tab-4" class="tab-pane ">
+<div id="tab-4" class="tab-pane active">
 <div class="heading">
     <i class="fa fa-pie-chart"></i>Project Report
 </div>

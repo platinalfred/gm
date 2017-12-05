@@ -24,9 +24,6 @@ if (!$projectDetails) {
         $parish_obj = new Parish();
         $village_obj = new Village();
         $tenure_obj = new Tenure();
-        $paps_obj = new ProjectAffectedPerson();
-        $pap_crop_tree_obj = new PAP_CropTree();
-        $pap_improvement_obj = new PAP_Improvement();
         //administrative units lists
         $counties = $county_obj->findAll();
         $subcounties = $subcounty_obj->findAll();
@@ -34,8 +31,6 @@ if (!$projectDetails) {
         $villages = $village_obj->findAll();
         //land tenures
         $tenures = $tenure_obj->findAll();
-        //Project Report
-        $project_paps = $paps_obj->findAll("project_id = " . $_GET['id']);
         ?>
         <div class="row">
             <div class="col-lg-12">
@@ -44,7 +39,6 @@ if (!$projectDetails) {
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
 							 <li ><a data-toggle="tab" href="#tab-5"><i class="fa fa-bar-chart-o"></i> PAPs</a></li>
-                            <li><a data-toggle="tab" href="#tab-4" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
                             <li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
                            
                         </ul>
@@ -130,7 +124,6 @@ if (!$projectDetails) {
                                 </div>
                             </div>
                             <!-- end Coverage pane -->
-                            <?php include("project_report.php"); ?>
  						<!-- Project Affected Persons Report section -->
 						<div id="tab-5" class="tab-pane ">
 							<div class="col-lg-12">
