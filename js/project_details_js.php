@@ -191,7 +191,15 @@ var viewModel = new ViewModel();
 var dTable = {};
 $(document).ready(function(){
 	//deleteDataTableRowData();
-
+        function generateHTML(data_array){
+            cellHTML = "";
+            if(data_array){
+                $.each(data_array, function(key, val){
+                    cellHTML += '<p>'+val[0]+'(<span class="text-danger">'+val[1]+' @ '+val[2]+'</span>)</p>';
+                });
+            }
+            return cellHTML;
+        }
 	var handleDataTableButtons = function() {
 		<?php if(isset($projectDetails)):?>
 			/* -- Project Affected Person Data Table --- */
@@ -212,9 +220,9 @@ $(document).ready(function(){
 			<?php endif;?>
 			if ($("#tblPapsReport").length) {
 				  dTable['tblPapsReport'] = $('#tblPapsReport').DataTable({
-				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
-                                  searching: false,
-                                  ordering: false,
+				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
+                                  "searching": false,
+                                  "ordering": false,
                                   "paging": true,
                                   "lengthChange": true,
 				  "autoWidth": false,
@@ -241,8 +249,9 @@ $(document).ready(function(){
                           }
 			if ($("#tblPap").length) {
 				  dTable['tblPap'] = $('#tblPap').DataTable({
-				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
+				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
 				  "processing": true,
+                                  order: [[1, 'asc']],
 				  "ajax": {
 					  "url":"getData.php",
 					  "dataType": "JSON",
@@ -332,25 +341,17 @@ $(document).ready(function(){
 		  /*-- End Project Affected Person DataTable--*/
 		  if ($("#tblPapCondensedReport").length) {
 				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
-				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
+				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
 				  "processing": true,
 				  "createdRow": function ( row, data, index ) {
 						$.ajax({
 							"type" : "POST",
 							"url" : "getPapData.php",
-							"data" :{id:data.id, tbl:"crops"},
+							"data" :{id:data.id, tbl:"crops_props"},
+                                                        "dataType":'json',
 							"success" : function(resp){
-								dTable['tblPapCondensedReport'].cell($('td', row).eq(5)).data(resp).draw();
-								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
-							}
-						});
-						$.ajax({
-							"type" : "POST",
-							"url" : "getPapData.php",
-							"data" :{id:data.id, tbl:"improvements"},
-							"success" : function(resp){
-								dTable['tblPapCondensedReport'].cell($('td', row).eq(6)).data(resp).draw();
-								//dTable['tblPapForm'].cell($('td', row).eq(6)).data(resp.improvements).draw();
+								dTable['tblPapCondensedReport'].cell($('td', row).eq(5)).data(generateHTML(resp.crops)).draw();
+								dTable['tblPapCondensedReport'].cell($('td', row).eq(6)).data(generateHTML(resp.props)).draw();
 							}
 						});
 						

@@ -4,20 +4,21 @@ if(isset($_POST['tbl'])){
 	$msg = "";
 	switch($_POST['tbl']){
 		
-		case "crops":
+		case "crops_props":
 			$pap_tree = new PAP_CropTree();
-			$details = $pap_tree->findByPapCropTrees($_POST['id']);
-			if($details){
+			$pap_improvement = new PAP_Improvement();
+			$data['crops'] = $pap_improvement->findByImprovements($_POST['id']);
+			$data['crops'] = $pap_tree->findByPapCropTrees($_POST['id']);
+                        $msg = json_encode($data);
+			/*if($details){
 				foreach($details as $single){
 					$msg .= '
 						<p>'. $single['crop_description'].'(<span class="text-danger">'.$single['quantity'].' @ '.$single['rate']*1 .'</span>)</p>
 						';
 				}
-			}
+			}*/
 		break;
 		case "improvements":
-			$pap_improvement = new PAP_Improvement();
-			$details = $pap_improvement->findByImprovements($_POST['id']);
 			if($details){
 				foreach($details as $single){
 					$msg .= '

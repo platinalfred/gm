@@ -98,7 +98,7 @@
                     <td><?php echo ($i === 0)?$key+1:""; ?></td>
                     <td><?php echo ($i === 0)?$project_pap['pap_ref']:""; ?></td>
                     <td><?php echo ($i === 0)?($project_pap['firstname']. " " . $project_pap['othername'] . " " . $project_pap['lastname']):""; ?></td>
-                    <td><?php echo ($i === 0)?($project_pap['district_name']. " " . $project_pap['subcounty_name'] . " " . $project_pap['parish_name'] . " " . $project_pap['village_name']):""; ?></td>
+                    <td><?php echo ($i === 0)?($project_pap['district_name']. ", " . $project_pap['subcounty_name'] . ", " . $project_pap['parish_name'] . ", " . $project_pap['village_name']):""; ?></td>
                     <td><?php echo ($i === 0)?$project_pap['phone_contact']:""; ?></td>
                     <td><?php echo ($i === 0)?$project_pap['tenure_desc']:""; ?></td>
                     <?php
