@@ -226,6 +226,7 @@ $(document).ready(function(){
                                   "paging": true,
                                   "lengthChange": true,
 				  "autoWidth": false,
+                                   "order": [ 0, 'asc'],
 				  buttons: [
 					{
 					  extend: "copy",
@@ -292,6 +293,7 @@ $(document).ready(function(){
 						  return "DF";
 					  }
 				  }],
+                                   "order": [ 0, 'asc'],
 				  "autoWidth": false,
 				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },

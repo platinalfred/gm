@@ -14,6 +14,7 @@ $(document).ready(function(){
                                   "lengthChange": true,
 				  "autoWidth": false,
                                   fixedHeader: true,
+                                  "order": [ 0, 'asc'],
 				  buttons: [
 					{
 					  extend: "copy",

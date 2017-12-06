@@ -6,7 +6,7 @@ class ProjectAffectedPerson extends Db {
 	protected static $db_fields = array("id","project_id", "pap_ref", "firstname", "othername", "lastname", "phone_contact", "district_id", "subcounty_id", "tenure", "parish_id", "village_id", "way_leave", "rightofway", "total_take", "chainage", "created_by","comment","date_created","modified_by");
 	
 	public function findById($id){
-		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
+		$result = $this->getrec(self::$table_name, "id=".$id, "`pap_ref` ASC", "");
 		return !empty($result) ? $result:false;
 	}
 	
@@ -19,7 +19,7 @@ class ProjectAffectedPerson extends Db {
 		
 		$fields = "`tbl_paps`.`id`, `project_id`, `pap_ref`,`comment`, `photo_url` `profile_pic`, `firstname`, `othername`, `lastname`, `phone_contact`, `district_id`, `district_name`, `county_id`, `subcounty_id`, `parish_id`, `village_id`, `village_name`,`subcounty_name`,`parish_name`, `way_leave`, `tenure`,  `tenure`.`title` `tenure_desc`, `rightofway`, `total_take`, `chainage`, `crop_tree_cnt`, `land_interest`,`rate_per_acre`,`diminution_rate`, `improvement_cnt`";
 		
-		$result_array = $this->getfarray($tables, $fields, $where, "", "");
+		$result_array = $this->getfarray($tables, $fields, $where, "`pap_ref` ASC", "");
 		return !empty($result_array) ? $result_array : false;
 	}
 	public function findAll($where = 1){
@@ -31,12 +31,12 @@ class ProjectAffectedPerson extends Db {
 		
 		$fields = "`tbl_paps`.`id`,`tbl_paps`.`id` as pap_d, `project_id`, `pap_ref`, `photo_url` `profile_pic`, `firstname`, `othername`, `lastname`, `phone_contact`, `district_id`, `district_name`, `county_id`, `subcounty_id`, `subcounty_name`, `tenure`, `tenure`.`title` `tenure_desc`, `comment`, `parish_id`, `parish_name` ,`village_id`, `village_name`, `way_leave`, `rightofway`, `total_take`, `chainage`, `crop_tree_cnt`, `crop_tree_sum`,`land_interest`,`rate_per_acre`,`diminution_rate`, `improvement_cnt`, `improvement_sum`";
 		
-		$result_array = $this->getfarray($tables, $fields, $where, "", "");
+		$result_array = $this->getfarray($tables, $fields, $where, "`pap_ref` ASC", "");
 		return !empty($result_array) ? $result_array : false;
 	}
 	public function getSelectList(){
 		$fields = "`id`, CONCAT(`lastname`,' ',`firstname`,' ',`othername`) `client_names`";
-		$result_array = $this->getfarray(self::$table_name, $fields, "", "", "");
+		$result_array = $this->getfarray(self::$table_name, $fields, "`pap_ref` ASC", "", "");
 		return !empty($result_array) ? $result_array : false;
 	}
 	public function addPap($data){
