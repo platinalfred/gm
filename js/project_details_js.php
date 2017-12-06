@@ -622,7 +622,7 @@ function saveData(form,event){
 							viewModel.village(null);
 						}
 						if(typeof dTable[frmId] != 'undefined')
-							dTable[frmId].ajax.reload();
+							dTable[frmId].ajax.reload(null,false);
 					}, 2000);
 				}else{
 					
