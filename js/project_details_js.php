@@ -251,6 +251,7 @@ $(document).ready(function(){
 				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
 				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
 				  "processing": true,
+				 // "serverSide": true,
 				  "createdRow": function ( row, data, index ) {
 					var disp = {crops:9, improvement:10};
 					<?php if( ($projectDetails['project_category_unit'] == 1) ):?>
@@ -357,7 +358,7 @@ $(document).ready(function(){
 					  className: "btn-sm btn-white"
 					},
 				  ],
-				  responsive: true,
+				  responsive: false,
 				});
 				//$("#datatable-buttons").DataTable();
 			}

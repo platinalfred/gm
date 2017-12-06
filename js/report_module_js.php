@@ -13,6 +13,7 @@ $(document).ready(function(){
                                   "paging": true,
                                   "lengthChange": true,
 				  "autoWidth": false,
+				  "lengthMenu": [[10, 25, 50, -1], [10, 50,  100, "All"]],
 				  buttons: [
 					{
 					  extend: "copy",
@@ -32,7 +33,7 @@ $(document).ready(function(){
 					},
 				  ],
 				  responsive: false
-                              });
+			  });
 			}
 	};
 	TableManageButtons = function() {

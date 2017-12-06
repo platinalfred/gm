@@ -151,7 +151,7 @@ if (!$projectDetails) {
 										<tr>
 											<th>PAP Ref</th>
 											<th>Names</th>
-											<th>Location</th>
+											<th>District, Subcounty, Parish, Village</th>
 											<th>Telephone</th>
 											<th>Chainage</th>
 											<?php 

@@ -7,7 +7,6 @@
     <table class="table table-bordered table-striped widerTable" id="tblPapsReport" width="100%">
         <thead>
             <tr>
-                <th>#</th>
                 <th>PAP Ref</th>
                 <th>Names</th>
                 <th>DISTRICT, SUB COUNTY, PARISH, VILLAGE</th>
@@ -90,12 +89,12 @@
                 if($properties_count !== FALSE){
                     $properties_count = count($pap_properties);
                 }
+
                 //max count of properties or trees for the pap
                 $max_crop_props_cnt = ($crops_count === $properties_count)?$crops_count:($crops_count > $properties_count?$crops_count:$properties_count);
                 for($i = 0; $i<$max_crop_props_cnt; $i++):
                 ?>
                 <tr>
-                    <td><?php echo ($i === 0)?$key+1:""; ?></td>
                     <td><?php echo ($i === 0)?$project_pap['pap_ref']:""; ?></td>
                     <td><?php echo ($i === 0)?($project_pap['firstname']. " " . $project_pap['othername'] . " " . $project_pap['lastname']):""; ?></td>
                     <td><?php echo ($i === 0)?($project_pap['district_name']. ", " . $project_pap['subcounty_name'] . ", " . $project_pap['parish_name'] . ", " . $project_pap['village_name']):""; ?></td>
@@ -177,7 +176,7 @@
         <tfoot>
             <tr>
                 <th>Total</th>
-                <th colspan="5">&nbsp;</th>
+                <th colspan="4">&nbsp;</th>
                 <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
                     <th><?php echo number_format($wl_acreage)?></th>
                 <?php endif; ?>
