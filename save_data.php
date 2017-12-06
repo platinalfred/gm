@@ -264,8 +264,7 @@ if(isset($_POST['tbl'])){
 			$response['message'][] = "PAP details could not be saved. Please try again or contact admin for assistance!";
 			$pap_id = "";
 			if($data['pap_d'] != ""){
-				$pap_id = $data['pap_d'];
-				$data['id'] = $data['pap_d'];
+				$data['id'] = $pap_id = $data['pap_d'];
                                 unset($data['pap_d']);
 				if($pap_obj->updatePap($data)){
 					$add_multiple_data = $update_multiple_data = array();
@@ -333,7 +332,7 @@ if(isset($_POST['tbl'])){
 				}
 			}
 			else{
-				unset($data['pap_d'],$data['id']);
+				unset($data['pap_d']);
 				$pap_id = $pap_obj->addPap($data);
 				if(is_numeric($pap_id)){
 					//we first deal with the plants/crops
