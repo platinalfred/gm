@@ -21,7 +21,7 @@ class Report extends Db {
 		
 		$tables = "tbl_paps LEFT JOIN `tenure` ON `tenure` = `tenure`.`id` JOIN `tbl_district` ON `district_id` = `tbl_district`.`id` LEFT JOIN $improvements_query ON `tbl_paps`.`id` = `improvements`.`pap_id` LEFT JOIN $crop_trees_query ON `tbl_paps`.`id` = `crop_trees`.`pap_id` LEFT JOIN `tbl_subcounty` ON `subcounty_id` = `tbl_subcounty`.`id` LEFT JOIN `tbl_parish` ON `parish_id` = `tbl_parish`.`id` LEFT JOIN `tbl_village` ON `village_id` = `tbl_village`.`id`";
 		
-		$fields = "`tbl_paps`.`id`, `project_id`, `pap_ref`, `firstname`, `othername`, `lastname`, `phone_contact`, `tenure`.`title` `tenure_desc`, `district_name`, `subcounty_name`, `parish_name`, `village_name`, `way_leave`, `rightofway`, `total_take`, `diminution_rate`, `rate_per_acre`, `land_interest`, `chainage`, `croptype`, `cropdescription`, `crop_qty`, `crop_rate`, `propertytype`, `propertydescription`, `improvement_qty`, `improvement_rate`";
+		$fields = "`tbl_paps`.`id`, `project_id`, `pap_ref`, `firstname`, `othername`, `lastname`, `phone_contact`, `tenure`.`title` `tenure_desc`, `district_name`, `subcounty_name`, `parish_name`, `village_name`, `way_leave`, `rightofway`, `total_take`, `diminution_rate`, `rate_per_acre`, `land_interest`, `chainage`, `croptype`, `cropdescription`, `crop_qty`, `crop_rate`, `propertytype`, `propertydescription`, `comment`, `improvement_qty`, `improvement_rate`";
 		
 		$result_array = $this->getfarray($tables, $fields, $where, "", "");
 		return !empty($result_array) ? $result_array : false;

@@ -13,6 +13,7 @@ $(document).ready(function(){
                                   "paging": true,
                                   "lengthChange": true,
 				  "autoWidth": false,
+                                  fixedHeader: true,
 				  buttons: [
 					{
 					  extend: "copy",

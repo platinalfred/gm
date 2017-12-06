@@ -7,35 +7,42 @@
     <table class="table table-bordered table-striped widerTable" id="tblPapsReport" width="100%">
         <thead>
             <tr>
-                <th>#</th>
-                <th>PAP Ref</th>
-                <th>Names</th>
-                <th>DISTRICT, SUB COUNTY, PARISH, VILLAGE</th>
-                <th>Telephone</th>
-                <th>Land Tenure</th>
+                <th>PAP REF</th>
+                <th>PAP NAME</th>
+                <th>TELEPHONE</th>
+                <th>DISTRICT, SUBCOUNTY, PARISH, VILLAGE</th>
+                <th>CHAINAGE</th>
+                <th>IMPROVEMENT</th>
+                <th>QTY/AREA/METRE RUN</th>
+                <th>RATE(U.Shs)</th>
+                <th>IMPROVEMENT VALUE(U.Shs)</th>
+                <th>CROPS/TREES</th>
+                <th>QTY</th>
+                <th>RATE(U.Shs)</th>
+                <th>CROP/TREE VALUE(U.Shs)</th>
+                <th>LAND TENURE</th>
                 <?php
                 //Way Leave or both ROW and WL
                 if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4):
                     ?>
-                    <th>Way Leave</th>
+                    <th>WAY LEAVE</th>
                 <?php endif; ?>
                 <?php
                 //ROW or Both ROW and WL
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4):
                     ?>
-                    <th>Right of Way</th>
+                    <th>RIGHT OF WAY</th>
                 <?php endif; ?>
                 <?php
                 //Total Take/Size Project
                 if ($projectDetails['project_category_unit'] == 5):
                     ?>
-                    <th>Total Take</th>
+                    <th>TOTAL SIZE</th>
                 <?php endif; ?>
-                <th>Chainage</th>
                 <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                     ?>
-                    <th>Rate per Acre</th>	
-                    <th>Land Interest(%)</th>
+                    <th>RATE PER ACRE(U.Shs)</th>	
+                    <th>LAND INTEREST(%)</th>
                     <?php
                 endif;
                 if ($projectDetails['project_category_unit'] == 4):
@@ -58,19 +65,14 @@
 //Total land value, applies to ROW, (Both ROW and WL) and Total Take/Size
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                     ?>
-                    <th>Land Value(U.shs)</th>
+                    <th>LAND VALUE (U.Shs)</th>
 <?php endif; ?>
-                <th>Property</th>
-                <th>Dimens</th>
-                <th>Rate</th>
-                <th>Value</th>
-                <th>Crop</th>
-                <th>Qty</th>
-                <th>Rate</th>
-                <th>Value</th>
-                <th>Sub Total</th>
-                <th>DA <?php echo $projectDetails['disturbance_allowance']; ?>%(UGX)</th>
-                <th>TC</th>
+                <th>IMPROVEMENT VALUE(U.Shs)</th>
+                <th>CROP/TREE VALUE(U.Shs)</th>
+                <th>SUB. TOTAL(U.Shs)</th>
+                <th>DISTURBANCE ALLOWANCE (<?php echo $projectDetails['disturbance_allowance']; ?>%)(U.Shs)</th>
+                <th>TOTAL COMPENSATION(U.Shs)</th>
+                <th>REMARKS</th>
             </tr>
         </thead>
         <tbody>
@@ -95,11 +97,19 @@
                 for($i = 0; $i<$max_crop_props_cnt; $i++):
                 ?>
                 <tr>
-                    <td><?php echo ($i === 0)?$key+1:""; ?></td>
                     <td><?php echo ($i === 0)?$project_pap['pap_ref']:""; ?></td>
                     <td><?php echo ($i === 0)?($project_pap['firstname']. " " . $project_pap['othername'] . " " . $project_pap['lastname']):""; ?></td>
-                    <td><?php echo ($i === 0)?($project_pap['district_name']. ", " . $project_pap['subcounty_name'] . ", " . $project_pap['parish_name'] . ", " . $project_pap['village_name']):""; ?></td>
                     <td><?php echo ($i === 0)?$project_pap['phone_contact']:""; ?></td>
+                    <td><?php echo ($i === 0)?($project_pap['district_name']. ", " . $project_pap['subcounty_name'] . ", " . $project_pap['parish_name'] . ", " . $project_pap['village_name']):""; ?></td>
+                    <td><?php if($i === 0){echo $project_pap['chainage'];} ?></td>
+                    <td><?php if(isset($pap_properties[$i])){echo $pap_properties[$i]['propertytype']; ?> <?php echo $pap_properties[$i]['propertydescription'];} ?></td>
+                    <td><?php if(isset($pap_properties[$i])){echo $pap_properties[$i]['quantity'];} ?></td>
+                    <td><?php if(isset($pap_properties[$i])){echo number_format((int)$pap_properties[$i]['old_rate']);} ?></td>
+                    <td><?php if(isset($pap_properties[$i])){ $property_value = $pap_properties[$i]['old_rate'] * $pap_properties[$i]['quantity'];echo number_format($property_value);}?></td>
+                    <td><?php if(isset($pap_crops[$i])){ echo $pap_crops[$i]['croptype']; ?> <?php echo $pap_crops[$i]['cropdescription']; }?></td>
+                    <td><?php if(isset($pap_crops[$i])){ echo $pap_crops[$i]['quantity']; }?></td>
+                    <td><?php if(isset($pap_crops[$i])){ echo number_format((int)$pap_crops[$i]['old_rate']); }?></td>
+                    <td><?php if(isset($pap_crops[$i])){ $crop_value = $pap_crops[$i]['old_rate'] * $pap_crops[$i]['quantity']; echo number_format($crop_value); }?></td>
                     <td><?php echo ($i === 0)?$project_pap['tenure_desc']:""; ?></td>
                     <?php
                     //Way Leave or both ROW and WL
@@ -119,7 +129,6 @@
                         ?>
                         <td><?php if($i === 0){ echo $project_pap['total_take']*1;  $total_take_acreage += $project_pap['total_take']; } ?></td>
                     <?php endif; ?>
-                    <td><?php if($i === 0){echo $project_pap['chainage'];} ?></td>
                     <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                         ?>
                         <td><?php echo ($i === 0)?$project_pap['rate_per_acre']:""; ?></td>	
@@ -153,17 +162,12 @@
                         echo number_format($total_land_value); $project_land_value += $total_land_value;}
                         ?></td>
                     <?php endif; ?>
-                    <td><?php if(isset($pap_properties[$i])){echo $pap_properties[$i]['propertytype']; ?> <?php echo $pap_properties[$i]['propertydescription'];} ?></td>
-                    <td><?php if(isset($pap_properties[$i])){echo $pap_properties[$i]['quantity'];} ?></td>
-                    <td><?php if(isset($pap_properties[$i])){echo number_format((int)$pap_properties[$i]['old_rate']);} ?></td>
-                    <td><?php if(isset($pap_properties[$i])){ $property_value = $pap_properties[$i]['old_rate'] * $pap_properties[$i]['quantity'];echo number_format($property_value);}?></td>
-                    <td><?php if(isset($pap_crops[$i])){ echo $pap_crops[$i]['croptype']; ?> <?php echo $pap_crops[$i]['cropdescription']; }?></td>
-                    <td><?php if(isset($pap_crops[$i])){ echo $pap_crops[$i]['quantity']; }?></td>
-                    <td><?php if(isset($pap_crops[$i])){ echo number_format((int)$pap_crops[$i]['old_rate']); }?></td>
-                    <td><?php if(isset($pap_crops[$i])){ $crop_value = $pap_crops[$i]['old_rate'] * $pap_crops[$i]['quantity']; echo number_format($crop_value); }?></td>
+                    <td><?php if($i === 0){echo number_format($project_pap['improvement_sum']);} ?></td>
+                    <td><?php if($i === 0){; echo number_format($project_pap['crop_tree_sum']);} ?></td>
                     <td><?php if($i === 0){$sub_total = $total_land_value + $project_pap['crop_tree_sum'] + $project_pap['improvement_sum']; echo number_format($sub_total);} ?></td>
                     <td><?php if($i === 0){$disturbance_allowance = $sub_total * ($projectDetails['disturbance_allowance'] / 100); echo number_format($disturbance_allowance);} ?></td>
                     <td><?php if($i === 0){$total_compensation = $sub_total + $disturbance_allowance; echo number_format($total_compensation);} ?></td>
+                    <td><?php if($i === 0){echo $project_pap['comment'];} ?></td>
                     <?php //total sum for the properties and crops
                     if($i === 0){
                          $total_crops_value += $project_pap['crop_tree_sum'];
@@ -177,7 +181,16 @@
         <tfoot>
             <tr>
                 <th>Total</th>
-                <th colspan="5">&nbsp;</th>
+                <th colspan="4">&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th><?php echo number_format($total_properties_value); ?></th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th><?php echo number_format($total_crops_value)?></th>
+                <td>&nbsp;</td>
                 <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
                     <th><?php echo number_format($wl_acreage)?></th>
                 <?php endif; ?>
@@ -187,7 +200,6 @@
                 <?php if ($projectDetails['project_category_unit'] == 5): ?>
                     <th><?php echo number_format($total_take_acreage)?></th>
                     <?php endif; ?>
-                    <td>&nbsp;</td>
                 <?php 
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                     ?>
@@ -216,17 +228,12 @@
                 ?>	
                     <th><?php echo number_format($project_land_value); ?></th>
                 <?php endif; ?>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
                 <th><?php echo number_format($total_properties_value); ?></th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
-                <th>&nbsp;</th>
                 <th><?php echo number_format($total_crops_value)?></th>
                 <th><?php $gsubTotal = $project_land_value+$total_crops_value+$total_properties_value; echo number_format($gsubTotal)?></th>
                 <th><?php $diminutionVal = $gsubTotal * ($projectDetails['disturbance_allowance'] / 100); echo number_format( $diminutionVal )?></th>
                 <th><?php echo number_format($gsubTotal+$diminutionVal)?></th>
+                <th>&nbsp;</th>
             </tr>
         </tfoot>
     </table>
