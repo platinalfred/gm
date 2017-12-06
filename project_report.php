@@ -92,6 +92,7 @@
                 if($properties_count !== FALSE){
                     $properties_count = count($pap_properties);
                 }
+
                 //max count of properties or trees for the pap
                 $max_crop_props_cnt = ($crops_count === $properties_count)?$crops_count:($crops_count > $properties_count?$crops_count:$properties_count);
                 for($i = 0; $i<$max_crop_props_cnt; $i++):
