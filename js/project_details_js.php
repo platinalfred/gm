@@ -190,7 +190,7 @@ $(document).ready(function(){
             cellHTML = "";
             if(data_array){
                 $.each(data_array, function(key, val){
-                    cellHTML += '<p>'+val[0]+'(<span class="text-danger">'+val[1]+' @ '+val[2]*1+'</span>)</p>';
+                    cellHTML += '<p>'+val[0]+' (<span class="text-danger">'+val[1]+' @'+val[2]*1+'</span>)</p>';
                 });
             }
             return cellHTML;
