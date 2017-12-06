@@ -13,14 +13,15 @@ class PAP_Improvement extends Db {
 		$result_array = $this->getarray(self::$table_name, $where, "", "");
 		return !empty($result_array) ? $result_array : false;
 	}
-	public function findByImprovements($id){
+	public function findByImprovements($where = ""){
 		//tt = tbl_property_type
 		// cd tbl_property_description
 		//pt = tbl_pap_improvement
-		//tcd = tbl_property_types_description
-		$fields = "CONCAT(`tbl_property_type`.`title`,`tbl_property_description`.`title`) as improvement_description, `tbl_pap_improvement`.`quantity`, `tbl_pap_improvement`.`rate`";
+                //tcd = tbl_property_types_description
+		//"tbl_pap_improvement.pap_id=".$id
+		$fields = "CONCAT(`tbl_property_type`.`title`,`tbl_property_description`.`title`) as improvement_description, `tbl_pap_improvement`.`quantity`, `tbl_pap_improvement`.`rate`, `pap_id`";
 		$table_name = "tbl_pap_improvement JOIN tbl_district_property_rate ON tbl_pap_improvement.district_property_rate_id = tbl_district_property_rate.id JOIN tbl_property_types_description ON tbl_district_property_rate.propertytypedescription_id = tbl_property_types_description.id JOIN tbl_property_description ON tbl_property_types_description.property_description_id = tbl_property_description.id JOIN tbl_property_type ON tbl_property_types_description.property_type_id = tbl_property_type.id";
-		$result_array = $this->getfarray($table_name, $fields, "tbl_pap_improvement.pap_id=".$id, "", "");
+		$result_array = $this->getfarray($table_name, $fields, $where, "", "");
 		return !empty($result_array) ? $result_array : false;
 	}
 	public function findPapImprovements($where = ""){

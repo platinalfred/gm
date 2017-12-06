@@ -9,7 +9,7 @@
 						<legend>PAP Details</legend>
 						<div class="col-lg-3">
 							<input type="hidden" name="tbl" value="tblPap">
-							<input type="hidden" name="id" >
+							<input type="hidden" name="pap_d" >
 							<input type="hidden" name="project_id" value="<?php echo $_GET['id']; ?>" />
 							<div class="form-group" >
 								<label class="control-label">Attach PAP Photo</label>

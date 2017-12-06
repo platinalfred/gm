@@ -10,7 +10,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">Crop/Tree</label>
 							<div class="col-md-9">
-								<select class="select2able" name="crop_description_rate_id" data-bind="options: $root.district_crop_rates, optionsText: function(item){ return item.croptype + ' - ' + item.cropdescription;}, optionsCaption: 'Select crop...', optionsAfterRender: $root.setOptionValue('id'), value:crop_rate_description" data-msg-required="An option must be selected" required></select>
+								<select class="select2able" name="crop_description_rate_id" data-bind="options: $root.filteredDistrictCropRates(), optionsText: function(item){ return item.croptype + ' - ' + item.cropdescription;}, optionsCaption: 'Select crop...', optionsAfterRender: $root.setOptionValue('id'), value:crop_rate_description" data-msg-required="An option must be selected" required></select>
 							</div>
 						</div>
 						<div class="form-group" >

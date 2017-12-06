@@ -62,10 +62,12 @@ var ViewModel = function() {
 			$(event.target).addClass('hideit').prev().removeClass('hideit').text(serverPapPhoto.description);
 		};
 		<?php else:?>
-		//self.countiesList = ko.observableArray(<?php //json_encode($counties)?>);	
 		self.subcountiesList = ko.observableArray(<?=json_encode($subcounties)?>);	
 		self.parishesList = ko.observableArray(<?=json_encode($parishes)?>);
 		self.villagesList = ko.observableArray(<?=json_encode($villages)?>);
+                //these are from the getServerData
+		self.pap_improvements = ko.observableArray();
+		self.pap_crops = ko.observableArray();
 
 		//useful variables for the form
 		//self.county = ko.observable();
@@ -73,15 +75,6 @@ var ViewModel = function() {
 		self.parish = ko.observable();
 		self.village = ko.observable();
 		
-		/* self.filteredCountiesList = ko.computed(function() {
-			if(self.district()){
-				return ko.utils.arrayFilter(self.countiesList(), function(county) {
-						
-					return (parseInt(self.district().id)==parseInt(county.district));
-					
-				});
-			}
-		});	 */
 		self.filteredSCountiesList = ko.computed(function() {
 			if(self.district()){
 				return ko.utils.arrayFilter(self.subcountiesList(), function(scounty) {
@@ -103,6 +96,7 @@ var ViewModel = function() {
 				});
 			}
 		});
+		<?php endif; ?>
 		self.filteredDistrictCropRates = ko.computed(function() {
 			if(self.district()){
 				return ko.utils.arrayFilter(self.district_crop_rates(), function(district_crop_rate) {
@@ -117,7 +111,6 @@ var ViewModel = function() {
 				});
 			}
 		});
-		<?php endif; ?>
 		
 		
 		//operations
@@ -160,8 +153,10 @@ var ViewModel = function() {
 					self.district_crop_rates(response.district_crop_rates);
 					<?php if(isset($_GET['pap_id'])):?> 
 					<?php else:?>
-					self.available_districts(response.available_districts);
-					viewModel.available_districts.valueHasMutated();
+                                            self.pap_crops(response.pap_crops);
+                                            self.pap_improvements(response.pap_improvements);
+                                            self.available_districts(response.available_districts);
+                                            viewModel.available_districts.valueHasMutated();
 					<?php endif;?> 
 				}
 			})
@@ -252,34 +247,6 @@ $(document).ready(function(){
 				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
 				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
 				  "processing": true,
-				 // "serverSide": true,
-				  "createdRow": function ( row, data, index ) {
-					var disp = {crops:9, improvement:10};
-					<?php if( ($projectDetails['project_category_unit'] == 1) ):?>
-						disp = {crops:9, improvement:10};
-					<?php endif;?>
-					<?php if( ($projectDetails['project_category_unit'] == 2) ):?>
-						disp = {crops:7, improvement:8};
-					<?php endif;?>
-					<?php if( ($projectDetails['project_category_unit'] == 4) ):?>
-						disp = {crops:11, improvement:12};
-					<?php endif;?>
-					<?php if( ($projectDetails['project_category_unit'] == 5) ):?>						
-						disp = {crops:9, improvement:10};
-
-					<?php endif;?>
-						$.ajax({
-							"type" : "POST",
-							"url" : "getPapData.php",
-							"data" :{id:data.id, tbl:"crops_props"},
-                                                        "dataType":'json',
-							"success" : function(resp){
-								dTable['tblPapCondensedReport'].cell($('td', row).eq(disp.crops)).data(generateHTML(resp.crops)).draw();
-								dTable['tblPapCondensedReport'].cell($('td', row).eq(disp.improvement)).data(generateHTML(resp.props)).draw();
-							}
-						});
-						
-					},
 					"ajax": {
 					  "url":"getData.php",
 					  "dataType": "JSON",
@@ -332,8 +299,22 @@ $(document).ready(function(){
 								}
 							endif; */  ?>
 						{data: 'tenure_desc'},
-						{data: 'id'},
-						{data: 'id'},
+						{data: 'id', render: function ( data, type, full, meta ) {
+                                                        pap_crops = ko.utils.arrayFilter(viewModel.pap_crops(), function(pap_crop){
+                                                            if(pap_crop.pap_id == data)
+                                                            return true;
+                                                        });
+                                                        return generateHTML(pap_crops);
+                                                    }
+                                                },
+						{data: 'id', render: function ( data, type, full, meta ) {
+                                                        pap_improvements = ko.utils.arrayFilter(viewModel.pap_improvements(), function(pap_improvement){
+                                                            if(pap_improvement.pap_id == data)
+                                                            return true;
+                                                        });
+                                                        return generateHTML(pap_improvements);
+                                                    }
+                                                },
 						{data: 'comment'},
 						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papModal"   class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>'}}
 						
@@ -405,7 +386,7 @@ $(document).ready(function(){
 				  
 					$(api.column(5).footer()).html( curr_format(pageTotal) + ' (' + curr_format(total) + ')' );
 			  },
-			  columns:[ { data: 'id'},
+			  columns:[ { data: 'id', render: function( data, type, full, meta ) {return meta.row+1;} },
 				  { data: 'croptype' },
 					{ data: 'cropdescription'},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));}},
@@ -479,7 +460,7 @@ $(document).ready(function(){
 				  });
 					$(api.column(5).footer()).html( curr_format(Math.round(pageTotal) + ' (' + total + ')') );
 			  },
-			  columns:[ { data: 'id'},
+			  columns:[ { data: 'id', render: function( data, type, full, meta ) {return meta.row+1;} },
 				  { data: 'propertytype' },
 					{ data: 'propertydescription'},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));} },
@@ -611,17 +592,17 @@ function saveData(form,event){
 							frm.reset();
 						}
 						if(frmId == 'tblProjectCoverage'){
-							//location.reload(true);
 							viewModel.getServerData();
 						}
 						if(frmId == 'tblPapPhotoForm'){
 							viewModel.serverPapPhotos(response.pap_photos);
 						}
-						if(frmId == 'tblPapForm'){
+						if(frmId == 'tblPapCondensedReportForm'){
 							viewModel.district(null);
 							viewModel.scounty(null);
 							viewModel.parish(null);
 							viewModel.village(null);
+							viewModel.getServerData();
 						}
 						if(typeof dTable[frmId] != 'undefined')
 							dTable[frmId].ajax.reload(null,false);
@@ -694,7 +675,7 @@ $('table tbody').on('click', '.delete_me', function () {
 		}
 	
 		 $.ajax({ // create an AJAX call...
-			url: "delete.php?id="+data.id+"&tbl="+$(tbl).attr("id"), // the file to call
+			url: "delete.php?id="+data.pap_d+"&tbl="+$(tbl).attr("id"), // the file to call
 			success: function(response) { // on success..
 				showStatusMessage(response, "success");
 				setTimeout(function(){
@@ -710,7 +691,7 @@ $("#tblPapImprovementForm").validate({submitHandler: saveData});
 $("#tblPapPhotoForm").validate({submitHandler: saveData});
 $("#tblPapCropForm").validate({submitHandler: saveData});
 $("#tblLandPapForm").validate({submitHandler: saveData});
-$("#tblPapForm").validate({
+$("#tblPapCondensedReportForm").validate({
 		rules: {
 			phone_contact: {
 				phoneUg: true

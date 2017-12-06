@@ -13,14 +13,15 @@ class PAP_CropTree extends Db {
 		$result_array = $this->getarray(self::$table_name, $where, "", "");
 		return !empty($result_array) ? $result_array : false;
 	}
-	public function findByPapCropTrees($id){
+	public function findByPapCropTrees($where = 1){
 		//tt = tbl_tree_or_crop_types
 		// cd tbl_crop_description
 		//pt = tbl_pap_crop_tree
-		//tcd = tree_crop_types_description
-		$fields = "CONCAT(`tbl_tree_or_crop_types`.`title`,`tbl_crop_description`.`title`) as crop_description, `tbl_pap_crop_tree`.`quantity`, `tbl_pap_crop_tree`.`rate`";
+                //tcd = tree_crop_types_description
+		//"tbl_pap_crop_tree.pap_id=".$id
+		$fields = "CONCAT(`tbl_tree_or_crop_types`.`title`,`tbl_crop_description`.`title`) as crop_description, `tbl_pap_crop_tree`.`quantity`, `tbl_pap_crop_tree`.`rate`, `pap_id`";
 		$table_name = "tbl_pap_crop_tree JOIN tbl_district_croptree_rate ON tbl_pap_crop_tree.crop_description_rate_id = tbl_district_croptree_rate.id JOIN tree_crop_types_description ON tbl_district_croptree_rate.croptree_id = tree_crop_types_description.id JOIN tbl_crop_description ON tree_crop_types_description.crop_description_id = tbl_crop_description.id JOIN tbl_tree_or_crop_types ON tree_crop_types_description.tree_crop_id = tbl_tree_or_crop_types.id";
-		$result_array = $this->getfarray($table_name, $fields, "tbl_pap_crop_tree.pap_id=".$id, "", "");
+		$result_array = $this->getfarray($table_name, $fields, $where, "", "");
 		return !empty($result_array) ? $result_array : false;
 	}
 	public function findPapCropTrees($where = 1){

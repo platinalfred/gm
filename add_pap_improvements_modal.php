@@ -10,7 +10,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-2">Property</label>
 							<div class="col-md-10">
-								<select class="select2able" name="district_property_rate_id" data-bind="options: $root.district_property_rates, optionsText: function(item){ return item.propertytype + ' - ' + item.propertydescription;}, optionsCaption: 'Select improvement...', optionsAfterRender: $root.setOptionValue('id'), value:property_rate_description" data-msg-required="An option must be selected" required></select>
+								<select class="select2able" name="district_property_rate_id" data-bind="options: $root.filteredDistrictPropertyRates(), optionsText: function(item){ return item.propertytype + ' - ' + item.propertydescription;}, optionsCaption: 'Select improvement...', optionsAfterRender: $root.setOptionValue('id'), value:property_rate_description" data-msg-required="An option must be selected" required></select>
 							</div>
 						</div>
 						<div class="form-group" >
