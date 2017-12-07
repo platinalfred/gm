@@ -36,8 +36,15 @@ if(isset($_POST['tbl'])){
 			//geography
 			$project_coverage_obj = new ProjectCoverage();
 			$district_property_rate_obj = new DistrictPropertyRate();
-			$district_crop_rate_obj = new DistrictCropRate();
+			$district_crop_rate_obj = new DistrictCropRate();case "crops_props":
+			$pap_tree = new PAP_CropTree();
+			$pap_improvement = new PAP_Improvement();
+                        
+			$output['pap_improvements'] = $pap_improvement->findByImprovements("`pap_id` IN (SELECT `id` FROM `tbl_paps` WHERE `project_id` =".$_POST['project_id'].")");
+			$output['pap_crops'] = $pap_tree->findByPapCropTrees("`pap_id` IN (SELECT `id` FROM `tbl_paps` WHERE `project_id` =".$_POST['project_id'].")");
 			
+			$output['available_districts'] = $project_coverage_obj->findAvailableDistricts($_POST['project_id']);
+			$output['available_districts'] = $project_coverage_obj->findAvailableDistricts($_POST['project_id']);
 			$output['available_districts'] = $project_coverage_obj->findAvailableDistricts($_POST['project_id']);
 			$output['district_property_rates'] = $district_property_rate_obj->findDistrictPropertyRates("`district_id` IN (SELECT `district_id` FROM `tbl_project_coverage` WHERE `project_id` = ".$_POST['project_id'].")");
 			$output['district_crop_rates'] = $district_crop_rate_obj->findDistrictCropRates("`district_id` IN (SELECT `district_id` FROM `tbl_project_coverage` WHERE `project_id` = ".$_POST['project_id'].")");

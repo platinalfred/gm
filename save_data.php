@@ -382,7 +382,7 @@ if(isset($_POST['tbl'])){
 				$data['date_created'] = time();
 				$data['created_by'] = $data['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
 				if($pap_crop_tree_obj->addPapCropTree($data)){
-					$response['message'] = true;
+					$response['success'] = true;
 				}
 			}
 			$output = json_encode($response);

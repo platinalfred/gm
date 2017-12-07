@@ -15,6 +15,7 @@ $(document).ready(function(){
 				  "autoWidth": false,
 				  "lengthMenu": [[10, 25, 50, -1], [10, 50,  100, "All"]],
 				  fixedHeader: true,
+                                  "order": [ 0, 'asc'],
 				  buttons: [
 					{
 					  extend: "copy",
