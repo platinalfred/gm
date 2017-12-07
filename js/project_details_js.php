@@ -204,7 +204,7 @@ $(document).ready(function(){
 		<?php if(isset($projectDetails)):?>
 			/* -- Project Affected Person Data Table --- */
 			//we have to set column indices based on the type of the project
-			var cols = [7,12,13]; //the index for columns where  the totals appear
+			/* var cols = [7,12,13]; //the index for columns where  the totals appear
 			var last_col = 15; //the final index table column
 			<?php if( ($projectDetails['project_category_unit'] == 1) ):?>
 				cols = [7,10,12,13]; last_col = 14;
@@ -217,8 +217,8 @@ $(document).ready(function(){
 			<?php endif;?>
 			<?php if( ($projectDetails['project_category_unit'] == 5) ):?>
 				cols = [7,10,12,13]; last_col = 14;
-			<?php endif;?>
-			if ($("#tblPapsReport").length) {
+			<?php endif;?> */
+			/* if ($("#tblPapsReport").length) {
 				  dTable['tblPapsReport'] = $('#tblPapsReport').DataTable({
 				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
                                   "searching": false,
@@ -244,13 +244,15 @@ $(document).ready(function(){
 					  className: "btn-sm btn-white"
 					},
 				  ],
+				  
 				  responsive: false
                               });
-			}
+			} */
 		 if ($("#tblPapCondensedReport").length) {
 				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
 				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
 				  "processing": true,
+					"order": [[0, 'desc']],
 				 // "serverSide": true,
 				  "createdRow": function ( row, data, index ) {
 					var disp = {crops:9, improvement:10};
@@ -287,13 +289,8 @@ $(document).ready(function(){
 							d.tbl = 'project_paps_reports';
 							d.project_id = <?php echo $_GET['id']; ?>;
 						}
-				  },"columnDefs": [ {
-					  "target":5,
-					  "render":function( data, type, full, meta ){
-						  return "DF";
-					  }
-				  }],
-				  "autoWidth": false,
+				  },"columnDefs": [ ],
+				  "autoWidth": true,
 				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
@@ -358,7 +355,7 @@ $(document).ready(function(){
 					  className: "btn-sm btn-white"
 					},
 				  ],
-				  responsive: false,
+				  responsive: true,
 				});
 				//$("#datatable-buttons").DataTable();
 			}
@@ -615,7 +612,7 @@ function saveData(form,event){
 						if(frmId == 'tblPapPhotoForm'){
 							viewModel.serverPapPhotos(response.pap_photos);
 						}
-						if(frmId == 'tblPapForm'){
+						if(frmId == 'tblPapCondensedReportForm'){
 							viewModel.district(null);
 							viewModel.scounty(null);
 							viewModel.parish(null);
@@ -635,17 +632,21 @@ function saveData(form,event){
 		return false;
 	//});
 }
-//clicking the update icon
+//0772307940 clicking the update icon
 $('table tbody').on( 'click', '.edit_me', function () {
 	var row = $(this).closest("tr");
 	var tbl = $(row).parent().parent();
 	tbl_id = $(tbl).attr("id");
 	var dt = dTable[tbl_id];
 	var data = dt.row(row).data();
+	var rowId = data[0];
 	if(typeof(data)=='undefined'){
 		data = dt.row($(row).prev()).data();
 	}
+	data.id = rowId;
+	//console.log(data);
 	edit_data(data, tbl_id+'Form');
+	$("#form_id").val(rowId);
 	<?php if(!isset($_GET['pap_id'])): ?>
 		// Display the update form
 		viewModel.pap_details(data);
@@ -708,7 +709,7 @@ $("#tblPapImprovementForm").validate({submitHandler: saveData});
 $("#tblPapPhotoForm").validate({submitHandler: saveData});
 $("#tblPapCropForm").validate({submitHandler: saveData});
 $("#tblLandPapForm").validate({submitHandler: saveData});
-$("#tblPapForm").validate({
+$("#tblPapCondensedReportForm").validate({
 		rules: {
 			phone_contact: {
 				phoneUg: true

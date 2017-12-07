@@ -1,6 +1,7 @@
 <?php 
 require_once("lib/Libraries.php");
 $output = array();
+//print_r($_POST);
 if(isset($_POST['tbl'])){
 	switch($_POST['tbl']){
 		case "land_access_project":

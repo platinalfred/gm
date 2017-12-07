@@ -9,7 +9,7 @@
 						<legend>PAP Details</legend>
 						<div class="col-lg-3">
 							<input type="hidden" name="tbl" value="tblPap">
-							<input type="hidden" name="id" >
+							<input type="hidden" id="form_id" name="id" >
 							<input type="hidden" name="project_id" value="<?php echo $_GET['id']; ?>" />
 							<div class="form-group" >
 								<label class="control-label">Attach PAP Photo</label>
@@ -102,7 +102,7 @@
 								<label class="control-label col-md-2" style="text-align:left;">Comment</label>
 								<div class="col-md-10">
 									<select name="comment" class="select2able">
-										<option>Select comment ...</option>
+										<option value="">Select comment ...</option>
 										<?php 
 										$comment_obj = new Comments();
 										$comments = $comment_obj->findAll();
@@ -183,13 +183,13 @@
 							<div class="form-group">
 								<label class="control-label col-md-4">Rate per Acre (U.shs)</label>
 								<div class="col-md-7">
-									<input type="text" value="" name="rate_per_acre" class="form-control athousand_separator" required >
+									<input type="text"  name="rate_per_acre" class="form-control athousand_separator"  >
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-md-4">Land Interest (%age)</label>
 								<div class="col-md-7">
-									<input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest" value="" class="form-control" required >
+									<input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest"  class="form-control"  >
 								</div>
 							</div>
 							<?php 
@@ -200,7 +200,7 @@
 								<div class="form-group">
 									<label class="control-label col-md-4">Diminution Level (%age)</label>
 									<div class="col-md-7">
-										<input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" value=""class="form-control" required >
+										<input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" class="form-control"  >
 									</div>
 								</div>
 							</fieldset>
