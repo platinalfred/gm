@@ -3,7 +3,7 @@ $curdir = dirname(__FILE__);
 require_once($curdir.'/Db.php');
 class PAP_CropTree extends Db {
 	protected static $table_name  = "tbl_pap_crop_tree";
-	protected static $db_fields = array("id", "crop_description_rate_id", "quantity", "rate", "pap_id", "date_created", "created_by","modified_by");
+	protected static $db_fields = array("id", "pap_id", "crop_description_rate_id", "rate", "quantity",   "date_created", "created_by","modified_by");
 	
 	public function findById($id){
 		$result = $this->getrec(self::$table_name, "id=".$id, "", "");

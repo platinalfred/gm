@@ -115,7 +115,7 @@ if(isset($_GET['tbl'])){
 				$msg =  "Success";
 			}
 		break;
-		case "tblPap":
+		case "tblPapCondensedReport":
 			$pap = new ProjectAffectedPerson();
 			if(isset($_GET['turn_off'])){
 				if($pap->turnOffPap($_GET['id'])){

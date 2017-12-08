@@ -8,7 +8,7 @@
 					<fieldset>
 						<legend>PAP Details</legend>
 						<div class="col-lg-3">
-							<input type="hidden" name="tbl" value="tblPap">
+							<input type="hidden" name="tbl" value="tblPapCondensedReportForm">
 							<input type="hidden" id="form_id" name="id" >
 
 							<input type="hidden" name="project_id" value="<?php echo $_GET['id']; ?>" />
@@ -280,14 +280,14 @@
 							<!-- ko foreach: $parent.serverDataPlants -->
 							<div class="form-group">
 								<div class="col-md-7">
-									<input type="hidden" data-bind="value:id, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][id]'}" />
-									<input type="hidden" data-bind="value:pap_id, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][pap_id]'}" />
-									<input type="hidden" data-bind="value:crop_description_rate_id, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][crop_description_rate_id]'}" />
+									<input type="hidden" data-bind="value:id, attr:{name:'plant['+($index())+'][id]'}" />
+									<input type="hidden" data-bind="value:pap_id, attr:{name:'plant['+($index())+'][pap_id]'}" />
+									<input type="hidden" data-bind="value:crop_description_rate_id, attr:{name:'plant['+($index())+'][crop_description_rate_id]'}" />
 									<label class="control-label" data-bind="text: croptype + ' - ' + cropdescription"></label>
 								</div>
 								<div class="col-md-4">
-									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][quantity]'}, value:quantity" required data-msg-required="Enter quantity" />
-									<input type="hidden" data-bind="attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][rate]'}, value:rate" />
+									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'plant['+($index())+'][quantity]'}, value:quantity" required data-msg-required="Enter quantity" />
+									<input type="hidden" data-bind="attr:{name:'plant['+($index())+'][rate]'}, value:rate" />
 								</div>
 								<div class="col-md-1">
 									<a href="#" data-bind="click: $root.removeServerDataPlant" class="text-danger"><i class="fa fa-minus"></i></a>
@@ -298,12 +298,12 @@
 							<div class="form-group">
 								<!--label class="control-label col-md-4">Plant <span data-bind="text: ($index()+1)"></span></label-->
 								<div class="col-md-7">
-									<select class="select2able" data-bind="options: $root.filteredDistrictCropRates(), optionsText: function(item){ return item.croptype + ' - ' + item.cropdescription;}, optionsCaption: 'Select crop/tree...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][crop_description_rate_id]'}, select2:{dropdownParent:'#papModal'}" data-msg-required="Select an option" required></select>
+									<select class="select2able" data-bind="options: $root.filteredDistrictCropRates(), optionsText: function(item){ return item.croptype + ' - ' + item.cropdescription;}, optionsCaption: 'Select crop/tree...', optionsAfterRender: $root.setOptionValue('id'), value:rate_description, attr:{name:'plant['+($index()+ ($root.serverDataPlants() ? $root.serverDataPlants().length:0))+'][crop_description_rate_id]'}, select2:{dropdownParent:'#papModal'}" data-msg-required="Select an option" required></select>
 								</div>
 								<div class="col-md-4">
-									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'plant['+($index()+$root.serverDataPlants().length)+'][quantity]'}" data-msg-required="Enter quantity" required />
+									<input class="form-control" placeholder="Quantity" data-bind="attr:{name:'plant['+($index()+ ($root.serverDataPlants() ? $root.serverDataPlants().length:0))+'][quantity]'}" data-msg-required="Enter quantity" required />
 									<!--ko with:rate_description-->
-									<input type="hidden" data-bind="attr:{name:'plant['+($parentContext.$index()+$root.serverDataPlants().length)+'][rate]', value:rate}" />
+									<input type="hidden" data-bind="attr:{name:'plant['+($index()+ ($root.serverDataPlants() ? $root.serverDataPlants().length:0))+'][rate]', value:rate}" />
 									<!--/ko-->
 								</div>
 								<div class="col-md-1">

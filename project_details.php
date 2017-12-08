@@ -349,12 +349,18 @@ if (!$projectDetails) {
                                                                     <input type="number" onkeyup="handleChange(this), checkInput(this);" name="land_interest" value="<?php echo $pap_details['land_interest']; ?>" class="form-control" required >
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4">Diminution Level (%age)</label>
-                                                                <div class="col-md-7">
-                                                                    <input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" value="<?php echo $pap_details['diminution_rate']; ?>"class="form-control" required >
-                                                                </div>
-                                                            </div>
+															<?php 
+															if($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4){ 
+																?>
+																<div class="form-group">
+																	<label class="control-label col-md-4">Diminution Level (%age)</label>
+																	<div class="col-md-7">
+																		<input type="number"  onkeyup="handleChange(this), checkInput(this);" name="diminution_rate" value="<?php echo $pap_details['diminution_rate']; ?>"class="form-control" required >
+																	</div>
+																</div>
+															<?php 
+															}
+															?>
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4">&nbsp;</label>
                                                                 <div class="col-md-7">

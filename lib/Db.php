@@ -497,9 +497,7 @@ class Db{
 	function addMultiple($table, $fields, $values){
 		//$fields data arrangement must match the $values arrangement
 		$fi = implode(",", $fields);
-		
 		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES ".implode(',', array_map("self::implode_array", $values));
-		//echo $ins;
 		$inse = $this->conn->query($ins);
 		if($inse){
 			return true;

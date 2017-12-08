@@ -241,7 +241,7 @@ if(isset($_POST['tbl'])){
 			}
 			$output = json_encode($response);
 		break;
-		case "tblPap": //Project affected persons details capture
+		case "tblPapCondensedReportForm": //Project affected persons details capture
 			$pap_obj = new ProjectAffectedPerson();
 			$pap_crop_tree_obj = new PAP_CropTree();
 			$pap_improvement_obj = new PAP_Improvement();
@@ -266,20 +266,10 @@ if(isset($_POST['tbl'])){
 			if($data['id'] != ""){
 				$pap_id = $data['id'];
 				if($pap_obj->updatePap($data)){
-					$add_multiple_data = $update_multiple_data = array();
-					foreach($plants as $key=>$plant){ //we first deal with the plants
-						if(isset($plant['id'])&&is_numeric($plant['id'])){
-							$update_multiple_data[$key]['id'] = $plant['id'];
-							if($plant['crop_description_rate_id']!=""&&$plant['rate']!=""&&$plant['quantity']!=""){
-								$update_multiple_data[$key]['pap_id'] = $pap_id;
-								$update_multiple_data[$key]['crop_description_rate_id'] = $plant['crop_description_rate_id'];
-								$update_multiple_data[$key]['rate'] = $plant['rate'];
-								$update_multiple_data[$key]['quantity'] = $plant['quantity'];
-								$update_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
-							}
-						}
-						else{
-							if($plant['crop_description_rate_id']!=""&&$plant['rate']!=""&&$plant['quantity']!=""){
+					$add_multiple_data = array();
+					if($plants){
+						foreach($plants as $key=>$plant){ //we first deal with the plants
+							if($plant['crop_description_rate_id']!=""&& $plant['rate']!=""&&$plant['quantity']!=""){
 								$add_multiple_data[$key]['pap_id'] = $pap_id;
 								$add_multiple_data[$key]['crop_description_rate_id'] = $plant['crop_description_rate_id'];
 								$add_multiple_data[$key]['rate'] = $plant['rate'];
@@ -287,39 +277,33 @@ if(isset($_POST['tbl'])){
 								$add_multiple_data[$key]['date_created'] = time();
 								$add_multiple_data[$key]['created_by'] = $add_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
 							}
+							
 						}
 					}
-					if($pap_crop_tree_obj->addPapCropTrees($add_multiple_data) || $pap_crop_tree_obj->updatePapCropTrees($update_multiple_data)){
+					$pap_crop_tree_obj->del("tbl_pap_crop_tree", "pap_id=".$pap_id);
+					if($pap_crop_tree_obj->addPapCropTrees($add_multiple_data)){
 						$response['success'] = true;
 						$response['message'][] = "PAP crops and trees successfully saved!";
 					}
+					
 					//then the properties/improvements
-					unset($add_multiple_data, $update_multiple_data);
-					$add_multiple_data = $update_multiple_data = array();
+					unset($add_multiple_data);
+					$add_multiple_data = array();
 					
 					foreach($improvements as $key=>$improvement){
-						if(isset($improvement['id'])&&is_numeric($improvement['id'])){
-							if($improvement['district_property_rate_id']!=""&&$improvement['rate']!=""&&$improvement['quantity']!=""){
-								$update_multiple_data[$key]['id'] = $improvement['id'];
-								$update_multiple_data[$key]['pap_id'] = $pap_id;
-								$update_multiple_data[$key]['district_property_rate_id'] = $improvement['district_property_rate_id'];
-								$update_multiple_data[$key]['rate'] = $improvement['rate'];
-								$update_multiple_data[$key]['quantity'] = $improvement['quantity'];
-								$update_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
-							}
+						if($improvement['district_property_rate_id']!=""&&$improvement['rate']!=""&&$improvement['quantity']!=""){
+							$add_multiple_data[$key]['pap_id'] = $pap_id;
+							$add_multiple_data[$key]['district_property_rate_id'] = $improvement['district_property_rate_id'];
+							$add_multiple_data[$key]['rate'] = $improvement['rate'];
+							$add_multiple_data[$key]['quantity'] = $improvement['quantity'];
+							$add_multiple_data[$key]['date_created'] = time();
+							$add_multiple_data[$key]['created_by'] = $add_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
 						}
-						else{
-							if($improvement['district_property_rate_id']!=""&&$improvement['rate']!=""&&$improvement['quantity']!=""){
-								$add_multiple_data[$key]['pap_id'] = $pap_id;
-								$add_multiple_data[$key]['district_property_rate_id'] = $improvement['district_property_rate_id'];
-								$add_multiple_data[$key]['rate'] = $improvement['rate'];
-								$add_multiple_data[$key]['quantity'] = $improvement['quantity'];
-								$add_multiple_data[$key]['date_created'] = time();
-								$add_multiple_data[$key]['created_by'] = $add_multiple_data[$key]['modified_by'] = isset($_SESSION['staffId'])?$_SESSION['staffId']:1;
-							}
-						}
+						
 					}
-					if($pap_improvement_obj->addPapImprovements($add_multiple_data) || $pap_improvement_obj->updatePapImprovements($update_multiple_data)){
+					$pap_improvement_obj->del("tbl_pap_improvement", "pap_id=".$pap_id);
+					
+					if($pap_improvement_obj->addPapImprovements($add_multiple_data)){
 						$response['success'] = true;
 						$response['message'][] = "PAP properties successfully saved!";
 					}

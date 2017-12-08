@@ -257,9 +257,9 @@ $(document).ready(function(){
 							d.project_id = <?php echo $_GET['id']; ?>;
 						}
 				  },"columnDefs": [ ],
-				  "autoWidth": true,
+				  "autoWidth": false,
 
-				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
+				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {  return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
 						{ data: 'phone_contact'},
@@ -337,7 +337,7 @@ $(document).ready(function(){
 					  className: "btn-sm btn-white"
 					},
 				  ],
-				  responsive: true,
+				  responsive: false,
 				});
 				//$("#datatable-buttons").DataTable();
 			}
@@ -462,7 +462,7 @@ $(document).ready(function(){
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));} },
 					{ data: 'quantity'},
 					{ data: 'rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data)*parseInt(full.quantity));}},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papImprovementModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papImprovementModal" id="'+data+'-tblPapImprovement-tblPapImprovement"class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
 					
 					] ,
 			  buttons: [
@@ -593,15 +593,21 @@ function saveData(form,event){
 						if(frmId == 'tblPapPhotoForm'){
 							viewModel.serverPapPhotos(response.pap_photos);
 						}
+						
 						if(frmId == 'tblPapCondensedReportForm'){
-							viewModel.district(null);
-							viewModel.scounty(null);
-							viewModel.parish(null);
-							viewModel.village(null);
+							$('#tblPapCondensedReport').DataTable().ajax.reload();
+							if(id_input == ""){ //If id input is not nul do not reload the districts
+								viewModel.district(null);
+								viewModel.scounty(null);
+								viewModel.parish(null);
+								viewModel.village(null);
+							
+							}
 							viewModel.getServerData();
+							
 						}
-						if(typeof dTable[frmId] != 'undefined')
-							dTable[frmId].ajax.reload(null,false);
+						/* if(typeof dTable[frmId] != 'undefined')
+							dTable[frmId].ajax.reload(null,false); */
 					}, 2000);
 				}else{
 					
@@ -673,9 +679,8 @@ $('table tbody').on('click', '.delete_me', function () {
 		if(typeof(data)=='undefined'){
 			data = dt.row($(row).prev()).data();
 		}
-	
-		 $.ajax({ // create an AJAX call...
-			url: "delete.php?id="+data.pap_d+"&tbl="+$(tbl).attr("id"), // the file to call
+		$.ajax({ // create an AJAX call...
+			url: "delete.php?id="+data.id+"&tbl="+$(tbl).attr("id"), // the file to call
 			success: function(response) { // on success..
 				showStatusMessage(response, "success");
 				setTimeout(function(){
