@@ -387,7 +387,7 @@ $(document).ready(function(){
 					{ data: 'cropdescription'},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));}},
 					{ data: 'quantity', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));}},
-					{ data: 'rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data)*parseInt(full.quantity));}},
+					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data) * parseInt(full.quantity));}},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papCropModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
 					
 					] ,
@@ -449,10 +449,10 @@ $(document).ready(function(){
 				  
 				  var total = 0, pageTotal = 0;
 				  $.each(totalQty, function(key, val){ //summing up the overall total
-					  total += (parseInt(val)*parseFloat(totalAmount[key]))
+					  total += (parseFloat(val)*parseFloat(totalAmount[key]))
 				  });
 				  $.each(pageQty, function(key, val){ //summing up the page total
-					  pageTotal += (parseInt(val)*parseFloat(pageAmount[key]))
+					  pageTotal += (parseFloat(val)*parseFloat(pageAmount[key]))
 				  });
 					$(api.column(5).footer()).html( curr_format(Math.round(pageTotal) + ' (' + total + ')') );
 			  },
@@ -461,7 +461,7 @@ $(document).ready(function(){
 					{ data: 'propertydescription'},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));} },
 					{ data: 'quantity'},
-					{ data: 'rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data)*parseInt(full.quantity));}},
+					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data)*parseFloat(full.quantity));}},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papImprovementModal" id="'+data+'-tblPapImprovement-tblPapImprovement"class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
 					
 					] ,

@@ -27,12 +27,13 @@ if(isset($_GET['tbl'])){
 			require_once("lib/landAcquisitionCategoryUnit.php");
 			$dbObj = new landAcquisitionCategoryUnit();
 			if($dbObj->deleteLandAcquisitionCategoryUnit($_GET['id'])){
-				$msg =  "Success";
+				$msg =  "success";
 			}
 		break;
 		case "treeCropsTypes":
-			if($db->del("tbl_tree_or_cropt_types", "id=".$_GET['id'])){
-				$msg =  "Successfully deleted the crop type";
+			
+			if($db->del("tbl_tree_or_crop_types", "id=".$_GET['id'])){
+				$msg =  "success";
 			}
 		break;
 		case "cropdescription":
