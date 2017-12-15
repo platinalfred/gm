@@ -132,7 +132,7 @@
                     <?php endif; ?>
                     <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                         ?>
-                        <td><?php echo ($i === 0)?$project_pap['rate_per_acre']:""; ?></td>	
+                        <td><?php echo ($i === 0)?number_format($project_pap['rate_per_acre']):""; ?></td>	
                         <td><?php if($i === 0){echo $project_pap['land_interest']."%";} ?></td>
                         <?php
                     endif;
@@ -156,10 +156,17 @@
                             ?></td>
                         <?php endif; ?>
                         <?php
-                    //Total land value, applies to ROW, (Both ROW and WL) and Total Take/Size
-                    if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
+                    //Total land value, applies to ROW, (Both ROW and WL)
+                    if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):
                         ?>
                         <td><?php if($i === 0){$total_land_value = (isset($wl_land_value) ? $wl_land_value : 0) + (isset($row_land_value) ? $row_land_value : 0);
+                        echo number_format($total_land_value); $project_land_value += $total_land_value;}
+                        ?></td>
+                    <?php endif; 
+                    // Applicable to Total Take/Size
+                    if ($projectDetails['project_category_unit'] == 5):
+                        ?>
+                        <td><?php if($i === 0){$total_land_value = $project_pap['total_take'] * $project_pap['rate_per_acre'] * ($project_pap['land_interest'] / 100);
                         echo number_format($total_land_value); $project_land_value += $total_land_value;}
                         ?></td>
                     <?php endif; ?>
