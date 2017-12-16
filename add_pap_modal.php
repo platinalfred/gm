@@ -236,7 +236,7 @@
 							<!-- ko foreach: $parent.serverDataImprovements -->
 							<div class="form-group">
 								<div class="col-md-7">
-									<input type="hidden" data-bind="attr:{name:'improvement['+$index()+'][id]'}, value:id" />
+									<!--input type="hidden" data-bind="attr:{name:'improvement['+$index()+'][id]'}, value:id" /-->
 									<input type="hidden" data-bind="attr:{name:'improvement['+$index()+'][district_property_rate_id]'}, value:district_property_rate_id" />
 									<label class="control-label" data-bind="text: propertytype + ' - ' + propertydescription"></label>
 								</div>
@@ -280,8 +280,7 @@
 							<!-- ko foreach: $parent.serverDataPlants -->
 							<div class="form-group">
 								<div class="col-md-7">
-									<input type="hidden" data-bind="value:id, attr:{name:'plant['+($index())+'][id]'}" />
-									<input type="hidden" data-bind="value:pap_id, attr:{name:'plant['+($index())+'][pap_id]'}" />
+									<!--input type="hidden" data-bind="value:id, attr:{name:'plant['+($index())+'][id]'}" /-->
 									<input type="hidden" data-bind="value:crop_description_rate_id, attr:{name:'plant['+($index())+'][crop_description_rate_id]'}" />
 									<label class="control-label" data-bind="text: croptype + ' - ' + cropdescription"></label>
 								</div>
