@@ -260,7 +260,7 @@ $(document).ready(function(){
 						}
 				  },"columnDefs": [ ],
 				  "autoWidth": false,
-
+				  "lengthMenu": [[10, 25, 50, -1], [10, 50,  100, "All"]],
 				  columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {  return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
@@ -299,7 +299,7 @@ $(document).ready(function(){
 						{data: 'tenure_desc'},
 						{data: 'id', render: function ( data, type, full, meta ) {
                                                         pap_crops = ko.utils.arrayFilter(viewModel.pap_crops(), function(pap_crop){
-                                                            if(pap_crop.pap_id == data)
+                                                            if(parseInt(pap_crop.pap_id) == parseInt(data))
                                                             return true;
                                                         });
                                                         return generateHTML(pap_crops);
@@ -307,7 +307,7 @@ $(document).ready(function(){
                                                 },
 						{data: 'id', render: function ( data, type, full, meta ) {
                                                         pap_improvements = ko.utils.arrayFilter(viewModel.pap_improvements(), function(pap_improvement){
-                                                            if(pap_improvement.pap_id == data)
+                                                            if(parseInt(pap_improvement.pap_id) == parseInt(data))
                                                             return true;
                                                         });
                                                         return generateHTML(pap_improvements);
@@ -632,13 +632,15 @@ $('table tbody').on( 'click', '.edit_me', function () {
 	tbl_id = $(tbl).attr("id");
 	var dt = dTable[tbl_id];
 	var data = dt.row(row).data();
-	var rowId = data[0];
+        //console.log(data);
+	var rowId = data.pap_d;
 	if(typeof(data)=='undefined'){
 		data = dt.row($(row).prev()).data();
 	}
 	data.id = rowId;
 	//console.log(data);
 	edit_data(data, tbl_id+'Form');
+        //alert(rowId);
 	$("#form_id").val(rowId);
 	<?php if(!isset($_GET['pap_id'])): ?>
 		// Display the update form
