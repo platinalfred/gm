@@ -277,7 +277,6 @@ if(isset($_POST['tbl'])){
 								$add_multiple_data[$key]['date_created'] = time();
 								$add_multiple_data[$key]['created_by'] = $add_multiple_data[$key]['modified_by'] = isset($_SESSION['gmt'])?$_SESSION['gmt']:1;
 							}
-							
 						}
 					}
 					$pap_crop_tree_obj->del("tbl_pap_crop_tree", "pap_id=".$pap_id);

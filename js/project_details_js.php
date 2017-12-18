@@ -190,7 +190,7 @@ $(document).ready(function(){
             cellHTML = "";
             if(data_array){
                 $.each(data_array, function(key, val){
-                    cellHTML += '<p>'+val[0]+' (<span class="text-danger">'+val[1]+' @'+val[2]*1+'</span>)</p>';
+                    cellHTML += '<p>'+val[0]+' (<span class="text-danger">'+(val[1]*1)+' @'+val[2]*1+'</span>)</p>';
                 });
             }
             return cellHTML;
@@ -248,6 +248,8 @@ $(document).ready(function(){
 				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
 				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
 				  "processing": true,
+				  "serverSide": true,
+				  //"deferRender": true,
 					"ajax": {
 					  "url":"getData.php",
 					  "dataType": "JSON",
@@ -595,14 +597,17 @@ function saveData(form,event){
 						}
 						
 						if(frmId == 'tblPapCondensedReportForm'){
-							$('#tblPapCondensedReport').DataTable().ajax.reload();
-							if(id_input == ""){ //If id input is not nul do not reload the districts
+							
+							if(id_input == ""){ //If id input is not null do not reload the districts
 								viewModel.district(null);
 								viewModel.scounty(null);
 								viewModel.parish(null);
 								viewModel.village(null);
-							
+                                                            $('#tblPapCondensedReport').DataTable().ajax.reload();
 							}
+                                                        else{
+                                                            $('#tblPapCondensedReport').DataTable().ajax.reload(null,false);
+                                                        }
 							viewModel.getServerData();
 							
 						}
