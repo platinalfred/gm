@@ -168,35 +168,6 @@ function draw_pie_chart(url_data){
 		}]
 	});
 }
-
-/* 
-function saveData(){
-	$(".save").click(function(){
-		var fmid = $(this).closest("form");
-		var frmdata = fmid.serialize();
-		var tbl_id = fmid.attr("id");
-		$.ajax({
-			url: "save_data.php",
-			type: 'POST',
-			data: frmdata,
-			success: function (response) {
-				if($.trim(response) == "success"){
-					fmid[0].reset();
-					showStatusMessage("Successfully added new record" ,"success");
-					setTimeout(function(){
-						var dt = dTable[tbl_id];
-						dt.ajax.reload();
-					}, 2000);
-				}else{//"Action not successful"
-					showStatusMessage(response, "failed");
-				}
-				
-			}
-		});
-
-		return false;
-	});
-}*/
 //Save function called when various buttons with .save are clicked , With this one function all settings will be sent to save_data.php for saving
 function saveData(){
 	$(".save").click(function(){
@@ -236,43 +207,6 @@ function saveData(){
 		return false;
 	});
 }
-	
-// Displays an alert message
-function showStatusMessage(message='', display_type='success'){
-	new PNotify({
-		  title: "Alert",
-		  text: message,
-		  type: display_type,
-		  styling: 'bootstrap3',
-		  sound: true,
-		  hide:true,
-		  buttons: {
-			closer_hover: false,
-		},
-		confirm: {
-			confirm: true,
-			buttons: [{
-				text: 'Ok',
-				addClass: 'btn-primary',
-				click: function(notice) {
-					notice.remove();
-				}
-			},
-			null]
-		},
-		animate: {
-			animate: true,
-			in_class: 'zoomInLeft',
-			out_class: 'zoomOutRight'
-		},
-		  nonblock: {
-			  nonblock: true
-		  }
-		  
-	  });
-	
-}
-		
 	//get the desc member element for each of the above arrays
 	function getDescription(array_index, id) {
 		var arrays = [

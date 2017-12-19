@@ -52,7 +52,7 @@ $(document).ready(function(){
 						d.tbl = 'land_access_project';
 					}
 			  },"columnDefs": [ {
-				  "targets": [],
+				  "targets": [6,7],
 				  "orderable": false,
 				  "searchable": false
 			  }],
@@ -63,8 +63,8 @@ $(document).ready(function(){
 					{ data: 'project_category'},
 					{ data: 'disturbance_allowance'},
 					{ data: 'date_added'},
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a href="report_module.php?id='+data+'" title="View Report"><i class="fa fa-bar-chart-o"></i> View Report</a>';}},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#projectModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-land_acquistion_category-landAcquisition" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
-					
 					] ,
 			  buttons: [
 				{
@@ -88,7 +88,7 @@ $(document).ready(function(){
 				  className: "btn-sm btn-white"
 				},
 			  ],
-			  responsive: true,
+			  responsive: false,
 			});
 			//$("#datatable-buttons").DataTable();
 		}
@@ -112,13 +112,14 @@ $(document).ready(function(){
 					viewModel.clients.valueHasMutated();
 			  },
 			  "columnDefs": [ {
-				  "targets": [2],
+				  "targets": [6],
 				  "orderable": false,
 				  "searchable": false
 			  }],
 			  "autoWidth": false,
 			  columns:[ { data: 'client_names'},
 					{ data: 'postal_address'},
+					{ data: 'physical_address'},
 					{ data: 'phone_contact1'},
 					{ data: 'phone_contact2'},
 					{ data: 'email_contact1'},

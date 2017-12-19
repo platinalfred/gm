@@ -568,6 +568,7 @@ ko.applyBindings(viewModel, $("#project_page")[0]); //
 //Functions being used in more than one instances / places
 //With this one function all settings will be sent to save_data.php for saving
 function saveData(form,event){
+		enableDisableButton(form, true);
 		event.preventDefault();
 		var frm = $(form)[0];
 		var frmdata = new FormData(frm);
@@ -611,11 +612,12 @@ function saveData(form,event){
 							viewModel.getServerData();
 							
 						}
+                                                enableDisableButton(form, false);
 						/* if(typeof dTable[frmId] != 'undefined')
 							dTable[frmId].ajax.reload(null,false); */
 					}, 2000);
 				}else{
-					
+					enableDisableButton(form, false);
 					showStatusMessage(response.message, "fail");
 				}
 				

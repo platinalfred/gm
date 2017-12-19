@@ -158,7 +158,7 @@ if(!isset($_SESSION['logged'])){
 		  display: none;
 		}
                 .widget-content{overflow-x: scroll}
-                table td, table th {white-space: nowrap}
+                table[id^='non_responsive'] td, table th {white-space: nowrap}
 	</style>
 	<script src="js/plugins/moment/min/moment.min.js"></script>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
@@ -194,7 +194,7 @@ if(!isset($_SESSION['logged'])){
                             <a class="current" href="dashboard.php"><span aria-hidden="true" class="hightop-home"></span>Dashboard</a>
                         </li>
 						<li>
-                            <a href="report_module.php?id=7">
+                            <a href="#">
                                 <span aria-hidden="true" class="hightop-charts"></span>Reports</a>
                         </li>
                         <li>
