@@ -20,6 +20,12 @@ class PropertyDescription extends Db {
 		$result = $this->getfrec(self::$table_name, "title", "id=".$id, "", "");
 		return !empty($result) ? $result['title'] : false;
 	}
+	public function propertyDescriptionExist($data){
+		if($this->countRecords(self::$table_name, "title='".$data['title']."'") > 0){
+			return true;
+		}
+		return false;
+	}
 	public function addPropertyDescription($data){
 		$fields =array_slice(self::$db_fields, 1);
 		if($this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data))){

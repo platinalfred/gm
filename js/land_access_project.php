@@ -193,7 +193,8 @@ function saveData(form,event){
 							frm.reset();
 						}
 						if(frmId == 'tblClient'){
-							location.reload(true);
+							dTable[frmId].ajax.reload();
+							//location.reload(true);
 							//viewModel.getServerData();
 						}
 						if(frmId == 'tblLandProject'){

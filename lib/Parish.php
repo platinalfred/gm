@@ -19,6 +19,12 @@ class Parish extends Db {
 		$result = $this->getfrec(self::$table_name, "parish_name", "id=".$id, "", "");
 		return !empty($result) ? $result['parish_name'] : false;
 	}
+	public function doesParishExist($data){
+		if($this->countRecords(self::$table_name, "parish_name='".$data['parish_name']."'") > 0){
+			return true;
+		}
+		return false;
+	}
 	public function findParishes(){
 		$table = self::$table_name . " p JOIN tbl_subcounty s ON p.subcounty = s.id JOIN tbl_district d ON s.district = d.id";
 		$fields = "`p`.`id`,`p`.`parish_name`,`s`.`subcounty_name`,`d`.`district_name`";

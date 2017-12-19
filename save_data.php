@@ -47,8 +47,9 @@ if(isset($_POST['tbl'])){
 				}
 			}else{
 				if($client_obj->addClient($data)){
-					$response['false'] = true;
+					$response['success'] = true;
 				}else{ 
+					$response['false'] = true;
 					$response['message'] = "Client data could not be added. Please try again or contact admin for assistance!";
 				}
 			}
@@ -64,10 +65,12 @@ if(isset($_POST['tbl'])){
 					$response =  "Village data could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				if($village->addVillage($data)){
-					$response = "success";
-				}else{ 
-					$response = "Village data could not be added. Please try again or contact admin for assistance!";
+				if($village->doesVillageExist($data)){
+					if($village->addVillage($data)){
+						$response = "success";
+					}else{ 
+						$response = "Village data could not be added. Please try again or contact admin for assistance!";
+					}
 				}
 			}
 			$output = $response;
@@ -82,10 +85,14 @@ if(isset($_POST['tbl'])){
 					$response =  "Parish data could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				if($parish->addParish($data)){
-					$response = "success";
-				}else{ 
-					$response = "Parish data could not be added. Please try again or contact admin for assistance!";
+				if(!$parish->doesParishExist($data)){
+					if($parish->addParish($data)){
+						$response = "success";
+					}else{ 
+						$response = "Parish data could not be added. Please try again or contact admin for assistance!";
+					}
+				}else{
+					$response = "Parish already exists!";
 				}
 			}
 			$output = $response;
@@ -100,10 +107,14 @@ if(isset($_POST['tbl'])){
 					$response =  "SubCounty data could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				if($subcounties->addSubCounty($data)){
-					$response = "success";
-				}else{ 
-					$response = "SubCounty data could not be added. Please try again or contact admin for assistance!";
+				if(!$subcounties->doesSubCountyExist($data)){
+					if($subcounties->addSubCounty($data)){
+						$response = "success";
+					}else{ 
+						$response = "SubCounty data could not be added. Please try again or contact admin for assistance!";
+					}
+				}else{
+					echo "SubCounty already exists";
 				}
 			}
 			$output = $response;
@@ -136,10 +147,14 @@ if(isset($_POST['tbl'])){
 					$response =  "District data could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				if($districts->addDistrict($data)){
-					$response = "success";
-				}else{ 
-					$response = "District data could not be added. Please try again or contact admin for assistance!";
+				if(!$districts->doesDistrictExist($data)){
+					if($districts->addDistrict($data)){
+						$response = "success";
+					}else{ 
+						$response = "District data could not be added. Please try again or contact admin for assistance!";
+					}
+				}else{
+					$response = "District already exists!";
 				}
 			}
 			$output = $response;
@@ -154,10 +169,14 @@ if(isset($_POST['tbl'])){
 					$response =  "Comment could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				if($comment->addComment($data)){
-					$response = "success";
-				}else{ 
-					$response = "Comment could not be added. Please try again or contact admin for assistance!";
+				if($comment->doesCommentExist){
+					if($comment->addComment($data)){
+						$response = "success";
+					}else{ 
+						$response = "Comment could not be added. Please try again or contact admin for assistance!";
+					}
+				}else{
+					$response = "Same comment details already exist, please such for the same to update";
 				}
 			}
 			$output = $response;
@@ -556,10 +575,14 @@ if(isset($_POST['tbl'])){
 					$output = "Ooups! Tree or crop type not updated, please contact administrator for assistance.";
 				}
 			}else{
-				if($treecroptypes->addTreeCropType($data)){
-					$output = "success";
-				}else{ 
-					$output = "Ooups! Tree or crop type not added, please contact administrator for assistance.";
+				if(!$treecroptypes->treecropTypeExist($data)){
+					if($treecroptypes->addTreeCropType($data)){
+						$output = "success";
+					}else{ 
+						$output = "Ooups! Tree or crop type not added, please contact administrator for assistance.";
+					}
+				}else{
+					$output = "Crop tree type already exists!";
 				}
 			}
 			
@@ -614,10 +637,15 @@ if(isset($_POST['tbl'])){
 					$output = "Ooups! crop description not updated, please contact administrator for assistance.";
 				}
 			}else{
-				if($crop_description->addCropDescription($data)){
-					$output = "success";
-				}else{ 
-					$output = "Ooups! crop description not added, please contact administrator for assistance.";
+				if(!$crop_description->cropDescriptionExist($data)){
+					if($crop_description->addCropDescription($data)){
+						$output = "success";
+					}else{ 
+						$output = "Ooups! crop description not added, please contact administrator for assistance.";
+					}
+				}else{
+					$output = "Crop description already exist, please seach for the same to update!";
+					
 				}
 			}
 			
@@ -631,10 +659,14 @@ if(isset($_POST['tbl'])){
 					$output = "Ooups! property description not updated, please contact administrator for assistance.";
 				}
 			}else{
-				if($property_description->addPropertyDescription($data)){
-					$output = "success";
-				}else{ 
-					$output = "Ooups! property description not added, please contact administrator for assistance.";
+				if(!$property_description->propertyDescriptionExist($data)){
+					if($property_description->addPropertyDescription($data)){
+						$output = "success";
+					}else{ 
+						$output = "Ooups! property description not added, please contact administrator for assistance.";
+					}
+				}else{
+					$output = "Improvement description already exist, please search for the same to update!";
 				}
 			}
 			
@@ -648,10 +680,14 @@ if(isset($_POST['tbl'])){
 					$output = "Ooups! property type not updated, please contact administrator for assistance.";
 				}
 			}else{
-				if($propertytypes->addPropertyTypes($data)){
-					$output = "success";
-				}else{ 
-					$output = "Ooups! property type not added, please contact administrator for assistance.";
+				if(!$propertytypes->propertyTypeExist($data)){
+					if($propertytypes->addPropertyTypes($data)){
+						$output = "success";
+					}else{ 
+						$output = "Ooups! property type not added, please contact administrator for assistance.";
+					}
+				}else{
+					$output = "Improvement type already exist, please search for the same to update!";
 				}
 			}
 			

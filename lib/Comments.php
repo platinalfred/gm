@@ -26,6 +26,13 @@ class Comments extends Db {
 		}
 		return false;
 	}
+	public function doesCommentExist($data){
+		if($this->countRecords(self::$table_name, "details='".$data['details']."'") > 0){
+			return true;
+		}
+		return false;
+	}
+	
 	public function updateComment($data){
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];

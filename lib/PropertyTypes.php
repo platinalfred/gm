@@ -26,6 +26,12 @@ class PropertyTypes extends Db {
 		}
 		return false;
 	}
+	public function propertyTypeExist($data){
+		if($this->countRecords(self::$table_name, "title='".$data['title']."'") > 0){
+			return true;
+		}
+		return false;
+	}
 	public function updatePropertyTypes($data){
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];

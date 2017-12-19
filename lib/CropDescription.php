@@ -27,6 +27,12 @@ class CropDescription extends Db {
 		}
 		return false;
 	}
+	public function cropDescriptionExist($data){
+		if($this->countRecords(self::$table_name, "title='".$data['title']."'") > 0){
+			return true;
+		}
+		return false;
+	}
 	public function updateCropDescription($data){
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];

@@ -7,10 +7,12 @@
 
 <body>
 <?php 
+ ini_set('max_execution_time', 892801);
+ ini_set('memory_limit','1000M');
 require_once("lib/Db.php");
 $db = new Db();
 if(isset($_POST['submit'])){
-	set_time_limit(892801);
+	//set_time_limit(892801);
      $filename=$_POST['filename'];
      $handle = fopen("$filename", "r");
 	 $run = 0;

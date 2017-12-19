@@ -31,6 +31,12 @@ class SubCounties extends Db {
 		}
 		return false;
 	}
+	public function doesSubCountyExist($data){
+		if($this->countRecords(self::$table_name, "subcounty_name='".$data['subcounty_name']."'") > 0){
+			return true;
+		}
+		return false;
+	}
 	public function updateSubCounty($data){
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];
