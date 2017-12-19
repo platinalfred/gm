@@ -41,7 +41,7 @@ include("includes/header.php");
 										<i class="fa fa-list"></i>Projects details
 									</div>
 									<div class="widget-content padded clearfix">
-										<table class="table table-bordered table-striped" id="tblLandProject">
+										<table class="table table-bordered table-striped non_responsive" id="tblLandProject">
 											<thead>
 												<th >Title</th>
 												<th>Client Name</th>
@@ -49,6 +49,7 @@ include("includes/header.php");
 												<th class="hidden-xs">Project Category</th>
 												<th class="hidden-xs">Disturbance Allowance</th>
 												<th class="hidden-xs">Date Added</th>
+												<th class="hidden-xs">Report</th>
 												<th></th>
 											</thead>
 											<tbody>

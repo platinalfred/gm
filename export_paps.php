@@ -15,18 +15,17 @@ if(isset($_POST['submit'])){
 	//set_time_limit(892801);
      $filename=$_POST['filename'];
      $handle = fopen("$filename", "r");
-	 $run = 0;
+	 $run = $count = 0;
 	 $fields  = array("total_take");
      while (($data = fgetcsv($handle, 90048576, ",")) !== FALSE){
 		 $run++;
 		$data = $db->sanitizeAttributes($data);
 		if($data[0] != ""){
-			$interest =  (int)substr($data[2], 0, -1);
 			if(trim($data[1]) == "-"){
 				$data[1] = 0;
 			}
-			if($db->update("tbl_paps", array("total_take", "land_interest", "rate_per_acre"),array("total_take"=>$data[1],"land_interest"=>$interest,"rate_per_acre"=>$data['3']),"pap_ref='".$data[0]."'")){
-				$run++;
+			if($db->update("tbl_paps", array("rate_per_acre"),array("rate_per_acre"=>(int) str_replace(",","",$data['1'])),"pap_ref='".$data[0]."'")){
+				$run++; $count++;
 			} 
 		}else{
 			print_r($data); echo "<br/>";
@@ -38,7 +37,7 @@ if(isset($_POST['submit'])){
        mysql_query($import) or die(mysql_error());
      }
      fclose($handle); */
-     print "Import done";
+     print "Import done\n $count records updated";
 }else{
 	print "<form action='' method='post'>";
 

@@ -7,7 +7,7 @@ $(document).ready(function(){
 			/* -- Project Affected Person Report Data Table --- */
 			if ($("#tblPapsReport").length) {
 				  dTable['tblPapsReport'] = $('#tblPapsReport').DataTable({
-				 dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-9"i><".col-md-3"p>',
+				 dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
                                   "searching": true,
                                   "ordering": false,
                                   "paging": true,

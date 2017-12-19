@@ -3,7 +3,7 @@ $curdir = dirname(__FILE__);
 require_once($curdir.'/Db.php');
 class PAP_Improvement extends Db {
 	protected static $table_name  = "tbl_pap_improvement";
-	protected static $db_fields = array("id", "pap_id",  "district_property_rate_id", "rate", "quantity","date_created","modified_by", "created_by");
+	protected static $db_fields = array("id", "district_property_rate_id", "quantity", "rate", "pap_id", "date_created", "created_by","modified_by");
 	
 	public function findById($id){
 		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
@@ -19,7 +19,7 @@ class PAP_Improvement extends Db {
 		//pt = tbl_pap_improvement
                 //tcd = tbl_property_types_description
 		//"tbl_pap_improvement.pap_id=".$id
-		$fields = "CONCAT(`tbl_property_type`.`title`,`tbl_property_description`.`title`) as improvement_description, `tbl_pap_improvement`.`quantity`, `tbl_pap_improvement`.`rate`, `pap_id`";
+		$fields = "CONCAT(`tbl_property_type`.`title`,' ', `tbl_property_description`.`title`) as improvement_description, `tbl_pap_improvement`.`quantity`, `tbl_pap_improvement`.`rate`, `pap_id`";
 		$table_name = "tbl_pap_improvement JOIN tbl_district_property_rate ON tbl_pap_improvement.district_property_rate_id = tbl_district_property_rate.id JOIN tbl_property_types_description ON tbl_district_property_rate.propertytypedescription_id = tbl_property_types_description.id JOIN tbl_property_description ON tbl_property_types_description.property_description_id = tbl_property_description.id JOIN tbl_property_type ON tbl_property_types_description.property_type_id = tbl_property_type.id";
 		$result_array = $this->getfarray($table_name, $fields, $where, "", "");
 		return !empty($result_array) ? $result_array : false;

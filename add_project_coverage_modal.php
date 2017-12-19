@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">&nbsp;</label>
                         <div class="col-md-7">
-                            <button class="btn btn-info" type="button" data-bind="click: addDistrict, enable: available_districts().length>0"><i class="fa fa-plus"></i> Add</button>
+                            <button class="btn btn-info" type="button" data-bind="click: addDistrict, enable: typeof available_districts()!= 'undefined' && available_districts().length>0"><i class="fa fa-plus"></i> Add</button>
                             <button class="btn btn-primary save" type="submit" data-bind="enable: selectedDistricts().length>0">Submit</button>
                             <button class="btn btn-default-outline" data-dismiss="modal" >Cancel </button>
                         </div>
