@@ -49,8 +49,14 @@ include("includes/header.php");
 												<th class="hidden-xs">Project Category</th>
 												<th class="hidden-xs">Disturbance Allowance</th>
 												<th class="hidden-xs">Date Added</th>
+												<?php 
+												if(isset($_SESSION['admin']) || isset($_SESSION['management_staff'])){ ?>
 												<th class="hidden-xs">Report</th>
 												<th></th>
+												<?php 
+												}
+												?>
+												
 											</thead>
 											<tbody>
 												
@@ -64,9 +70,14 @@ include("includes/header.php");
 						<!-- Clients section -->
 						<div id="tab-2" class="tab-pane">
 							<div class="col-lg-12">
-								<div class="action-buttons">
-									<a  data-toggle="modal" href="#clientModal"><i class="fa fa-plus"></i> Add New</a>
-								</div>
+								<?php 
+								if(isset($_SESSION['admin']) || isset($_SESSION['management_staff'])){ ?>
+									<div class="action-buttons">
+										<a  data-toggle="modal" href="#clientModal"><i class="fa fa-plus"></i> Add New</a>
+									</div>
+								<?php 
+								}
+								?>
 								<div class="modal fade" id="clientModal">
 									<div class="modal-dialog">
 										<div class="modal-content">
@@ -82,27 +93,31 @@ include("includes/header.php");
 								</div>
 							
 							</div>
-							<div class="heading">
-								<i class="fa fa-briefcase"></i>Clients
-							</div>
-							<div class="widget-content padded">
-								<table class="table table-bordered table-striped" id="tblClient">
-									<thead>
-										<th>Client</th>
-										<th>Postal Address</th>
-										<th>Physical Address</th>
-										<th>Telephone</th>
-										<th>Telephone 2</th>
-										<th>Email</th>
-										<th>Email 2</th>
-										<th></th>
-									</thead>
-									<tbody>
-										
-									</tbody>
-								</table>
-							</div>
-						
+							<?php 
+							if(isset($_SESSION['admin']) || isset($_SESSION['management_staff'])){ ?>
+								<div class="heading">
+									<i class="fa fa-briefcase"></i>Clients
+								</div>
+								<div class="widget-content padded">
+									<table class="table table-bordered table-striped" id="tblClient">
+										<thead>
+											<th>Client</th>
+											<th>Postal Address</th>
+											<th>Physical Address</th>
+											<th>Telephone</th>
+											<th>Telephone 2</th>
+											<th>Email</th>
+											<th>Email 2</th>
+											<th></th>
+										</thead>
+										<tbody>
+											
+										</tbody>
+									</table>
+								</div>
+							<?php 
+							}
+							?>
 						</div>
 						<!-- end Projects content pane -->
 					</div>

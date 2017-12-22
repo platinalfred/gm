@@ -1,6 +1,8 @@
 <?php 
 session_start();
 unset($_SESSION['admin']);
+unset($_SESSION['field_officer']);
+unset($_SESSION['management_staff']);
 unset($_SESSION['logged']);
 unset($_SESSION['firstname']);
 header("location:index.php");

@@ -18,22 +18,43 @@ if(isset($_POST['submit'])){
 	 $run = $count = 0;
 	// $fields  = array("total_take");
      while (($data = fgetcsv($handle, 90048576, ",")) !== FALSE){
-		 $run++;
+		$run++;
 		$data = $db->sanitizeAttributes($data);
-		$interest =  (int) substr($data[2], 0, -1);
-		if($data[0] != ""){
-			if(trim($data[1]) == "-"){
-				$data[1] = 0;
-			}
-			if($db->update("tbl_paps", array("rate_per_acre", "total_take", "land_interest"), array("rate_per_acre"=>(int) str_replace(",","",$data[3]), "total_take"=>$data[1], "land_interest"=>$interest),"pap_ref='".$data[0]."'")){
-				$run++; $count++;
-			}  
+		$names = explode(" ", $data[1]);
+		$firstname = @$names[1];
+		$lastname = $names[0];
+		$othername = @$names[2];
+		$interest =  (int) substr($data[6], 0, -1);
+		$project_id = 10;
+		$district = 24;
+		$sub = 18;
+		$parish = 60;
+		$village = 97;
+		if($firstname == ""){
+			continue;
+		}
+		$tenure = "";
+		switch($data[3]){
+			case "Customery":
+				$tenure = 8;
+			break;
+			case "Tenant":
+				$tenure = 8;
+			break;
+		
+		}
+		$add_d = array("project_id"=>$project_id, "pap_ref"=>$data[0],"firstname"=>$firstname,"lastname"=>$lastname,"othername"=>$othername,"phone_contact"=>$data[2],"rate_per_acre"=>$data[5], "total_take"=>$data[4], "land_interest"=>$interest, "district_id"=>$district, "subcounty_id"=>$sub, "parish_id"=>$parish, "village_id"=>$village, "tenure"=>$tenure, "comment"=>$data[7]);
+		 if($data[0] != ""){
+			 if($db->add("tbl_paps", array("project_id", "pap_ref", "firstname", "lastname", "othername", "phone_contact", "rate_per_acre", "total_take", "land_interest", "district_id", "subcounty_id", "parish_id", "village_id", "tenure", "comment"), $add_d)){
+				$run++; $count++;   //,"pap_ref='".$data[0]."'")
+				//echo $run."<br/>";
+			}    
 		}else{
 			print_r($data); echo "<br/>";
 		}   
 		
 	}
-	//echo $run ." - ". count($data);
+	echo $run ." - ". count($data);
 	/* $import= "INSERT into  members(InvoiceID, InvoiceType, CustID, dtInvoice, OrigDocID, dtDue, cySaleOnly) values('$data[0]','$data[1]','$data[2]','$data[3]','$data[4]','$data[5]','$data[6]')";		
        mysql_query($import) or die(mysql_error());
      }

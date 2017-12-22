@@ -94,9 +94,14 @@ if (!$projectDetails) {
                             <!-- Coverage section -->
                             <div id="tab-3" class="tab-pane active">
                                 <div class="col-lg-5">
+									<?php 
+									if(isset($_SESSION['admin']) || isset($_SESSION['management_staff'])){ ?>
                                     <div class="action-buttons">
                                         <a  data-toggle="modal" href="#projectCoverageModal"><i class="fa fa-plus"></i> Add District</a>
                                     </div>
+									<?php 
+									}
+									?>
                                     <div class="modal fade" id="projectCoverageModal">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

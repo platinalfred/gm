@@ -193,35 +193,47 @@ if(!isset($_SESSION['logged'])){
                         <li>
                             <a class="current" href="dashboard.php"><span aria-hidden="true" class="hightop-home"></span>Dashboard</a>
                         </li>
-						<li>
-                            <a href="#">
-                                <span aria-hidden="true" class="hightop-charts"></span>Reports</a>
-                        </li>
-                        <li>
-                            <a href="administration.php"><span aria-hidden="true" class="hightop-feed"></span>Administration</a>
-                        </li>
-						<li>
-                            <a href="administration.php"><span aria-hidden="true" class="hightop-feed"></span> Assignments</a>
-                        </li>
-						<li>
-                            <a href="land-acquisition.php">
-                                <span aria-hidden="true" class="hightop-forms"></span>Land Acquisition
-							</a>
-                        </li>
-                        <li >
-                            <a data-toggle="dropdown" href="#">
-                                <span aria-hidden="true" class="hightop-pages"></span>Income
-							</a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span aria-hidden="true" class="hightop-pages"></span>Expenses</a>
-                        </li>
-                        <li>
-							<a  href="settings.php">
-                                <span aria-hidden="true" class="hightop-gear"></span>Settings</b>
-							</a>
-                        </li>
+						<?php 
+						if(isset($_SESSION['admin']) || isset($_SESSION['management_staff'])){ ?>
+							<li>
+								<a href="#">
+									<span aria-hidden="true" class="hightop-charts"></span>Reports</a>
+							</li>
+							<li>
+								<a href="administration.php"><span aria-hidden="true" class="hightop-feed"></span>Administration</a>
+							</li>
+							<li>
+								<a href="administration.php"><span aria-hidden="true" class="hightop-feed"></span> Assignments</a>
+							</li>
+							<li>
+								<a href="land-acquisition.php">
+									<span aria-hidden="true" class="hightop-forms"></span>Land Acquisition
+								</a>
+							</li>
+							<li >
+								<a data-toggle="dropdown" href="#">
+									<span aria-hidden="true" class="hightop-pages"></span>Income
+								</a>
+							</li>
+							<li>
+								<a href="">
+									<span aria-hidden="true" class="hightop-pages"></span>Expenses</a>
+							</li>
+							<li>
+								<a  href="settings.php">
+									<span aria-hidden="true" class="hightop-gear"></span>Settings</b>
+								</a>
+							</li>
+						<?php 
+						}else{ ?>
+							<li>
+								<a href="land-acquisition.php">
+									<span aria-hidden="true" class="hightop-forms"></span>Land Acquisition
+								</a>
+							</li>
+							<?php
+						}
+						?>
                     </ul>
                 
                 </div>

@@ -134,22 +134,9 @@
 									</div>
 							</fieldset>
 						</div>
-						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
-						<div class="col-lg-6">
-							<fieldset>
-								<legend>Way Leave</legend>
-									<div class="form-group" >
-										<div class="col-md-8">
-											<input name="way_leave" type="text" class="form-control" data-msg-required="Required" />
-										</div>
-										<label class="control-label col-md-4">Acres</label>
-									</div>
-							</fieldset>
-						</div>
 						<?php 
-						endif;
 						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
-							<div class="col-lg-6">
+							<div class="col-lg-3">
 								<fieldset>
 									<legend>Right of way</legend>
 										<div class="form-group" >
@@ -162,6 +149,21 @@
 							</div>
 						<?php 
 						endif;
+						if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
+						<div class="col-lg-3">
+							<fieldset>
+								<legend>Way Leave</legend>
+									<div class="form-group" >
+										<div class="col-md-8">
+											<input name="way_leave" type="text" class="form-control" data-msg-required="Required" />
+										</div>
+										<label class="control-label col-md-4">Acres</label>
+									</div>
+							</fieldset>
+						</div>
+						<?php 
+						endif;
+						
 						if( $projectDetails['project_category_unit'] == 5 ): ?>
 							<div class="col-lg-6">
 								<fieldset>
@@ -213,12 +215,12 @@
 					<div class="col-lg-2">
 						<fieldset>
 							<legend>Chainage</legend>
-								<div class="form-group" >
-									<label class="control-label col-md-5">Km</label>
-									<div class="col-md-7">
-										<input name="chainage" type="text" class="form-control" data-msg-required="Chainage point must be entered"  />
-									</div>
+							<div class="form-group" >
+								<label class="control-label col-md-5">Km</label>
+								<div class="col-md-7">
+									<input name="chainage" type="text" class="form-control" data-msg-required="Chainage point must be entered"  />
 								</div>
+							</div>
 						</fieldset>
 					</div>
 					

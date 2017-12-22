@@ -203,10 +203,12 @@ $all_ditricts = $districts->findAll();
 														<th id="county0">&nbsp;</th>
 														<th id="county1">&nbsp;</th>
 														<th></th>
+														<th></th>
 													</tr>
 													<tr>
 														<th>County Name</th>
 														<th>District Name</th>
+														<th>Id</th>
 														<th></th>
 													</tr>
 												</thead>
@@ -277,11 +279,13 @@ $all_ditricts = $districts->findAll();
 														<!--<th id="subcounty1">&nbsp;</th>-->
 														<th id="subcounty1">&nbsp;</th>
 														<th></th>
+														<th></th>
 													</tr>
 													<tr>
 														<th>Subcounty</th>
 														<!--<th >County</th>-->
 														<th >District</th>
+														<th>Id</th>
 														<th></th>
 													</tr>
 												</thead>
@@ -359,12 +363,14 @@ $all_ditricts = $districts->findAll();
 														<!--<th id="parish2">&nbsp;</th>-->
 														<th id="parish2">&nbsp;</th>
 														<th></th>
+														<th></th>
 													</tr>
 													<tr>
 														<th>Parish</th>
 														<th>Subcounty</th>
 														<!--<th >County</th>-->
 														<th >District</th>
+														<th></th>
 														<th></th>
 													</tr>
 												</thead>
@@ -447,6 +453,7 @@ $all_ditricts = $districts->findAll();
 														<!--<th id="village3">&nbsp;</th>-->
 														<th id="village3">&nbsp;</th>
 														<th></th>
+														<th></th>
 													</tr>
 													<tr>
 														<th>Village</th>
@@ -454,6 +461,7 @@ $all_ditricts = $districts->findAll();
 														<th>Subcounty</th>
 														<!--<th >County</th>-->
 														<th >District</th>
+														<th>Id</th>
 														<th></th>
 													</tr>
 												</thead>
@@ -889,12 +897,14 @@ $all_ditricts = $districts->findAll();
 														<th id="selector2">&nbsp;</th>
 														<th></th>
 														<th></th>
+														<th></th>
 													</tr>
 													<tr>
 														<th>District</th>
 														<th>Crop/Tree Type</th>
 														<th>Crop Description</th>
 														<th>Rate</th>
+														<th>Id</th>
 														<th></th>
 														
 													</tr>
@@ -904,6 +914,7 @@ $all_ditricts = $districts->findAll();
 													<tr>
 														<th>Title</th>
 														<th>Description</th>
+														<th></th>
 														<th></th>
 														<th></th>
 														<th></th>

@@ -24,8 +24,8 @@ class Village extends Db {
 		$result = $this->getfrec(self::$table_name, "parish_name", "id=".$id, "", "");
 		return !empty($result) ? $result['parish_name'] : false;
 	}
-	public function doesVillageExist($data){
-		if($this->countRecords(self::$table_name, "village_name='".$data['village_name']."'") > 0){
+	public function doesVillageExist($data, $parish_id){
+		if($this->countRecords(self::$table_name, "parish_id=".$parish_id." AND village_name='".$data['village_name']."'") > 0){
 			return true;
 		}
 		return false;

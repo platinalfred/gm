@@ -56,6 +56,7 @@ if(isset($_POST['tbl'])){
 			$output = json_encode($response);
 		break;
 		case "village":
+			//print_r($data);
 			$village = new Village();
 			$response = array();
 			if($data['id'] != ""){
@@ -65,12 +66,14 @@ if(isset($_POST['tbl'])){
 					$response =  "Village data could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				if($village->doesVillageExist($data)){
+				if(!$village->doesVillageExist($data, $data['parish'])){
 					if($village->addVillage($data)){
 						$response = "success";
 					}else{ 
 						$response = "Village data could not be added. Please try again or contact admin for assistance!";
 					}
+				}else{
+					$response = "Village already exists";
 				}
 			}
 			$output = $response;

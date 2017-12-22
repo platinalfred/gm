@@ -62,9 +62,12 @@ $(document).ready(function(){
 					{ data: 'project_reference'},
 					{ data: 'project_category'},
 					{ data: 'disturbance_allowance'},
-					{ data: 'date_added'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a href="report_module.php?id='+data+'" title="View Report"><i class="fa fa-bar-chart-o"></i> View Report</a>';}},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#projectModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-land_acquistion_category-landAcquisition" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
+					{ data: 'date_added'}
+					<?php  if(isset($_SESSION['admin']) || isset($_SESSION['management_staff'])){ ?>,
+						{ data: 'id', render: function ( data, type, full, meta ) {return '<a href="report_module.php?id='+data+'" title="View Report"><i class="fa fa-bar-chart-o"></i> View Report</a>';}}, 
+						{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#projectModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-land_acquistion_category-landAcquisition" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
+					<?php 
+					} ?>
 					] ,
 			  buttons: [
 				{

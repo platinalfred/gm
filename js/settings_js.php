@@ -361,6 +361,7 @@ $(document).ready(function(){
 			  } */],
 			  "autoWidth": false,
 			  columns:[ { data: 'district_name' },
+						{ data: 'id' },
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" href="#districts"  id="'+data+'-tblDistrict-tblDistricts" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-tblDistrict-tblDistricts" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
 					
 					] ,
@@ -518,7 +519,7 @@ $(document).ready(function(){
 			  } ],*/
 			  "autoWidth": false,
 			  columns:[ { data: 'subcounty_name' },
-					{ data: 'district_name'},
+					{ data: 'district_name'},{ data: 'id'},
 					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#subcounty"  id="'+data+'-tblSubCounty-tblSubCountys" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-tblSubCounty-tblSubCountys" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>';}}
 					
 					] ,
@@ -597,7 +598,7 @@ $(document).ready(function(){
 			  "autoWidth": false,
 			  columns:[ { data: 'parish_name' },
 					{data: 'subcounty_name' },
-					{ data: 'district_name'},
+					{ data: 'district_name'},{ data: 'id'},
 					{ data: 'id', render: function ( data, type, full, meta ) { 					
 						return '<a data-toggle="modal" href="#parish"  id="'+data+'-tblParish-tblParishs" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-tblParish-tblParishs" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>'; 
 					}}
@@ -680,6 +681,7 @@ $(document).ready(function(){
 					{ data: 'parish_name' },
 					{data: 'subcounty_name' },
 					{ data: 'district_name'},
+					{ data: 'id'},
 					{ data: 'id', render: function ( data, type, full, meta ) { 
 						
 					return '<a data-toggle="modal" href="#villages"  id="'+data+'-tblVillage-tblVillages" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><span id="'+data+'-tblVillage-tblVillages" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></span>'; }}
@@ -1168,7 +1170,7 @@ $(document).ready(function(){
 					{ data: 'cropdescription'},//, render: function ( data, type, full, meta ) {return full.firstname + ' ' + full.othername + ' ' + full.lastname;}
 					{ data: 'rate', function ( data, type, full, meta ) { return curr_format(data); }},
 					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
-					
+					{ data: 'id'},
 					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#districtrate"  id="'+data+'-district_rate-tblDistrictCropRate" data-toggle="modal"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-cropdescription_rate-tblDistrictCropRate" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>'; }}
 					
 					] ,
