@@ -50,16 +50,16 @@
                     <th>Diminution(%)</th>
                 <?php endif; ?>
                 <?php
-                //Way Leave or both ROW and WL
-                if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4):
-                    ?>
-                    <th>WL Land Value</th>
-                <?php endif; ?>
-                <?php
                 //Right of Way or Both ROW and WL
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4):
                     ?>
                     <th>ROW Land Value</th>
+                <?php endif; ?>
+                <?php
+                //Way Leave or both ROW and WL
+                if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4):
+                    ?>
+                    <th>WL Land Value</th>
                 <?php endif; ?>
                 <?php
 //Total land value, applies to ROW, (Both ROW and WL) and Total Take/Size
@@ -283,7 +283,7 @@
                     <th><?php echo number_format($row_acreage,4)?></th>
                 <?php endif; ?>
                 <?php if ($projectDetails['project_category_unit'] == 5 || $projectDetails['project_category_unit'] == 4): ?>
-                    <th><?php echo number_format($total_take_acreage,4)?></th>
+                    <th><?php echo number_format($total_take_acreage,4); ?></th>
                     <?php endif; ?>
                 <?php 
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
@@ -298,19 +298,19 @@
                 //Right of Way or Both ROW and WL
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4):
                     ?>
-                    <th><?php echo number_format($row_land_value); ?></th>
+                    <th><?php echo number_format($total_row_land_value); ?></th>
                 <?php endif; ?>
                 <?php
                 //Way Leave or both ROW and WL
                 if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
-                    <th><?php echo number_format($wl_land_value); ?></th>
+                    <th><?php echo number_format($total_wl_land_value); ?></th>
                 <?php endif; ?>
                 <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>	
                 <th><?php echo number_format($project_land_value); ?></th>
                 <?php endif; ?>
                 <th><?php echo number_format($total_properties_value); ?></th>
                 <th><?php echo number_format($total_crops_value)?></th>
-                <th><?php $gsubTotal = $project_land_value+$total_crops_value+$total_properties_value; echo number_format($gsubTotal)?></th>
+                <th><?php $gsubTotal = $project_land_value + $total_crops_value + $total_properties_value; echo number_format($gsubTotal); ?></th>
                 <th><?php $diminutionVal = $gsubTotal * ($projectDetails['disturbance_allowance'] / 100); echo number_format( $diminutionVal )?></th>
                 <th><?php echo number_format($gsubTotal+$diminutionVal)?></th>
                 <th>&nbsp;</th>
