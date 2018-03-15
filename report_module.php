@@ -6,7 +6,6 @@ include("includes/header.php");
 if (!isset($_GET['id'])) {
     header('Location: error_404.php');
 }
-require_once('lib/LandAcquisition.php');
 $land_acquisition_object = new LandAcquisition();
 $projectDetails = $land_acquisition_object->findById($_GET['id']);
 //if the request comes up empty, redirect to the invalid page-title
@@ -22,7 +21,7 @@ if (!$projectDetails) {
         $pap_crop_tree_obj = new PAP_CropTree();
         $pap_improvement_obj = new PAP_Improvement();
         //Project Report
-        $project_paps = $paps_obj->findAll("project_id = " . $_GET['id']);
+        $project_paps = $paps_obj->findAll("`project_id` = " . $_GET['id']);
         ?>
         <div class="row">
             <div class="col-lg-12">
@@ -33,7 +32,9 @@ if (!$projectDetails) {
                            
                         </ul>
                         <div class="tab-content">
-                             <?php include("project_report.php"); ?>
+                             <?php 
+                            //print_r($project_paps);
+                            include("project_report.php"); ?>
                         </div>
                     </div>
                 </div>

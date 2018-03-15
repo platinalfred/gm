@@ -20,7 +20,7 @@ class Parish extends Db {
 		return !empty($result) ? $result['parish_name'] : false;
 	}
 	public function doesParishExist($data){
-		if($this->countRecords(self::$table_name, "parish_name='".$data['parish_name']."'") > 0){
+		if($this->countRecords(self::$table_name, "parish_name='".$data['parish_name']."' AND subcounty=".$data['subcounty']." AND active =1") > 0){
 			return true;
 		}
 		return false;

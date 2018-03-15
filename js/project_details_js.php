@@ -694,11 +694,11 @@ $('table tbody').on('click', '.delete_me', function () {
 			data = dt.row($(row).prev()).data();
 		}
 		$.ajax({ // create an AJAX call...
-			url: "delete.php?id="+data.id+"&tbl="+$(tbl).attr("id"), // the file to call
+			url: "delete.php?id="+data.pap_d+"&tbl="+$(tbl).attr("id"), // the file to call
 			success: function(response) { // on success..
 				showStatusMessage(response, "success");
 				setTimeout(function(){
-					dt.ajax.reload();
+					dt.ajax.reload(null,false);
 				}, 300);
 			}			
 		}); 

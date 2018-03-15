@@ -30,7 +30,7 @@ class ProjectAffectedPerson extends Db {
 		
 		$fields = "`tbl_paps`.`id`,`tbl_paps`.`id` as pap_d, `project_id`, `pap_ref`, `photo_url` `profile_pic`, `firstname`, `othername`, `lastname`, `phone_contact`, `district_id`, `district_name`, `county_id`, `subcounty_id`, `subcounty_name`, `tenure`, `tenure`.`title` `tenure_desc`, `comment`, `parish_id`, `parish_name` ,`village_id`, `village_name`, `way_leave`, `rightofway`, `total_take`, `chainage`, `crop_tree_cnt`, `crop_tree_sum`,`land_interest`,`rate_per_acre`,`diminution_rate`, `improvement_cnt`, `improvement_sum`";
 		$result_array = $this->getfarray($tables, $fields, $where, "pap_ref ASC", "");
-		return !empty($result_array) ? $result_array : false;
+		return $result_array;
 	}
 	public function getSelectList(){
 		$fields = "`id`, CONCAT(`lastname`,' ',`firstname`,' ',`othername`) `client_names`";
@@ -50,9 +50,11 @@ class ProjectAffectedPerson extends Db {
 	public function updatePap($data){
 		$id = $data['id'];
 		unset($data['id'], $data['tbl']);
+		unset($data['created_by']);
 		if(isset($data['rate_per_acre']) && $data['rate_per_acre'] != ""){
 			$data['rate_per_acre'] = $this->stripCommasOnNumber($data['rate_per_acre']);
 		}
+		
 		if($this->updateSpecial(self::$table_name, $data, "id=".$id)){
 			return true;
 		}

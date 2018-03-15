@@ -1,4 +1,7 @@
-<?php session_start();?>
+<?php 
+session_start();
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -16,37 +19,8 @@
     <script src="js/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="javascripts/bootstrap.min.js" type="text/javascript"></script>
-    <script src="javascripts/raphael.min.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.mousewheel.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.vmap.min.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.vmap.sampledata.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.vmap.world.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.bootstrap.wizard.js" type="text/javascript"></script>
-    <script src="javascripts/fullcalendar.min.js" type="text/javascript"></script>
-    <script src="javascripts/gcal.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="javascripts/datatable-editable.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.easy-pie-chart.js" type="text/javascript"></script>
-    <script src="javascripts/excanvas.min.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.isotope.min.js" type="text/javascript"></script>
-    <script src="javascripts/modernizr.custom.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.fancybox.pack.js" type="text/javascript"></script>
-    <script src="javascripts/select2.js" type="text/javascript"></script>
-    <script src="javascripts/styleswitcher.js" type="text/javascript"></script>
-    <script src="javascripts/wysiwyg.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.inputmask.min.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.validate.js" type="text/javascript"></script>
-    <script src="javascripts/bootstrap-fileupload.js" type="text/javascript"></script>
-    <script src="javascripts/bootstrap-datepicker.js" type="text/javascript"></script>
-    <script src="javascripts/bootstrap-timepicker.js" type="text/javascript"></script>
-    <script src="javascripts/bootstrap-colorpicker.js" type="text/javascript"></script>
-    <script src="javascripts/bootstrap-switch.min.js" type="text/javascript"></script>
-    <script src="javascripts/daterange-picker.js" type="text/javascript"></script>
-    <script src="javascripts/date.js" type="text/javascript"></script>
-    <script src="javascripts/morris.min.js" type="text/javascript"></script>
-    <script src="javascripts/skycons.js" type="text/javascript"></script>
-    <script src="javascripts/jquery.sparkline.min.js" type="text/javascript"></script>
-    <script src="javascripts/main.js" type="text/javascript"></script>
+	
+    <script src="javascripts/jquery.validate.js" type="text/javascript"></script>]
     <script src="javascripts/respond.js" type="text/javascript"></script>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 </head>
@@ -62,10 +36,18 @@
 		if($staff->getLogin($email, $password)){
                      /*print_r($_SESSION);
                      die();*/
-			if(isset($_SESSION['field_officer'])){
-				header("Location:land-acquisition.php");
-			}else{
-				header("Location:main.php");
+			if(isset($_SESSION['field_officer'])){ ?>
+				<script>
+					window.location = "land-acquisition.php";
+				</script>
+				<?php
+				//header("Location:land-acquisition.php");
+			}else{ ?>
+				<script>
+				window.location = "main.php";
+				
+				</script>
+				<?php
 			}
 			
 		}else{
@@ -121,6 +103,9 @@
     <!-- End Login Screen -->
 	<script>
 		$(document).ready(function(){
+			$(window).load(function() {
+			  return $(".login-container").addClass("active");
+			});
 			function showStatusMessage(message='', display_type='success'){
 				new PNotify({
 					  title: "Action response",
@@ -213,7 +198,6 @@
 					
 				}
 			});
-
 			return false; */
 			//});
 		}

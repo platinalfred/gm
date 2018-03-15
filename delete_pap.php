@@ -34,25 +34,29 @@ if(isset($_POST['submit'])){
 			continue;
 		} */
 		$tenure = "";
-		switch($data[2]){
-			case "Mailo":
+		switch(strtolower(trim($data[2]))){
+			case "mailo":
 				$tenure = 7;
 			break;
-			case "Customery":
+			case "customary":
 				$tenure = 8;
 			break;
-			case "Tenant":
+			case "tenant":
+				$tenure = 13;
+			break;
+			case "kibanja":
 				$tenure = 11;
 			break;
-			case "Licencee":
+			case "licencee":
 				$tenure = 9;
 			break;
 			
-			case "Freehold":
+			case "freehold":
 				$tenure = 10;
 			break;
 		
 		}
+		//
 		$interest =  (int) substr($data[1], 0, -1);
 		/* $add_d = array("project_id"=>$project_id, "pap_ref"=>$data[0],"firstname"=>$firstname,"lastname"=>$lastname,"othername"=>$othername,"phone_contact"=>$data[2],"rate_per_acre"=>$data[5], "total_take"=>$data[4], "land_interest"=>$interest, "district_id"=>$district, "subcounty_id"=>$sub, "parish_id"=>$parish, "village_id"=>$village, "tenure"=>$tenure, "comment"=>$data[7]); */
 		 if($data[0] != ""){
@@ -60,7 +64,7 @@ if(isset($_POST['submit'])){
 				$run++; $count++;   //,"pap_ref='".$data[0]."'")
 				//echo $run."<br/>";
 			} */
-			if($db->update("tbl_paps", array("land_interest", "comment"), array("land_interest"=>$interest, "tenure"=>$tenure), "pap_ref='".$data[0]."'")){
+			if($db->update("tbl_paps", array("comment"), array("comment"=>$data[1]), "pap_ref='".$data[0]."'")){
 				$run++; $count++;   //,"pap_ref='".$data[0]."'")
 				//echo $run."<br/>";
 			}    

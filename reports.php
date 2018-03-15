@@ -174,6 +174,7 @@ include("includes/header.php");
 			</div>
 		</div>
 	</div>
+	<?php endif; ?>
 </div>
 <?php
 include("js/project_details_js.php");

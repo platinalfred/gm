@@ -52,6 +52,7 @@ class Db{
 	function count($table, $where) {
 		if ($where != "") 	$sel = "SELECT COUNT(*) AS cnt FROM ".$table." WHERE ".$where;
 		else $sel = "SELECT COUNT(*) AS cnt FROM ".$table;
+		//echo $sel;
 		$res  = $this->conn->query($sel);
 		$q = $res->fetch_array();	
 		$cnt = $q{'cnt'};
@@ -429,6 +430,7 @@ class Db{
 	function countRecords($table, $where) {
 		if ($where != "") 	$sel = "SELECT COUNT(*) AS cnt FROM ".$table." WHERE ".$where;
 		else $sel = "SELECT COUNT(*) AS cnt FROM ".$table;
+		//	echo $sel;
 		$res = $this->conn->query($sel);	
 		if($res){
 			$q = $res->fetch_array();
@@ -497,7 +499,9 @@ class Db{
 	function addMultiple($table, $fields, $values){
 		//the arrangement of keys in $fields array must match that of the keys in the $values array
 		$fi = implode(",", $fields);
+		
 		$ins = "INSERT INTO ".$table. " (".$fi.") VALUES ".implode(',', array_map("self::implode_array", $values));
+		//echo $ins;
 		$inse = $this->conn->query($ins);
 		if($inse){
 			return true;

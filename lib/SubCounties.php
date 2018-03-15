@@ -32,7 +32,7 @@ class SubCounties extends Db {
 		return false;
 	}
 	public function doesSubCountyExist($data){
-		if($this->countRecords(self::$table_name, "subcounty_name='".$data['subcounty_name']."'") > 0){
+		if($this->countRecords(self::$table_name, "subcounty_name='".$data['subcounty_name']."' AND district=".$data['district']." AND active != 0") > 0){
 			return true;
 		}
 		return false;

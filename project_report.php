@@ -66,7 +66,7 @@
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                     ?>
                     <th>LAND VALUE (U.Shs)</th>
-<?php endif; ?>
+                <?php endif; ?>
                 <th>IMPROVEMENT VALUE(U.Shs)</th>
                 <th>CROP/TREE VALUE(U.Shs)</th>
                 <th>SUB. TOTAL(U.Shs)</th>
@@ -79,20 +79,20 @@
             <?php //current_papId
             $pap_id = 0;
             $total_take_acreage = $wl_acreage = $row_acreage = 0;
+            $row_land_value = $wl_land_value = 0;
             $project_land_value = $total_row_land_value = $total_wl_land_value = $total_crops_value = $total_properties_value = 0;
-			if($project_paps){
-				foreach ($project_paps as $key => $project_pap):
-					//lets get the crops and properties for this PAP
-					$pap_crops = $pap_crop_tree_obj->findPapCropTrees("pap_id=".$project_pap['id']);
-					$pap_properties = $pap_improvement_obj->findPapImprovements("pap_id=".$project_pap['id']);
-					//total count of the crops
-					$crops_count = $properties_count = $max_crop_props = 0;
-					if($pap_crops !== FALSE){
-						$crops_count = count($pap_crops);
-					}
-					if($properties_count !== FALSE){
-						$properties_count = count($pap_properties);
-					}
+            foreach ($project_paps as $key => $project_pap):
+                //lets get the crops and properties for this PAP
+                $pap_crops = $pap_crop_tree_obj->findPapCropTrees("pap_id=".$project_pap['id']);
+                $pap_properties = $pap_improvement_obj->findPapImprovements("pap_id=".$project_pap['id']);
+                //total count of the crops
+                $crops_count = $properties_count = $max_crop_props = 0;
+                if($pap_crops !== FALSE){
+                    $crops_count = count($pap_crops);
+                }
+                if($properties_count !== FALSE){
+                    $properties_count = count($pap_properties);
+                }
 
 					//max count of properties or trees for the pap
 					$max_crop_props_cnt = ($crops_count === $properties_count)?$crops_count:($crops_count > $properties_count?$crops_count:$properties_count);
@@ -261,9 +261,7 @@
 						<td>&nbsp;</td>
 						
 					</tr>
-                <?php endforeach; 
-			}
-			?>
+                <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr>
@@ -279,13 +277,13 @@
                 <th><?php echo number_format($total_crops_value)?></th>
                 <td>&nbsp;</td>
                 <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
-                    <th><?php echo number_format($wl_acreage*1,4)?></th>
+                    <th><?php echo number_format($wl_acreage,4)?></th>
                 <?php endif; ?>
                 <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4): ?>
-                    <th><?php echo number_format($row_acreage*1,4)?></th>
+                    <th><?php echo number_format($row_acreage,4)?></th>
                 <?php endif; ?>
                 <?php if ($projectDetails['project_category_unit'] == 5 || $projectDetails['project_category_unit'] == 4): ?>
-                    <th><?php echo number_format($total_take_acreage*1,4)?></th>
+                    <th><?php echo number_format($total_take_acreage,4)?></th>
                     <?php endif; ?>
                 <?php 
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):

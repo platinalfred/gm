@@ -165,7 +165,7 @@ if(isset($_GET['tbl'])){
 				$msg =  "Success";
 			}
 		break;
-		case "tblCounties":
+		case "tblSubCounty":
 			if($db->turnOff("tbl_county", "id=".$_GET['id'])){
 				$msg =  "Success";
 			}
@@ -181,6 +181,11 @@ if(isset($_GET['tbl'])){
 		break;
 		case "tblVillage":
 			if($db->turnOff("tbl_village", "id=".$_GET['id'])){
+				$msg =  "Success";
+			}
+		break;
+		case "tblComments":
+			if($db->del("tbl_comment", "id=".$_GET['id'])){
 				$msg =  "Success";
 			}
 		break;

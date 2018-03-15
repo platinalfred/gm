@@ -6,59 +6,59 @@
             </div>
             <div class="widget-content padded">
                 <form  id="tblClientForm"action="#" method="post" class="form-horizontal">
-                    <input type="hidden" name="tbl" value="tblClient">
-                    <input type="hidden" name="id" >
+					<input type="hidden" name="tbl" value="tblClient">
+					<input type="hidden" name="id" >
                     <div class="form-group" >
                         <label class="control-label col-md-4">Client Names</label>
                         <div class="col-md-7">
-                            <textarea name="client_names" class="form-control" rows="2" required ></textarea>
+							<textarea name="client_names" class="form-control" rows="2" required ></textarea>
                         </div>
                     </div>
-
+					
                     <div class="form-group">
                         <label class="control-label col-md-4">Primary phone contact</label>
                         <div class="col-md-7">
-                            <input name="phone_contact1" type="text" class="form-control" data-rule-phoneUg="true)" data-msg-phoneUg="Start number with 07 or +256" data-msg-required="Primary phone contact is required" required />
+							<input name="phone_contact1" type="text" class="form-control" data-rule-phoneUg="true)" data-msg-phoneUg="Start number with 07 or +256" data-msg-required="Primary phone contact is required" required />
                         </div>
                     </div>
-
+					
                     <div class="form-group">
                         <label class="control-label col-md-4">Secondary phone contact</label>
                         <div class="col-md-7">
-                            <input name="phone_contact2" type="text" class="form-control" data-rule-phoneUg="true)" data-msg-phoneUg="Start number with 07 or +256" />
+							<input name="phone_contact2" type="text" class="form-control" data-rule-phoneUg="true)" data-msg-phoneUg="Start number with 07 or +256" />
                         </div>
                     </div>
-
+					
                     <div class="form-group">
                         <label class="control-label col-md-4">Primary email contact</label>
                         <div class="col-md-7">
-                            <input name="email_contact1" type="email" class="form-control" required />
+							<input name="email_contact1" type="email" class="form-control" required />
                         </div>
                     </div>
-
+					
                     <div class="form-group">
                         <label class="control-label col-md-4">Secondary email contact</label>
                         <div class="col-md-7">
-                            <input name="email_contact2" type="email" class="form-control" />
+							<input name="email_contact2" type="email" class="form-control" />
                         </div>
                     </div>
-
+					
                     <div class="form-group">
                         <label class="control-label col-md-4">Website</label>
                         <div class="col-md-7">
-                            <input name="website" type="url" class="form-control" />
+							<input name="website" type="url" class="form-control" />
                         </div>
                     </div>
-                    <div class="form-group">
+					<div class="form-group">
                         <label class="control-label col-md-4">Postal Address</label>
                         <div class="col-md-7">
-                            <textarea name="postal_address" class="form-control" rows="2" required ></textarea>
+							<textarea name="postal_address" class="form-control" rows="2" required ></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
+					<div class="form-group">
                         <label class="control-label col-md-4">Physical Address</label>
                         <div class="col-md-7">
-                            <textarea name="physical_address" class="form-control" rows="2" required ></textarea>
+							<textarea name="physical_address" class="form-control" rows="2" required ></textarea>
                         </div>
                     </div>
                     <div class="form-group">
