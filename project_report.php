@@ -34,8 +34,8 @@
                     <th>RIGHT OF WAY</th>
                 <?php endif; ?>
                 <?php
-                //Total Take/Size Project
-                if ($projectDetails['project_category_unit'] == 5):
+                //Total Take/Size OR Both ROW and WL Project
+                if ($projectDetails['project_category_unit'] == 5 || $projectDetails['project_category_unit'] == 4):
                     ?>
                     <th>TOTAL SIZE</th>
                 <?php endif; ?>
@@ -114,16 +114,22 @@
 						<td><?php if(isset($pap_crops[$i])){ $crop_value = $pap_crops[$i]['old_rate'] * $pap_crops[$i]['quantity']; echo number_format($crop_value); }?></td>
 						<td><?php echo ($i === 0)?$project_pap['tenure_desc']:""; ?></td>
 						<?php
+						//ROW or Both ROW and WL
+						if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4):
+							?>
+							<td><?php if($i === 0){ echo $project_pap['rightofway']*1;  $row_acreage += $project_pap['rightofway']; } ?></td>
+						<?php endif; ?>
+						<?php
 						//Way Leave or both ROW and WL
 						if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4):
 							?>
 							<td><?php if($i === 0){ echo $project_pap['way_leave']*1;  $wl_acreage += $project_pap['way_leave']; } ?></td>
 						<?php endif; ?>
 						<?php
-						//ROW or Both ROW and WL
-						if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4):
+						//Dimunintion - Both ROW and WL Project
+						if($projectDetails['project_category_unit'] == 4):
 							?>
-							<td><?php if($i === 0){ echo $project_pap['rightofway']*1;  $row_acreage += $project_pap['rightofway']; } ?></td>
+							<td><?php if($i === 0){ echo ($project_pap['rightofway'] + $project_pap['way_leave'] ) * 1;  $total_take_acreage += ($project_pap['rightofway'] + $project_pap['way_leave'] ); } ?></td>
 						<?php endif; ?>
 						<?php
 						//Total Take/Size Project
@@ -139,7 +145,7 @@
 						endif;
 						if ($projectDetails['project_category_unit'] == 4):
 							?>
-							<td><?php echo ($i === 0)? number_format($project_pap['diminution_rate']): ""; ?>%</td>
+							<td><?php echo ($i === 0)? (number_format($project_pap['diminution_rate'])."%"): ""; ?></td>
 						<?php endif; ?>
 						<?php
 						//Way Leave or both ROW and WL
@@ -202,20 +208,20 @@
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<?php
-						//Way Leave or both ROW and WL
-						if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4):
-							?>
-							<td>&nbsp;</td>
-						<?php endif; ?>
-						<?php
 						//ROW or Both ROW and WL
 						if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4):
 							?>
 							<td>&nbsp;</td>
 						<?php endif; ?>
 						<?php
+						//Way Leave or both ROW and WL
+						if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4):
+							?>
+							<td>&nbsp;</td>
+						<?php endif; ?>
+						<?php
 						//Total Take/Size Project
-						if ($projectDetails['project_category_unit'] == 5):
+						if ($projectDetails['project_category_unit'] == 5 || $projectDetails['project_category_unit'] == 4):
 							?>
 							<td>&nbsp;</td>
 						<?php endif; ?>
@@ -255,8 +261,7 @@
 						<td>&nbsp;</td>
 						
 					</tr>
-                <?php 
-				endforeach; 
+                <?php endforeach; 
 			}
 			?>
         </tbody>
@@ -274,41 +279,36 @@
                 <th><?php echo number_format($total_crops_value)?></th>
                 <td>&nbsp;</td>
                 <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
-                    <th><?php echo number_format($wl_acreage)?></th>
+                    <th><?php echo number_format($wl_acreage*1,4)?></th>
                 <?php endif; ?>
                 <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4): ?>
-                    <th><?php echo number_format($row_acreage)?></th>
+                    <th><?php echo number_format($row_acreage*1,4)?></th>
                 <?php endif; ?>
-                <?php if ($projectDetails['project_category_unit'] == 5): ?>
-                    <th><?php echo number_format($total_take_acreage)?></th>
+                <?php if ($projectDetails['project_category_unit'] == 5 || $projectDetails['project_category_unit'] == 4): ?>
+                    <th><?php echo number_format($total_take_acreage*1,4)?></th>
                     <?php endif; ?>
                 <?php 
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                     ?>
                     <th>&nbsp;</th>	
                     <th>&nbsp;</th>
-                    <?php
-                endif;
-                if ($projectDetails['project_category_unit'] == 4):
-                ?>	
-                    <th>&nbsp;</th>
                 <?php endif; ?>
-                <?php
-                //Way Leave or both ROW and WL
-                if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4):
-                    ?>
-                    <th><?php echo number_format($wl_land_value); ?></th>
+                <?php if ($projectDetails['project_category_unit'] == 4): ?>
+                    <th>&nbsp;</th>	
                 <?php endif; ?>
                 <?php
                 //Right of Way or Both ROW and WL
                 if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4):
                     ?>
                     <th><?php echo number_format($row_land_value); ?></th>
+                <?php endif; ?>
                 <?php
-                endif;
-                if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
-                ?>	
-                    <th><?php echo number_format($project_land_value); ?></th>
+                //Way Leave or both ROW and WL
+                if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
+                    <th><?php echo number_format($wl_land_value); ?></th>
+                <?php endif; ?>
+                <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>	
+                <th><?php echo number_format($project_land_value); ?></th>
                 <?php endif; ?>
                 <th><?php echo number_format($total_properties_value); ?></th>
                 <th><?php echo number_format($total_crops_value)?></th>
@@ -317,8 +317,7 @@
                 <th><?php echo number_format($gsubTotal+$diminutionVal)?></th>
                 <th>&nbsp;</th>
             </tr>
-        
-		</tfoot>
+	</tfoot>
     </table>
 </div>
 </div>

@@ -266,12 +266,17 @@ $(document).ready(function(){
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
 						{ data: 'phone_contact'},
 						{ data: 'chainage'},
-						<?php if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
-							{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data) *1 :0;}},
+						<?php 
+						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
+							{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data*1):0;}},
 						<?php 
 						endif;
-						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
-							{ data: 'rightofway', render: function( data, type, full, meta ) {return data?curr_format(data)*1:0;}},
+                                                if( $projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4 ):?>
+							{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data *1) :0;}},
+						<?php 
+						endif;
+                                                if( $projectDetails['project_category_unit'] == 1 && $projectDetails['project_category_unit'] == 2 ):?>
+							{ data: 'way_leave', render: function( data, type, full, meta ) {return curr_format(((data?data:0)+(full.rightofway?full.rightofway:0))*1);}},
 						<?php 
 						endif;
 						if( $projectDetails['project_category_unit'] == 5 ):?>
