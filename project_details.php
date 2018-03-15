@@ -272,13 +272,13 @@ if (!$projectDetails) {
                                                         <strong>Village:</strong> <?= $village_details['village_name'] ?> </div>
                                                 </div>
                                                 <div class="row">
-													<?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 3): ?>
-                                                        <div class="col-md-2"><strong><i class="fa fa-map-marker"></i> Way Leave</strong></div>
-                                                        <div class="col-md-2"><?php echo $pap_details['way_leave']; ?> acres</div>
-                                                    <?php endif; ?>
 													<?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 3): ?>
                                                         <div class="col-md-2"><strong><i class="fa fa-envelope"></i> Right of Way</strong></div>
                                                         <div class="col-md-2"><?php echo $pap_details['rightofway']; ?> acres</div>
+                                                    <?php endif; ?>
+													<?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 3): ?>
+                                                        <div class="col-md-2"><strong><i class="fa fa-map-marker"></i> Way Leave</strong></div>
+                                                        <div class="col-md-2"><?php echo $pap_details['way_leave']; ?> acres</div>
                                                     <?php endif; ?>
 													<?php if ($projectDetails['project_category_unit'] == 3): ?>
                                                         <div class="col-md-2"><strong><i class="fa fa-map-marker"></i> Total Take</strong></div>

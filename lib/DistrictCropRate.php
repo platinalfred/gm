@@ -9,7 +9,29 @@ class DistrictCropRate extends Db {
 		$result = $this->getrec(self::$table_name, "id=".$id, "", "");
 		return !empty($result) ? $result:false;
 	}
-	
+	public function copyDistrictRates($copy_from, $copy_to){
+		$results  = $result_array = $this->getarray(self::$table_name, "district_id=".$copy_from, "", "");
+		if($results){
+			$d = 0;
+			foreach($results as $single){
+				if(!$this->doesRateExist($copy_to, $single['croptree_id'])){
+					$d++;
+					$this->add(self::$table_name, array("district_id",  "croptree_id", "rate"), array("district_id"=>$copy_to,  "croptree_id"=>$single['croptree_id'], "rate"=>$single['rate']));
+					if($d == count($results)){
+						return true;
+					}
+				}
+			}
+			
+		}
+		return false;
+	}
+	public function doesRateExist($district_id, $croptree_id){
+		if($this->countRecords(self::$table_name, "district_id=".$district_id. " AND croptree_id = ".$croptree_id) > 0){
+			return true;
+		}
+		return false;
+	}
 	public function findDistrictCropRates($where = ""){
 		/*dr = tbl_district_croptree_rate
 		ctd = tree_crop_types_description
@@ -34,8 +56,10 @@ class DistrictCropRate extends Db {
 	public function addDistrictCropRate($data){
 		$fields =array_slice(self::$db_fields, 1);
 		$data['rate'] = $this->stripCommasOnNumber($data['rate']);
-		if($this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data))){
-			return true;
+		if(!$this->doesRateExist($data['district_id'], $data['croptree_id'])){
+			if($this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data))){
+				return true;
+			}
 		}
 		return false;
 	}

@@ -50,9 +50,11 @@ class ProjectAffectedPerson extends Db {
 	public function updatePap($data){
 		$id = $data['id'];
 		unset($data['id'], $data['tbl']);
+		unset($data['created_by']);
 		if(isset($data['rate_per_acre']) && $data['rate_per_acre'] != ""){
 			$data['rate_per_acre'] = $this->stripCommasOnNumber($data['rate_per_acre']);
 		}
+		
 		if($this->updateSpecial(self::$table_name, $data, "id=".$id)){
 			return true;
 		}

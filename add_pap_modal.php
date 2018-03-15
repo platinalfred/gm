@@ -10,7 +10,8 @@
 						<div class="col-lg-3">
 							<input type="hidden" name="tbl" value="tblPapCondensedReportForm">
 							<input type="hidden" id="form_id" name="id" >
-
+							<input type="hidden" value="<?php echo @$_SESSION['gmt']; ?>" id="created_by" name="created_by" >
+							<input type="hidden" value="<?php echo @$_SESSION['gmt']; ?>" id="modified_by" name="modified_by" >
 							<input type="hidden" name="project_id" value="<?php echo $_GET['id']; ?>" />
 							<div class="form-group" >
 								<label class="control-label">Attach PAP Photo</label>

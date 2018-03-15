@@ -816,7 +816,63 @@ $all_ditricts = $districts->findAll();
 							<div class="panel-body">
 								<div class="col-lg-2 col-offset-sm-8">
 									<div class="action-buttons">
-										<a  data-toggle="modal" href="#districtrate"><i class="fa fa-plus"></i> Add Crop/Tree Rate</a>
+										<a  data-toggle="modal" href="#districtrate"><i class="fa fa-plus"></i> Add Crop/Tree Rate</a> &nbsp;
+										<a  data-toggle="modal" href="#copydistrictrate"><i class="fa fa-files-o"></i> Copy Rates</a>
+									</div>
+									<div id="copydistrictrate" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Copy Rate</p>
+															<?php 
+															$all_ditricts = $districts->findAll();
+															?>				
+															<div class="ibox-content">
+																<form class="form-horizontal" method="post" id="tblDistrictCropRate">
+																	<input type="hidden" name="tbl" value="copy_district_rate">
+																	<div class="form-group">
+																		<label class="control-label col-md-2">From District</label>
+																		<div class="col-lg-10">
+																		  <select class="select2able" name="district_from" >
+																				<?php 
+																				if($all_ditricts){
+																					foreach($all_ditricts as $single){ ?>
+																						<option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
+																					<?php	
+																					}
+																				}?>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label col-md-2">To District</label>
+																		<div class="col-lg-10">
+																		  <select class="select2able" name="district_to" >
+																				<?php 
+																				if($all_ditricts){
+																					foreach($all_ditricts as $single){ ?>
+																						<option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
+																					<?php	
+																					}
+																				}?>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Copy</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div id="districtrate" class="modal fade" aria-hidden="true">
 										<div class="modal-dialog">
@@ -933,7 +989,64 @@ $all_ditricts = $districts->findAll();
 							<div class="panel-body">
 								<div class="col-lg-2 col-offset-sm-8">
 									<div class="action-buttons">
-										<a  data-toggle="modal" href="#propertyrate"><i class="fa fa-plus"></i> Add improvement rate</a>
+										<a  data-toggle="modal" href="#propertyrate"><i class="fa fa-plus"></i> Add improvement rate</a>&nbsp;&nbsp;
+										<a  data-toggle="modal" href="#copypropertyrate"><i class="fa fa-files-o"></i> Copy Rate</a>
+									</div>
+									<div id="copypropertyrate" class="modal fade" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-sm-12">
+															<p>Copy Rate</p>
+															<div class="ibox-content">
+																<form class="form-horizontal" method="post" id="tblPropertyRate">
+																	<input type="hidden" name="tbl" value="copy_property_rate">
+																	<?php 
+																	$all_ditricts = $districts->findAll();
+																	?>
+																	<div class="form-group">
+																		<label class="control-label col-md-2">Copy From District</label>
+																		<div class="col-lg-10">
+																		  <select class="select2able" name="district_from" >
+																				<?php 
+																				if($all_ditricts){
+																					foreach($all_ditricts as $single){ ?>
+																						<option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
+																					<?php	
+																					}
+																				}?>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label class="control-label col-md-2">Copy to District</label>
+																		<div class="col-lg-10">
+																		  <select class="select2able" name="district_to" >
+																				<?php 
+																				if($all_ditricts){
+																					foreach($all_ditricts as $single){ ?>
+																						<option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
+																					<?php	
+																					}
+																				}?>
+																			</select>
+																		</div>
+																	</div>
+																	
+																	<div class="form-group">
+																		<div class="col-lg-offset-2 col-lg-10">
+																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																		</div>
+																	</div>
+																</form>
+															</div>
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 									<div id="propertyrate" class="modal fade" aria-hidden="true">
 										<div class="modal-dialog">

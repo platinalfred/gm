@@ -66,7 +66,7 @@ if(isset($_POST['tbl'])){
 					$response =  "Village data could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				if(!$village->doesVillageExist($data, $data['parish'])){
+				if(!$village->doesVillageExist($data)){
 					if($village->addVillage($data)){
 						$response = "success";
 					}else{ 
@@ -172,7 +172,7 @@ if(isset($_POST['tbl'])){
 					$response =  "Comment could not be updated. Please try again or contact admin for assistance!";
 				}
 			}else{
-				if($comment->doesCommentExist){
+				if(!$comment->doesCommentExist($data)){
 					if($comment->addComment($data)){
 						$response = "success";
 					}else{ 
@@ -462,6 +462,14 @@ if(isset($_POST['tbl'])){
 			}
 			$output = json_encode($response);
 		break;
+		case "copy_district_rate":
+			$districtcroprate = new DistrictCropRate();
+			if($districtcroprate->copyDistrictRates($data['district_from'], $data['district_to'])){
+				$output = "success";
+			}else{ 
+				$output = "District crop rate could not be copied. Please try again or contact admin for assistance!";
+			}
+		break;
 		case "district_rate":
 			$districtcroprate = new DistrictCropRate();
 			if($data['id'] != ""){
@@ -478,6 +486,16 @@ if(isset($_POST['tbl'])){
 					$output = "District crop rate could not be added. Please try again or contact admin for assistance!";
 				}
 			}
+			
+		break;
+		case "copy_property_rate":
+			$property_rate = new DistrictPropertyRate();
+			if($property_rate->copyDistrictImprovementRates($data['district_from'], $data['district_to'])){
+				$output = "success";
+			}else{ 
+				$output = "Property rate could not be copied. Please try again or contact admin for assistance!";
+			}
+			
 			
 		break;
 		case "property_rate":
