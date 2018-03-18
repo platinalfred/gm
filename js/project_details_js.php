@@ -112,7 +112,6 @@ var ViewModel = function() {
 			}
 		});
 		
-		
 		//operations
 		//districts
 		self.selectedDistricts = ko.observableArray([new DummyObject()]);
@@ -141,6 +140,7 @@ var ViewModel = function() {
 				}
 			}
 		};
+                
 		//Retrieve page data from the server
 		self.getServerData = function() {
 			$.ajax({
@@ -275,8 +275,8 @@ $(document).ready(function(){
 							{ data: 'way_leave', render: function( data, type, full, meta ) {return data?curr_format(data *1) :0;}},
 						<?php 
 						endif;
-                                                if( $projectDetails['project_category_unit'] == 1 && $projectDetails['project_category_unit'] == 2 ):?>
-							{ data: 'way_leave', render: function( data, type, full, meta ) {return curr_format(((data?data:0)+(full.rightofway?full.rightofway:0))*1);}},
+                                                if( $projectDetails['project_category_unit'] == 4 ):?>
+							{ data: 'way_leave', render: function( data, type, full, meta ) {return curr_format(((data?parseFloat(data):0)+(full.rightofway?parseFloat(full.rightofway):0)).toFixed(4));}},
 						<?php 
 						endif;
 						if( $projectDetails['project_category_unit'] == 5 ):?>
@@ -287,7 +287,7 @@ $(document).ready(function(){
 							{ data: 'rate_per_acre', render: function( data, type, full, meta ) {return data? curr_format(data*1) :0;}},
 							{ data: 'land_interest', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 							<?php endif;
-                             if ($projectDetails['project_category_unit'] == 4): ?>
+                                                        if ($projectDetails['project_category_unit'] == 4): ?>
 							{ data: 'diminution_rate', render: function( data, type, full, meta ) {return data?curr_format(data):0;}},
 							<?php 
 							endif;
