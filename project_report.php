@@ -100,7 +100,7 @@
 					?>
 					<tr>
 						<td><?php echo ($i === 0)? ("<a href='project_details.php?id=".$project_pap['project_id']."&pap_id=".$project_pap['id']."'>".$project_pap['pap_ref']."</a>") :""; ?></td>
-						<td><?php echo ($i === 0)?($project_pap['lastname'] . $project_pap['firstname']. " " . $project_pap['othername'] . " "):""; ?></td>
+						<td><?php echo ($i === 0)?($project_pap['lastname']. " " . $project_pap['firstname']. " " . $project_pap['othername'] . " "):""; ?></td>
 						<td><?php echo ($i === 0)?$project_pap['phone_contact']:""; ?></td>
 						<td><?php echo ($i === 0)?($project_pap['district_name']. ", " . $project_pap['subcounty_name'] . ", " . $project_pap['parish_name'] . ", " . $project_pap['village_name']):""; ?></td>
 						<td><?php if($i === 0){echo $project_pap['chainage'];} ?></td>
