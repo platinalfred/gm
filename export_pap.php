@@ -7,7 +7,7 @@
 
 <body>
 <?php 
- ini_set('max_execution_time', 892801);
+ ini_set('max_execution_time', 3000);
  ini_set('memory_limit','1000M');
 require_once("lib/Db.php");
 $db = new Db();

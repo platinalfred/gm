@@ -140,7 +140,7 @@
 						<?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
 							?>
 							<td><?php echo ($i === 0) ? number_format($project_pap['rate_per_acre']) : ""; ?></td>	
-							<td><?php if($i === 0){echo $project_pap['land_interest']."%";} ?></td>
+							<td><?php if($i === 0){echo $project_pap['land_interest'];} ?></td>
 							<?php
 						endif;
 						if ($projectDetails['project_category_unit'] == 4):
