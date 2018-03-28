@@ -558,7 +558,7 @@ class Db{
 		}
 		$upd = "UPDATE ".$table. " SET ".$va." WHERE ".$where;
 		if($this->conn->query($upd)){
-			return true;
+			return mysqli_affected_rows($this->conn);
 		}else {
 			return false;
 		}
@@ -575,7 +575,7 @@ class Db{
 		//echo $update_sql;
 		 $updated = $this->conn->query($update_sql);
 		if($updated){
-			return true;
+			return mysqli_affected_rows($this->conn);
 		} 
 		return false; 
 	}
