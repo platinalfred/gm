@@ -295,7 +295,7 @@ function saveData(){
 })*/
 $(document).ready(function(){
 	jQuery.validator.addMethod("phoneUg", function(value, element) {
-	  return this.optional(element) || /^(0|\+256)[2347]([0-9]{8})/.test(value);
+	  return this.optional(element) || /^(0|\+\d{1,4})(\d{8,11})/.test(value);
 	}, "Please enter valid phone number");
 	
 	ko.bindingHandlers.select2 = {

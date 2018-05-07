@@ -18,14 +18,14 @@
                     <div class="form-group">
                         <label class="control-label col-md-4">Primary phone contact</label>
                         <div class="col-md-7">
-							<input name="phone_contact1" type="text" class="form-control" data-rule-phoneUg="true)" data-msg-phoneUg="Start number with 07 or +256" data-msg-required="Primary phone contact is required" required />
+							<input name="phone_contact1" type="text" class="form-control" data-rule-phoneUg="true" data-msg-phoneUg="Start number with 0 or +" data-msg-required="Primary phone contact is required" required />
                         </div>
                     </div>
 					
                     <div class="form-group">
                         <label class="control-label col-md-4">Secondary phone contact</label>
                         <div class="col-md-7">
-							<input name="phone_contact2" type="text" class="form-control" data-rule-phoneUg="true)" data-msg-phoneUg="Start number with 07 or +256" />
+							<input name="phone_contact2" type="text" class="form-control" data-rule-phoneUg="true" data-msg-phoneUg="Start number with 0 or +" />
                         </div>
                     </div>
 					

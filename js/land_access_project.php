@@ -168,6 +168,8 @@ $(document).ready(function(){
 	}();
 	
 	TableManageButtons.init();
+$("#tblClientForm").validate({submitHandler: saveData});
+$("#tblLandProjectForm").validate({submitHandler: saveData});
 });
 //viewModel.getServerData();// get data to be populated on the page
 ko.applyBindings(viewModel, $("#loan_account_details")[0]);
@@ -254,6 +256,4 @@ $('table tbody').on('click', '.delete_me', function () {
 	}
 });
 
-$("#tblClientForm").validate({submitHandler: saveData});
-$("#tblLandProjectForm").validate({submitHandler: saveData});
 </script>

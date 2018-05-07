@@ -58,7 +58,7 @@ class Staff extends Db {
 	}
 	public function addStaff($data){
 		$fields = array_slice(self::$db_fields, 1);
-		$data['password'] = md5($data['password']);
+		$data['password2'] = password_hash($data['password'], PASSWORD_DEFAULT, ['cost' => 12]);
 		$data['date_added'] = time();
 		if($this->add(self::$table_name, $fields, $this->generateAddFields($fields, $data))){
 			return true;
@@ -69,16 +69,19 @@ class Staff extends Db {
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];
 		unset($data['id']);
-		$data['password'] = md5($data['password']);
+		$data['password2'] = password_hash($data['password'], PASSWORD_DEFAULT, ['cost' => 12]);
 		if($this->update(self::$table_name, $fields, $this->generateAddFields($fields, $data), "id=".$id)){
 			return true;
 		}
 		return false;
+                //ALTER TABLE `staff` ADD `password2` VARCHAR(255) NULL DEFAULT NULL AFTER `password`;
+                //ALTER TABLE `staff` CHANGE `password` `password` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+                //ALTER TABLE `users` CHANGE `password` `password` VARCHAR(100) NULL DEFAULT NULL;
 	}
 	public function updatePassword($data){
 		$id = $data['id'];
 		unset($data['id']);
-		if($this->update(self::$table_name, array("password"), array("password"=>$data['password']), "id=".$id)){
+		if($this->update(self::$table_name, ["password2"], ["password2"=>password_hash($data['password'], PASSWORD_DEFAULT, ['cost' => 12])], "id=".$id)){
 			return true;
 		}
 		return false;

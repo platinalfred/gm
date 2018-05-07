@@ -151,6 +151,7 @@ if (!$projectDetails) {
 								<table class="table table-bordered table-striped" id="tblPapCondensedReport">
 									<thead>
 										<tr>
+											<th>ID</th>
 											<th>PAP Ref</th>
 											<th>Names</th>
 											<th>District, Subcounty, Parish, Village</th>

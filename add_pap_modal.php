@@ -10,8 +10,8 @@
 						<div class="col-lg-3">
 							<input type="hidden" name="tbl" value="tblPapCondensedReportForm">
 							<input type="hidden" id="form_id" name="id" >
-							<input type="hidden" value="<?php echo @$_SESSION['gmt']; ?>" id="created_by" name="created_by" >
-							<input type="hidden" value="<?php echo @$_SESSION['gmt']; ?>" id="modified_by" name="modified_by" >
+							<input type="hidden" value="<?php echo $_SESSION['gmt']; ?>" id="created_by" name="created_by" >
+							<input type="hidden" value="<?php echo $_SESSION['gmt']; ?>" id="modified_by" name="modified_by" >
 							<input type="hidden" name="project_id" value="<?php echo $_GET['id']; ?>" />
 							<div class="form-group" >
 								<label class="control-label">Attach PAP Photo</label>
@@ -51,13 +51,13 @@
 							<div class="form-group">
 								<label class="control-label col-md-5">Phone Contact</label>
 								<div class="col-md-7">
-									<input name="phone_contact" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 07 or +256"  />
+									<input name="phone_contact" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 0 or +"  />
 								</div>
 							</div><!--
 							<div class="form-group">
 								<label class="control-label col-md-5">Phone Contact 2</label>
 								<div class="col-md-7">
-									<input name="phone_contact2" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 07 or +256" required />
+									<input name="phone_contact2" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 0 or +" required />
 								</div>
 							</div>-->
 						</div>
