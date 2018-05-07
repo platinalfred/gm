@@ -552,4 +552,3 @@ if (!$projectDetails) {
 <?php
 include("js/project_details_js.php");
 include("includes/footer.php");
-?>

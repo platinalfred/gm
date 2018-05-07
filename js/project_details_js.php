@@ -566,6 +566,18 @@ $(document).ready(function(){
 	}();
 	
 	TableManageButtons.init();
+        
+                $("#projectCoverageForm").validate({submitHandler: saveData});
+                $("#tblPapImprovementForm").validate({submitHandler: saveData});
+                $("#tblPapPhotoForm").validate({submitHandler: saveData});
+                $("#tblPapCropForm").validate({submitHandler: saveData});
+                $("#tblLandPapForm").validate({submitHandler: saveData});
+                $("#tblPapCondensedReportForm").validate({
+		rules: {
+			phone_contact: {
+				phoneUg: true
+			}
+		},submitHandler: saveData});
 });
 viewModel.getServerData();// get data to be populated on the page
 ko.applyBindings(viewModel, $("#project_page")[0]); //
@@ -705,16 +717,5 @@ $('table tbody').on('click', '.delete_me', function () {
 	}
 });
 
-$("#projectCoverageForm").validate({submitHandler: saveData});
-$("#tblPapImprovementForm").validate({submitHandler: saveData});
-$("#tblPapPhotoForm").validate({submitHandler: saveData});
-$("#tblPapCropForm").validate({submitHandler: saveData});
-$("#tblLandPapForm").validate({submitHandler: saveData});
-$("#tblPapCondensedReportForm").validate({
-		rules: {
-			phone_contact: {
-				phoneUg: true
-			}
-		},submitHandler: saveData});
 
 </script>
