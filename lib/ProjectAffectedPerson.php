@@ -55,7 +55,7 @@ class ProjectAffectedPerson extends Db {
 			$data['rate_per_acre'] = $this->stripCommasOnNumber($data['rate_per_acre']);
 		}
 		
-		if($this->updateSpecial(self::$table_name, $data, "id=".$id)){
+		if(is_numeric($this->updateSpecial(self::$table_name, $data, "id=".$id))){
 			return true;
 		}
 		return false;

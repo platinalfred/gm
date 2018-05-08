@@ -631,6 +631,7 @@ class Db {
         if ($updated) {
             return mysqli_affected_rows($this->conn);
         }
+        echo mysqli_error($this->conn);
         return false;
     }
 

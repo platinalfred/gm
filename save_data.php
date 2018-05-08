@@ -245,7 +245,12 @@ if (isset($_POST['tbl'])) {
                     $response['message'] = "Project details could not be added. Please try again or contact admin for assistance!";
                 }
             }
-            $output = json_encode($response);
+            if($response['success']){
+                $output = "success";
+            }else{
+                $output = json_encode($response['message']);
+            }
+            //$output = json_encode($response);
             break;
         case "tblProjectCoverage":
             $land_project = new ProjectCoverage();
@@ -263,9 +268,14 @@ if (isset($_POST['tbl'])) {
                     }
                 }
             }
-            $output = json_encode($response);
+            if($response['success']){
+                $output = "success";
+            }else{
+                $output = json_encode($response['message']);
+            }
+            //$output = json_encode($response);
             break;
-        case "tblPapCondensedReportForm": //Project affected persons details capture
+        case "tblPapCondensedReport": //Project affected persons' details capture
             $pap_obj = new ProjectAffectedPerson();
             $pap_crop_tree_obj = new PAP_CropTree();
             $pap_improvement_obj = new PAP_Improvement();
@@ -290,6 +300,7 @@ if (isset($_POST['tbl'])) {
             if ($data['id'] != "") {
                 $pap_id = $data['id'];
                 if ($pap_obj->updatePap($data)) {
+                    $response['success'] = true;
                     $add_multiple_data = array();
                     if ($plants) {
                         foreach ($plants as $key => $plant) { //we first deal with the plants
@@ -339,6 +350,7 @@ if (isset($_POST['tbl'])) {
                 unset($data['id']);
                 $pap_id = $pap_obj->addPap($data);
                 if (is_numeric($pap_id)) {
+                    $response['success'] = true;
                     //we first deal with the plants/crops
                     foreach ($plants as $key => $plant) {
                         if ($plant['crop_description_rate_id'] != "" && $plant['rate'] != "" && $plant['quantity'] != "") {
@@ -371,7 +383,12 @@ if (isset($_POST['tbl'])) {
                     }
                 }
             }
-            $output = json_encode($response);
+            if($response['success']){
+                $output = "success";
+            }else{
+                $output =  json_encode($response['message']);
+            }
+            //$output = json_encode($response);
             break;
         case "tblPapCrop":
             $pap_crop_tree_obj = new PAP_CropTree();
@@ -379,7 +396,7 @@ if (isset($_POST['tbl'])) {
             $response['success'] = false;
             $response['message'] = "PAP crop/tree details could not be saved. Please try again or contact admin for assistance!";
             if ($data['id'] != "") {
-                if ($pap_crop_tree_obj->updatePapCropTree($data)) { //saving only one crop to the database
+                if (is_numeric($pap_crop_tree_obj->updatePapCropTree($data))) { //saving only one crop to the database
                     $response['success'] = true;
                     $response['message'] = "PAP crop/tree successfully updated!";
                 }
@@ -390,7 +407,12 @@ if (isset($_POST['tbl'])) {
                     $response['success'] = true;
                 }
             }
-            $output = json_encode($response);
+            if($response['success']){
+                $output = "success";
+            }else{
+                $output = json_encode($response['message']);
+            }
+            //$output = json_encode($response);
             break;
         case "tblLandPap":
             $pap_obj = new ProjectAffectedPerson();
@@ -401,8 +423,12 @@ if (isset($_POST['tbl'])) {
                 $response['message'] = true;
                 $response['success'] = true;
             }
-
-            $output = json_encode($response);
+            if($response['success']){
+                $output = "success";
+            }else{
+                $output = json_encode($response['message']);
+            }
+            //$output = json_encode($response);
             break;
         case "tblPapImprovement":
             $pap_improvement_obj = new PAP_Improvement();
@@ -410,18 +436,25 @@ if (isset($_POST['tbl'])) {
             $response['success'] = false;
             $response['message'] = "PAP improvement details could not be saved. Please try again or contact admin for assistance!";
             if ($data['id'] != "") {
+                $response['success'] = true;
                 if ($pap_improvement_obj->updatePapImprovement($data)) { //saving only one mprovement to the database
                     $response['success'] = true;
                     $response['message'] = "PAP improvement successfully updated!";
                 }
             } else {
+                $response['success'] = true;
                 $data['date_created'] = time();
                 $data['created_by'] = $data['modified_by'] = isset($_SESSION['gmt']) ? $_SESSION['gmt'] : 1;
                 if ($pap_improvement_obj->addPapImprovement($data)) {
                     $response['success'] = true;
                 }
             }
-            $output = json_encode($response);
+            if($response['success']){
+                $output = "success";
+            }else{
+                $output = json_encode($response['message']);
+            }
+            //$output = json_encode($response);
             break;
         case "tblPapPhotos":
             $pap_obj = new ProjectAffectedPerson();
@@ -458,7 +491,12 @@ if (isset($_POST['tbl'])) {
                     $response['pap_photos'] = $pap_obj->getPapPhotos("`pap_id`=" . $data['pap_id']);
                 }
             }
-            $output = json_encode($response);
+            if($response['success']){
+                $output = "success";
+            }else{
+                $output = json_encode($response['message']);
+            }
+            //$output = json_encode($response);
             break;
         case "copy_district_rate":
             $districtcroprate = new DistrictCropRate();

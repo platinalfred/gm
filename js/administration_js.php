@@ -172,7 +172,7 @@ $(document).ready(function(){
 });
 function saveData(form,event){
 	event.preventDefault();
-	var frm =  $(form).closest("form").submit();
+	var frm =  $(form).closest("form");
 	var frmdata = frm.serialize();
 	var id_input = frm.find("input[name = 'id']").val();;
 	var frmId = frm.attr('id');

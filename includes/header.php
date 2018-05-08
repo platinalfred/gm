@@ -73,7 +73,7 @@ if(!isset($_SESSION['logged'])){
     <script src="javascripts/jquery.easy-pie-chart.js" type="text/javascript"></script>
     <script src="javascripts/excanvas.min.js" type="text/javascript"></script>
     <script src="javascripts/jquery.isotope.min.js" type="text/javascript"></script>
-    <!--script src="javascripts/isotope_extras.js" type="text/javascript"></script-->
+    <script src="javascripts/isotope_extras.js" type="text/javascript"></script>
     <script src="javascripts/modernizr.custom.js" type="text/javascript"></script>
     <script src="javascripts/jquery.fancybox.pack.js" type="text/javascript"></script>
     <script src="javascripts/select2.js" type="text/javascript"></script>
@@ -82,7 +82,7 @@ if(!isset($_SESSION['logged'])){
     <script src="javascripts/typeahead.js" type="text/javascript"></script>
     <script src="javascripts/summernote.min.js" type="text/javascript"></script>
     <script src="javascripts/jquery.inputmask.min.js" type="text/javascript"></script>
-    <!--script src="javascripts/jquery.validate.js" type="text/javascript"></script-->
+    <script src="javascripts/jquery.validate.js" type="text/javascript"></script>
     <script src="javascripts/bootstrap-fileupload.js" type="text/javascript"></script>
     <script src="javascripts/bootstrap-datepicker.js" type="text/javascript"></script>
     <script src="javascripts/bootstrap-timepicker.js" type="text/javascript"></script>
@@ -94,8 +94,8 @@ if(!isset($_SESSION['logged'])){
     <script src="javascripts/moment.js" type="text/javascript"></script>
     <script src="javascripts/mockjax.js" type="text/javascript"></script>
     <script src="javascripts/bootstrap-editable.min.js" type="text/javascript"></script>
-    <!--script src="javascripts/xeditable-demo-mock.js" type="text/javascript"></script-->
-    <!--script src="javascripts/xeditable-demo.js" type="text/javascript"></script-->
+    <script src="javascripts/xeditable-demo-mock.js" type="text/javascript"></script>
+    <script src="javascripts/xeditable-demo.js" type="text/javascript"></script>
     <script src="javascripts/address.js" type="text/javascript"></script>
     <script src="javascripts/daterange-picker.js" type="text/javascript"></script>
     <script src="javascripts/date.js" type="text/javascript"></script>
@@ -105,7 +105,7 @@ if(!isset($_SESSION['logged'])){
     <script src="javascripts/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="javascripts/dropzone.js" type="text/javascript"></script>
     <script src="javascripts/jquery.nestable.js" type="text/javascript"></script>
-    <!--script src="javascripts/main.js" type="text/javascript"></script-->
+    <script src="javascripts/main.js" type="text/javascript"></script>
     <script src="javascripts/respond.js" type="text/javascript"></script>
 	<!-- PNotify -->
 	<script src="js/plugins/pnotify/dist/pnotify.js"></script>

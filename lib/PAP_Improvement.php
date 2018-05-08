@@ -57,10 +57,7 @@ class PAP_Improvement extends Db {
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];
 		unset($data['id'], $data['tbl']);
-		if($this->updateSpecial(self::$table_name, $data, "id=".$id)){
-			return true;
-		}
-		return false;
+		return $this->updateSpecial(self::$table_name, $data, "id=".$id);
 	}
 	public function deletePapImprovement($id){
 		if($this->del(self::$table_name, (is_numeric($id)?("id=".$id):$id))){

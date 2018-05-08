@@ -5,7 +5,7 @@
 				<fieldset>
 					<div class="col-lg-12">
 						<input type="hidden" name="tbl" value="tblPapCrop">
-						<input type="hidden" name="id" >
+						<input type="hidden" name="id" id="id">
 						<input type="hidden" name="pap_id" value="<?=$_GET['pap_id']?>" >
 						<div class="form-group">
 							<label class="control-label col-md-3">Crop/Tree</label>

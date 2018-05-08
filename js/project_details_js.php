@@ -261,8 +261,8 @@ $(document).ready(function(){
 				  },"columnDefs": [ ],
 				  "autoWidth": false,
 				  "lengthMenu": [[10, 25, 50, -1], [10, 50,  100, "All"]],
-				  columns:[ { data: 'id', render: function( data, type, full, meta ) {  return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
-				  { data: 'pap_ref', render: function( data, type, full, meta ) {  return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
+				  columns:[ { data: 'id', render: function( data, type, full, meta ) {  return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
+				  { data: 'pap_ref', render: function( data, type, full, meta ) {  return '<a href="project_details.php?id=<?php echo $_GET['id']; ?>&pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
 						{ data: 'phone_contact'},
@@ -657,8 +657,9 @@ $('table tbody').on( 'click', '.edit_me', function () {
 	if(typeof(data)=='undefined'){
 		data = dt.row($(row).prev()).data();
 	}
+        if(typeof rowId !== 'undefined'){
 	data.id = rowId;
-	//console.log(data);
+        }
 	edit_data(data, tbl_id+'Form');
         //alert(rowId);
 	$("#form_id").val(rowId);
@@ -666,7 +667,6 @@ $('table tbody').on( 'click', '.edit_me', function () {
 		// Display the update form
 		viewModel.pap_details(data);
 		viewModel.getPapDetails(data.pap_d);
-	<?php else:?>
 		//we need to set the village object accordingly
 		viewModel.village(ko.utils.arrayFirst(viewModel.villagesList(), function(currentParish){
 			return (data.parish_id == currentParish.id);
@@ -691,6 +691,7 @@ $('table tbody').on( 'click', '.edit_me', function () {
 		viewModel.district(ko.utils.arrayFirst(viewModel.project_districts(), function(currentDistrict){
 			return (data.district_id == currentDistrict.id);
 		}));
+	<?php else:?>
 	<?php endif;?>
 } );
 

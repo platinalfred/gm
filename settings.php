@@ -115,16 +115,16 @@ $all_ditricts = $districts->findAll();
 																<div class="col-sm-12">
 																	<p>Add /Update District</p>
 																	<div class="ibox-content">
-																		<form class="form-horizontal" id="tblDistricts">
+																		<form class="form-horizontalform_validate" id="tblDistricts">
 																			<input type="hidden" name="id" >
-																			<input type="hidden" name="tbl"  value="ditricts">
+																			<input type="hidden" name="tbl"  value="districts">
 																			<div class="form-group"><label class="col-lg-2 control-label">Name</label>
 																				<div class="col-lg-10"><input type="text" name="district_name" placeholder="Name" class="form-control"> 
 																				</div>
 																			</div>
 																			<div class="form-group">
 																				<div class="col-lg-offset-2 col-lg-10">
-																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																					<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																				</div>
 																			</div>
 																		</form>
@@ -165,7 +165,7 @@ $all_ditricts = $districts->findAll();
 																<div class="col-sm-12">
 																	<p>Add /Update County</p>
 																	<div class="ibox-content">
-																		<form class="form-horizontal" id="tblCountys">
+																		<form class="form-horizontal form_validate" id="tblCountys">
 																			<input type="hidden" name="id" >
 																			<input type="hidden" name="tbl"  value="county">
 																			<div class="form-group"><label class="col-lg-2 control-label">District</label>
@@ -180,7 +180,7 @@ $all_ditricts = $districts->findAll();
 																			</div>
 																			<div class="form-group">
 																				<div class="col-lg-offset-2 col-lg-10">
-																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																					<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																				</div>
 																			</div>
 																		</form>
@@ -231,7 +231,7 @@ $all_ditricts = $districts->findAll();
 																<div class="col-sm-12">
 																	<p>Add /Update SubCounty</p>
 																	<div class="ibox-content">
-																		<form class="form-horizontal" id="tblSubCountys">
+																		<form class="form-horizontal form_validate" id="tblSubCountys">
 																			<input type="hidden" name="id" >
 																			<input type="hidden" name="noreset" >
 																			<input type="hidden" name="tbl"  value="subcounty">
@@ -255,7 +255,7 @@ $all_ditricts = $districts->findAll();
 																			</div>
 																			<div class="form-group">
 																				<div class="col-lg-offset-2 col-lg-10">
-																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																					<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																				</div>
 																			</div>
 																		</form>
@@ -308,7 +308,7 @@ $all_ditricts = $districts->findAll();
 																<div class="col-sm-12">
 																	<p>Add /Update Parish</p>
 																	<div class="ibox-content">
-																		<form class="form-horizontal" id="tblParishs">
+																		<form class="form-horizontal form_validate" id="tblParishs">
 																			<input type="hidden" name="id" >
 																			<input type="hidden" name="noreset" >
 																			<input type="hidden" name="tbl"  value="parish">
@@ -338,7 +338,7 @@ $all_ditricts = $districts->findAll();
 																			</div>
 																			<div class="form-group">
 																				<div class="col-lg-offset-2 col-lg-10">
-																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																					<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																				</div>
 																			</div>
 																		</form>
@@ -393,7 +393,7 @@ $all_ditricts = $districts->findAll();
 																<div class="col-sm-12">
 																	<p>Add /Update Village</p>
 																	<div class="ibox-content">
-																		<form class="form-horizontal" id="tblVillages">
+																		<form class="form-horizontal form_validate"id="tblVillages">
 																			<input type="hidden" name="id" >
 																			<input type="hidden" name="tbl"  value="village">
 																			<div class="form-group">
@@ -427,7 +427,7 @@ $all_ditricts = $districts->findAll();
 																			</div>
 																			<div class="form-group">
 																				<div class="col-lg-offset-2 col-lg-10">
-																					<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																					<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																				</div>
 																			</div>
 																		</form>
@@ -489,7 +489,7 @@ $all_ditricts = $districts->findAll();
 														<div class="col-sm-12">
 															<p>Add /Update Tree or Crop Type</p>
 															<div class="ibox-content">
-																<form class="form-horizontal" id="tblTreeCrops">
+																<form class="form-horizontal form_validate" id="tblTreeCrops">
 																	<input type="hidden" name="id" >
 																	<input type="hidden" name="tbl"  value="treecroptypes">
 																	<div class="form-group"><label class="col-lg-2 control-label">Title</label>
@@ -501,7 +501,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>
@@ -725,7 +725,7 @@ $all_ditricts = $districts->findAll();
 														<div class="col-sm-12">
 															<p>Add /Update  Property</p>
 															<div class="ibox-content">
-																<form class="form-horizontal" id="tblPropertyTypes">
+																<form class="form-horizontal form_validate" id="tblPropertyTypes">
 																	<input type="hidden" name="id" >
 																	<input type="hidden" name="tbl"  value="propertytypes">
 																	<div class="form-group"><label class="col-lg-2 control-label">Title</label>
@@ -737,7 +737,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>
@@ -830,7 +830,7 @@ $all_ditricts = $districts->findAll();
 															$all_ditricts = $districts->findAll();
 															?>				
 															<div class="ibox-content">
-																<form class="form-horizontal" method="post" id="tblDistrictCropRate">
+																<form class="form-horizontal form_validate" method="post" id="tblDistrictCropRate">
 																	<input type="hidden" name="tbl" value="copy_district_rate">
 																	<div class="form-group">
 																		<label class="control-label col-md-2">From District</label>
@@ -862,7 +862,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Copy</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Copy</button>
 																		</div>
 																	</div>
 																</form>
@@ -921,7 +921,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>
@@ -1000,7 +1000,7 @@ $all_ditricts = $districts->findAll();
 														<div class="col-sm-12">
 															<p>Copy Rate</p>
 															<div class="ibox-content">
-																<form class="form-horizontal" method="post" id="tblPropertyRate">
+																<form class="form-horizontal form_validate" method="post" id="tblPropertyRate">
 																	<input type="hidden" name="tbl" value="copy_property_rate">
 																	<?php 
 																	$all_ditricts = $districts->findAll();
@@ -1036,7 +1036,7 @@ $all_ditricts = $districts->findAll();
 																	
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>
@@ -1095,7 +1095,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>
@@ -1209,7 +1209,7 @@ $all_ditricts = $districts->findAll();
 														<div class="col-sm-12">
 															<p>Add Access Level.</p>
 															<div class="ibox-content">
-																<form class="form-horizontal" method="post" id="tblAccessLevel">
+																<form class="form-horizontal form_validate" method="post" id="tblAccessLevel">
 																	<input type="hidden" name="tbl" value="access_level">
 																	<input type="hidden" name="id" value="access_level">
 																	<div class="form-group"><label class="col-lg-2 control-label">Name</label>
@@ -1222,7 +1222,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>
@@ -1278,7 +1278,7 @@ $all_ditricts = $districts->findAll();
 														<div class="col-sm-12">
 															<p>Add /Update Position</p>
 															<div class="ibox-content">
-																<form class="form-horizontal" id="tblPosition">
+																<form class="form-horizontal form_validate" id="tblPosition">
 																	<input type="hidden" name="id" >
 																	<input type="hidden" name="tbl"  value="position">
 																	<div class="form-group"><label class="col-lg-2 control-label">Name</label>
@@ -1292,8 +1292,8 @@ $all_ditricts = $districts->findAll();
 																			<select class="form-control m-b" name="access_level" required >
 																				<option>Please select</option>
 																				<?php 
-																				$access_level = new AccessLevel();
-																				$access_level = $access_level->findAll();
+																				$access_level_obj = new AccessLevel();
+																				$access_level = $access_level_obj->findAll();
 																				if($access_level){
 																					foreach($access_level as $single){ ?>
 																						<option value="<?php echo $single['id']; ?>" ><?php echo $single['name']; ?></option>
@@ -1309,7 +1309,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>
@@ -1365,7 +1365,7 @@ $all_ditricts = $districts->findAll();
 														<div class="col-sm-12">
 															<p>Expense Type</p>
 															<div class="ibox-content">
-																<form class="form-horizontal" id="tblExpenseType">
+																<form class="form-horizontal form_validate" id="tblExpenseType">
 																	<input type="hidden" name="tbl"  value="expense_type">
 																	<input type="hidden" name="id" id="id_field">
 																	<div class="form-group"><label class="col-lg-2 control-label">Name</label>
@@ -1377,7 +1377,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>
@@ -1434,7 +1434,7 @@ $all_ditricts = $districts->findAll();
 														<div class="col-sm-12">
 															<p>Add /Update Comment</p>
 															<div class="ibox-content">
-																<form class="form-horizontal" id="tblComment">
+																<form class="form-horizontal form_validate" id="tblComment">
 																	<input type="hidden" name="id" >
 																	<input type="hidden" name="tbl"  value="comment">
 																	<div class="form-group"><label class="col-lg-2 control-label">Comments</label>
@@ -1444,7 +1444,7 @@ $all_ditricts = $districts->findAll();
 																	</div>
 																	<div class="form-group">
 																		<div class="col-lg-offset-2 col-lg-10">
-																			<button class="btn btn-sm btn-primary save" type="button">Submit</button>
+																			<button class="btn btn-sm btn-primary save" type="submit">Submit</button>
 																		</div>
 																	</div>
 																</form>

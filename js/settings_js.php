@@ -230,9 +230,7 @@ $(document).ready(function(){
 	
 	
 /* ====  COMMON FUNCTIONS ==== */
-	
-	deleteDataTableRowData();
-	saveData();
+        $(".form_validate").validate({submitHandler: saveData});
 	
 	/*To have a form editable first add a class .edit_me on the row, also add an Id-tbl_name-formId and also add an empty id field in the form */
 
@@ -240,7 +238,6 @@ $(document).ready(function(){
 	
 	//Functions being used in more than one instances / places
 		/* Delete whenever a Delete Button has been clicked */
-	 function deleteDataTableRowData(){
 		$('.table tbody').on('click', 'tr .delete_me', function () {
 			var confirmation = confirm("Are sure you would like to delete this item?");
 			if(confirmation){
@@ -263,7 +260,6 @@ $(document).ready(function(){
 				}); 
 			}
 		});
-	}
 	/*Thousands separator and creates a price format into an input */
 	/* $('#minimum_balance, #minAmount, #maxAmount, #defmount').priceFormat({
 		thousandsSeparator: '.'

@@ -169,12 +169,12 @@ function draw_pie_chart(url_data){
 	});
 }
 //Save function called when various buttons with .save are clicked , With this one function all settings will be sent to save_data.php for saving
-function saveData(){
-	$(".save").click(function(){
-		var frm = $(this).closest("form");
+function saveData(form,event){
+	event.preventDefault();
+	var frm =  $(event.target);
 		var frmdata = frm.serialize();
-		var frmId = frm.attr('id');
-		var id_input = frm.find().val();
+		var tbl = frm.find("input[name = 'tbl']");
+		var id_input = frm.find("input[name = 'id']");
 		var reset = frm.find("input[name = 'noreset']").length;
 		
 		enableDisableButton(frm, true);
@@ -188,10 +188,15 @@ function saveData(){
 					showStatusMessage("Data successfully saved" ,"success");
 					
 					setTimeout(function(){
-						dTable[frmId].ajax.reload();
+                                                                                            if(tbl.length && $(tbl[0]).val() != ""){
+                                                                                                        var dt = dTable[$(tbl[0]).val()];
+                                                                                                        if (typeof dt !== 'undefined') {
+                                                                                                            dt.ajax.reload();
+                                                                                                        }
+                                                                                                    }
 						enableDisableButton(frm, false);
 					}, 2000);
-					if(id_input == "" && reset < 1){
+					if(id_input.length && $(id_input[0]).val() == "" && reset < 1){
 						frm[0].reset();
 					}
 					
@@ -205,7 +210,6 @@ function saveData(){
 			}
 		});
 		return false;
-	});
 }
 	//get the desc member element for each of the above arrays
 	function getDescription(array_index, id) {
@@ -285,11 +289,6 @@ function saveData(){
 			});
 		});		
 	}
-	$(".modal").on("hide.bs.modal", function () {
-		// put your default event here
-		$('form', this)[0].reset();
-		$('input[name="id"]', this).val('');
-	});
 /*$(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })*/
@@ -313,7 +312,14 @@ $(document).ready(function(){
 				$(element).trigger('change');
 			}
 		}
-	}
+	};
+        $(".modal").each(function(key, val){console.log(val)});
+	$(".modal").on("hide.bs.modal", function () {
+            console.log("Modal closed");
+		// put your default event here
+		$('form', this)[0].reset();
+		$('input[name="id"]', this).val('');
+	});
 });
 //This function is supposed to make sure when the pop up is not an edit, no data is displayed in the form. It picks the id field and makes sure if empty then the form is empty for adding new data
 function showStatusMessage(message='', display_type='success'){
