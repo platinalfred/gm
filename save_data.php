@@ -57,7 +57,7 @@ if (isset($_POST['tbl'])) {
             }
             $output = json_encode($response);
             break;
-        case "village":
+        case "tblVillages":
             //print_r($data);
             $village = new Village();
             $response = array();
@@ -80,7 +80,7 @@ if (isset($_POST['tbl'])) {
             }
             $output = $response;
             break;
-        case "parish":
+        case "tblParishs":
             $parish = new Parish();
             $response = array();
             if ($data['id'] != "") {
@@ -102,7 +102,7 @@ if (isset($_POST['tbl'])) {
             }
             $output = $response;
             break;
-        case "subcounty":
+        case "tblSubCounty":
             $subcounties = new SubCounties();
             $response = array();
             if ($data['id'] != "") {
@@ -142,7 +142,7 @@ if (isset($_POST['tbl'])) {
             }
             $output = $response;
             break;
-        case "ditricts":
+        case "tblDistricts":
             $districts = new Districts();
             $response = array();
             if ($data['id'] != "") {
@@ -164,7 +164,7 @@ if (isset($_POST['tbl'])) {
             }
             $output = $response;
             break;
-        case "comment":
+        case "tblComment":
             $comment = new Comments();
             $response = array();
             if ($data['id'] != "") {
@@ -570,7 +570,7 @@ if (isset($_POST['tbl'])) {
             }
 
             break;
-        case "access_level":
+        case "tblAccessLevel":
             $access_level = new AccessLevel();
             if ($_POST['id'] != "") {
                 if ($access_level->updateAccessLevel($data)) {
@@ -588,7 +588,7 @@ if (isset($_POST['tbl'])) {
             }
 
             break;
-        case "position":
+        case "tblPosition":
             $position = new Position();
             if ($_POST['id'] != "") {
                 if ($position->updatePosition($data)) {
