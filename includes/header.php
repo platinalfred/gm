@@ -27,7 +27,7 @@ if(!isset($_SESSION['logged'])){
     <link href="stylesheets/timepicker.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/colorpicker.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/bootstrap-switch.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="stylesheets/bootstrap-editable.css" media="all" rel="stylesheet" type="text/css" />
+    <!--link href="stylesheets/bootstrap-editable.css" media="all" rel="stylesheet" type="text/css" /-->
     <link href="stylesheets/daterange-picker.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/typeahead.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/summernote.css" media="all" rel="stylesheet" type="text/css" />
@@ -58,9 +58,8 @@ if(!isset($_SESSION['logged'])){
 	 }
 	 ?>
 	<script src="js/jquery-2.1.1.js" type="text/javascript"></script>
-        <!--script src="js/jquery-3.2.1.min.js" type="text/javascript"></script-->
     <script src="js/ui/1.10.3/jquery-ui.js" type="text/javascript"></script>
-    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="javascripts/bootstrap.min.js" type="text/javascript"></script>
     <script src="javascripts/raphael.min.js" type="text/javascript"></script>
     <script src="javascripts/selectivizr-min.js" type="text/javascript"></script>
     <script src="javascripts/jquery.mousewheel.js" type="text/javascript"></script>
@@ -73,7 +72,7 @@ if(!isset($_SESSION['logged'])){
     <script src="javascripts/jquery.easy-pie-chart.js" type="text/javascript"></script>
     <script src="javascripts/excanvas.min.js" type="text/javascript"></script>
     <script src="javascripts/jquery.isotope.min.js" type="text/javascript"></script>
-    <script src="javascripts/isotope_extras.js" type="text/javascript"></script>
+    <!--script src="javascripts/isotope_extras.js" type="text/javascript"></script-->
     <script src="javascripts/modernizr.custom.js" type="text/javascript"></script>
     <script src="javascripts/jquery.fancybox.pack.js" type="text/javascript"></script>
     <script src="javascripts/select2.js" type="text/javascript"></script>
@@ -112,7 +111,7 @@ if(!isset($_SESSION['logged'])){
 	<script src="js/plugins/pnotify/dist/pnotify.buttons.js"></script>
 	<script src="js/plugins/pnotify/dist/pnotify.nonblock.js"></script>
 	
-    <script src="js/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <!--script src="js/jquery-3.3.1.min.js" type="text/javascript"></script-->
     <script src="javascripts/knockout-3.4.2.js" type="text/javascript"></script>
 	<?php
 	if(in_array("dataTables", $needed_files)){

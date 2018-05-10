@@ -34,7 +34,7 @@ class ProjectCoverage extends Db {
 		$fields = array_slice(self::$db_fields, 1);
 		$id = $data['id'];
 		unset($data['id'], $data['tbl']);
-		if($this->updateSpecial(self::$table_name, $data, "id=".$id)){
+		if(is_numeric($this->updateSpecial(self::$table_name, $data, "id=".$id))){
 			return true;
 		}
 		return false;
@@ -46,4 +46,3 @@ class ProjectCoverage extends Db {
 		return false;
 	}
 }
-?>

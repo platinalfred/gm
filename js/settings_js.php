@@ -168,66 +168,7 @@ var ImprovementViewModel = function(){
 var improvementViewModel = new ImprovementViewModel();
 ko.applyBindings(improvementViewModel, $("#improvement_type_desc")[0]); 
 
-
-	
-function saveCrops(crop_id){
-	$(".saveCropTreeDescription").click(function(){
-		var frm = $(this).closest("form");
-		var frmdata = frm.serialize();
-		$.ajax({
-			url: "save_data.php",
-			type: 'POST',
-			data: frmdata,
-			success: function (response) {
-				if(response.trim() == "success"){
-					showStatusMessage("Descriptions successfully saved." ,"success");
-					setTimeout(function(){
-						cropViewModel.getServerData(crop_id);
-					}, 1000);
-				}else{
-					showStatusMessage("Your description could not be saved, Please refresh the page anad try again or contact administrator for assistance." ,"fail");
-				}
-				
-			}
-		});
-		return false;
-	});
-}	
-function saveImprovements(improvement_id){
-	$(".saveImprovementDescription").click(function(){
-		var frm = $(this).closest("form");
-		var frmdata = frm.serialize();
-		$.ajax({
-			url: "save_data.php",
-			type: 'POST',
-			data: frmdata,
-			success: function (response) {
-				if(response.trim() == "success"){
-					showStatusMessage("Descriptions successfully saved" ,"success");
-					setTimeout(function(){
-						improvementViewModel.getServerData(improvement_id);
-					}, 1000);
-				}else{
-					showStatusMessage("Your description could not be saved, Please refresh the page anad try again or contact administrator for assistance." ,"fail");
-				}
-				
-			}
-		});
-		return false;
-	});
-}	
 $(document).ready(function(){
-	
-
-	//This function is supposed to make sure when the pop up is not an edit no data is displayed in the form. It picks the id field and makes sure if empty then the form is empty for adding new data
-	$('.modal').on('show.bs.modal', function (e) {
-		var id = $(this).find('input[name="id"]').val();
-		var frm = $(this).find("form");
-		if(id == "undefined" || id == ""){
-			frm[0].reset(); 
-		}
-	});
-	
 	
 /* ====  COMMON FUNCTIONS ==== */
         $(".form_validate").validate({submitHandler: saveData});
@@ -486,7 +427,6 @@ $(document).ready(function(){
 							var val = $.fn.dataTable.util.escapeRegex(
 								$(this).val()
 							);
-							console.log(val);
 							column
 								.search( val ? '^'+val+'$' : '', true, false )
 								.draw();
@@ -710,7 +650,7 @@ $(document).ready(function(){
 	  /*-- End Village----*/
 	  /* -- Land Acquisition category Unit Data Table --- */
 			if ($("#land_acquistion_category_unit").length) {
-			  dTable['landAcquisitionUnit'] = $('#land_acquistion_category_unit').DataTable({
+			  dTable['landAcquisitionCategoryUnit'] = $('#land_acquistion_category_unit').DataTable({
 			  dom: "lfrtipB",
 			  "processing": true,
 			  /*"serverSide": true,
@@ -738,7 +678,7 @@ $(document).ready(function(){
 			  columns:[ { data: 'title' },/* 
 					{ data: 'category'}, */
 					{ data: 'description'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<span><a data-toggle="modal" href="#categoryModalUnit"  id="'+data+'-land_acquistion_category_unit-landAcquisitionUnit" data-toggle="modal" href="#categoryModalUnit" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a></span><span id="'+data+'-land_acquistion_category_unit-landAcquisitionUnit" class= "delete_me"><i class="fa fa-trash-o"></i></span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<span><a data-toggle="modal" href="#categoryUnitModal" id="'+data+'-land_acquistion_category_unit-landAcquisitionCategoryUnit" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a></span><span id="'+data+'-land_acquistion_category_unit-landAcquisitionUnit" class= "delete_me"><i class="fa fa-trash-o"></i></span>';}}
 					
 					] ,
 			  buttons: [
@@ -779,8 +719,6 @@ $(document).ready(function(){
 				  "type": "POST",
 				  "data":  function(d){
 						d.tbl = 'access_level';
-						//d.start_date = getStartDate();
-						//d.end_date = getEndDate();
 					}
 			  },"columnDefs": [ {
 				  "targets": [2],
@@ -793,7 +731,7 @@ $(document).ready(function(){
 			  "autoWidth": false,
 			  columns:[ { data: 'name'},
 					{ data: 'description'},
-					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" href="#edit_account_type" class="btn btn-white btn-sm"><i class="fa fa-pencil"></i> Edit </a>';}}//<span id="'+data+'-access_level-tblbranch" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" href="#access_level" id="'+data+'-access_levels-tblAccessLevel" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a>';}}//<span id="'+data+'-access_level-tblbranch" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>
 					
 					] ,
 			  buttons: [
@@ -848,7 +786,7 @@ $(document).ready(function(){
 			  "autoWidth": false,
 			  columns:[ { data: 'title'},
 					{ data: 'description'},
-					{ data: 'access_level'},
+					{ data: 'name'},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" id="'+data+'-position-tblPosition" href="#position" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-position-tblPosition" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
@@ -1369,7 +1307,7 @@ $(document).ready(function(){
 			  "autoWidth": false,
 			  columns:[ { data: 'details' },
 					
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal"  id="'+data+'-tblComments-tblComments" href="#propertydescription" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblComments-tblComments" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal"  id="'+data+'-tblComments-tblComment" href="#comment" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblComments-tblComments" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [

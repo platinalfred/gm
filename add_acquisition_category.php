@@ -26,7 +26,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-2">&nbsp;</label>
                         <div class="col-md-7">
-                            <button class="btn btn-primary save" type="button">Submit</button>
+                            <button class="btn btn-primary save" type="submit">Submit</button>
                             <button class="btn btn-default-outline" data-dismiss="modal" >Cancel </button>
                         </div>
                     </div>
