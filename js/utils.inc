@@ -313,7 +313,7 @@ $(document).ready(function(){
 			}
 		}
 	};
-        $(".modal").each(function(key, val){console.log(val)});
+        //$(".modal").each(function(key, val){console.log(val)});
 	$(".modal").on("hide.bs.modal", function () {
             console.log("Modal closed");
 		// put your default event here
