@@ -558,17 +558,19 @@ $all_ditricts = $districts->findAll();
                                             <table class="table table-striped table-bordered table-hover" id="treeCropsTypes">
                                                 <thead>
                                                     <tr>
+                                                        <th>ID</th>
                                                         <th>Title</th>
                                                         <th>Notes</th>
-                                                        <th></th>
+                                                        <th>&nbsp;</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
                                                 <tfoot>
                                                     <tr>
+                                                        <th>ID</th>
                                                         <th>Title</th>
                                                         <th>Notes</th>
-                                                        <th></th>
+                                                        <th>&nbsp;</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -792,17 +794,19 @@ $all_ditricts = $districts->findAll();
                                             <table class="table table-striped table-bordered table-hover" id="tblPropertyType">
                                                 <thead>
                                                     <tr>
+                                                        <th>ID</th>
                                                         <th>Title</th>
                                                         <th>Description</th>
-                                                        <th></th>
+                                                        <th>&nbsp;</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
                                                 <tfoot>
                                                     <tr>
+                                                        <th>ID</th>
                                                         <th>Title</th>
                                                         <th>Description</th>
-                                                        <th></th>
+                                                        <th>&nbsp;</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -1171,7 +1175,6 @@ if ($alldata) {
                             </div>
                         </div>
                         <!-- End Property  Rate -->
-
 
                         <!-- Land access category -->
                         <div id="tab-21" class="tab-pane">

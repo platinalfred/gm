@@ -902,11 +902,12 @@ $(document).ready(function(){
 				  "orderable": false
 			  } */],
 			  "autoWidth": false,
-			  columns:[ { data: 'title', render: function ( data, type, full, meta ) { return '<a  id="'+full.id +'-treeCropsTypes-tblTreeCrops"  class="ls-modal crops"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
-					{ data: 'description'},//
-					//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
+			  columns:[ { data: 'id'},
+                                      { data: 'title', render: function ( data, type, full, meta ) { return '<a  href="#croptypes_desc" data-toggle="modal" id="'+full.id +'-treeCropsTypes-tblTreeCrops"  class="ls-modal crops edit_me"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
+			{ data: 'description'},//
+			//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
 					
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#treecrops"  id="'+data+'-treeCropsTypes-tblTreeCrops"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-treeCropsTypes-tblTreeCrops" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+			{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#treecrops"  id="'+data+'-treeCropsTypes-tblTreeCrops"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-treeCropsTypes-tblTreeCrops" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [
@@ -961,10 +962,12 @@ $(document).ready(function(){
 				  "orderable": false
 			  } */],
 			  "autoWidth": false,
-			  columns:[ { data: 'title', render: function ( data, type, full, meta ) {
-					return '<a  id="'+full.id +'-tblPropertyType-tblPropertyTypes"  class="ls-modal improvement_type"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
-					{ data: 'description'},
-					{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#propertytype"  id="'+data+'-tblPropertyType-tblPropertyTypes"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblPropertyType-tblPropertyTypes" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
+			  columns:[  { data: 'id'},
+                                      {data: 'title', render: function ( data, type, full, meta ) {
+                                      return '<a  href="#property_d" data-toggle="modal"  id="'+full.id +'-tblPropertyType-tblPropertyTypes"  class="ls-modal improvement_type edit_me"><i class="fa fa-folder"></i> '+ data +'</a>'; }
+                              },
+                                  { data: 'description'},
+                                  { data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#propertytype"  id="'+data+'-tblPropertyType-tblPropertyTypes"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblPropertyType-tblPropertyTypes" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
 			  buttons: [
@@ -1348,46 +1351,10 @@ $(document).ready(function(){
 	
 	TableManageButtons.init();
 	//This helps load a page into a bootstrap modal
-	$('.table tbody').on('click', 'tr .crops', function (e) {
-		e.preventDefault();
-		var row = $(this).closest("tr");
-		var data = dTable['tblTreeCrops'].row(row).data();
-		if(typeof(data)=='undefined'){
-			data = dTable['tblTreeCrops'].row($(row).prev()).data();
-		}
-		var  id 
-		var d_id = $(this).attr("id");
-		var arr = d_id.split("-");
-		id = arr[0]; //The  row id  
-		cropViewModel.tree_crop_type(data);
-		cropViewModel.getServerData(id);
-		saveCrops(id);
-		$('#croptypes_desc').modal('show');//find('.modal-body').load($(this).attr('href'))
-		
-	});
-	//This helps load a page into a bootstrap modal
 	$('.table tbody').on('click', 'tr .edit_propety_rate', function (e) {
 		var row = $(this).closest("tr");
 		e.preventDefault();
 		$('#propertyrate_edt').modal('show').find('.modal-body').load($(this).attr('href'));
-	});
-	$('.table tbody').on('click', 'tr .improvement_type', function (e) {
-		e.preventDefault();
-		e.preventDefault();
-		var row = $(this).closest("tr");
-		var data = dTable['tblPropertyTypes'].row(row).data();
-		if(typeof(data)=='undefined'){
-			data = dTable['tblPropertyTypes'].row($(row).prev()).data();
-		}
-		var  id 
-		var d_id = $(this).attr("id");
-		var arr = d_id.split("-");
-		id = arr[0]; //The  row id 
-		improvementViewModel.improvement_type(data);
-		improvementViewModel.getServerData(id);
-		saveImprovements(id);
-		$('#property_d').modal('show');
-		//$('#property_d').modal('show').find('.modal-body').load($(this).attr('href'));
 	});
 	$('.table tbody').on('click', 'tr .crop_rate', function (e) {
 		e.preventDefault();
@@ -1404,8 +1371,22 @@ $(document).ready(function(){
 		tbl = arr[1]; // The table , 
 		frm = arr[2]; //The form id
 		dt = dTable[frm];
-		var row = $(this).parent().parent(); 
-		edit_data(dt.row(row).data(), frm);
+		var row = $(this).parent().parent();
+                var data = dt.row(row).data();
+                if(typeof(data)=='undefined'){
+                    data = dTable[frm].row($(row).prev()).data();
+                }
+                if($(this).hasClass('improvement_type')){
+                    improvementViewModel.improvement_type(data);
+                    improvementViewModel.getServerData(id);
+                    //$('#property_d').modal('show');$('#property_d').modal('show').find('.modal-body').load($(this).attr('href'))
+                }
+                if($(this).hasClass('crops')){
+                    cropViewModel.tree_crop_type(data);
+                    cropViewModel.getServerData(id);
+                    //$('#croptypes_desc').modal('show');find('.modal-body').load($(this).attr('href'))
+                }
+		edit_data(data, frm);
 		
 	});
 	/*  */

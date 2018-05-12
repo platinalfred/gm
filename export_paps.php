@@ -27,8 +27,8 @@
                     }*/
                     //if ($db->update("tbl_paps", array("rate_per_acre", "total_take", "land_interest"), array("rate_per_acre" => (int) str_replace(",", "", $data1[3]), "total_take" => $data1[1], "land_interest" => $interest), "pap_ref='" . $data1[0] . "'")) {
                     //if ($db->update("tbl_paps", array("pap_ref", "rightofway", "way_leave", "rate_per_acre", "land_interest", "diminution_rate"), array("pap_ref" => $data1[2], "rightofway" => (float) $data1[4], "way_leave" => (float) $data1[5], "rate_per_acre" => (int) $data1[6], "land_interest" => (float) $data1[7], "diminution_rate" => (float) $data1[8]), "id=" . $data1[0] )) {
-                    //if ($db->update("tbl_paps", array("pap_ref", "total_take", "rate_per_acre", "land_interest"), array("pap_ref" => $data1[0], "total_take" => (float) $data1[5], "rate_per_acre" => (float) str_replace(",", "", $data1[6]), "land_interest" => (float) $data1[7]), "pap_ref='" . $data1[1] . "'")) {
-                    if ($db->update("tbl_district_croptree_rate", array("rate"), array("rate" => (int) $data1[1]), "id=" . ((int) $data1[0]))) {
+                    if ($db->update("tbl_paps", array("pap_ref", "total_take", "rate_per_acre", "land_interest"), array("pap_ref" => $data1[1], "total_take" => (float) $data1[3], "rate_per_acre" => (float) str_replace(",", "", $data1[4]), "land_interest" => (float) $data1[5]), "id='" . $data1[0] . "'")) {
+                    //if ($db->update("tbl_district_croptree_rate", array("rate"), array("rate" => (int) $data1[1]), "id=" . ((int) $data1[0]))) {
                         $run++;
                         $count++;
                     }
