@@ -309,7 +309,6 @@
         };
         //$(".modal").each(function(key, val){console.log(val)});
 	$(".modal").on("hide.bs.modal", function () {
-            console.log("Modal closed");
 		// put your default event here
 		$('form', this)[0].reset();
 		$('input[name="id"]', this).val('');
