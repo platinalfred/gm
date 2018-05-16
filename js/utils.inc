@@ -179,7 +179,7 @@
         var id_input = frm.find("input[name = 'id']");
         var reset = frm.find("input[name = 'noreset']").length;
 
-        enableDisableButton(frm, true);
+        enableDisableButton(form, true);
         $.ajax({
             url: "save_data.php",
             type: 'POST',
@@ -190,25 +190,43 @@
                     showStatusMessage("Data successfully saved", "success");
 
                     setTimeout(function () {
-                        if (tbl.length && $(tbl[0]).val() != "") {
+                        var tbl_id = $(tbl[0]).val();
+                        if (tbl.length &&  tbl_id != "") {
                             var dt = dTable[$(tbl[0]).val()];
                             if (typeof dt !== 'undefined') {
                                 dt.ajax.reload();
                             }
+                            switch(tbl_id){
+                                case "tblProjectCoverage":
+                                    viewModel.getServerData();
+                                    break;
+                                case "tblPapPhotoForm":
+                                    viewModel.serverPapPhotos(response.pap_photos);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                         if (id_input.length && !isNaN(parseInt($(id_input[0]).val()))) {
-                            if(typeof cropViewModel !== 'undefined' && (tbl.length && $(tbl[0]).val() == "CropDescription")){
+                            if(typeof cropViewModel !== 'undefined' && (tbl.length && tbl_id == "CropDescription")){
                                 cropViewModel.getServerData(parseInt($(id_input[0]).val()));
                             }
-                            if(typeof improvementViewModel !== 'undefined' && (tbl.length && $(tbl[0]).val() == "propertyDescription")){
+                            if(typeof improvementViewModel !== 'undefined' && (tbl.length && tbl_id == "propertyDescription")){
                                 improvementViewModel.getServerData(parseInt($(id_input[0]).val()));
                             }
                         }else {
                             if( reset < 1){
                                 frm[0].reset();
+                                $('select', form).trigger('change');
+                            }
+                            if(typeof viewModel !== 'undefined' && tbl.length && tbl_id == "tblPapCondensedReportForm"){
+                                    viewModel.district(null); viewModel.scounty(null); viewModel.parish(null); viewModel.village(null);
                             }
                         }
-                        enableDisableButton(frm, false);
+                            if(typeof viewModel !== 'undefined'){
+                                viewModel.getServerData();
+                            }
+                        enableDisableButton(form, false);
                     }, 2000);
 
                 } else {
@@ -311,7 +329,8 @@
 	$(".modal").on("hide.bs.modal", function () {
 		// put your default event here
 		$('form', this)[0].reset();
-		$('input[name="id"]', this).val('');
+		$('input[name="id"]', this).val('').trigger('change');
+		$('select', this).trigger('change');
 	});
 });
 //This function is supposed to make sure when the pop up is not an edit, no data is displayed in the form. It picks the id field and makes sure if empty then the form is empty for adding new data

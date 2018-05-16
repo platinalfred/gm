@@ -584,67 +584,6 @@ viewModel.getServerData();// get data to be populated on the page
 ko.applyBindings(viewModel, $("#project_page")[0]); //
 
 //Functions being used in more than one instances / places
-//With this one function all settings will be sent to save_data.php for saving
-function saveData(form,event){
-		enableDisableButton(form, true);
-		event.preventDefault();
-		var frm = $(form)[0];
-		var frmdata = new FormData(frm);
-		var id_input = frmdata.get("id");
-		var frmId = frmdata.get("tbl");
-		$.ajax({
-			url: "save_data.php",
-			type: 'POST',
-			async: false,
-			cache: false,
-			contentType: false,
-			processData: false,
-			dataType:'json',
-			data: frmdata,
-			success: function (response) {
-				if(response.success){
-					showStatusMessage("Data successfully saved" ,"success");
-					setTimeout(function(){
-						if(id_input == ""){
-							frm.reset();
-						}
-						if(frmId == 'tblProjectCoverage'){
-							viewModel.getServerData();
-						}
-						if(frmId == 'tblPapPhotoForm'){
-							viewModel.serverPapPhotos(response.pap_photos);
-						}
-						
-						if(frmId == 'tblPapCondensedReportForm'){
-							
-							if(id_input == ""){ //If id input is not null do not reload the districts
-								viewModel.district(null);
-								viewModel.scounty(null);
-								viewModel.parish(null);
-								viewModel.village(null);
-                                                            $('#tblPapCondensedReport').DataTable().ajax.reload();
-							}
-                                                        else{
-                                                            $('#tblPapCondensedReport').DataTable().ajax.reload(null,false);
-                                                        }
-							viewModel.getServerData();
-							
-						}
-                                                enableDisableButton(form, false);
-						/* if(typeof dTable[frmId] != 'undefined')
-							dTable[frmId].ajax.reload(null,false); */
-					}, 2000);
-				}else{
-					enableDisableButton(form, false);
-					showStatusMessage(response.message, "fail");
-				}
-				
-			}
-		});
-
-		return false;
-	//});
-}
 //0772307940 clicking the update icon
 $('table tbody').on( 'click', '.edit_me', function () {
 	var row = $(this).closest("tr");
