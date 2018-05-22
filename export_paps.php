@@ -16,6 +16,7 @@
             $filename = $_POST['filename'];
             $handle = fopen("$filename", "r");
             $run = $count = 0;
+            if($handle){
             // $fields  = array("total_take");
             while (($data = fgetcsv($handle, 90048576, ",")) !== FALSE) {
                 $run++;
@@ -33,16 +34,19 @@
                         $count++;
                     }
                 } else {
-                    print_r($data1);
+                    print_r($data);
                     echo "<br/>";
                 }
             }
             //echo $run ." - ". count($data);
             /* $import= "INSERT into  members(InvoiceID, InvoiceType, CustID, dtInvoice, OrigDocID, dtDue, cySaleOnly) values('$data[0]','$data[1]','$data[2]','$data[3]','$data[4]','$data[5]','$data[6]')";		
               mysql_query($import) or die(mysql_error());
-              }
-              fclose($handle); */
+              }*/
+              fclose($handle);
             print "Import done\n $count records updated";
+            }else{
+                echo "File '".$filename."' does not exist.";
+            }
         } else {
             print "<form action='' method='post'>";
 

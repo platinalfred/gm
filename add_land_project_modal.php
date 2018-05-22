@@ -15,7 +15,7 @@
                         </div>
                     </div>
 					<div class="form-group">
-                        <label class="control-label col-md-4">Distance Allowance</label>
+                        <label class="control-label col-md-4">Disturbance Allowance</label>
                         <div class="col-md-7">
 							<input type="number" id="distance_allowance" onkeyup="handleChange(this), checkInput(this);" name="disturbance_allowance" class="form-control" required >
                         </div>
