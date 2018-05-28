@@ -20,18 +20,22 @@ $(document).ready(function(){
 					{
 					  extend: "copy",
 					  className: "btn-sm btn-white"
+                                                                                            footer: true
 					},
 					{
 					  extend: "excel",
 					  className: "btn-sm btn-white"
+                                                                                            footer: true
 					},
 					{
 					  extend: "pdfHtml5",
 					  className: "btn-sm btn-white"
+                                                                                            footer: true
 					},
 					{
 					  extend: "print",
 					  className: "btn-sm btn-white"
+                                                                                            footer: true
 					},
 				  ],
 				  responsive: false
