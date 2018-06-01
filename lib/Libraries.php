@@ -24,6 +24,8 @@ require_once(dirname(__FILE__)."/ProjectCoverage.php");
 require_once(dirname(__FILE__)."/ProjectAffectedPerson.php");
 require_once(dirname(__FILE__)."/PAP_CropTree.php");
 require_once(dirname(__FILE__)."/PAP_Improvement.php");
+require_once(dirname(__FILE__)."/Report.php");
 require_once(dirname(__FILE__)."/Tenure.php");
+require_once(dirname(__FILE__)."/UnitOfMeasure.php");
 require_once(dirname(__FILE__)."/Staff.php");
 require_once(dirname(__FILE__)."/Comments.php");

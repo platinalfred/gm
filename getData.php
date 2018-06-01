@@ -33,6 +33,26 @@ if (isset($_POST['tbl'])) {
             $report_obj = new Report();
             $output['data'] = $report_obj->getProjectReport();
             break;
+        case "pap_compensation_report":
+            $pap_report_obj = new Report();
+            $where = isset($_POST['project_id'])?("`project_id`=".$_POST['project_id']):1;
+            $output['data'] = $pap_report_obj->getPapSummarizedReport($where);
+            break;
+        case "pap_village_report":
+            $pap_report_obj = new Report();
+            $where = isset($_POST['project_id'])?("`project_id`=".$_POST['project_id']):1;
+            $output['data'] = $pap_report_obj->getPapVillageSummary($where);
+            break;
+        case "project_improvements_report":
+            $pap_report_obj = new Report();
+            $where = isset($_POST['project_id'])?("`pap_id` IN (SELECT `id` FROM `tbl_paps` WHERE `project_id`=".$_POST['project_id'].")"):1;
+            $output['data'] = $pap_report_obj->getPropertiesSummary($where);
+            break;
+        case "project_crops_report":
+            $pap_report_obj = new Report();
+            $where = isset($_POST['project_id'])?("`pap_id` IN (SELECT `id` FROM `tbl_paps` WHERE `project_id`=".$_POST['project_id'].")"):1;
+            $output['data'] = $pap_report_obj->getCropsSummary($where);
+            break;
         case "project_details":
             //geography
             $project_coverage_obj = new ProjectCoverage();

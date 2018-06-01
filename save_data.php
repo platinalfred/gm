@@ -635,7 +635,7 @@ if (isset($_POST['tbl'])) {
                     if ($treecroptypes->addTreeCropType($data)) {
                         $output = "success";
                     } else {
-                        $output = "Ooups! Tree or crop type not added, please contact administrator for assistance.";
+                        $output = "Ooops! Tree or crop type not added, please contact administrator for assistance.";
                     }
                 } else {
                     $output = "Crop tree type already exists!";
@@ -646,7 +646,7 @@ if (isset($_POST['tbl'])) {
         case "treecroptypedescription":
             $treecroptypedescription = new TreeCropTypesDescription();
             if (!empty($_POST['crop_description_id'])) {
-                $data['tree_crop_id'] = $_POST['tree_crop_id'];
+                $data['tree_crop_id'] = $_POST['id'];
 
                 foreach ($_POST['crop_description_id'] as $single) {
                     $data['crop_description_id'] = $single;
@@ -660,7 +660,7 @@ if (isset($_POST['tbl'])) {
         case "improvementtypedescription":
             $propertytypedescription = new PropertyTypeDescription();
             if (!empty($_POST['improvement_description_id'])) {
-                $data['property_type_id'] = $_POST['property_type_id'];
+                $data['property_type_id'] = $_POST['id'];
 
                 foreach ($_POST['improvement_description_id'] as $single) {
                     $data['property_description_id'] = $single;

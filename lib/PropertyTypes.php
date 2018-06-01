@@ -6,7 +6,7 @@ require_once($curdir . '/Db.php');
 class PropertyTypes extends Db {
 
     protected static $table_name = "tbl_property_type";
-    protected static $db_fields = array("id", "title", "description");
+    protected static $db_fields = array("id", "title", "description", "measure_unit_id");
 
     public function findById($id) {
         $result = $this->getrec(self::$table_name, "id=" . $id, "");
@@ -14,7 +14,9 @@ class PropertyTypes extends Db {
     }
 
     public function findAll() {
-        $result_array = $this->getarray(self::$table_name, "active=1", "", "");
+        $table = self::$table_name." LEFT JOIN `tbl_measure_unit` ON `measure_unit_id` = `tbl_measure_unit`.`id`";
+        $fields = "tbl_property_type.id, title, description, measure_unit_id, measure_unit, short_form";
+        $result_array = $this->getfarray($table, $fields, "active=1", "", "");
         return !empty($result_array) ? $result_array : false;
     }
 

@@ -1,18 +1,17 @@
 <?php 
 session_start();
 include("lib/Libraries.php");
-if(!isset($_SESSION['logged'])){ 
-	header("location:logout.php");
-}
-?>
+if(!isset($_SESSION['logged'])){ ?>
+	<script>
+		window.location.href = "logout.php";
+	</script>
+	<?php } ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>
-       GMIS
-    </title>
-	<meta charset="UTF-8" />
-	<link rel="shortcut icon" href="images/favicon.ico" />
+    <title> GMIS </title>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="images/favicon.ico" />
     <link href="stylesheets/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/font-awesome.min.css" media="all" rel="stylesheet" type="text/css" />
     <link href="stylesheets/hightop-font.css" media="all" rel="stylesheet" type="text/css" />

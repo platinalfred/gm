@@ -197,53 +197,6 @@ $(document).ready(function(){
         }
 	var handleDataTableButtons = function() {
 		<?php if(isset($projectDetails)):?>
-			/* -- Project Affected Person Data Table --- */
-			//we have to set column indices based on the type of the project
-			/* var cols = [7,12,13]; //the index for columns where  the totals appear
-			var last_col = 15; //the final index table column
-			<?php if( ($projectDetails['project_category_unit'] == 1) ):?>
-				cols = [7,10,12,13]; last_col = 14;
-			<?php endif;?>
-			<?php if( ($projectDetails['project_category_unit'] == 2) ):?>
-				cols = [7,9,10]; last_col = 11;;
-			<?php endif;?>
-			<?php if( ($projectDetails['project_category_unit'] == 4) ):?>
-				cols = [7,8,12,14,15]; last_col = 16;
-			<?php endif;?>
-			<?php if( ($projectDetails['project_category_unit'] == 5) ):?>
-				cols = [7,10,12,13]; last_col = 14;
-			<?php endif;?> */
-			/* if ($("#tblPapsReport").length) {
-				  dTable['tblPapsReport'] = $('#tblPapsReport').DataTable({
-				  dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
-                                  "searching": false,
-                                  "ordering": false,
-                                  "paging": true,
-                                  "lengthChange": true,
-				  "autoWidth": false,
-                                   "order": [ 0, 'asc'],
-				  buttons: [
-					{
-					  extend: "copy",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "excel",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "pdfHtml5",
-					  className: "btn-sm btn-white"
-					},
-					{
-					  extend: "print",
-					  className: "btn-sm btn-white"
-					},
-				  ],
-				  
-				  responsive: false
-                              });
-			} */
 		 if ($("#tblPapCondensedReport").length) {
 				  dTable['tblPapCondensedReport'] = $('#tblPapCondensedReport').DataTable({
 				  dom: '<".col-md-6"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
@@ -385,7 +338,7 @@ $(document).ready(function(){
 					  total += (parseInt(val)*parseFloat(totalAmount[key]))
 				  });
 				  $.each(pageQty, function(key, val){ //summing up the page total
-					  pageTotal += (parseInt(val)*parseFloat(pageAmount[key]))
+					  pageTotal += (parseInt(val)*parseFloat(pageAmount[key]))+" "
 				  });
 				  
 					$(api.column(5).footer()).html( curr_format(pageTotal) + ' (' + curr_format(total) + ')' );
@@ -394,7 +347,7 @@ $(document).ready(function(){
 				  { data: 'croptype' },
 					{ data: 'cropdescription'},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));}},
-					{ data: 'quantity', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));}},
+					{ data: 'quantity', render: function( data, type, full, meta ) {return curr_format(parseFloat(data))+" "+(full.short_form?full.short_form:'') ;}},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data) * parseInt(full.quantity));}},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papCropModal" class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
 					
@@ -468,7 +421,7 @@ $(document).ready(function(){
 				  { data: 'propertytype' },
 					{ data: 'propertydescription'},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data));} },
-					{ data: 'quantity'},
+					{ data: 'quantity', render: function( data, type, full, meta ) {return curr_format(parseFloat(data))+" "+(full.short_form?full.short_form:'') ;}},
 					{ data: 'old_rate', render: function( data, type, full, meta ) {return curr_format(parseFloat(data)*parseFloat(full.quantity));}},
 					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" data-toggle="modal" href="#papImprovementModal" id="'+data+'-tblPapImprovement-tblPapImprovement"class=" btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> </a><a href="#" class= "btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i></a>';}}
 					

@@ -291,8 +291,10 @@ if (!$projectDetails) {
                                                         <div class="col-md-2"><?php echo $pap_details['total_take']; ?> acres</div>
                                                             <?php endif; ?>
 
+                                                    <div class="col-md-2"><strong><i class="fa fa-map-marker"></i> Coordinates</strong></div>
+                                                    <div class="col-md-2"><?php echo $pap_details['x_coord'] . " " . $pap_details['y_coord'] ; ?></div>
                                                     <div class="col-md-2"><strong><i class="fa fa-map-marker"></i> Chainage</strong></div>
-                                                    <div class="col-md-2">km <?php echo $pap_details['total_take']; ?></div>
+                                                    <div class="col-md-2">km <?php echo $pap_details['chainage']; ?></div>
                                                 </div>
                                             </div>
                                         </div>

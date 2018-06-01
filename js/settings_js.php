@@ -80,7 +80,7 @@ var ViewModel = function() {
 			}
 		})
 	};
-}
+};
  var viewModel = new ViewModel();
  ko.applyBindings(viewModel, $("#tab-6")[0]); //
  
@@ -894,7 +894,7 @@ $(document).ready(function(){
 						//d.end_date = getEndDate();
 					}
 			  },"columnDefs": [ {
-				  "targets": [2],
+				  "targets": [4],
 				  "orderable": false,
 				  "searchable": false
 			  }/* , {
@@ -904,9 +904,8 @@ $(document).ready(function(){
 			  "autoWidth": false,
 			  columns:[ { data: 'id'},
                                       { data: 'title', render: function ( data, type, full, meta ) { return '<a  href="#croptypes_desc" data-toggle="modal" id="'+full.id +'-treeCropsTypes-tblTreeCrops"  class="ls-modal crops edit_me"><i class="fa fa-folder"></i> '+ data +'</a>'; } },
-			{ data: 'description'},//
-			//{ data: 'date_added', render: function ( data, type, full, meta ) {return moment(data).format('LL');}},
-					
+			{ data: 'measure_unit_id', render: function ( data, type, full, meta ) { return data?(full.measure_unit + ' ('+full.short_form+')'):'count';}},
+			{ data: 'description'},
 			{ data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#treecrops"  id="'+data+'-treeCropsTypes-tblTreeCrops"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-treeCropsTypes-tblTreeCrops" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
 					] ,
@@ -954,7 +953,7 @@ $(document).ready(function(){
 						//d.end_date = getEndDate();
 					}
 			  },"columnDefs": [ {
-				  "targets": [2],
+				  "targets": [4],
 				  "orderable": false,
 				  "searchable": false
 			  }/* , {
@@ -964,8 +963,8 @@ $(document).ready(function(){
 			  "autoWidth": false,
 			  columns:[  { data: 'id'},
                                       {data: 'title', render: function ( data, type, full, meta ) {
-                                      return '<a  href="#property_d" data-toggle="modal"  id="'+full.id +'-tblPropertyType-tblPropertyTypes"  class="ls-modal improvement_type edit_me"><i class="fa fa-folder"></i> '+ data +'</a>'; }
-                              },
+                                      return '<a  href="#property_d" data-toggle="modal"  id="'+full.id +'-tblPropertyType-tblPropertyTypes"  class="ls-modal improvement_type edit_me"><i class="fa fa-folder"></i> '+ data +'</a>'; }},
+                                  { data: 'measure_unit_id', render: function ( data, type, full, meta ) { return data?(full.measure_unit + ' ('+full.short_form+')'):'count';}},
                                   { data: 'description'},
                                   { data: 'id', render: function ( data, type, full, meta ) { return '<a data-toggle="modal" href="#propertytype"  id="'+data+'-tblPropertyType-tblPropertyTypes"  class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a><span id="'+data+'-tblPropertyType-tblPropertyTypes" class="btn btn-danger btn-sm delete_me"><i class="fa fa-trash-o"></i> Deleted</span>';}}
 					
@@ -1350,7 +1349,7 @@ $(document).ready(function(){
 	}();
 	
 	TableManageButtons.init();
-	//This helps load a page into a bootstrap modal
+	//This load the property descriptions into a bootstrap modal
 	$('.table tbody').on('click', 'tr .edit_propety_rate', function (e) {
 		var row = $(this).closest("tr");
 		e.preventDefault();
@@ -1392,6 +1391,4 @@ $(document).ready(function(){
 	/*  */
 	
 });
-	
-	//ko.applyBindings({ depositProductModel: depositProductModel, loanProductModel: loanProductModel });
 </script>

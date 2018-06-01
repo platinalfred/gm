@@ -28,7 +28,8 @@
                     }*/
                     //if ($db->update("tbl_paps", array("rate_per_acre", "total_take", "land_interest"), array("rate_per_acre" => (int) str_replace(",", "", $data1[3]), "total_take" => $data1[1], "land_interest" => $interest), "pap_ref='" . $data1[0] . "'")) {
                     //if ($db->update("tbl_paps", array("pap_ref", "rightofway", "way_leave", "rate_per_acre", "land_interest", "diminution_rate"), array("pap_ref" => $data1[2], "rightofway" => (float) $data1[4], "way_leave" => (float) $data1[5], "rate_per_acre" => (int) $data1[6], "land_interest" => (float) $data1[7], "diminution_rate" => (float) $data1[8]), "id=" . $data1[0] )) {
-                    if ($db->update("tbl_paps", array("pap_ref", "total_take", "rate_per_acre", "land_interest"), array("pap_ref" => $data1[1], "total_take" => (float) $data1[2], "rate_per_acre" => (float) str_replace(",", "", $data1[3]), "land_interest" => (float) $data1[4]), "id='" . $data1[0] . "'")) {
+                    //if ($db->update("tbl_paps", array("pap_ref", "total_take", "rate_per_acre", "land_interest"), array("pap_ref" => $data1[1], "total_take" => (float) $data1[2], "rate_per_acre" => (float) str_replace(",", "", $data1[3]), "land_interest" => (float) $data1[4]), "id='" . $data1[0] . "'")) {
+                    if ($db->update("tbl_tree_or_crop_types", array("measure_unit_id"), array("measure_unit_id" => (float) $data1[1]), "id='" . $data1[0] . "'")) {
                     //if ($db->update("tbl_district_croptree_rate", array("rate"), array("rate" => (int) $data1[1]), "id=" . ((int) $data1[0]))) {
                         $run++;
                         $count++;
@@ -43,7 +44,7 @@
               mysql_query($import) or die(mysql_error());
               }*/
               fclose($handle);
-            print "Import done\n $count records updated";
+            print "Update done\n $count records updated";
             }else{
                 echo "File '".$filename."' does not exist.";
             }

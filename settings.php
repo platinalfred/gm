@@ -9,7 +9,9 @@ $subcounties = new SubCounties();
 $parishes = new Parish();
 $villages = new Village();
 $propertytypedescription = new PropertyTypeDescription();
-$all_ditricts = $districts->findAll();
+$unit_of_measure_obj = new UnitOfMeasure();
+$all_districts = $districts->findAll();
+$units_of_measure = $unit_of_measure_obj->findAll();
 //$all_counties = $counties->findAll();							
 //$all_subcounties = $subcounties->findAll();							
 //$all_parishes = $parishes->findAll();							
@@ -497,6 +499,21 @@ $all_ditricts = $districts->findAll();
                                                                         <div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
                                                                         </div>
                                                                     </div>
+                                                                    <div class="form-group"><label class="col-lg-2 control-label">Unit of measure</label>
+                                                                        <div class="col-lg-10">
+                                                                            <select id="measure_id" name="measure_id" class="select2able">
+                                                                                <?php
+                                                                                $units_of_measure_options = "";
+                                                                                if ($units_of_measure) {
+                                                                                    foreach ($units_of_measure as $single) {
+                                                                                        $units_of_measure_options .= "<option value=\"".$single['id']."\">".$single['measure_unit']." (".$single['short_form'].")</option>";
+                                                                                    }
+                                                                                    echo $units_of_measure_options;
+                                                                                }
+                                                                                ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="form-group"><label class="col-lg-2 control-label">Notes</label>
                                                                         <div class="col-lg-10"><textarea  name="description" placeholder="add Note" class="form-control"></textarea></div>
                                                                     </div>
@@ -519,6 +536,7 @@ $all_ditricts = $districts->findAll();
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <div class="row" id="tree_crop_description">
+                                                                <form class="form-horizontal form_validate" >
                                                         <div class="col-sm-12" data-bind="with:tree_crop_type">
                                                             <h3><span data-bind="text:title"></span> Tree/Crop Type</h3>
                                                             <div data-bind="foreach: $parent.all_attached">
@@ -527,9 +545,8 @@ $all_ditricts = $districts->findAll();
                                                             </div>
                                                             <div class="ibox-content">
                                                                 <p><b>Attach possible description to <span data-bind="text:title"></span> crop/tree type</b></p>
-                                                                <form class="form-horizontal" >
                                                                     <input type="hidden" value="treecroptypedescription" name="tbl">
-                                                                    <input type="hidden" data-bind="value:id" name="tree_crop_id">
+                                                                    <input type="hidden" data-bind="value:id" name="id">
                                                                     <div class="form-group">
                                                                         <div class=" col-md-12">Choose description</div>
                                                                         <!--ko foreach: $parent.all_crop_descriptions-->
@@ -540,12 +557,12 @@ $all_ditricts = $districts->findAll();
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <div class="col-lg-offset-2 col-lg-10">
-                                                                            <button class="btn btn-sm btn-primary saveCropTreeDescription" type="button">Attach description</button>
+                                                                            <button class="btn btn-sm btn-primary" type="submit">Attach description</button>
                                                                         </div>
                                                                     </div>
-                                                                </form>
                                                             </div>
                                                         </div>
+                                                                </form>
                                                     </div>										
                                                 </div>
                                             </div>
@@ -560,6 +577,7 @@ $all_ditricts = $districts->findAll();
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Title</th>
+                                                        <th>Unit of Measure</th>
                                                         <th>Notes</th>
                                                         <th>&nbsp;</th>
                                                     </tr>
@@ -569,6 +587,7 @@ $all_ditricts = $districts->findAll();
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Title</th>
+                                                        <th>Unit of measure</th>
                                                         <th>Notes</th>
                                                         <th>&nbsp;</th>
                                                     </tr>
@@ -581,7 +600,7 @@ $all_ditricts = $districts->findAll();
                         </div>
                         <!-- End Tree or Crop Types -->
 
-                        <!-- Crop Descriptions -->
+                        <!-- Tree Crop Descriptions -->
                         <div id="tab-5" class="tab-pane">
                             <div class="panel-body">
                                 <div class="col-lg-2 col-offset-sm-8">
@@ -713,7 +732,7 @@ $all_ditricts = $districts->findAll();
                             </div>
                         </div>
                         <!-- End Property Descriptions -->
-                        <!-- Propery -->
+                        <!-- Property -->
                         <div id="tab-8" class="tab-pane">
                             <div class="panel-body">
                                 <div class="col-lg-2 col-offset-sm-8">
@@ -735,7 +754,14 @@ $all_ditricts = $districts->findAll();
                                                                         <div class="col-lg-10"><input type="text" name="title" placeholder="Title" class="form-control"> 
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group"><label class="col-lg-2 control-label">Crop Rate</label>
+                                                                    <div class="form-group"><label class="col-lg-2 control-label">Unit of measure</label>
+                                                                        <div class="col-lg-10">
+                                                                            <select class="select2able" name="measure_unit_id" >
+                                                                                <?php echo $units_of_measure_options;?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group"><label class="col-lg-2 control-label">Note</label>
                                                                         <div class="col-lg-10"><textarea  name="description" placeholder="Description" class="form-control"></textarea></div>
                                                                     </div>
                                                                     <div class="form-group">
@@ -757,14 +783,14 @@ $all_ditricts = $districts->findAll();
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <div class="row" id="improvement_type_desc">
+                                                                <form class="form-horizontal form_validate" >
                                                         <div class="col-sm-12" data-bind="with:improvement_type">
                                                             <h3><span data-bind="text:title"></span> Property Type</h3>
                                                             <div data-bind="foreach: $parent.all_attached_improvements"><span data-bind="text:propertydescription"></span> &nbsp;<i class="fa fa-trash-o warning" style="color:red;cursor:pointer;" title="Remove description" data-bind="confirmClick: { message: 'Are you sure you would like to delete this item?', click: $root.removePropertyDescription } "></i><br/><br/></div>
                                                             <div class="ibox-content">
                                                                 <p><b>Attach possible description to <span data-bind="text:title"></span> crop/tree type</b></p>
-                                                                <form class="form-horizontal" >
                                                                     <input type="hidden" value="improvementtypedescription" name="tbl">
-                                                                    <input type="hidden" data-bind="value:id" name="property_type_id">
+                                                                    <input type="hidden" data-bind="value:id" name="id">
                                                                     <div class="form-group">
                                                                         <div class=" col-md-12">Choose description</div>
                                                                         <!--ko foreach: $parent.all_improvements_description-->
@@ -775,12 +801,12 @@ $all_ditricts = $districts->findAll();
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <div class="col-lg-offset-2 col-lg-10">
-                                                                            <button class="btn btn-sm btn-primary saveImprovementDescription" type="button">Attach description</button>
+                                                                            <button class="btn btn-sm btn-primary" type="submit">Attach description</button>
                                                                         </div>
                                                                     </div>
-                                                                </form>
                                                             </div>
                                                         </div>
+                                                                </form>
                                                     </div>										
 
                                                 </div>
@@ -796,6 +822,7 @@ $all_ditricts = $districts->findAll();
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Title</th>
+                                                        <th>Unit of measure</th>
                                                         <th>Description</th>
                                                         <th>&nbsp;</th>
                                                     </tr>
@@ -805,6 +832,7 @@ $all_ditricts = $districts->findAll();
                                                     <tr>
                                                         <th>ID</th>
                                                         <th>Title</th>
+                                                        <th>Unit of measure</th>
                                                         <th>Description</th>
                                                         <th>&nbsp;</th>
                                                     </tr>
@@ -830,10 +858,7 @@ $all_ditricts = $districts->findAll();
                                                 <div class="modal-body">
                                                     <div class="row">
                                                         <div class="col-sm-12">
-                                                            <p>Copy Rate</p>
-                                                            <?php
-                                                            $all_ditricts = $districts->findAll();
-                                                            ?>				
+                                                            <p>Copy Rate</p>			
                                                             <div class="ibox-content">
                                                                 <form class="form-horizontal form_validate" method="post" id="tblDistrictCropRate">
                                                                     <input type="hidden" name="tbl" value="copy_district_rate">
@@ -842,12 +867,12 @@ $all_ditricts = $districts->findAll();
                                                                         <div class="col-lg-10">
                                                                             <select class="select2able" name="district_from" >
                                                                                 <?php
-                                                                                if ($all_ditricts) {
-                                                                                    foreach ($all_ditricts as $single) {
-                                                                                        ?>
-                                                                                        <option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
-                                                                                        <?php
+                                                                                $district_options = "";
+                                                                                if ($all_districts) {
+                                                                                    foreach ($all_districts as $single) {
+                                                                                        $district_options .= "<option value=\"".$single['id']."\">".$single['district_name']."</option>";
                                                                                     }
+                                                                                    echo $district_options;
                                                                                 }
                                                                                 ?>
                                                                             </select>
@@ -857,15 +882,7 @@ $all_ditricts = $districts->findAll();
                                                                         <label class="control-label col-md-2">To District</label>
                                                                         <div class="col-lg-10">
                                                                             <select class="select2able" name="district_to" >
-                                                                                <?php
-                                                                                if ($all_ditricts) {
-                                                                                    foreach ($all_ditricts as $single) {
-                                                                                        ?>
-                                                                                        <option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
-        <?php
-    }
-}
-?>
+                                                                                <?php echo $district_options; ?>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -898,16 +915,7 @@ $all_ditricts = $districts->findAll();
                                                                         <label class="control-label col-md-2">District</label>
                                                                         <div class="col-lg-10">
                                                                             <select class="select2able" name="district_id" >
-                                                                                <?php
-                                                                                $all_ditricts = $districts->findAll();
-                                                                                if ($all_ditricts) {
-                                                                                    foreach ($all_ditricts as $single) {
-                                                                                        ?>
-                                                                                        <option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
-        <?php
-    }
-}
-?>
+                                                                                <?php echo $district_options;?>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -1015,22 +1023,11 @@ $all_ditricts = $districts->findAll();
                                                             <div class="ibox-content">
                                                                 <form class="form-horizontal form_validate" method="post" id="tblPropertyRate">
                                                                     <input type="hidden" name="tbl" value="copy_property_rate">
-                                                                                <?php
-                                                                                $all_ditricts = $districts->findAll();
-                                                                                ?>
                                                                     <div class="form-group">
                                                                         <label class="control-label col-md-2">Copy From District</label>
                                                                         <div class="col-lg-10">
                                                                             <select class="select2able" name="district_from" >
-<?php
-if ($all_ditricts) {
-    foreach ($all_ditricts as $single) {
-        ?>
-                                                                                        <option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
-                                                                                        <?php
-                                                                                    }
-                                                                                }
-                                                                                ?>
+                                                                                <?php echo $district_options; ?>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -1038,15 +1035,7 @@ if ($all_ditricts) {
                                                                         <label class="control-label col-md-2">Copy to District</label>
                                                                         <div class="col-lg-10">
                                                                             <select class="select2able" name="district_to" >
-<?php
-if ($all_ditricts) {
-    foreach ($all_ditricts as $single) {
-        ?>
-                                                                                        <option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
-        <?php
-    }
-}
-?>
+                                                                                <?php echo $district_options; ?>
                                                                             </select>
                                                                         </div>
                                                                     </div>
@@ -1080,16 +1069,7 @@ if ($all_ditricts) {
                                                                         <label class="control-label col-md-2">District</label>
                                                                         <div class="col-lg-10">
                                                                             <select class="select2able" name="district_id" >
-<?php
-$all_ditricts = $districts->findAll();
-if ($all_ditricts) {
-    foreach ($all_ditricts as $single) {
-        ?>
-                                                                                        <option value="<?php echo $single['id']; ?>"><?php echo $single['district_name']; ?></option>
-                                                                                        <?php
-                                                                                    }
-                                                                                }
-                                                                                ?>
+                                                                                <?php echo $district_options; ?>
                                                                             </select>
                                                                         </div>
                                                                     </div>

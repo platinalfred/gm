@@ -1,6 +1,5 @@
 <?php 
 session_start();
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,7 +19,7 @@ session_start();
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="javascripts/bootstrap.min.js" type="text/javascript"></script>
 	
-    <script src="javascripts/jquery.validate.js" type="text/javascript"></script>]
+    <script src="javascripts/jquery.validate.js" type="text/javascript"></script>
     <script src="javascripts/respond.js" type="text/javascript"></script>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 </head>

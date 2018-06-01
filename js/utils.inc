@@ -16,7 +16,7 @@
 
 //Only numbers
     function checkInput(input) {
-        var invalidChars = /[^0-9]/gi
+        var invalidChars = /[^0-9]/gi;
         if (invalidChars.test(input.value)) {
             input.value = input.value.replace(invalidChars, "");
         }
@@ -175,9 +175,9 @@
         event.preventDefault();
         var frm = $(event.target);
         var frmdata = frm.serialize();
-        var tbl = frm.find("input[name = 'tbl']");
-        var id_input = frm.find("input[name = 'id']");
-        var reset = frm.find("input[name = 'noreset']").length;
+        var tbl = frm.find("input[name='tbl']");
+        var id_input = frm.find("input[name='id']");
+        var reset = frm.find("input[name='noreset']").length;
 
         enableDisableButton(form, true);
         $.ajax({
@@ -208,10 +208,10 @@
                             }
                         }
                         if (id_input.length && !isNaN(parseInt($(id_input[0]).val()))) {
-                            if(typeof cropViewModel !== 'undefined' && (tbl.length && tbl_id == "CropDescription")){
+                            if(typeof cropViewModel !== 'undefined' && (tbl.length && (tbl_id == "treecroptypedescription" || tbl_id == "CropDescription"))){
                                 cropViewModel.getServerData(parseInt($(id_input[0]).val()));
                             }
-                            if(typeof improvementViewModel !== 'undefined' && (tbl.length && tbl_id == "propertyDescription")){
+                            if(typeof improvementViewModel !== 'undefined' && (tbl.length && (tbl_id == "improvementtypedescription" || tbl_id == "propertyDescription"))){
                                 improvementViewModel.getServerData(parseInt($(id_input[0]).val()));
                             }
                         }else {
@@ -307,7 +307,7 @@
     $(document).ready(function () {
         jQuery.validator.addMethod("phoneUg", function (value, element) {
             return this.optional(element) || /^(0|\+\d{1,4})(\d{8,11})/.test(value);
-        }, "Please enter valid phone number");
+        }, "Please enter a valid phone number");
 
         ko.bindingHandlers.select2 = {
             init: function (element, valueAccessor, allBindingsAccessor) {

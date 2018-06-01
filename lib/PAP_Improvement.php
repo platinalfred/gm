@@ -24,15 +24,26 @@ class PAP_Improvement extends Db {
         //pt = tbl_pap_improvement
         //tcd = tbl_property_types_description
         //"tbl_pap_improvement.pap_id=".$id
-        $fields = "CONCAT(`tbl_property_type`.`title`,' ', `tbl_property_description`.`title`) as improvement_description, `tbl_pap_improvement`.`quantity`, `tbl_pap_improvement`.`rate`, `pap_id`";
-        $table_name = "tbl_pap_improvement JOIN tbl_district_property_rate ON tbl_pap_improvement.district_property_rate_id = tbl_district_property_rate.id JOIN tbl_property_types_description ON tbl_district_property_rate.propertytypedescription_id = tbl_property_types_description.id JOIN tbl_property_description ON tbl_property_types_description.property_description_id = tbl_property_description.id JOIN tbl_property_type ON tbl_property_types_description.property_type_id = tbl_property_type.id";
+        $fields = "CONCAT(`tbl_property_type`.`title`,' ', `tbl_property_description`.`title`) as improvement_description, `tbl_pap_improvement`.`quantity`, "
+                . "`tbl_pap_improvement`.`rate`, `pap_id`";
+        $table_name = "tbl_pap_improvement JOIN tbl_district_property_rate ON tbl_pap_improvement.district_property_rate_id = tbl_district_property_rate.id "
+                . "JOIN tbl_property_types_description ON tbl_district_property_rate.propertytypedescription_id = tbl_property_types_description.id "
+                . "JOIN tbl_property_description ON tbl_property_types_description.property_description_id = tbl_property_description.id "
+                . "JOIN tbl_property_type ON tbl_property_types_description.property_type_id = tbl_property_type.id";
         $result_array = $this->getfarray($table_name, $fields, $where, "", "");
         return !empty($result_array) ? $result_array : false;
     }
 
     public function findPapImprovements($where = "") {
-        $fields = "`tbl_pap_improvement`.`id`, `pap_id`, `quantity`, `tbl_pap_improvement`.`rate` `old_rate`, `tbl_dpr`.`rate`, `district_property_rate_id`, propertytype, propertydescription";
-        $table_name = self::$table_name . " JOIN (SELECT `dpr`.`id`, dpr.rate, pt.`title` as propertytype, pd.`title` as propertydescription FROM tbl_district_property_rate dpr JOIN tbl_property_types_description ptd ON dpr.propertytypedescription_id = ptd.id JOIN tbl_property_description pd ON ptd.property_description_id = pd.id JOIN tbl_property_type pt ON ptd.property_type_id = pt.id JOIN tbl_district d ON  dpr.district_id = d.id) `tbl_dpr` ON `district_property_rate_id` = `tbl_dpr`.`id`";
+        $fields = "`tbl_pap_improvement`.`id`, `pap_id`, `quantity`, `tbl_pap_improvement`.`rate` `old_rate`, `tbl_dpr`.`rate`, `district_property_rate_id`, "
+                . "propertytype, propertydescription, `measure_unit`, `short_form` ";
+        $table_name = self::$table_name . " JOIN (SELECT `dpr`.`id`, dpr.rate, tpt.`title` as propertytype, tpd.`title` as propertydescription, `measure_unit`, `short_form` "
+                . "FROM tbl_district_property_rate dpr "
+                . "JOIN tbl_property_types_description tptd ON dpr.propertytypedescription_id = tptd.id "
+                . "JOIN tbl_property_description tpd ON tptd.property_description_id = tpd.id "
+                . "JOIN tbl_property_type tpt ON tptd.property_type_id = tpt.id "
+                . "LEFT JOIN tbl_measure_unit tmu ON tpt.measure_unit_id = tmu.id "
+                . "JOIN tbl_district d ON  dpr.district_id = d.id) `tbl_dpr` ON `district_property_rate_id` = `tbl_dpr`.`id`";
         $result_array = $this->getfarray($table_name, $fields, $where, "", "");
         return !empty($result_array) ? $result_array : false;
     }
