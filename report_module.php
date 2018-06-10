@@ -28,18 +28,18 @@ if (!$projectDetails) {
                 <div class="widget-container fluid-height clearfix">
                     <div class="tabs-container" id="project_page">
                         <ul class="nav nav-tabs">
-                           <li><a data-toggle="tab" href="#tabProjectReport" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
-                           <li class="active"><a data-toggle="tab" href="#tabPapCompensation" ><i class="fa fa-pie-chart"></i> PAP Compensation</a></li>
+                           <li class="active"><a data-toggle="tab" href="#tabProjectReport" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
+                           <li><a data-toggle="tab" href="#tabPapCompensation" ><i class="fa fa-pie-chart"></i> PAP Compensation</a></li>
                            <li><a data-toggle="tab" href="#tabCropsReport" ><i class="fa fa-pie-chart"></i> Crops Report</a></li>
                            <li><a data-toggle="tab" href="#tabImprovementsReport" ><i class="fa fa-pie-chart"></i> Properties Report</a></li>
                            <li><a data-toggle="tab" href="#tabVillageReport" ><i class="fa fa-pie-chart"></i> Village Report</a></li>
                         </ul>
                         <div class="tab-content">
                             <!-- Project Affected Persons Report section -->
-                             <?php //include("project_report.php"); ?>
+                             <?php include("project_report.php"); ?>
                             <!-- end PAPs Report section -->
                             <!-- PAPs Compensation Report section -->
-                            <div id="tabPapCompensation" class="tab-pane active">
+                            <div id="tabPapCompensation" class="tab-pane">
                                 <div class="heading">
                                     <i class="fa fa-pie-chart"></i>PAPs Compensation Summary Report
                                 </div>

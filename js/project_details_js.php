@@ -219,6 +219,8 @@ $(document).ready(function(){
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
 						{ data: 'phone_contact'},
+						{ data: 'x_coord'},
+						{ data: 'y_coord'},
 						{ data: 'chainage'},
 						<?php 
 						if( $projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 ):?>
@@ -335,10 +337,10 @@ $(document).ready(function(){
 				  
 				  var total = 0, pageTotal = 0;
 				  $.each(totalQty, function(key, val){ //summing up the overall total
-					  total += (parseInt(val)*parseFloat(totalAmount[key]))
+					  total += (parseInt(val)*parseFloat(totalAmount[key]));
 				  });
 				  $.each(pageQty, function(key, val){ //summing up the page total
-					  pageTotal += (parseInt(val)*parseFloat(pageAmount[key]))+" "
+					  pageTotal += (parseInt(val)*parseFloat(pageAmount[key]))+" ";
 				  });
 				  
 					$(api.column(5).footer()).html( curr_format(pageTotal) + ' (' + curr_format(total) + ')' );

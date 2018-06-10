@@ -87,7 +87,7 @@ if (isset($_POST['tbl'])) {
             $tables = "`tbl_paps` LEFT JOIN `tenure` ON `tenure` = `tenure`.`id` JOIN `tbl_district` ON `district_id` = `tbl_district`.`id` LEFT JOIN `tbl_subcounty` ON `subcounty_id` = `tbl_subcounty`.`id` LEFT JOIN `tbl_parish` ON `parish_id` = `tbl_parish`.`id` LEFT JOIN `tbl_village` ON `village_id` = `tbl_village`.`id`";
             $primary_key = "`tbl_paps`.`id`";
             $where = "`project_id`=" . $_POST['project_id'];
-            $columns = array("`pap_ref`",  "`firstname`", "`othername`", "`lastname`", "`phone_contact`", "`district_id`", "`district_name`", "`county_id`", "`subcounty_id`", "`subcounty_name`", "`tenure`", "`tenure`.`title` `tenure_desc`", "`comment`", "`parish_id`", "`parish_name`", "`village_id`", "`village_name`", "`photo_url` `profile_pic`", "`tbl_paps`.`id`", "`tbl_paps`.`id` as pap_d", "`project_id`", "`way_leave`", "`rightofway`", "`total_take`", "`chainage`", "`land_interest`", "`rate_per_acre`", "`diminution_rate`");
+            $columns = array("`pap_ref`",  "`firstname`", "`othername`", "`lastname`", "`phone_contact`", "`district_id`", "`district_name`", "`county_id`", "`subcounty_id`", "`subcounty_name`", "`tenure`", "`tenure`.`title` `tenure_desc`", "`comment`", "`parish_id`", "`parish_name`", "`village_id`", "`village_name`", "`photo_url` `profile_pic`", "`tbl_paps`.`id`", "`tbl_paps`.`id` as pap_d", "`project_id`", "`way_leave`", "`rightofway`", "`total_take`", "`x_coord`", "`y_coord`", "`chainage`", "`land_interest`", "`rate_per_acre`", "`diminution_rate`");
 
             // Get the data
             $output = $data_table->get($tables, $primary_key, $columns, $where);

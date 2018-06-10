@@ -108,11 +108,11 @@
                 <td><?php if($i === 0){echo $project_pap['y_coord'];} ?></td>
                 <td><?php if($i === 0){echo $project_pap['chainage'];} ?></td>
                 <td><?php if(isset($pap_properties[$i])){echo $pap_properties[$i]['propertytype']; ?> <?php echo $pap_properties[$i]['propertydescription'];} ?></td>
-                <td><?php if(isset($pap_properties[$i])){echo $pap_properties[$i]['quantity'] . ($pap_properties[$i]['short_form']);} ?></td>
+                <td><?php if(isset($pap_properties[$i])){echo $pap_properties[$i]['quantity']/* . ($pap_properties[$i]['short_form'])*/;} ?></td>
                 <td><?php if(isset($pap_properties[$i])){echo number_format((int)$pap_properties[$i]['old_rate']);} ?></td>
                 <td><?php if(isset($pap_properties[$i])){ $property_value = $pap_properties[$i]['old_rate'] * $pap_properties[$i]['quantity'];echo number_format($property_value);}?></td>
                 <td><?php if(isset($pap_crops[$i])){ echo $pap_crops[$i]['croptype']; ?> <?php echo $pap_crops[$i]['cropdescription']; }?></td>
-                <td><?php if(isset($pap_crops[$i])){ echo $pap_crops[$i]['quantity'] . ($pap_crops[$i]['short_form']); }?></td>
+                <td><?php if(isset($pap_crops[$i])){ echo $pap_crops[$i]['quantity']/* . ($pap_crops[$i]['short_form'])*/; }?></td>
                 <td><?php if(isset($pap_crops[$i])){ echo number_format((int)$pap_crops[$i]['old_rate']); }?></td>
                 <td><?php if(isset($pap_crops[$i])){ $crop_value = $pap_crops[$i]['old_rate'] * $pap_crops[$i]['quantity']; echo number_format($crop_value); }?></td>
                 <td><?php echo ($i === 0)?$project_pap['tenure_desc']:""; ?></td>
