@@ -52,6 +52,9 @@
         formatted = (n < 0) ? ("(" + numberWithCommas(n * -1) + ")") : numberWithCommas(n);
         return formatted;
     }
+    function round(value, decimals) {
+        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+      }
 //sum up values in an array
     function array_total(arr, idx) {
         var total = 0.0;

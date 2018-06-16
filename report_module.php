@@ -74,13 +74,12 @@ if (!$projectDetails) {
                                                         ?>
                                                         <th>TOTAL SIZE</th>
                                                     <?php endif; ?>
-                                                    <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
+                                                    <?php //if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                                                         ?>
                                                         <th>RATE PER ACRE(U.Shs)</th>	
                                                         <th>LAND INTEREST(%)</th>
-                                                        <?php
-                                                    endif;
-                                                    if ($projectDetails['project_category_unit'] == 4):
+                                                        <?php //endif; ?>
+                                                    <?php if ($projectDetails['project_category_unit'] == 4):
                                                         ?>
                                                         <th>Diminution(%)</th>
                                                     <?php endif; ?>
@@ -98,7 +97,7 @@ if (!$projectDetails) {
                                                     <?php endif; ?>
                                                     <?php
                                     //Total land value, applies to ROW, (Both ROW and WL) and Total Take/Size
-                                                    if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
+                                                    if ($projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                                                         ?>
                                                         <th>LAND VALUE (U.Shs)</th>
                                                     <?php endif; ?>
@@ -126,11 +125,11 @@ if (!$projectDetails) {
                                                         <th>&nbsp;</th>
                                                         <?php endif; ?>
                                                     <?php 
-                                                    if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
+                                                    //if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                                                         ?>
                                                         <th>&nbsp;</th>	
                                                         <th>&nbsp;</th>
-                                                    <?php endif; ?>
+                                                    <?php //endif; ?>
                                                     <?php if ($projectDetails['project_category_unit'] == 4): ?>
                                                         <th>&nbsp;</th>	
                                                     <?php endif; ?>
@@ -145,7 +144,7 @@ if (!$projectDetails) {
                                                     if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
                                                         <th>&nbsp;</th>
                                                     <?php endif; ?>
-                                                    <?php if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>	
+                                                    <?php if ($projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>	
                                                     <th>&nbsp;</th>
                                                     <?php endif; ?>
                                                     <th>&nbsp;</th>
