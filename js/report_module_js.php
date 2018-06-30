@@ -83,19 +83,27 @@ $(document).ready(function(){
                     },
                         "footerCallback": function (tfoot, data, start, end, display ) {
                             var api = this.api();
-                            $.each([2,3], function(key, val){
-                                var pageTotal = api.column(val, {page: 'current'}).data().sum();
-                                var total = api.column(val).data().sum();
-                                $(api.column(val).footer()).html( curr_format(pageTotal) + " (" + curr_format(total) +")" );
-                            });
+                                var totalPageValue = 0, totalOverallValue = 0;
+                                
+                                var pageQuantities = api.column(3, {page: 'current'}).data();
+                                var overallQuantities = api.column(3).data();
+                                var pageRates = api.column(4, {page: 'current'}).data();
+                                var overallRates = api.column(4).data();
+                             $.each(pageQuantities, function(key, val){
+                                 totalPageValue += val?(parseFloat(val)*(pageRates[key]?parseFloat(pageRates[key]):0)*1):0;
+                                 });
+                             $.each(overallQuantities, function(key, val){
+                                 totalOverallValue += val?(parseFloat(val)*(overallRates[key]?parseFloat(overallRates[key]):0)*1):0;
+                                 });
+                                $(api.column(5).footer()).html( curr_format(totalPageValue) + " (" + curr_format(totalOverallValue) +")" );
                             },
                             columns:[ 
                         { data: 'propertytype' },
                         { data: 'propertydescription' },
-                        { data: 'property_cnt', render: function( data, type, full, meta ) {return data?(full.improv_msf?curr_format(data*1):(curr_format(full.property_sum*1))):"";} },
-                        //{ data: 'property_sum', render: function( data, type, full, meta ) {return data?curr_format(data):"";} },
-                        { data: 'property_sum', render: function( data, type, full, meta ) {return data?((full.improv_msf?(curr_format(data*1)+' '+full.improv_msf):'')):"";} }
-                        //,{ data: 'property_sum', render: function( data, type, full, meta ) {return data?(full.improv_msf?(' '+full.improv_msf):''):"";} }
+                        { data: 'property_cnt', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
+                        { data: 'quantity', render: function( data, type, full, meta ) {return data?(curr_format(data*1)+(full.improv_msf?(' '+full.improv_msf):'')):"";} },
+                        { data: 'rate', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
+                        { data: 'rate', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} }
                         ],
                     buttons: button_options,
                     responsive: false
@@ -120,19 +128,27 @@ $(document).ready(function(){
                     },
                         "footerCallback": function (tfoot, data, start, end, display ) {
                             var api = this.api();
-                            $.each([2,3], function(key, val){
-                                var pageTotal = api.column(val, {page: 'current'}).data().sum();
-                                var total = api.column(val).data().sum();
-                                $(api.column(val).footer()).html( curr_format(pageTotal) + " (" + curr_format(total) +")" );
-                            });
+                                var totalPageValue = 0, totalOverallValue = 0;
+                                
+                                var pageQuantities = api.column(3, {page: 'current'}).data();
+                                var overallQuantities = api.column(3).data();
+                                var pageRates = api.column(4, {page: 'current'}).data();
+                                var overallRates = api.column(4).data();
+                             $.each(pageQuantities, function(key, val){
+                                 totalPageValue += val?(parseFloat(val)*(pageRates[key]?parseFloat(pageRates[key]):0)*1):0;
+                                 });
+                             $.each(overallQuantities, function(key, val){
+                                 totalOverallValue += val?(parseFloat(val)*(overallRates[key]?parseFloat(overallRates[key]):0)*1):0;
+                                 });
+                                $(api.column(5).footer()).html( curr_format(totalPageValue) + " (" + curr_format(totalOverallValue) +")" );
                             },
                             columns:[ 
                         { data: 'croptype' },
                         { data: 'cropdescription' },
-                        { data: 'crop_cnt', render: function( data, type, full, meta ) {return data?(full.crop_msf?curr_format(data*1):(curr_format(full.crop_sum*1))):"";} },
-                        //{ data: 'property_sum', render: function( data, type, full, meta ) {return data?curr_format(data):"";} },
-                        { data: 'crop_sum', render: function( data, type, full, meta ) {return data?((full.crop_msf?(curr_format(data*1)+' '+full.crop_msf):'')):"";} }
-                        //,{ data: 'property_sum', render: function( data, type, full, meta ) {return data?(full.improv_msf?(' '+full.improv_msf):''):"";} }
+                        { data: 'crop_cnt', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
+                        { data: 'quantity', render: function( data, type, full, meta ) {return data?(curr_format(data*1)+(full.crop_msf?(' '+full.crop_msf):'')):"";} },
+                        { data: 'rate', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
+                        { data: 'rate', render: function( data, type, full, meta ) {return data?curr_format(data*(full.quantity?full.quantity:0)):"";} }
                         ],
                     buttons: button_options,
                     responsive: false

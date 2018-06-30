@@ -172,14 +172,15 @@ if (!$projectDetails) {
                                                     <th>DESCRIPTION</th>
                                                     <th>COUNT</th>
                                                     <th>MEASURE</th>
+                                                    <th>RATE(U.Shs)</th>
+                                                    <th>CROP/TREE VALUE(U.Shs)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             </tbody>
                                             <tfoot>
                                                     <th>TOTAL</th>
-                                                    <th>&nbsp;</th>
-                                                    <th>0</th>
+                                                    <th colspan="4">&nbsp;</th>
                                                     <th>0</th>
                                             </tfoot>
                                             </table>
@@ -199,15 +200,15 @@ if (!$projectDetails) {
                                                     <th>DESCRIPTION</th>
                                                     <th>COUNT</th>
                                                     <th>MEASURE</th>
-                                                    <!--th>Properties' VALUE (U. Shs)</th-->
+                                                    <th>RATE(U.Shs)</th>
+                                                    <th>CROP/TREE VALUE(U.Shs)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             </tbody>
                                             <tfoot>
                                                     <th>TOTAL</th>
-                                                    <th>&nbsp;</th>
-                                                    <th>0</th>
+                                                    <th colspan="4">&nbsp;</th>
                                                     <th>0</th>
                                             </tfoot>
                                             </table>

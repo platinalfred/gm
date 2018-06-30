@@ -96,14 +96,14 @@ class Report extends Db {
     }
     public function getPropertiesSummary($where = 1){
         //the improvements
-        $fields = "SUM(`quantity`*`rate`) `property_sum`,COUNT(`tbl_pap_improvement`.`id`) `property_cnt`,`propertytype`,`propertydescription`,`improv_mu`,`improv_msf`";
-        $result_array = $this->getfarray(self::$improvements_table_name, $fields, $where, "", ""," GROUP BY `tbl_dpr`.`id`, `propertytype`,`propertydescription`,`improv_mu`,`improv_msf`");
+        $fields = "SUM(`quantity`) `quantity`, `rate`,  COUNT(`tbl_pap_improvement`.`id`) `property_cnt`,`propertytype`,`propertydescription`,`improv_mu`,`improv_msf`";
+        $result_array = $this->getfarray(self::$improvements_table_name, $fields, $where, "", ""," GROUP BY `tbl_dpr`.`id`, `propertytype`,`propertydescription`,`improv_mu`,`improv_msf`, `rate`");
         return !empty($result_array) ? $result_array : false;
     }
     public function getCropsSummary($where = 1){
         //the crops
-        $fields = "SUM(`quantity`*`rate`) `crop_sum`,COUNT(`tbl_pap_crop_tree`.`id`) `crop_cnt`,`croptype`,`cropdescription`,`crop_mu`,`crop_msf`";
-        $result_array = $this->getfarray(self::$crops_table_name, $fields, $where, "", ""," GROUP BY `tbl_dr`.`id`, `croptype`,`cropdescription`,`crop_mu`,`crop_msf`");
+        $fields = "SUM(`quantity`) `quantity`, `rate`, COUNT(`tbl_pap_crop_tree`.`id`) `crop_cnt`,`croptype`,`cropdescription`,`crop_mu`,`crop_msf`";
+        $result_array = $this->getfarray(self::$crops_table_name, $fields, $where, "", ""," GROUP BY `tbl_dr`.`id`, `croptype`,`cropdescription`,`crop_mu`,`crop_msf`, `rate` ");
         return !empty($result_array) ? $result_array : false;
     }
 }
