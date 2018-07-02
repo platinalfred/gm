@@ -101,9 +101,9 @@ $(document).ready(function(){
                         { data: 'propertytype' },
                         { data: 'propertydescription' },
                         { data: 'property_cnt', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
-                        { data: 'quantity', render: function( data, type, full, meta ) {return data?(curr_format(data*1)+(full.improv_msf?(' '+full.improv_msf):'')):"";} },
-                        { data: 'rate', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
-                        { data: 'rate', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} }
+                        { data: 'qty', render: function( data, type, full, meta ) {return data?(curr_format(data*1)+(full.improv_msf?(' '+full.improv_msf):'')):"";} },
+                        { data: 'qty_rate', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
+                        { data: 'qty_rate', render: function( data, type, full, meta ) {return data?curr_format(data*(full.qty?full.qty:0)):"";} }
                         ],
                     buttons: button_options,
                     responsive: false
@@ -146,9 +146,9 @@ $(document).ready(function(){
                         { data: 'croptype' },
                         { data: 'cropdescription' },
                         { data: 'crop_cnt', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
-                        { data: 'quantity', render: function( data, type, full, meta ) {return data?(curr_format(data*1)+(full.crop_msf?(' '+full.crop_msf):'')):"";} },
-                        { data: 'rate', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
-                        { data: 'rate', render: function( data, type, full, meta ) {return data?curr_format(data*(full.quantity?full.quantity:0)):"";} }
+                        { data: 'qty', render: function( data, type, full, meta ) {return data?(curr_format(data*1)+(full.crop_msf?(' '+full.crop_msf):'')):"";} },
+                        { data: 'qty_rate', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";} },
+                        { data: 'qty_rate', render: function( data, type, full, meta ) {return data?curr_format(data*(full.qty?full.qty:0)):"";} }
                         ],
                     buttons: button_options,
                     responsive: false

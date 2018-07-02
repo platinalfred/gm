@@ -201,7 +201,7 @@ if (!$projectDetails) {
                                                     <th>COUNT</th>
                                                     <th>MEASURE</th>
                                                     <th>RATE(U.Shs)</th>
-                                                    <th>CROP/TREE VALUE(U.Shs)</th>
+                                                    <th>PROPERTY VALUE(U.Shs)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

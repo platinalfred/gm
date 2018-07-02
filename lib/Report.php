@@ -5,15 +5,17 @@ require_once($curdir . '/Db.php');
 
 class Report extends Db {
     
-    protected static $improvements_table_name = " `tbl_pap_improvement` JOIN (SELECT `dpr`.`id`, tpt.`title` as propertytype, tpd.`title` as propertydescription, "
+    protected static $improvements_table_name = " `tbl_pap_improvement` "
+            . "JOIN (SELECT `dpr`.`id`, tpt.`title` as propertytype, tpd.`title` as propertydescription, "
                 . "`measure_unit`  `improv_mu`, `short_form`  `improv_msf`"
                 . "FROM  tbl_property_type tpt "
                 . "JOIN tbl_property_types_description tptd ON tptd.property_type_id = tpt.id "
                 . "JOIN tbl_district_property_rate dpr ON dpr.propertytypedescription_id = tptd.id  "
                 . "JOIN tbl_property_description tpd ON tptd.property_description_id = tpd.id "
                 . "LEFT JOIN tbl_measure_unit tmu ON tpt.measure_unit_id = tmu.id) `tbl_dpr` ON `district_property_rate_id` = `tbl_dpr`.`id`";
-    
-        protected static $crops_table_name = " `tbl_pap_crop_tree` JOIN (SELECT `tdcr`.`id`, tct.`title` as croptype, tcd.`title` as `cropdescription`, "
+   
+        protected static $crops_table_name = " `tbl_pap_crop_tree`"
+                . " JOIN (SELECT `tdcr`.`id`, tct.`title` as croptype, tcd.`title` as `cropdescription`, "
                 . "`measure_unit`  `crop_mu`, `short_form` `crop_msf` "
                 . "FROM  tbl_tree_or_crop_types tct "
                 . "JOIN tree_crop_types_description tctd ON tctd.tree_crop_id = tct.id "
@@ -51,6 +53,7 @@ class Report extends Db {
         $result_array = $this->getfarray($tables, $fields, $where, "", "");
         return !empty($result_array) ? $result_array : false;
     }
+    
     /**
      * 
      * summarized_report function enables the generation of an aggregated report providing summaries of PAPs' compensations at the villages. districts, subcounties and at the parish level
@@ -75,6 +78,7 @@ class Report extends Db {
         $result_array = $this->getfarray($tables, $fields, $where, "", "");
         return !empty($result_array) ? $result_array : false;
     }
+    
     public function getPapVillageSummary($where = 1){
         $crop_trees_query = "(SELECT `pap_id`, SUM(`quantity`*`rate`) `crop_tree_sum` FROM `tbl_pap_crop_tree` GROUP BY `pap_id`) `crop_trees`";
         $improvements_query = "(SELECT `pap_id`, SUM(`quantity`*`rate`) `improvement_sum` FROM `tbl_pap_improvement` GROUP BY `pap_id`) `improvements`";
@@ -94,16 +98,40 @@ class Report extends Db {
         $result_array = $this->getfarray($tables, $fields, $where, "", "");
         return !empty($result_array) ? $result_array : false;
     }
+    
     public function getPropertiesSummary($where = 1){
         //the improvements
-        $fields = "SUM(`quantity`) `quantity`, `rate`,  COUNT(`tbl_pap_improvement`.`id`) `property_cnt`,`propertytype`,`propertydescription`,`improv_mu`,`improv_msf`";
-        $result_array = $this->getfarray(self::$improvements_table_name, $fields, $where, "", ""," GROUP BY `tbl_dpr`.`id`, `propertytype`,`propertydescription`,`improv_mu`,`improv_msf`, `rate`");
+        $pap_improvements_summary = "(select district_property_rate_id, count(tbl_pap_improvement.id) `property_cnt`,sum(quantity) qty, max(rate) qty_rate "
+                . "from tbl_pap_improvement WHERE $where group by district_property_rate_id) tpps ";
+        
+        $improvement_table_name = " `tbl_pap_improvement` "
+            . " JOIN tbl_district_property_rate tdpr ON `district_property_rate_id` = `tdpr`.`id`  "
+                . "JOIN tbl_property_types_description tptd ON tdpr.propertytypedescription_id = tptd.id "
+                . "JOIN tbl_property_description tpd ON tptd.property_description_id = tpd.id "
+                . "JOIN  tbl_property_type tpt ON tptd.property_type_id = tpt.id "
+                . "JOIN $pap_improvements_summary ON tpps.district_property_rate_id = tdpr.id "
+                . "LEFT JOIN tbl_measure_unit tmu ON tpt.measure_unit_id = tmu.id";
+        
+        $prop_fields = "`qty`, `qty_rate`,  `property_cnt`,tpt.`title` `propertytype`,tpd.`title` `propertydescription`,`measure_unit` `improv_mu`,`short_form` `improv_msf`";
+        $result_array = $this->getfarray($improvement_table_name, $prop_fields, "", "", "");
         return !empty($result_array) ? $result_array : false;
     }
+    
     public function getCropsSummary($where = 1){
         //the crops
-        $fields = "SUM(`quantity`) `quantity`, `rate`, COUNT(`tbl_pap_crop_tree`.`id`) `crop_cnt`,`croptype`,`cropdescription`,`crop_mu`,`crop_msf`";
-        $result_array = $this->getfarray(self::$crops_table_name, $fields, $where, "", ""," GROUP BY `tbl_dr`.`id`, `croptype`,`cropdescription`,`crop_mu`,`crop_msf`, `rate` ");
+        $pap_crop_summary = "(select crop_description_rate_id, count(tbl_pap_crop_tree.id) `crop_cnt`, sum(quantity) qty, max(rate)  qty_rate "
+                . "from tbl_pap_crop_tree WHERE $where group by  crop_description_rate_id) tpcs ";
+        //$crop_fields = "`qty`, `qty_rate`, `crop_cnt`,tct.`title` `croptype`, tcd.`title` `cropdescription`,`measure_unit` `crop_mu`,`short_form` `crop_msf`";
+        $crop_table_name = "(SELECT tdcr.id,tct.`title` `croptype`, tcd.`title` `cropdescription`,`measure_unit` `crop_mu`,`short_form` `crop_msf` "
+                . "FROM tbl_district_croptree_rate tdcr "
+                . "JOIN tree_crop_types_description tctd ON tdcr.croptree_id = tctd.id "
+                . "JOIN tbl_crop_description tcd ON tctd.crop_description_id = tcd.id "
+                . "JOIN  tbl_tree_or_crop_types tct ON tctd.tree_crop_id = tct.id "
+                . "LEFT JOIN tbl_measure_unit tmu ON tct.measure_unit_id = tmu.id) dcrs";
+                //. " JOIN $pap_crop_summary ON tpcs.crop_description_rate_id = tdcr.id ";
+        
+        $table = $pap_crop_summary." JOIN $crop_table_name ON dcrs.id=crop_description_rate_id";
+        $result_array = $this->getarray($table, "", "", "");
         return !empty($result_array) ? $result_array : false;
     }
 }
