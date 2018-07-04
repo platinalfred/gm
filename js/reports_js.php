@@ -109,6 +109,7 @@ $(document).ready(function(){
                             "searchable": false
                         }],
                             "autoWidth": false,
+                            "lengthMenu": [[10, 25, 50, -1], [10, 50,  100, "All"]],
                             "footerCallback": function (tfoot, data, start, end, display ) {
                                 var api = this.api();
                                 $.each(cols, function(key, val){

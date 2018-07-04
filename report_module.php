@@ -231,6 +231,10 @@ if (!$projectDetails) {
                                                     <th>No. of PAPs</th>
                                                     <th>CROPs VALUE (U. Shs)</th>
                                                     <th>IMPROVEMENTS VALUE (U. Shs)</th>
+                                                    <th>LAND VALUE (U. Shs)</th>
+                                                    <th>SUB TOTAL (U. Shs)</th>
+                                                    <th>DISTURBANCE ALLOWANCE (<?php echo $projectDetails['disturbance_allowance']; ?>%) (U. Shs)</th>
+                                                    <th>TOTAL COMPENSATION (U. Shs)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -238,6 +242,10 @@ if (!$projectDetails) {
                                             <tfoot>
                                                     <th>TOTALs</th>
                                                     <th colspan="3">&nbsp;</th>
+                                                    <th>0</th>
+                                                    <th>0</th>
+                                                    <th>0</th>
+                                                    <th>0</th>
                                                     <th>0</th>
                                                     <th>0</th>
                                                     <th>0</th>

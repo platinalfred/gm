@@ -28,6 +28,7 @@ $(document).ready(function(){
             }
             /* -- VILLAGES SUMMARY Report Data Table --- */
             if ($("#tblVillageReport").length) {
+                var d_allow = <?php echo $projectDetails['disturbance_allowance']/100;?>; //disturbance_allowance
                 dTable['tblVillageReport'] = $('#tblVillageReport').DataTable({
                     dom: '<".col-md-7"B><".col-md-2"l><".col-md-3"f>rt<".col-md-7"i><".col-md-5"p>',
                     "autoWidth": false,
@@ -45,11 +46,25 @@ $(document).ready(function(){
                     },
                         "footerCallback": function (tfoot, data, start, end, display ) {
                             var api = this.api();
-                            $.each([4,5,6], function(key, val){
-                                var pageTotal = api.column(val, {page: 'current'}).data().sum();
-                                var total = api.column(val).data().sum();
-                                $(api.column(val).footer()).html( curr_format(pageTotal) + " (" + curr_format(total) +")" );
+                            $.each([4,5,6,7], function(key, val){
                             });
+                            var papsPageTotal = api.column(4, {page: 'current'}).data().sum();
+                            var papsTotal = api.column(4).data().sum();
+                            $(api.column(4).footer()).html( curr_format(papsPageTotal) + " (" + curr_format(papsTotal) +")" );
+                            var cropsPageTotal = api.column(5, {page: 'current'}).data().sum();
+                            var cropsTotal = api.column(5).data().sum();
+                            $(api.column(5).footer()).html( curr_format(cropsPageTotal) + " (" + curr_format(cropsTotal) +")" );
+                            var improvementsPageTotal = api.column(6, {page: 'current'}).data().sum();
+                            var improvementsTotal = api.column(6).data().sum();
+                            $(api.column(6).footer()).html( curr_format(improvementsPageTotal) + " (" + curr_format(improvementsTotal) +")" );
+                            var landValuePageTotal = api.column(7, {page: 'current'}).data().sum();
+                            var landValueTotal = api.column(7).data().sum();
+                            $(api.column(7).footer()).html( curr_format(landValuePageTotal) + " (" + curr_format(landValueTotal) +")" );
+                            var pageSubTotal = cropsPageTotal+improvementsPageTotal+landValuePageTotal;
+                            var subTotal = cropsTotal+improvementsTotal+landValueTotal;
+                            $(api.column(8).footer()).html( curr_format(pageSubTotal) + " (" + curr_format(subTotal) +")" );
+                            $(api.column(9).footer()).html( curr_format(pageSubTotal*d_allow) + " (" + curr_format(subTotal*d_allow) +")" );
+                            $(api.column(10).footer()).html( curr_format(pageSubTotal*d_allow+pageSubTotal) + " (" + curr_format(subTotal+subTotal*d_allow) +")" );
                             },
                             columns:[ 
                         { data: 'district_name' },
@@ -58,7 +73,22 @@ $(document).ready(function(){
                         { data: 'village_name' },
                         { data: 'no_paps', render: function( data, type, full, meta ) {return data?curr_format(data):"";}},
                         { data: 'crop_tree_value', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";}},
-                        { data: 'improvement_value', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";}}
+                        { data: 'improvement_value', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";}},
+                        { data: 'land_value', render: function( data, type, full, meta ) {return data?curr_format(data*1):"";}},
+                        { data: 'improvement_value', render: function( data, type, full, meta ) {
+                                var overall_value = (data?parseFloat(data):0)+(full.land_value?parseFloat(full.land_value):0)+(full.crop_tree_value?parseFloat(full.crop_tree_value):0);
+                                return curr_format(overall_value*1);}
+                        },
+                        { data: 'improvement_value', render: function( data, type, full, meta ) {
+                                var overall_value = (data?parseFloat(data):0)+(full.land_value?parseFloat(full.land_value):0)+(full.crop_tree_value?parseFloat(full.crop_tree_value):0);
+                                return curr_format(d_allow*overall_value);
+                            }
+                        },
+                        { data: 'improvement_value', render: function( data, type, full, meta ) {
+                                var overall_value = (data?parseFloat(data):0)+(full.land_value?parseFloat(full.land_value):0)+(full.crop_tree_value?parseFloat(full.crop_tree_value):0);
+                                return curr_format(d_allow*overall_value+overall_value);
+                            }
+                        }
                         ],
                     buttons: button_options,
                     responsive: false

@@ -25,7 +25,7 @@ class Report extends Db {
 
 
         public function getProjectReport($where = 1) {
-        //teh crops/trees
+        //the crops/trees
         $crop_fields = array("`pap_id`", "`quantity` `crop_qty`", "`tbl_pap_crop_tree`.`rate` `crop_rate`", "`crop_description_rate_id`", "`croptype`", "`cropdescription`", 
             "`crop_mu`", "`crop_msf`");
 
@@ -83,15 +83,16 @@ class Report extends Db {
         $crop_trees_query = "(SELECT `pap_id`, SUM(`quantity`*`rate`) `crop_tree_sum` FROM `tbl_pap_crop_tree` GROUP BY `pap_id`) `crop_trees`";
         $improvements_query = "(SELECT `pap_id`, SUM(`quantity`*`rate`) `improvement_sum` FROM `tbl_pap_improvement` GROUP BY `pap_id`) `improvements`";
         $villages_query = " (SELECT `tbl_village`.`id`, `village_name`, `parish_name`,  `subcounty_name`, `district_name` FROM `tbl_village` "
-                . "     LEFT JOIN (SELECT `tbl_parish`.`id`, `parish_name`, `subcounty_name`, `district_name` FROM  `tbl_parish`"
-                . "         LEFT JOIN (SELECT `tbl_subcounty`.`id`, `subcounty_name`, `district_name` FROM `tbl_subcounty` JOIN `tbl_district` ON `district`=`tbl_district`.`id`)  `subcounties` "
-                . "         ON `subcounties`.`id` = `subcounty`) "
-                . "     `parishes` ON `parish` = `parishes`.`id`) "
+                . "     LEFT JOIN `tbl_parish` ON `parish` = `tbl_parish`.`id`"
+                . "    LEFT JOIN `tbl_subcounty`ON `tbl_subcounty`.`id` = `subcounty`"
+                . "    JOIN `tbl_district`  ON `district`=`tbl_district`.`id`) "
                 . "`villages`";
         
-        $fields = "`no_paps`, `village_name`, `parish_name`,  `subcounty_name`, `district_name`,  `crop_tree_value`,  `improvement_value`";
-
-        $tables = "$villages_query JOIN (SELECT `village_id`, COUNT(`tbl_paps`.`id`) `no_paps`, MIN(`project_id`)`project_id`, SUM(`crop_tree_sum`) `crop_tree_value`,  SUM(`improvement_sum`) `improvement_value` FROM `tbl_paps` "
+        $fields = "`no_paps`, `village_name`, `parish_name`,  `subcounty_name`, `district_name`,  `land_value`,  `crop_tree_value`,  `improvement_value`";
+        
+        $land_value = "SUM(((COALESCE(`way_leave`,0)*COALESCE(`diminution_rate`/100,0))+((COALESCE(`rightofway`,0)+COALESCE(`total_take`,0))*COALESCE(`land_interest`/100,0)))*COALESCE(`rate_per_acre`,0)) `land_value`";
+        
+        $tables = "$villages_query JOIN (SELECT `village_id`, COUNT(`tbl_paps`.`id`) `no_paps`, MIN(`project_id`)`project_id`, $land_value, SUM(`crop_tree_sum`) `crop_tree_value`,  SUM(`improvement_sum`) `improvement_value` FROM `tbl_paps` "
                 . " LEFT JOIN $improvements_query ON `tbl_paps`.`id` = `improvements`.`pap_id`"
                 . " LEFT JOIN $crop_trees_query ON `tbl_paps`.`id` = `crop_trees`.`pap_id` GROUP BY `village_id`) `village_paps`  ON `village_id` = `villages`.`id` ";
 
