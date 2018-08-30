@@ -33,7 +33,9 @@ $output = "";
 
 if (isset($_POST['tbl'])) {
     $data = $_POST;
-    switch ($data['tbl']) {
+    $tbl = $data['tbl'];
+    unset($data['tbl']);
+    switch ($tbl) {
         case "gmt103932092030932":
             print_r($_POST);
             break;
@@ -77,6 +79,24 @@ if (isset($_POST['tbl'])) {
                 } else {
                     $response = "Village already exists";
                 }
+            }
+            $output = $response;
+            break;
+        case "tblBank":
+            $bank_obj = new Bank();
+            $response = array();
+            if ($data['id'] != ""  && is_numeric($data['id'])) {
+                if ($bank_obj->updateBank($data)) {
+                    $response = "success";
+                } else {
+                    $response = "Bank data could not be updated. Please try again or contact admin for assistance!";
+                }
+            } else {
+                    if ($bank_obj->addBank($data)) {
+                        $response = "success";
+                    } else {
+                        $response = "Bank data could not be added. Please try again or contact admin for assistance!";
+                    }
             }
             $output = $response;
             break;
@@ -229,7 +249,6 @@ if (isset($_POST['tbl'])) {
             $land_project = new LandAcquisition();
             $response = "";
             if ($data['id'] != "") {
-                unset($data['tbl']);
                 if ($land_project->updateProject($data)) {
                     $response['success'] = true;
                 } else {
@@ -291,7 +310,6 @@ if (isset($_POST['tbl'])) {
                 $plants = $data['plant'];
                 unset($data['plant']);
             }
-            unset($data['tbl']);
 
             $response = array();
             $response['success'] = false;

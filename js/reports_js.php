@@ -147,7 +147,7 @@ $(document).ready(function(){
                                 <?php endif; ?>
                                 <?php //ROW or Total Take/Size OR Both ROW and WL Project
                                 //if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>
-                            { data: 'rate_per_acre', render: function( data, type, full, meta ) {return data?curr_format(data):"";}},
+                            { data: 'rate_per_acre', render: function( data, type, full, meta ) {return data?curr_format(Math.round(data)):"";}},
                             { data: 'land_interest', render: function( data, type, full, meta ) {return data?data:0;}},
                                 <?php //endif; ?>
                                 <?php //Dimunition rate for Both ROW and WL Project

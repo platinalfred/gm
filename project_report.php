@@ -115,7 +115,7 @@
                 <td><?php if(isset($pap_crops[$i])){ echo $pap_crops[$i]['quantity']/* . ($pap_crops[$i]['short_form'])*/; }?></td>
                 <td><?php if(isset($pap_crops[$i])){ echo number_format((int)$pap_crops[$i]['old_rate']); }?></td>
                 <td><?php if(isset($pap_crops[$i])){ $crop_value = $pap_crops[$i]['old_rate'] * $pap_crops[$i]['quantity']; echo number_format($crop_value); }?></td>
-                <td><?php echo ($i === 0)?$project_pap['tenure_desc']:""; ?></td>
+                <td><?php echo ($i === 0)?strtoupper($project_pap['tenure_desc']):""; ?></td>
                     <?php
 //ROW or Both ROW and WL
                     if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4):
@@ -182,7 +182,7 @@
                 <td><?php if($i === 0){$sub_total = $total_land_value + $project_pap['crop_tree_sum'] + $project_pap['improvement_sum']; echo number_format($sub_total);} ?></td>
                 <td><?php if($i === 0){$disturbance_allowance = $sub_total * ($projectDetails['disturbance_allowance'] / 100); echo number_format($disturbance_allowance);} ?></td>
                 <td><?php if($i === 0){$total_compensation = $sub_total + $disturbance_allowance; echo number_format($total_compensation);} ?></td>
-                <td><?php if($i === 0){echo $project_pap['comment'];} ?></td>
+                <td><?php if($i === 0){echo strtoupper($project_pap['comment']);} ?></td>
                     <?php //total sum for the properties and crops
                     if($i === 0){
                         $total_crops_value += $project_pap['crop_tree_sum'];

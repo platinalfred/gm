@@ -31,7 +31,7 @@ if (!$projectDetails) {
                            <li class="active"><a data-toggle="tab" href="#tabProjectReport" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
                            <li><a data-toggle="tab" href="#tabPapCompensation" ><i class="fa fa-pie-chart"></i> PAP Compensation</a></li>
                            <li><a data-toggle="tab" href="#tabCropsReport" ><i class="fa fa-pie-chart"></i> Crops Report</a></li>
-                           <li><a data-toggle="tab" href="#tabImprovementsReport" ><i class="fa fa-pie-chart"></i> Properties Report</a></li>
+                           <li><a data-toggle="tab" href="#tabImprovementsReport" ><i class="fa fa-pie-chart"></i> Improvements Report</a></li>
                            <li><a data-toggle="tab" href="#tabVillageReport" ><i class="fa fa-pie-chart"></i> Village Report</a></li>
                         </ul>
                         <div class="tab-content">
@@ -189,7 +189,7 @@ if (!$projectDetails) {
                             </div>
                             <div id="tabImprovementsReport" class="tab-pane">
                                 <div class="heading">
-                                    <i class="fa fa-pie-chart"></i>Properties Summary Report
+                                    <i class="fa fa-pie-chart"></i>Improvements Summary Report
                                 </div>
                                 <div class="widget-content padded">
                                     <div class="table-responsive">
@@ -201,7 +201,7 @@ if (!$projectDetails) {
                                                     <th>COUNT</th>
                                                     <th>MEASURE</th>
                                                     <th>RATE(U.Shs)</th>
-                                                    <th>PROPERTY VALUE(U.Shs)</th>
+                                                    <th>IMPROVEMENT VALUE(U.Shs)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

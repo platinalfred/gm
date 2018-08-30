@@ -53,14 +53,23 @@
                             <div class="col-md-7">
                                 <input name="phone_contact" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 0 or +"  />
                             </div>
-                        </div><!--
+                        </div>
                         <div class="form-group">
-                                <label class="control-label col-md-5">Phone Contact 2</label>
+                                <label class="control-label col-md-5">Bank</label>
                                 <div class="col-md-7">
-                                        <input name="phone_contact2" type="text" class="form-control" data-msg-required="Phone number must be entered" data-msg-phoneUg="Start number with 0 or +" required />
+                                    <select name="bank_id" class="select2able">
+                                        <option value="">-- select --</option>
+                                        <?php
+                                        $bank_obj = new Bank();
+                                        $banks = $bank_obj->findAll();
+                                        foreach ($banks as $bank):
+                                            ?>
+                                            <option value="<?php echo $bank['id'] ?>"><?php echo $bank['bank_name'] ?></option>
+                                                <?php endforeach; ?>
+                                    </select>
                                 </div>
-                        </div>-->
-                    </div>
+                        </div>
+                    </div><!---->
                     <div class="col-lg-4">
 
                         <div class="form-group">
@@ -97,6 +106,18 @@
                                 <select id="village_id" name="village_id" class="select2able" data-bind='options: filteredVillagesList, optionsText: "village_name", optionsCaption: "Select village...", optionsAfterRender: $root.setOptionValue("id"), value:village' data-msg-required="Vlillage must be selected" required ></select>
                             </div>
                         </div>
+                        <div class="form-group">
+                                <label class="control-label col-md-5">NIN</label>
+                                <div class="col-md-7">
+                                        <input name="nid_no" id="acc_number" type="text" class="form-control" />
+                                </div>
+                        </div>
+                        <div class="form-group">
+                                <label class="control-label col-md-5">Acc Number</label>
+                                <div class="col-md-7">
+                                        <input name="acc_number" id="acc_number" type="text" class="form-control" />
+                                </div>
+                        </div>
                     </div>
 
                     <div class="col-lg-8 offset-4">
@@ -111,7 +132,7 @@
                                     foreach ($comments as $comment):
                                         ?>
                                         <option value="<?= $comment['details'] ?>"><?= $comment['details'] ?></option>
-<?php endforeach; ?>
+                                            <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>

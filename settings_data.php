@@ -38,6 +38,10 @@ if(isset($_POST['tbl'])){
 			$villages = new Village();
 			$output['data'] = $villages->findVillages();
 		break;
+		break;case "tblBanks":
+			$bank_obj = new Bank();
+			$output['data'] = $bank_obj->findAll();
+		break;
 		break;
 		case "propertytypes":
 			$propertytypes = new PropertyTypes();

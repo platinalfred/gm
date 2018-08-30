@@ -29,3 +29,4 @@ require_once(dirname(__FILE__)."/Tenure.php");
 require_once(dirname(__FILE__)."/UnitOfMeasure.php");
 require_once(dirname(__FILE__)."/Staff.php");
 require_once(dirname(__FILE__)."/Comments.php");
+require_once(dirname(__FILE__)."/Bank.php");

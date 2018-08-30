@@ -219,6 +219,8 @@ $(document).ready(function(){
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
 						{ data: 'phone_contact'},
+						{ data: 'acc_number'},
+						{ data: 'bank_name'},
 						{ data: 'x_coord'},
 						{ data: 'y_coord'},
 						{ data: 'chainage'},
@@ -562,15 +564,15 @@ $('table tbody').on( 'click', '.edit_me', function () {
 		viewModel.pap_details(data);
 		viewModel.getPapDetails(data.pap_d);
 		//we need to set the village object accordingly
-		viewModel.village(ko.utils.arrayFirst(viewModel.villagesList(), function(currentParish){
-			return (data.parish_id == currentParish.id);
+		viewModel.village(ko.utils.arrayFirst(viewModel.villagesList(), function(currentVillage){
+			return (data.village_id == currentVillage.id);
 		}));
-		$('#parish_id').val(data.fk_parish_id);
+		$('#village_id').val(data.village_id);
 		//we need to set the parish object accordingly
 		viewModel.parish(ko.utils.arrayFirst(viewModel.parishesList(), function(currentParish){
 			return (data.parish_id == currentParish.id);
 		}));
-		$('#parish_id').val(data.fk_parish_id);
+		$('#parish_id').val(data.parish_id);
 		//as well as the scounty object
 		viewModel.scounty(ko.utils.arrayFirst(viewModel.subcountiesList(), function(currentSCounty){
 			return (data.subcounty_id == currentSCounty.id);

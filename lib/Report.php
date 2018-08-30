@@ -100,7 +100,7 @@ class Report extends Db {
         return !empty($result_array) ? $result_array : false;
     }
     
-    public function getPropertiesSummary($where = 1){
+    public function getPropertiesSummary2($where = 1){
         //the improvements
         $pap_improvements_summary = "(select district_property_rate_id, count(tbl_pap_improvement.id) `property_cnt`,sum(quantity) qty, max(rate) qty_rate "
                 . "from tbl_pap_improvement WHERE $where group by district_property_rate_id) tpps ";
@@ -113,8 +113,25 @@ class Report extends Db {
                 . "JOIN $pap_improvements_summary ON tpps.district_property_rate_id = tdpr.id "
                 . "LEFT JOIN tbl_measure_unit tmu ON tpt.measure_unit_id = tmu.id";
         
-        $prop_fields = "`qty`, `qty_rate`,  `property_cnt`,tpt.`title` `propertytype`,tpd.`title` `propertydescription`,`measure_unit` `improv_mu`,`short_form` `improv_msf`";
+        $prop_fields = "`qty`, `qty_rate`,  `property_cnt`, tpt.`title` `propertytype`,tpd.`title` `propertydescription`,`measure_unit` `improv_mu`,`short_form` `improv_msf`";
         $result_array = $this->getfarray($improvement_table_name, $prop_fields, "", "", "");
+        return !empty($result_array) ? $result_array : false;
+    }
+    public function getPropertiesSummary($where = 1){
+        //the improvements
+        $pap_improvements_summary = "(select district_property_rate_id, count(tbl_pap_improvement.id) `property_cnt`,sum(quantity) qty, max(rate) qty_rate "
+                . "from tbl_pap_improvement WHERE $where group by district_property_rate_id) tpps ";
+        
+        $improvement_table_name = " (SELECT tdpr.id,tpt.`title` `propertytype`, tpd.`title` `propertydescription`,`measure_unit` `improv_mu`,`short_form` `improv_msf` "
+                . "FROM tbl_district_property_rate tdpr "
+                . "JOIN tbl_property_types_description tptd ON tdpr.propertytypedescription_id = tptd.id "
+                . "JOIN tbl_property_description tpd ON tptd.property_description_id = tpd.id "
+                . "JOIN  tbl_property_type tpt ON tptd.property_type_id = tpt.id "
+                . "LEFT JOIN tbl_measure_unit tmu ON tpt.measure_unit_id = tmu.id) dprs";
+                //. "JOIN $pap_improvements_summary ON tpps.district_property_rate_id = tdpr.id "
+        
+        $table = $pap_improvements_summary." JOIN $improvement_table_name ON dprs.id=district_property_rate_id";
+        $result_array = $this->getarray($table, "", "", "");
         return !empty($result_array) ? $result_array : false;
     }
     
@@ -123,7 +140,7 @@ class Report extends Db {
         $pap_crop_summary = "(select crop_description_rate_id, count(tbl_pap_crop_tree.id) `crop_cnt`, sum(quantity) qty, max(rate)  qty_rate "
                 . "from tbl_pap_crop_tree WHERE $where group by  crop_description_rate_id) tpcs ";
         //$crop_fields = "`qty`, `qty_rate`, `crop_cnt`,tct.`title` `croptype`, tcd.`title` `cropdescription`,`measure_unit` `crop_mu`,`short_form` `crop_msf`";
-        $crop_table_name = "(SELECT tdcr.id,tct.`title` `croptype`, tcd.`title` `cropdescription`,`measure_unit` `crop_mu`,`short_form` `crop_msf` "
+        $crop_table_name = "(SELECT tdcr.id, tct.`title` `croptype`, tcd.`title` `cropdescription`,`measure_unit` `crop_mu`,`short_form` `crop_msf` "
                 . "FROM tbl_district_croptree_rate tdcr "
                 . "JOIN tree_crop_types_description tctd ON tdcr.croptree_id = tctd.id "
                 . "JOIN tbl_crop_description tcd ON tctd.crop_description_id = tcd.id "

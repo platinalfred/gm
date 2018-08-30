@@ -760,6 +760,58 @@ $(document).ready(function(){
 			});
 			//$("#datatable-buttons").DataTable();
 		}
+		/*BANKS */
+	  	if ($("#tblBanks").length) {
+			  dTable['tblBank'] = $('#tblBanks').DataTable({
+			  dom: "lfrtipB",
+			  "processing": true,
+			  "ajax": {
+				  "url":"settings_data.php",
+				  "dataType": "JSON",
+				  "type": "POST",
+				  "data":  function(d){
+						d.tbl = 'tblBanks';
+					}
+			  },"columnDefs": [ {
+				  "targets": [2],
+				  "orderable": false,
+				  "searchable": false
+			  }/* , {
+				  "targets": [0],
+				  "orderable": false
+			  } */],
+			  "autoWidth": false,
+			  columns:[ { data: 'bank_name'},
+					{ data: 'bank_code'},
+					{ data: 'id', render: function ( data, type, full, meta ) {return '<a data-toggle="modal" href="#add_bank-modal" id="'+data+'-tblBanks-tblBank" class="btn btn-white btn-sm edit_me"><i class="fa fa-pencil"></i> Edit </a>';}}
+					
+					] ,
+			  buttons: [
+				{
+				  extend: "copy",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "csv",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "excel",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "pdfHtml5",
+				  className: "btn-sm"
+				},
+				{
+				  extend: "print",
+				  className: "btn-sm"
+				},
+			  ],
+			  responsive: true,
+			});
+			//$("#datatable-buttons").DataTable();
+		}
 		/*End Access Level- --*/
 		/*Position */
 	  	if ($("#positions").length) {
@@ -1360,7 +1412,7 @@ $(document).ready(function(){
 		$('#district_rate_edit').modal('show').find('.modal-body').load($(this).attr('href'));
 	});
 /* Editing Several tables */
-	$('.table tbody').on('click', 'tr .edit_me', function () {
+	$('.table tbody').on('click', 'tr .edit_me', function (e) {
 		//id="'+data+'-person_type-personTypeTable" 
 		
 		var tbl, id , frm, dt;

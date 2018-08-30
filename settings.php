@@ -43,6 +43,7 @@ $units_of_measure = $unit_of_measure_obj->findAll();
                                 <li><a data-toggle="tab" role="tab" href="#tab-24" >Comments</a></li>
                                 <li><a data-toggle="tab" role="tab" href="#tab-23" >Positions</a></li>
                                 <li class=""><a data-toggle="tab"  href="#tab-9" >Access Levels</a></li>
+                                <li class=""><a data-toggle="tab"  href="#tab-banks" >Banks</a></li>
                                 <!---->
                                 <!--<li class=""><a data-toggle="tab" role="tab" href="#tab-15" href="#">Repayment Duration</a></li> -->
 
@@ -1253,6 +1254,77 @@ if ($alldata) {
                                                     <tr>
                                                         <th>Name</th>
                                                         <th>Description</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Access Level -->
+                        <div id="tab-banks" class="tab-pane">
+                            <div class="panel-body">
+                                <div class="col-lg-2 col-offset-sm-8">
+                                    <div class="action-buttons">
+                                        <a  data-toggle="modal" href="#add_bank-modal"><i class="fa fa-plus"></i> Add New</a>
+                                    </div>
+                                    <div id="add_bank-modal" class="modal fade" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <p>Add Bank</p>
+                                                            <div class="ibox-content">
+                                                                <form class="form-horizontal form_validate" method="post" id="tblBank">
+                                                                    <input type="hidden" name="tbl" value="tblBank">
+                                                                    <input type="hidden" name="id" value="">
+                                                                    <div class="form-group"><label class="col-lg-4 control-label">Bank Name</label>
+
+                                                                        <div class="col-lg-8">
+                                                                            <input name="bank_name" name="bank_name" type="text" placeholder="Name" class="form-control">
+                                                                            <span class="help-block m-b-none">Bank name (e.g Barclays).</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group"><label class="col-lg-4 control-label">Bank Code</label>
+                                                                        <div class="col-lg-8"><input name="bank_code" placeholder="Bank Code" class="form-control" /></div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="col-lg-offset-4 col-lg-8">
+                                                                            <button class="btn btn-sm btn-primary save" type="submit">Submit</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12" style="margin-top:10px;">
+                                    <div class="ibox-content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered table-hover" id="tblBanks" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Bank</th>
+                                                        <th>Code</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Bank</th>
+                                                        <th>Code</th>
                                                         <th></th>
                                                     </tr>
                                                 </tfoot>

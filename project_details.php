@@ -37,8 +37,8 @@ if (!$projectDetails) {
                 <div class="widget-container fluid-height clearfix">
                     <div class="tabs-container" id="project_page">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
-                            <li ><a data-toggle="tab" href="#tab-5"><i class="fa fa-bar-chart-o"></i> PAPs</a></li>
+                            <li><a data-toggle="tab" href="#tab-3"><i class="fa fa-globe"></i> Coverage</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-5"><i class="fa fa-bar-chart-o"></i> PAPs</a></li>
                             <li><a data-toggle="tab" href="#tab-2" ><i class="fa fa-briefcase"></i> Client</a></li>
 
                         </ul>
@@ -92,7 +92,7 @@ if (!$projectDetails) {
                             </div>
                             <!-- end Projects content pane -->
                             <!-- Coverage section -->
-                            <div id="tab-3" class="tab-pane active">
+                            <div id="tab-3" class="tab-pane">
                                 <div class="col-lg-5">
                                     <?php if (isset($_SESSION['admin']) || isset($_SESSION['management_staff'])) { ?>
                                         <div class="action-buttons">
@@ -115,8 +115,10 @@ if (!$projectDetails) {
                                     <div class="widget-content padded">
                                         <table class="table table-bordered table-striped" id="tblProjectCoverage">
                                             <thead>
-                                            <th>District</th>
-                                            <th>Action</th>
+                                                <tr>
+                                                    <th>District</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
 
@@ -127,7 +129,7 @@ if (!$projectDetails) {
                             </div>
                             <!-- end Coverage pane -->
                             <!-- Project Affected Persons Report section -->
-                            <div id="tab-5" class="tab-pane ">
+                            <div id="tab-5" class="tab-pane active">
                                 <div class="col-lg-12">
                                     <div class="action-buttons">
                                         <a  data-toggle="modal" href="#papModal" data-bind="click: resetForm"><i class="fa fa-plus"></i> Add New</a>
@@ -156,6 +158,8 @@ if (!$projectDetails) {
                                                 <th>Names</th>
                                                 <th>District, Subcounty, Parish, Village</th>
                                                 <th>Telephone</th>
+                                                <th>Acc No.</th>
+                                                <th>Bank</th>
                                                 <th>X Coord</th>
                                                 <th>Y Coord</th>
                                                 <th>Chainage</th>
