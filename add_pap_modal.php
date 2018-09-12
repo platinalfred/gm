@@ -254,11 +254,11 @@
                         <div class="form-group" >
                             <label class="control-label col-md-2">X Coord</label>
                             <div class="col-md-4">
-                                <input name="x_coord" type="number" step="0.01" class="form-control" />
+                                <input name="x_coord" type="number" step="0.001" class="form-control" />
                             </div>
                             <label class="control-label col-md-2">Y Coord</label>
                             <div class="col-md-4">
-                                <input name="y_coord" type="number" step="0.01" class="form-control" />
+                                <input name="y_coord" type="number" step="0.001" class="form-control" />
                             </div>
                         </div>
                     </fieldset>
