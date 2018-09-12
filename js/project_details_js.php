@@ -219,6 +219,7 @@ $(document).ready(function(){
 					  { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
 						{ data: 'district_name', render: function( data, type, full, meta ) {return full.district_name+', ' + full.subcounty_name+', ' + full.parish_name+', ' + full.village_name;}},
 						{ data: 'phone_contact'},
+						{ data: 'nid_no'},
 						{ data: 'acc_number'},
 						{ data: 'bank_name'},
 						{ data: 'x_coord'},

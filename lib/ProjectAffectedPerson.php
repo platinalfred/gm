@@ -35,7 +35,7 @@ class ProjectAffectedPerson extends Db {
 
         $fields = "`tbl_paps`.`id`,`tbl_paps`.`id` as pap_d, `project_id`, `pap_ref`, `photo_url` `profile_pic`, `firstname`, `othername`, `lastname`, `phone_contact`, "
                 . "`district_id`, `district_name`, `county_id`, `subcounty_id`, `subcounty_name`, `tenure`, `tenure`.`title` `tenure_desc`, `comment`, `parish_id`, "
-                . "`parish_name` ,`village_id`, `village_name`, `bank_id`, `bank_name`, `acc_number`,`way_leave`, `rightofway`, `total_take`, `chainage`,`x_coord`,  `y_coord`, `crop_tree_cnt`, "
+                . "`parish_name` ,`village_id`, `village_name`, `nid_no`, `bank_id`, `bank_name`, `acc_number`,`way_leave`, `rightofway`, `total_take`, `chainage`,`x_coord`,  `y_coord`, `crop_tree_cnt`, "
                 . "`crop_tree_sum`,`land_interest`,`rate_per_acre`,`diminution_rate`, `improvement_cnt`, `improvement_sum`";
         $result_array = $this->getfarray($tables, $fields, $where, "pap_ref ASC", "");
         return $result_array;
@@ -128,5 +128,3 @@ class ProjectAffectedPerson extends Db {
     }
 
 }
-
-?>

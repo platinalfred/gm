@@ -158,6 +158,7 @@ if (!$projectDetails) {
                                                 <th>Names</th>
                                                 <th>District, Subcounty, Parish, Village</th>
                                                 <th>Telephone</th>
+                                                <th>NIN</th>
                                                 <th>Acc No.</th>
                                                 <th>Bank</th>
                                                 <th>X Coord</th>

@@ -58,27 +58,27 @@ $(document).ready(function(){
         var crop_total_col = project_type==2?13:(project_type==4?17:12);
         crop_pageTotal = api.column(crop_total_col, {page: 'current'}).data().sum();
         crop_total = api.column(crop_total_col).data().sum();
-        $(api.column(crop_total_col).footer()).html( curr_format(round(crop_pageTotal,4)) + " (" + curr_format(round(crop_total,4)) +")" );
+        $(api.column(crop_total_col).footer()).html( curr_format(Math.round(crop_pageTotal)) + " (" + curr_format(Math.round(crop_total)) +")" );
         
         var property_total_col = project_type==2?14:(project_type==4?18:13);
         property_pageTotal = api.column(property_total_col, {page: 'current'}).data().sum();
         property_total = api.column(property_total_col).data().sum();
-        $(api.column(property_total_col).footer()).html( curr_format(round(property_pageTotal,4)) + " (" + curr_format(round(property_total,4)) +")" );
+        $(api.column(property_total_col).footer()).html( curr_format(Math.round(property_pageTotal)) + " (" + curr_format(Math.round(property_total)) +")" );
         
         var sub_total_col = project_type==2?15:(project_type==4?19:14);
         sub_pageTotal = ttlValuePageTotal + crop_pageTotal+ property_pageTotal;
         sub_total = ttlValueTotal + crop_total + property_total;
-        $(api.column(sub_total_col).footer()).html( curr_format(round(sub_pageTotal,4)) + " (" + curr_format(round(sub_total,4)) +")" );
+        $(api.column(sub_total_col).footer()).html( curr_format(Math.round(sub_pageTotal)) + " (" + curr_format(Math.round(sub_total)) +")" );
         //disturbance allowance
         var da_total_col = project_type==2?16:(project_type==4?20:15);
         da_pageTotal = sub_pageTotal*<?php echo $projectDetails['disturbance_allowance'];?>/100;
         da_total = sub_total*<?php echo $projectDetails['disturbance_allowance'];?>/100;
-        $(api.column(da_total_col).footer()).html( curr_format(round(da_pageTotal,4)) + " (" + curr_format(round(da_total,4)) +")" );
+        $(api.column(da_total_col).footer()).html( curr_format(Math.round(da_pageTotal)) + " (" + curr_format(Math.round(da_total)) +")" );
         //total compensation
         var tc_total_col = project_type==2?17:(project_type==4?21:16);
         tc_pageTotal = sub_pageTotal+da_pageTotal;
         tc_total = sub_total+da_total;
-        $(api.column(tc_total_col).footer()).html( curr_format(round(tc_pageTotal,4)) + " (" + curr_format(round(tc_total,4)) +")" );
+        $(api.column(tc_total_col).footer()).html( curr_format(Math.round(tc_pageTotal)) + " (" + curr_format(Math.round(tc_total)) +")" );
     }
 	//deleteDataTableRowData();
 	var handleDataTableButtons = function() {
@@ -160,7 +160,7 @@ $(document).ready(function(){
                             { data: 'rightofway', render: function( data, type, full, meta ) {
                                     row_land_value = (data?data:0)*(full.rate_per_acre?full.rate_per_acre:0);
                                     land_interest = full.land_interest?(full.land_interest/100):0;
-                                    return curr_format(round(row_land_value*land_interest,4));
+                                    return curr_format(Math.round(row_land_value*land_interest));
                                 }
                             },
                                 <?php endif; ?>
@@ -171,7 +171,7 @@ $(document).ready(function(){
                                     land_value = (data?data:0)*(full.rate_per_acre?full.rate_per_acre:0);
                                     land_interest = full.land_interest?(full.land_interest/100):0;
                                     diminution_rate = full.diminution_rate?(full.diminution_rate/100):0;
-                                    return curr_format(round(land_value*land_interest*diminution_rate,4));
+                                    return curr_format(Math.round(land_value*land_interest*diminution_rate));
                                 }
                             },
                                 <?php endif; ?>
@@ -180,7 +180,7 @@ $(document).ready(function(){
                             { data: 'rightofway', render: function( data, type, full, meta ) {
                                     wl_land_value = (full.way_leave?full.way_leave:0)*(full.rate_per_acre?full.rate_per_acre:0)*(full.land_interest?(full.land_interest/100):0)*(full.diminution_rate?(full.diminution_rate/100):0);
                                     row_land_value = (data?data:0)*(full.rate_per_acre?full.rate_per_acre:0)*(full.land_interest?(full.land_interest/100):0);
-                                    return curr_format( round(wl_land_value,4) + round(row_land_value,4) );
+                                    return curr_format( Math.round(wl_land_value+row_land_value) );
                                 }
                             },
                                 <?php endif; ?>
@@ -188,7 +188,7 @@ $(document).ready(function(){
                             { data: 'total_take', render: function( data, type, full, meta ) {
                                     row_land_value = (data?data:0)*(full.rate_per_acre?full.rate_per_acre:0);
                                     land_interest = full.land_interest?(full.land_interest/100):0;
-                                    return curr_format(round(row_land_value*land_interest,4));
+                                    return curr_format(Math.round(row_land_value*land_interest));
                                 }
                             },
                                 <?php endif; ?>
@@ -220,7 +220,7 @@ $(document).ready(function(){
                                     land_interest = full.land_interest?(full.land_interest/100):0;
                                     total_land_value = row_land_value*land_interest;
                                 <?php endif; ?>
-                                    return curr_format(round(total_crop_value+total_property_value + total_land_value,4));
+                                    return curr_format(Math.round(total_crop_value+total_property_value + total_land_value));
                                 }
                             },
                             { data: 'crop_tree_sum', render: function( data, type, full, meta ) {
@@ -249,7 +249,7 @@ $(document).ready(function(){
                                     land_interest = full.land_interest?(full.land_interest/100):0;
                                     total_land_value = row_land_value*land_interest;
                                 <?php endif; ?>
-                                    return curr_format(round((total_crop_value+total_property_value + total_land_value)*<?php echo $projectDetails['disturbance_allowance'];?>/100,4));
+                                    return curr_format(Math.round((total_crop_value+total_property_value + total_land_value)*<?php echo $projectDetails['disturbance_allowance'];?>/100));
                                 }
                             },
                             { data: 'crop_tree_sum', render: function( data, type, full, meta ) {
@@ -279,7 +279,7 @@ $(document).ready(function(){
                                     total_land_value = row_land_value*land_interest;
                                 <?php endif; ?>
                                     sub_total = (total_crop_value+total_property_value + total_land_value);
-                                    return curr_format(round(sub_total+(sub_total*<?php echo $projectDetails['disturbance_allowance'];?>/100),4));
+                                    return curr_format(Math.round(sub_total+(sub_total*<?php echo $projectDetails['disturbance_allowance'];?>/100)));
                                 }
                             },
                             { data: 'comment'
