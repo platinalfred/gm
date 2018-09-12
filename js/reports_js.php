@@ -9,28 +9,28 @@ $(document).ready(function(){
          * in this context total size can mean ROW or WL depending on the project type
          * will also mean way leave size (in the case of category 4, both ROW and WL)
          */
-        var total_size_p = api.column(8, {page: 'current'}).data();
-        var total_size_ov = api.column(8).data();
-        var rate_per_acre_p = api.column(9, {page: 'current'}).data();
-        var rate_per_acre_ov = api.column(9).data();
-        var land_interest_p = api.column(10, {page: 'current'}).data();
-        var land_interest_ov = api.column(10).data();
+        var total_size_p = api.column(11, {page: 'current'}).data();
+        var total_size_ov = api.column(11).data();
+        var rate_per_acre_p = api.column(12, {page: 'current'}).data();
+        var rate_per_acre_ov = api.column(12).data();
+        var land_interest_p = api.column(13, {page: 'current'}).data();
+        var land_interest_ov = api.column(13).data();
         var diminution_rate_p = [], row_land_size_p = [];
         var diminution_rate_ov = [], row_land_size_ov = [];
         
         if(project_type == 2){
-            diminution_rate_p = api.column(11, {page: 'current'}).data();
-            diminution_rate_ov = api.column(11).data();
+            diminution_rate_p = api.column(14, {page: 'current'}).data();
+            diminution_rate_ov = api.column(14).data();
         }
         if(project_type == 4){
-            row_land_size_p = api.column(9, {page: 'current'}).data();
-            row_land_size_ov = api.column(9).data();
-            rate_per_acre_p = api.column(11, {page: 'current'}).data();
-            rate_per_acre_ov = api.column(11).data();
-            land_interest_p = api.column(12, {page: 'current'}).data();
-            land_interest_ov = api.column(12).data();
-            diminution_rate_p = api.column(13, {page: 'current'}).data();
-            diminution_rate_ov = api.column(13).data();
+            row_land_size_p = api.column(12, {page: 'current'}).data();
+            row_land_size_ov = api.column(12).data();
+            rate_per_acre_p = api.column(14, {page: 'current'}).data();
+            rate_per_acre_ov = api.column(14).data();
+            land_interest_p = api.column(15, {page: 'current'}).data();
+            land_interest_ov = api.column(15).data();
+            diminution_rate_p = api.column(16, {page: 'current'}).data();
+            diminution_rate_ov = api.column(16).data();
         }
         $.each(total_size_p, function(key, val){
             var row_land_value = (row_land_size_p.length?parseFloat(row_land_size_p[key]):0)*parseFloat(rate_per_acre_p[key]) * (parseFloat(land_interest_p[key]/100));
@@ -49,46 +49,46 @@ $(document).ready(function(){
             ttlValueTotal += (row_land_value+wl_land_value);
         });
         if(project_type == 4){
-            $(api.column(14).footer()).html( curr_format(round(rowValuePageTotal,4)) + " (" + curr_format(round(rowValueTotal,4)) +")" );
-            $(api.column(15).footer()).html( curr_format(round(wlValuePageTotal,4)) + " (" + curr_format(round(wlValueTotal,4)) +")" );
+            $(api.column(17).footer()).html( curr_format(round(rowValuePageTotal,4)) + " (" + curr_format(round(rowValueTotal,4)) +")" );
+            $(api.column(18).footer()).html( curr_format(round(wlValuePageTotal,4)) + " (" + curr_format(round(wlValueTotal,4)) +")" );
         }
-        var land_size_col = project_type==2?12:(project_type==4?16:11);
+        var land_size_col = project_type==2?15:(project_type==4?19:14);
         $(api.column(land_size_col).footer()).html( curr_format(round(ttlValuePageTotal,4)) + " (" + curr_format(round(ttlValueTotal,4)) +")" );
         
-        var crop_total_col = project_type==2?13:(project_type==4?17:12);
+        var crop_total_col = project_type==2?16:(project_type==4?20:15);
         crop_pageTotal = api.column(crop_total_col, {page: 'current'}).data().sum();
         crop_total = api.column(crop_total_col).data().sum();
         $(api.column(crop_total_col).footer()).html( curr_format(Math.round(crop_pageTotal)) + " (" + curr_format(Math.round(crop_total)) +")" );
         
-        var property_total_col = project_type==2?14:(project_type==4?18:13);
+        var property_total_col = project_type==2?17:(project_type==4?21:16);
         property_pageTotal = api.column(property_total_col, {page: 'current'}).data().sum();
         property_total = api.column(property_total_col).data().sum();
         $(api.column(property_total_col).footer()).html( curr_format(Math.round(property_pageTotal)) + " (" + curr_format(Math.round(property_total)) +")" );
         
-        var sub_total_col = project_type==2?15:(project_type==4?19:14);
+        var sub_total_col = project_type==2?18:(project_type==4?22:17);
         sub_pageTotal = ttlValuePageTotal + crop_pageTotal+ property_pageTotal;
         sub_total = ttlValueTotal + crop_total + property_total;
         $(api.column(sub_total_col).footer()).html( curr_format(Math.round(sub_pageTotal)) + " (" + curr_format(Math.round(sub_total)) +")" );
         //disturbance allowance
-        var da_total_col = project_type==2?16:(project_type==4?20:15);
+        var da_total_col = project_type==2?19:(project_type==4?23:18);
         da_pageTotal = sub_pageTotal*<?php echo $projectDetails['disturbance_allowance'];?>/100;
         da_total = sub_total*<?php echo $projectDetails['disturbance_allowance'];?>/100;
         $(api.column(da_total_col).footer()).html( curr_format(Math.round(da_pageTotal)) + " (" + curr_format(Math.round(da_total)) +")" );
         //total compensation
-        var tc_total_col = project_type==2?17:(project_type==4?21:16);
+        var tc_total_col = project_type==2?20:(project_type==4?24:19);
         tc_pageTotal = sub_pageTotal+da_pageTotal;
         tc_total = sub_total+da_total;
         $(api.column(tc_total_col).footer()).html( curr_format(Math.round(tc_pageTotal)) + " (" + curr_format(Math.round(tc_total)) +")" );
     }
 	//deleteDataTableRowData();
 	var handleDataTableButtons = function() {
-            var cols = [8,12,13]; //the index for columns where  the totals appear
-            var last_col = 17; //the final index table column
+            var cols = [11,15,16]; //the index for columns where  the totals appear
+            var last_col = 20; //the final index table column
          <?php if( ($projectDetails['project_category_unit'] == 2) ):?>//wl
-             cols = [8,13,14]; last_col = 18;
+             cols = [11,16,17]; last_col = 21;
          <?php endif;?>
          <?php if( ($projectDetails['project_category_unit'] == 4) ):?>//both row and wl
-             cols = [8,9,10]; last_col = 22;
+             cols = [11,12,13]; last_col = 25;
          <?php endif;?>
             /* -- Project Affected Person Data Table --- */
             if ($("#tblPapCompenstation").length) {
@@ -122,6 +122,9 @@ $(document).ready(function(){
                                 columns:[ { data: 'pap_ref', render: function( data, type, full, meta ) {return '<a href="project_details.php?id='+full.project_id+'&amp;pap_id='+full.id+'" title="View PAP details">'+ data + '</a>';} },
                             { data: 'firstname', render: function( data, type, full, meta ) {return full.lastname+' ' + data + ' ' + (full.othername?full.othername:'');} },
                             { data: 'phone_contact'},
+                            { data: 'nid_no'},
+                            { data: 'acc_number'},
+                            { data: 'bank_name'},
                             { data: 'district_name', render:function( data, type, full, meta){
                                     return data + ", " + full.subcounty_name +  ", " + full.parish_name +  ", " + full.village_name;
                             }},

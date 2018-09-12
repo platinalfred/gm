@@ -16,7 +16,8 @@ if (!$projectDetails) {
 <div class="container-fluid main-content">
     <div class="page-title" > <h4 ><a href="project_details.php?id=<?= $_GET['id'] ?>"><?php echo $projectDetails['project_title']; ?></a><?php if (isset($_GET['pap_id'])) { ?> <i class="fa fa-chevron-right"></i> <a href="project_details.php?id=<?php echo $_GET['id']; ?>#tab-1"> Paps</a> <i class="fa fa-chevron-right"></i> Pap detais <?php } ?></h4> </div>
     <div style="clear:float;"></div>
-    <?php if (!isset($_GET['pap_id'])):
+    <?php
+    if (!isset($_GET['pap_id'])):
         $paps_obj = new ProjectAffectedPerson();
         $pap_crop_tree_obj = new PAP_CropTree();
         $pap_improvement_obj = new PAP_Improvement();
@@ -28,15 +29,15 @@ if (!$projectDetails) {
                 <div class="widget-container fluid-height clearfix">
                     <div class="tabs-container" id="project_page">
                         <ul class="nav nav-tabs">
-                           <li class="active"><a data-toggle="tab" href="#tabProjectReport" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
-                           <li><a data-toggle="tab" href="#tabPapCompensation" ><i class="fa fa-pie-chart"></i> PAP Compensation</a></li>
-                           <li><a data-toggle="tab" href="#tabCropsReport" ><i class="fa fa-pie-chart"></i> Crops Report</a></li>
-                           <li><a data-toggle="tab" href="#tabImprovementsReport" ><i class="fa fa-pie-chart"></i> Improvements Report</a></li>
-                           <li><a data-toggle="tab" href="#tabVillageReport" ><i class="fa fa-pie-chart"></i> Village Report</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tabProjectReport" ><i class="fa fa-pie-chart"></i> Project Report</a></li>
+                            <li><a data-toggle="tab" href="#tabPapCompensation" ><i class="fa fa-pie-chart"></i> PAP Compensation</a></li>
+                            <li><a data-toggle="tab" href="#tabCropsReport" ><i class="fa fa-pie-chart"></i> Crops Report</a></li>
+                            <li><a data-toggle="tab" href="#tabImprovementsReport" ><i class="fa fa-pie-chart"></i> Improvements Report</a></li>
+                            <li><a data-toggle="tab" href="#tabVillageReport" ><i class="fa fa-pie-chart"></i> Village Report</a></li>
                         </ul>
                         <div class="tab-content">
                             <!-- Project Affected Persons Report section -->
-                             <?php include("project_report.php"); ?>
+    <?php include("project_report.php"); ?>
                             <!-- end PAPs Report section -->
                             <!-- PAPs Compensation Report section -->
                             <div id="tabPapCompensation" class="tab-pane">
@@ -51,6 +52,9 @@ if (!$projectDetails) {
                                                     <th>PAP REF</th>
                                                     <th>PAP NAME</th>
                                                     <th>TELEPHONE</th>
+                                                    <th>NIN</th>
+                                                    <th>ACCOUNT NO.</th>
+                                                    <th>BANK</th>
                                                     <th>DISTRICT, SUBCOUNTY, PARISH, VILLAGE</th>
                                                     <th>X COORD</th>
                                                     <th>Y COORD</th>
@@ -75,10 +79,10 @@ if (!$projectDetails) {
                                                         <th>TOTAL SIZE</th>
                                                     <?php endif; ?>
                                                     <?php //if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
-                                                        ?>
-                                                        <th>RATE PER ACRE(U.Shs)</th>	
-                                                        <th>LAND INTEREST(%)</th>
-                                                        <?php //endif; ?>
+                                                    ?>
+                                                    <th>RATE PER ACRE(U.Shs)</th>	
+                                                    <th>LAND INTEREST(%)</th>
+                                                    <?php //endif; ?>
                                                     <?php if ($projectDetails['project_category_unit'] == 4):
                                                         ?>
                                                         <th>Diminution(%)</th>
@@ -96,11 +100,11 @@ if (!$projectDetails) {
                                                         <th>WL Land Value</th>
                                                     <?php endif; ?>
                                                     <?php
-                                    //Total land value, applies to ROW, (Both ROW and WL) and Total Take/Size
+                                                    //Total land value, applies to ROW, (Both ROW and WL) and Total Take/Size
                                                     if ($projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
                                                         ?>
                                                         <th>LAND VALUE (U.Shs)</th>
-                                                    <?php endif; ?>
+    <?php endif; ?>
                                                     <th>IMPROVEMENT VALUE(U.Shs)</th>
                                                     <th>CROP/TREE VALUE(U.Shs)</th>
                                                     <th>SUB. TOTAL(U.Shs)</th>
@@ -114,7 +118,7 @@ if (!$projectDetails) {
                                             <tfoot>
                                                 <tr>
                                                     <th>Total</th>
-                                                    <th colspan="7">&nbsp;</th>
+                                                    <th colspan="10">&nbsp;</th>
                                                     <?php if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
                                                         <th>&nbsp;</th>
                                                     <?php endif; ?>
@@ -123,12 +127,12 @@ if (!$projectDetails) {
                                                     <?php endif; ?>
                                                     <?php if ($projectDetails['project_category_unit'] == 5 || $projectDetails['project_category_unit'] == 4): ?>
                                                         <th>&nbsp;</th>
-                                                        <?php endif; ?>
-                                                    <?php 
+                                                    <?php endif; ?>
+                                                    <?php
                                                     //if ($projectDetails['project_category_unit'] == 1 || $projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5):
-                                                        ?>
-                                                        <th>&nbsp;</th>	
-                                                        <th>&nbsp;</th>
+                                                    ?>
+                                                    <th>&nbsp;</th>	
+                                                    <th>&nbsp;</th>
                                                     <?php //endif; ?>
                                                     <?php if ($projectDetails['project_category_unit'] == 4): ?>
                                                         <th>&nbsp;</th>	
@@ -141,12 +145,13 @@ if (!$projectDetails) {
                                                     <?php endif; ?>
                                                     <?php
                                                     //Way Leave or both ROW and WL
-                                                    if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4): ?>
+                                                    if ($projectDetails['project_category_unit'] == 2 || $projectDetails['project_category_unit'] == 4):
+                                                        ?>
                                                         <th>&nbsp;</th>
                                                     <?php endif; ?>
                                                     <?php if ($projectDetails['project_category_unit'] == 4 || $projectDetails['project_category_unit'] == 5): ?>	
-                                                    <th>&nbsp;</th>
-                                                    <?php endif; ?>
+                                                        <th>&nbsp;</th>
+    <?php endif; ?>
                                                     <th>&nbsp;</th>
                                                     <th>&nbsp;</th>
                                                     <th>&nbsp;</th>
@@ -155,7 +160,7 @@ if (!$projectDetails) {
                                                     <th>&nbsp;</th>
                                                 </tr>
                                             </tfoot>
-                                            </table>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -179,11 +184,11 @@ if (!$projectDetails) {
                                             <tbody>
                                             </tbody>
                                             <tfoot>
-                                                    <th>TOTAL</th>
-                                                    <th colspan="4">&nbsp;</th>
-                                                    <th>0</th>
+                                            <th>TOTAL</th>
+                                            <th colspan="4">&nbsp;</th>
+                                            <th>0</th>
                                             </tfoot>
-                                            </table>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -207,11 +212,11 @@ if (!$projectDetails) {
                                             <tbody>
                                             </tbody>
                                             <tfoot>
-                                                    <th>TOTAL</th>
-                                                    <th colspan="4">&nbsp;</th>
-                                                    <th>0</th>
+                                            <th>TOTAL</th>
+                                            <th colspan="4">&nbsp;</th>
+                                            <th>0</th>
                                             </tfoot>
-                                            </table>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -240,30 +245,30 @@ if (!$projectDetails) {
                                             <tbody>
                                             </tbody>
                                             <tfoot>
-                                                    <th>TOTALs</th>
-                                                    <th colspan="3">&nbsp;</th>
-                                                    <th>0</th>
-                                                    <th>0</th>
-                                                    <th>0</th>
-                                                    <th>0</th>
-                                                    <th>0</th>
-                                                    <th>0</th>
-                                                    <th>0</th>
+                                            <th>TOTALs</th>
+                                            <th colspan="3">&nbsp;</th>
+                                            <th>0</th>
+                                            <th>0</th>
+                                            <th>0</th>
+                                            <th>0</th>
+                                            <th>0</th>
+                                            <th>0</th>
+                                            <th>0</th>
                                             </tfoot>
-                                            </table>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-                <?php else: ?>
+        <?php else: ?>
 
-<?php endif; ?>
-</div>
-<?php
-include("js/report_module_js.php");
-include("js/reports_js.php");
-include("includes/footer.php");
-?>
+    <?php endif; ?>
+    </div>
+    <?php
+    include("js/report_module_js.php");
+    include("js/reports_js.php");
+    include("includes/footer.php");
+    ?>
