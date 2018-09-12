@@ -26,8 +26,8 @@
                     /*if (trim($data1[1]) == "-") {
                         $data1[1] = 0;
                     }*/
-                    //if ($db->update("tbl_paps", array("pap_ref", "x_coord", "y_coord"), array("pap_ref" => $data1[1], "x_coord" => $data1[2], "y_coord" => $data1[3]), "id='" . $data1[0] . "'")) {
-                    if ($db->update("tbl_paps", array("pap_ref"), array("pap_ref" => $data1[1]), "id=" . ((int) $data1[0]) )) {
+                    if ($db->update("tbl_paps", array("pap_ref", "x_coord", "y_coord"), array("pap_ref" => $data1[1], "x_coord" => $data1[2], "y_coord" => $data1[3]), "id='" . $data1[0] . "'")) {
+                    //if ($db->update("tbl_paps", array("pap_ref"), array("pap_ref" => $data1[1]), "id=" . ((int) $data1[0]) )) {
                     //if ($db->update("tbl_paps", array("pap_ref", "rightofway", "way_leave", "rate_per_acre", "land_interest", "diminution_rate"), array("pap_ref" => $data1[2], "rightofway" => (float) $data1[4], "way_leave" => (float) $data1[5], "rate_per_acre" => (int) $data1[6], "land_interest" => (float) $data1[7], "diminution_rate" => (float) $data1[8]), "id=" . $data1[0] )) {
                     //if ($db->update("tbl_paps", array("pap_ref", "total_take", "rate_per_acre", "land_interest"), array("pap_ref" => $data1[1], "total_take" => (float) $data1[2], "rate_per_acre" => (float) str_replace(",", "", $data1[3]), "land_interest" => (float) $data1[4]), "id='" . $data1[0] . "'")) {
                     //if ($db->update("tbl_paps", array("rate_per_acre", "land_interest"), array("rate_per_acre" => (float) str_replace(",", "", $data1[1]), "land_interest" => (float) $data1[2]), "id='" . $data1[0] . "'")) {

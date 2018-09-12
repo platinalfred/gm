@@ -131,7 +131,7 @@
                                     $comments = $comment_obj->findAll();
                                     foreach ($comments as $comment):
                                         ?>
-                                        <option value="<?= $comment['details'] ?>"><?= $comment['details'] ?></option>
+                                        <option value="<?= $comment['details'] ?>"><?php echo $comment['details'] ?></option>
                                             <?php endforeach; ?>
                                 </select>
                             </div>
@@ -243,6 +243,22 @@
                             <label class="control-label col-md-5">Km</label>
                             <div class="col-md-7">
                                 <input name="chainage" type="text" class="form-control" data-msg-required="Chainage point must be entered"  />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-6">
+                    <fieldset>
+                        <legend>Coordinates</legend>
+                        <div class="form-group" >
+                            <label class="control-label col-md-2">X Coord</label>
+                            <div class="col-md-4">
+                                <input name="x_coord" type="number" step="0.01" class="form-control" />
+                            </div>
+                            <label class="control-label col-md-2">Y Coord</label>
+                            <div class="col-md-4">
+                                <input name="y_coord" type="number" step="0.01" class="form-control" />
                             </div>
                         </div>
                     </fieldset>
