@@ -68,8 +68,8 @@ $(document).ready(function(){
                             },
                             columns:[ 
                         { data: 'district_name' },
-                        { data: 'parish_name' },
                         { data: 'subcounty_name' },
+                        { data: 'parish_name' },
                         { data: 'village_name' },
                         { data: 'no_paps', render: function( data, type, full, meta ) {return data?curr_format(data):"";}},
                         { data: 'crop_tree_value', render: function( data, type, full, meta ) {return data?curr_format(Math.round(data*1)):"";}},
