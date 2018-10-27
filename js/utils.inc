@@ -188,7 +188,6 @@
             type: 'POST',
             data: frmdata,
             success: function (response) {
-
                 if ($.trim(response) == "success") {
                     showStatusMessage("Data successfully saved", "success");
 
@@ -233,16 +232,33 @@
                     }, 2000);
 
                 } else {
-
                     showStatusMessage(response, "fail");
                     enableDisableButton(frm, false);
                 }
-
-
+            }
+            , error: function (jqXHR, textStatus, errorThrown) {
+                network_error(jqXHR, textStatus, errorThrown, form);
             }
         });
         return false;
     }
+function network_error(jqXHR, textStatus, errorThrown, formElement) {
+    msg = "Network error. Please check your network/internet connection or get in touch with the admin.";
+    status = jqXHR.status;
+    switch (status) {
+        case 500:
+            msg = "There was a server problem.\nPlease report the following message to admin\n" + textStatus;
+            break;
+        case 404:
+            msg = "The operation was unsuccessful.\n Please report the following message to admin\n" + textStatus + "\n" + errorThrown;
+            break;
+        default:
+            break;
+    }
+    showStatusMessage(msg, "fail");
+    console.log("Status : " + textStatus + "\nStatus code: " + status + "\nResponse: " + errorThrown);
+    enableDisableButton(formElement, false);
+}
     function getWords(s) {
         // American Numbering System
         var th = ['', 'Thousand', 'Million', 'Billion', 'Trillion'];

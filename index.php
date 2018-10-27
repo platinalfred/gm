@@ -105,7 +105,9 @@ session_start();
 			$(window).load(function() {
 			  return $(".login-container").addClass("active");
 			});
-			function showStatusMessage(message='', display_type='success'){
+			function showStatusMessage(message, display_type){
+                            message = (typeof message !== 'undefined') ?  message : "";
+                            display_type = (typeof display_type !== 'undefined') ?  display_type : "success";
 				new PNotify({
 					  title: "Action response",
 					  text: message,
